@@ -29,5 +29,5 @@
 <button type="button">LinkedIn</button> <br> <br>
 <button type="button">Submit</button>
 </body>
-<script src="/scripts/facebookConnection.js"></script>
+<script src="${pageContext.servletContext.contextPath }/resources/scripts/facebookConnection.js"></script>
 </html>
