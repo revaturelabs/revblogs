@@ -27,7 +27,11 @@ public class BaseController {
 	
 		return "login";
 	}
+	@RequestMapping(value="/create-blog", method=RequestMethod.GET)
+	public String createBlog(HttpServletRequest req, HttpServletResponse resp){
 	
+		return "create-blog";
+	}
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	public ModelAndView home(){
 		ModelAndView mv = new ModelAndView("index");
