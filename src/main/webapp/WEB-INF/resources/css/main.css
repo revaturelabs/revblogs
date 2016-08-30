@@ -125,6 +125,15 @@ html, body {
   .post-title a {
   	color: #474c55;
   }
+  .post-preview .post-author,
+  .post-preview .post-date {
+  	display: inline-block;
+  }
+  
+  .post-preview .post-date {
+  	color: #777777;
+  	float: right;
+  }
   .post-title a:hover,
   .post-title a:focus,
   .post-title a:active {

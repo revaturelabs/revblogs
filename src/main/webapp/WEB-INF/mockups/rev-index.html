@@ -2,15 +2,19 @@
 <html>
 <head>
 <title>Revature Blog</title>
+<base href="/revblogs" />
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
-<link href="css/main.css" rel="stylesheet">
+<link href="/resources/css/main.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
+<script src="/resources/js/app.js"></script>
+<script src="/resources/js/BlogIndexController.js"></script>
 
 </head>
 
-<body>
+<body ng-app="app" ng-controller="BlogIndexController">
   <nav class="page-navigation navbar navbar-default navbar-fixed-top">
     <div class="container">
       <div class="navbar-header">
@@ -57,7 +61,7 @@
       <div class="col-sm-4 hidden-xs">
         <div class="panel panel-primary">
           <div class="panel-heading">
-            <h3 class="panel-title">Learn more about Revature</h3>
+            <h3 class="panel-title">Learn more about Revature ${totalPages}</h3>
           </div>
           <div class="panel-body">
             <ul class="list-unstyled">
@@ -78,39 +82,6 @@
       </div>
     </div>
   </div>
-  <script type="text/javascript">
-    $(document).ready(function() {
-      // scroll nav logic
-      var yPos = $(window).scrollTop();
-      var maxDelta = 5;
-      var didScroll = false;
-      var mouseY = 0;
-      $(window).scroll(function(e) {
-        didScroll = true;
-      });
-      $(document).mousemove(function(e) {
-        mouseY = e.clientY;
-        console.log(mouseY);
-      });
-      setInterval(function () {
-        if (mouseY <= 70) {
-          $(".page-navigation").fadeIn(200);
-        }
-        else if (didScroll) {
-          var newYPos = $(window).scrollTop();
-          if (Math.abs(yPos-newYPos) >= maxDelta) {
-            if (newYPos > yPos) {
-              $(".page-navigation").fadeOut(200);
-            }
-            else {
-              $(".page-navigation").fadeIn(200);
-            }
-          }
-          yPos = newYPos;
-        }
-        didScroll = false;
-      }, 250);
-    });
-  </script>
+  <script type="text/javascript" src="/resources/js/ui.js"></script>
 </body>
 </html>

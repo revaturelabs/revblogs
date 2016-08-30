@@ -16,7 +16,7 @@ public class GherkinPostController {
 		this.businessDelegate = businessDelegate;
 	}
 	
-	@RequestMapping(value="/", method=RequestMethod.GET)
+	@RequestMapping(value="/", method=RequestMethod.POST)
 	public ModelAndView home(){
 		ModelAndView mv = new ModelAndView("index");
 		return mv;
