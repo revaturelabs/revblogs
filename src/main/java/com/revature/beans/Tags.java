@@ -13,7 +13,7 @@ public class Tags {
 	private int tagId;
 		@Column(name="REV_BLOG_DESCRIPTION", nullable=false)
 	private String description;
-		@ManyToMany(mappedBy="blogId")
+		@ManyToMany(mappedBy="tags")
 	private Set<Blog> blogs;
 	
 	/**
