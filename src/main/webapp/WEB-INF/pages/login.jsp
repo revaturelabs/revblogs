@@ -10,13 +10,15 @@
 <title>RevBlogs || Login</title>
 </head>
 <body>
-	<img src="${pageContext.servletContext.contextPath}/images/RevLogo.jpg">
+	<img src="${pageContext.servletContext.contextPath}/resources/images/RevLogo.jpg" alt="Revature Logo" width="318" height="72"/>
 	<div id="login">
-		Username: <input type="text" id="userAuth"/>
+		Username: <input type="text" id="userAuth"/><br/>
 		Password: <input type="password" id="passAuth"/>
-		<input type="button" id="sendAuth" value="submit"/>
+		<hr/>
+		<input type="button" id="sendAuth" value="Submit"/>
 	</div>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
 	
