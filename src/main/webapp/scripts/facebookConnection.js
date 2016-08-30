@@ -3,7 +3,7 @@
  */
   window.fbAsyncInit = function() {
     FB.init({
-      appId      : '1852148985016316',
+      appId      : '1070815552954243',
       xfbml      : true,
       version    : 'v2.7'
     });
@@ -21,6 +21,6 @@ document.getElementById('shareBtn').onclick = function() {
   FB.ui({
     method: 'share',
     display: 'popup',
-    href: 'http://50.207.204.190:7001/dillF/index.jsp',
+    href: 'http://dev.pjw6193:7001/pages/create-blog.jsp',
   }, function(response){});
 }

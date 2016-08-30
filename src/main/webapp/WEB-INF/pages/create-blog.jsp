@@ -4,14 +4,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:og="http://ogp.me/ns#" xmlns:fb="http://www.facebook.com/2008/fbml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<meta property="og:url" content="http://50.207.204.190:7001/dillF/index.jsp" />
+<meta property="og:url" content="http://dev.pjw6193:7001/pages/create-blog.jsp" />
 <meta property="og:type"content="article" />
 <meta property="og:title"content="Different" />
 <meta property="og:description"content="this is only a testkhjkgkjhgkj" />
 <meta property="og:image"content="http://weknowyourdreams.com/images/cheese/cheese-03.jpg" />
 <meta property="og:image:width" content="450" />
 <meta property="og:image:height" content="298" />
-<meta property="fb:app_id" content="1852148985016316"/>
+<meta property="fb:app_id" content="1070815552954243"/>
 <title>Insert title here</title>
 </head>
 <body>
