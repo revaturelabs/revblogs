@@ -1,5 +1,9 @@
 Manifest-Version: 1.0
+<<<<<<< HEAD
 Built-By: Chris
+=======
+Built-By: Jwhee
+>>>>>>> 13a2430f914581e1f07d0434695eccff6cef5dd0
 Build-Jdk: 1.8.0_91
 Created-By: Maven Integration for Eclipse
 
