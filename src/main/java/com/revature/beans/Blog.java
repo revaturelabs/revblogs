@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -34,7 +35,7 @@ public class Blog {
 	@Column(name="BLOG_SUBTITLE")
 	private String blogSubtitle;
 	
-	@Column(name="BLOG_CONTENT", nullable=false)
+	@Column(name="BLOG_CONTENT", length=3000, nullable=false)
 	private String blogContent;
 	
 	@Column(name="BLOG_VIEWS")
@@ -50,6 +51,10 @@ public class Blog {
 	
 	//----------------------------------
 	// Realationship Mapping
+	@ManyToOne
+	@JoinColumn(name="BLOG_AUTHOR", nullable=false)
+	private User author;
+	
 	@OneToMany
 	@JoinColumn(name="BLOG_EVIDENCE")
 	private Set<Evidence> evidences;
@@ -66,11 +71,12 @@ public class Blog {
 	public Blog() {
 		super();
 	}	
-	public Blog(String blogTitle, String blogSubtitle, String blogContent, Set<Tags> tags) {
+	public Blog(String blogTitle, String blogSubtitle, String blogContent, User author, Set<Tags> tags) {
 		super();
 		this.blogTitle = blogTitle;
 		this.blogSubtitle = blogSubtitle;
 		this.blogContent = blogContent;
+		this.author = author;
 		this.tags = tags;
 		
 		// Blogs publish date is the date of construction
@@ -142,5 +148,11 @@ public class Blog {
 	}
 	public void setStaticHTML(Clob staticHTML) {
 		this.staticHTML = staticHTML;
+	}
+	public User getAuthor() {
+		return author;
+	}
+	public void setAuthor(User author) {
+		this.author = author;
 	}
 }
