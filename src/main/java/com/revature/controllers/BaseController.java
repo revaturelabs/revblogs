@@ -43,7 +43,6 @@ public class BaseController {
 		System.out.println(blog.getBlogContent());
 		return "create-blog";
 	}
-	//comment
 	/*
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	public ModelAndView home(){
