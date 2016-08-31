@@ -7,20 +7,26 @@ import java.util.Set;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.revature.beans.Blog;
 import com.revature.beans.Tags;
 import com.revature.beans.User;
 import com.revature.beans.UserRoles;
-import com.revature.service.impl.BusinessDelegateImpl;
 import com.revature.service.impl.Crypt;
 
+@Transactional
 public class Population {
 	
-	BusinessDelegate delegate = new BusinessDelegateImpl();
+	private BusinessDelegate delegate;
 	
+	public void setDelegate(BusinessDelegate delegate) {
+		this.delegate = delegate;
+	}
+
 	// ALL TAGS
-	List<Tags> tags = new ArrayList<Tags>();
+	List<Tags> tagList = new ArrayList<Tags>();
 	
 	//-----------------------------------
 	// Complete Population (Besides Evidence)
@@ -28,12 +34,13 @@ public class Population {
 		
 		populateRoles();
 		populateTags();
-		populateBlogs();
 		populateUsers();
+		populateBlogs();
 	}
 	
 	//-----------------------------------
 	// Roles
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void populateRoles(){
 		
 		/**
@@ -49,7 +56,8 @@ public class Population {
 		
 		for(int i = 0; i < roles.length; i++){
 			
-			role = new UserRoles(roles[i]);
+			role = new UserRoles(i, roles[i]);
+		
 			delegate.putRecord(role);
 		}
 		
@@ -58,6 +66,7 @@ public class Population {
 	
 	//-----------------------------------
 	// Tags
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void populateTags(){
 		
 		/**
@@ -68,7 +77,7 @@ public class Population {
 		 *  Save that tag in the database.
 		 */
 		
-		String[] tags = new String[]{"Java, SQL, Apian, JSP, Servlet, Hibernate, Spring, REST, SOAP"};
+		String[] tags = new String[]{"Java", "SQL", "Apian", "JSP", "Servlet", "Hibernate", "Spring", "REST", "SOAP"};
 		
 		Tags tag = null;
 		
@@ -76,7 +85,7 @@ public class Population {
 			
 			tag = new Tags(tags[i]);
 			
-			this.tags.add(tag);
+			tagList.add(tag);
 			
 			delegate.putRecord(tag);
 		}
@@ -86,6 +95,7 @@ public class Population {
 	
 	//-----------------------------------
 	// Blogs
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void populateBlogs(){
 		
 		/**
@@ -172,6 +182,8 @@ public class Population {
 			{1, 2, 0, 0, 0, 6, 0, 0, 0}
 		};
 		
+		List<User> users = delegate.requestUsers();
+		
 		Blog blog = null;
 		
 		for(int i = 0; i < blogTitle.length; i++){
@@ -179,15 +191,15 @@ public class Population {
 			Set<Tags> tagsSet = new HashSet<Tags>();
 			
 			// Attach the set of Product Categories that correspond to THIS particular product.
-			for(int j = 0; j < tags.size(); j++){
+			for(int j = 0; j < tagIndexes.length; j++){
 				
 				if(tagIndexes[i][j] != 0){
 					
-					tagsSet.add(tags.get(tagIndexes[i][j] - 1));
+					tagsSet.add(tagList.get(tagIndexes[i][j] - 1));
 				}
 			}
 			
-			blog = new Blog(blogTitle[i], blogSubtitle[i], blogContent[i], tagsSet);
+			blog = new Blog(blogTitle[i], blogSubtitle[i], blogContent[i], users.get(i), tagsSet);
 			delegate.putRecord(blog);
 		}
 
@@ -196,6 +208,7 @@ public class Population {
 	
 	//-----------------------------------
 	// Users
+	@Transactional(propagation = Propagation.REQUIRED)
 	public void populateUsers(){
 		
 		String[] username = new String[]{

@@ -4,8 +4,8 @@ import java.io.File;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.revature.beans.Blog;
 import com.revature.beans.Evidence;
 import com.revature.beans.Tags;
@@ -16,6 +16,7 @@ import com.revature.service.BusinessDelegate;
 import com.revature.service.JetS3;
 import com.revature.service.ServiceLocator;
 
+@Service
 public class BusinessDelegateImpl implements BusinessDelegate{
 
 	private DataService dataService;

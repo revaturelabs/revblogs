@@ -16,18 +16,29 @@ import org.jets3t.service.security.AWSCredentials;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.revature.service.JetS3;
+import com.revature.service.Logging;
 
 public class JetS3Impl implements JetS3{
 	private static AWSCredentials credentials;
 	private static S3Service s3;
+	private static Logging logging;
 	//This pushes to Patrick's S3
 	//private final static String BUCKET = "dan-pickles-jar";
 	private final static String BUCKET = "alpha-beta-jar";
 	static
 	{
-		//Temporarily changed credentials
-		//Get rid of spaces for correct key
-		credentials = new AWSCredentials("AKIAI K25JLJZ BAYEQDJQ", "Uzdkfp2JZd woK4xZVMq26i3 Ot6IuQKm0ac+i/cs8");
+		//For String 1
+		//Part1: AKIAI
+		//Part2: K25JLJZ
+		//Part3: BAYEQDJQ
+		//For String 2
+		//Part1: Uzdkfp2JZd
+		//Part2: woK4xZVMq26i3
+		//Part3: Ot6IuQKm0ac+i/cs8
+		//Place all together for string atm until
+		//	credentials are in the database and
+		//	we can grab them from there
+		credentials = new AWSCredentials("","");
 		s3 = new RestS3Service(credentials);
 	}
 	
@@ -79,11 +90,14 @@ public class JetS3Impl implements JetS3{
 				fileName;
 			
 		} catch (S3ServiceException e) {
-			e.printStackTrace();
+			logging.info(e);
+			//e.printStackTrace();
 		} catch (IOException e) {
-			e.printStackTrace();
+			logging.info(e);
+			//e.printStackTrace();
 		} catch (Exception e) {
-			e.printStackTrace();
+			logging.info(e);
+			//e.printStackTrace();
 		}
 		return null; // Resource could not be uploaded
 	}
@@ -117,9 +131,11 @@ public class JetS3Impl implements JetS3{
 				file.getName();
 			
 		} catch (S3ServiceException e) {
-			e.printStackTrace();
+			logging.info(e);
+			//e.printStackTrace();
 		} catch (Exception e) {
-			e.printStackTrace();
+			logging.info(e);
+			//e.printStackTrace();
 		}
 		return null; // Resource could not be uploaded
 	}
@@ -139,7 +155,8 @@ public class JetS3Impl implements JetS3{
 			s3.putObject(bucket, file);
 			}catch(Exception e)
 			{
-				e.printStackTrace();
+				logging.info(e);
+				//e.printStackTrace();
 				return false;
 			}	
 			return true;
@@ -156,7 +173,8 @@ public class JetS3Impl implements JetS3{
 		s3.putObject(bucket, file);
 		}catch(Exception e)
 		{
-			e.printStackTrace();
+			logging.info(e);
+			//e.printStackTrace();
 			return false;
 		}	
 		return true;
@@ -168,7 +186,8 @@ public class JetS3Impl implements JetS3{
 			s3.deleteObject(bucket, filename);
 		}catch(Exception e)
 		{
-			e.printStackTrace();
+			logging.info(e);
+			//e.printStackTrace();
 			return false;
 		}	
 		return true;
