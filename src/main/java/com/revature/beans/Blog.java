@@ -79,6 +79,15 @@ public class Blog {
 		// Blogs always start active
 		this.blogActive = true;
 	}
+	public Blog(String blogTitle, String blogContent) {
+		super();
+		this.blogTitle = blogTitle;
+		this.blogContent = blogContent;
+		// Blogs publish date is the date of construction
+		this.publishDate = new Date();
+		// Blogs always start active
+		this.blogActive = true;
+	}
 
 	/**
 	 *   Getters & Setters
