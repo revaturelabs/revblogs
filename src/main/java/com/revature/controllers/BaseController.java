@@ -29,10 +29,11 @@ public class BaseController {
 	
 		return "create-blog";
 	}
+	/*
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	public ModelAndView home(){
 		ModelAndView mv = new ModelAndView("index");
 		return mv;
 	}
-	
+	*/
 }
