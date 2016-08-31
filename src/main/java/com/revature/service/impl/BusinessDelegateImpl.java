@@ -1,8 +1,10 @@
 package com.revature.service.impl;
 
+import java.io.File;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.revature.beans.Blog;
 import com.revature.beans.Evidence;
@@ -11,12 +13,14 @@ import com.revature.beans.User;
 import com.revature.beans.UserRoles;
 import com.revature.data.DataService;
 import com.revature.service.BusinessDelegate;
+import com.revature.service.JetS3;
 import com.revature.service.ServiceLocator;
 
 public class BusinessDelegateImpl implements BusinessDelegate{
 
 	private DataService dataService;
 	private ServiceLocator serviceLocator;
+	private JetS3 jetS3 = new JetS3Impl();
 	
 	public void setDataService(DataService dataService) {
 		this.dataService = dataService;
@@ -26,6 +30,25 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	}
 	public Session requestSession(){
 		return dataService.grabSession();
+	}
+	
+	/**
+	 * Attempts to upload a resource (such as an image) to the S3 server
+	 * @param fileName the destination name of the file, a valid extension should be included
+	 * @param file a file that is to be uploaded to the database
+	 * @return the URL where the file was uploaded if successful, null otherwise
+	 */
+	public String uploadResource(String fileName, MultipartFile file) {
+		return jetS3.uploadResource(fileName, file);
+	}
+	
+	/**
+	 * Attempts to upload a front-end page to the S3 server
+	 * @param file a file that is to be uploaded to the database, the file should have a valid extension
+	 * @return the URL where the file was uploaded if successful, null otherwise
+	 */
+	public String uploadPage(File file) {
+		return jetS3.uploadPage(file);
 	}
 	
 	// Push
