@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.revature.app.TemporaryFile;
 import com.revature.beans.Blog;
 import com.revature.service.BusinessDelegate;
+import com.revature.service.Population;
 import com.revature.service.Logging;
 
 @Controller
@@ -27,14 +28,29 @@ public class BaseController {
 	
 	private Logging logging;
 	private BusinessDelegate businessDelegate;
+	private Population population;
 
 	public void setBusinessDelegate(BusinessDelegate businessDelegate){
 		this.businessDelegate = businessDelegate;
 	}
-	
+	public BusinessDelegate getBusinessDelegate() {
+		return businessDelegate;
+	}
+	public Population getPopulation() {
+		return population;
+	}
+	public void setPopulation(Population population) {
+		this.population = population;
+	}
 	@RequestMapping(value="/login", method=RequestMethod.GET)
 	public String login(HttpServletRequest req, HttpServletResponse resp){
 	
+		return "login";
+	}
+	@RequestMapping(value="/populate", method=RequestMethod.GET)
+	public String populate(HttpServletRequest req, HttpServletResponse resp){
+	
+		//population.populateDatabase();
 		return "login";
 	}
 	@RequestMapping(value="/create-blog", method=RequestMethod.GET)
@@ -72,7 +88,6 @@ public class BaseController {
 			writer.append("<html><body><img src=\"" + url + "\" /></body></html>");
 		} catch (IOException e) {
 			logging.info(e);
-			//e.printStackTrace();
 		}
 	}
 	@RequestMapping(value="/upload-page", method=RequestMethod.POST)
@@ -86,7 +101,6 @@ public class BaseController {
 			writer.append("<html><body><a href=\"" + url + "\">" + url + "</a></body></html>");
 		} catch (IOException e) {
 			logging.info(e);
-			//e.printStackTrace();
 		}
 	}
 }
