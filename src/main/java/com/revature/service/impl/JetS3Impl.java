@@ -26,9 +26,9 @@ public class JetS3Impl implements JetS3{
 	{
 		//Temporarily changed credentials
 		//Get rid of spaces for correct key
-		credentials = new AWSCredentials("AKIAIK25JLJZBAYEQDJQ", "Uzdkfp2JZdwoK4xZVMq26i3Ot6IuQKm0ac+i/cs8");
+		credentials = new AWSCredentials("AKIA IK25JLJZBA YEQDJQ", "Uzdkfp2JZ dwoK4xZVMq26i3Ot6I uQKm0ac+i/cs8");
 		/*credentials = new AWSCredentials(
-				"AKIAJVEAKBOMV6NISKKA", "bYRtQq1LepU6C9UeRpPceddfl0pXvykV");*/
+				"AKIAJVEAKB OMV6NISKKA", "bYRtQq1LepU6C 9UeRpPceddfl0pXvykV");*/
 		s3 = new RestS3Service(credentials);
 	}
 	
