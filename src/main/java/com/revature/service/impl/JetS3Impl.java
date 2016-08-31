@@ -15,12 +15,12 @@ public class JetS3Impl {
 	//This pushes to Patrick's S3
 	//private final static String BUCKET = "dan-pickles-jar";
 	//Using my(Alex H's) S3 atm
-	private final static String BUCKET = "dan-pickles-jar";
+	private final static String BUCKET = "alpha-beta-jar";
 	static
 	{
-//		Credentials for Patrick's S3
-//		credentials = new AWSCredentials("AKIAISITZJSMPIICMLWQ", "ALNGBXrKFyFvW3ow1ql29aprCdza3ytdeCnAW8Vn+i/cs8");
-		credentials = new AWSCredentials("AKIAIK25JLJZBAYEQDJQ", "Uzdkfp2JZdwoK4xZVMq26i3Ot6IuQKm0ac+i/cs8");
+		//Temporarily changed credentials
+		//Get rid of spaces for correct key
+		credentials = new AWSCredentials("AKIAI K25JLJZ BAYEQDJQ", "Uzdkfp2JZdw oK4xZVMq 26i3Ot6IuQKm0ac+i/cs8");
 		s3 = new RestS3Service(credentials);
 	}
 	public boolean uploadText(String filename,String filedata)
