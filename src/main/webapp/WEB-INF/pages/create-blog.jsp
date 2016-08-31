@@ -61,5 +61,5 @@
 	<div class="fb-comments" data-href="http://dev.pjw6193:7001/pages/create-blog.jsp" data-numposts="5"></div>
 	
 </body>
-<script src="${pageContext.servletContext.contextPath }/resources/scripts/facebookConnection.js"></script>
+<script src="${pageContext.servletContext.contextPath }/resources/js/facebookConnection.js"></script>
 </html>
