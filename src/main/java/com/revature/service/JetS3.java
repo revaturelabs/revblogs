@@ -3,10 +3,23 @@ package com.revature.service;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface JetS3 {
+	
 	/**
-	 * Used for uploading html from 
+	 * Attempts to upload a resource (such as an image) to the S3 server
+	 * @param fileName the destination name of the file, a valid extension should be included
+	 * @param file a file that is to be uploaded to the database
+	 * @return the URL where the file was uploaded if successful, null otherwise
 	 */
-	public boolean uploadFile(MultipartFile file);
+	public String uploadResource(String fileName, MultipartFile file);
+	
+	/**
+	 * Attempts to upload a front-end page to the S3 server
+	 * @param fileName the destination name of the file, a valid extension should be included
+	 * @param file a file that is to be uploaded to the database
+	 * @return the URL where the file was uploaded if successful, null otherwise
+	 */
+	public String uploadPage(String fileName, String pageContent);
+	
 	/**
 	 * Used as a base for uploading data to S3
 	 */
