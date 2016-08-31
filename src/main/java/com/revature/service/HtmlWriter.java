@@ -13,6 +13,7 @@ import com.revature.beans.User;
 
 public class HtmlWriter {
 	
+	public static String DEFAULT_PATH = "src/main/webapp/WEB-INF/pages/";
 	private BufferedReader tempReader;
 	private BufferedWriter blogWriter;
 	private Blog blog;
@@ -24,10 +25,11 @@ public class HtmlWriter {
 		tempReader = new BufferedReader(new FileReader(tempPath));
 	}
 	
-	public String render() throws IOException {
+	public String render(String outPath) throws IOException {
 		String line;
 		String title = ""+blog.getBlogTitle().hashCode()+blog.getPublishDate().hashCode();
-		blogWriter = new BufferedWriter(new FileWriter(new File("src/main/webapp/WEB-INF/pages/"+title+".html")));
+		String fileName = outPath+title+".html";
+		blogWriter = new BufferedWriter(new FileWriter(new File(fileName)));
 		while ((line=tempReader.readLine()) != null) {
 			blogWriter.write(line+"\n");
 			if (line.contains("post-date"))
@@ -44,7 +46,7 @@ public class HtmlWriter {
 				blogWriter.write(author.getDescription());
 		}
 		blogWriter.close();
-		return title;
+		return outPath;
 	}
 	
 	@Override
