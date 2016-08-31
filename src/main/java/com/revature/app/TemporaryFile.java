@@ -1,15 +1,16 @@
 package com.revature.app;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import org.apache.log4j.Logger;
 import org.springframework.web.multipart.MultipartFile;
 
 public class TemporaryFile {
 
+	private static Logger log = Logger.getRootLogger(); 
+	
 	private File temporaryFile;
 	private File temporaryDirectory;
 	private String temporaryDirectoryPath;
@@ -29,7 +30,7 @@ public class TemporaryFile {
 			if ( temporaryFileContainer.createTemporaryFile(multipartFile) )
 				return temporaryFileContainer;
 		}
-		catch ( Throwable t ) {}
+		catch ( Throwable t ) {log.info(t);}
 		
 		if ( temporaryFileContainer != null )
 			temporaryFileContainer.destroy();
@@ -45,8 +46,8 @@ public class TemporaryFile {
 	}
 	
 	public void destroy() {
-		try { removeTemporaryFile();	  } catch ( Throwable t ) {}
-		try { removeTemporaryDirectory(); } catch ( Throwable t ) {}
+		try { removeTemporaryFile();	  } catch ( Throwable t ) {log.info(t);}
+		try { removeTemporaryDirectory(); } catch ( Throwable t ) {log.info(t);}
 	}
 	
 	
