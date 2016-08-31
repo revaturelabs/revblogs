@@ -17,7 +17,6 @@ public class Logging {
 	
 	@Around("logPerformance()")
 	public Object intercept(ProceedingJoinPoint pjp){
-		
 		//Object to eventually be sent temporarily null
 		Object result = null;
 		
@@ -37,6 +36,10 @@ public class Logging {
 		//Send null or the actual result back to the chain
 		return result;
 	}
+	
+	//Temporary Logging function for Bugs on SonarQube
+	//Remove if necessary
+	public void info(Throwable t){log.info(t);}
 	
 	 //------------------POINTCUTS------------------//
 	//Whenever any method is executed

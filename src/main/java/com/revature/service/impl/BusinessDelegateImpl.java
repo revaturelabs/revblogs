@@ -1,5 +1,6 @@
 package com.revature.service.impl;
 
+import java.io.File;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -39,6 +40,15 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	 */
 	public String uploadResource(String fileName, MultipartFile file) {
 		return jetS3.uploadResource(fileName, file);
+	}
+	
+	/**
+	 * Attempts to upload a front-end page to the S3 server
+	 * @param file a file that is to be uploaded to the database, the file should have a valid extension
+	 * @return the URL where the file was uploaded if successful, null otherwise
+	 */
+	public String uploadPage(File file) {
+		return jetS3.uploadPage(file);
 	}
 	
 	// Push

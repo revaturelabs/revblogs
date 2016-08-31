@@ -1,5 +1,6 @@
 package com.revature.service;
 
+import java.io.File;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -22,6 +23,13 @@ public interface BusinessDelegate {
 	 * @return the URL where the file was uploaded if successful, null otherwise
 	 */
 	public String uploadResource(String fileName, MultipartFile file);
+	
+	/**
+	 * Attempts to upload a front-end page to the S3 server
+	 * @param file a file that is to be uploaded to the database, the file should have a valid extension
+	 * @return the URL where the file was uploaded if successful, null otherwise
+	 */
+	public String uploadPage(File file);
 	
 	// Push
 	public void putRecord(Object _obj);

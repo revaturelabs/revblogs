@@ -13,7 +13,7 @@ import com.revature.beans.User;
 
 public class HtmlWriter {
 	
-	public static String DEFAULT_PATH = "src/main/webapp/WEB-INF/pages/";
+	public static final String DEFAULT_PATH = "src/main/webapp/WEB-INF/pages/";
 	private BufferedReader tempReader;
 	private BufferedWriter blogWriter;
 	private Blog blog;

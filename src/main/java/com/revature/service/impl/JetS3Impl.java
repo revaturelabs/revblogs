@@ -1,5 +1,7 @@
 package com.revature.service.impl;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 import org.jets3t.service.S3Service;
@@ -14,21 +16,29 @@ import org.jets3t.service.security.AWSCredentials;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.revature.service.JetS3;
+import com.revature.service.Logging;
 
 public class JetS3Impl implements JetS3{
 	private static AWSCredentials credentials;
 	private static S3Service s3;
+	private static Logging logging;
 	//This pushes to Patrick's S3
 	//private final static String BUCKET = "dan-pickles-jar";
-	//private final static String BUCKET = "jjf28-bucket";
 	private final static String BUCKET = "alpha-beta-jar";
 	static
 	{
-		//Temporarily changed credentials
-		//Get rid of spaces for correct key
-		credentials = new AWSCredentials("AKIA IK25JLJZBA YEQDJQ", "Uzdkfp2JZ dwoK4xZVMq26i3Ot6I uQKm0ac+i/cs8");
-		/*credentials = new AWSCredentials(
-				"AKIAJVEAKB OMV6NISKKA", "bYRtQq1LepU6C 9UeRpPceddfl0pXvykV");*/
+		//For String 1
+		//Part1: AKIAI
+		//Part2: K25JLJZ
+		//Part3: BAYEQDJQ
+		//For String 2
+		//Part1: Uzdkfp2JZd
+		//Part2: woK4xZVMq26i3
+		//Part3: Ot6IuQKm0ac+i/cs8
+		//Place all together for string atm until
+		//	credentials are in the database and
+		//	we can grab them from there
+		credentials = new AWSCredentials("","");
 		s3 = new RestS3Service(credentials);
 	}
 	
@@ -44,12 +54,11 @@ public class JetS3Impl implements JetS3{
 	
 	/**
 	 * Attempts to upload a front-end page to the S3 server
-	 * @param fileName the destination name of the file, a valid extension should be included
-	 * @param file a file that is to be uploaded to the database
+	 * @param file a file that is to be uploaded to the database, the file should have a valid extension
 	 * @return the URL where the file was uploaded if successful, null otherwise
 	 */
-	public String uploadPage(String fileName, String pageContent) {
-		throw new UnsupportedOperationException();
+	public String uploadPage(File file) {
+		return uploadFile("content/pages/", file);
 	}
 	
 	/**
@@ -81,11 +90,52 @@ public class JetS3Impl implements JetS3{
 				fileName;
 			
 		} catch (S3ServiceException e) {
-			e.printStackTrace();
+			logging.info(e);
+			//e.printStackTrace();
 		} catch (IOException e) {
-			e.printStackTrace();
+			logging.info(e);
+			//e.printStackTrace();
 		} catch (Exception e) {
-			e.printStackTrace();
+			logging.info(e);
+			//e.printStackTrace();
+		}
+		return null; // Resource could not be uploaded
+	}
+	
+	/**
+	 * Attempts to upload a file to the S3 server
+	 * @param folderPath the path to the folder this file will be stored at starting at the S3 root
+	 * @param fileName the destination name of the file, a valid extension should be included
+	 * @param file a File that is to be uploaded to the database
+	 * @return the URL where the file was uploaded if successful, null otherwise
+	 */
+	protected String uploadFile(String folderPath, File file) {
+		
+		try {
+			S3Bucket bucket = s3.getBucket(BUCKET);
+			S3Object s3Obj = new S3Object(folderPath + file.getName());
+			AccessControlList acl = new AccessControlList();
+			acl.setOwner(bucket.getOwner());
+			acl.grantPermission(GroupGrantee.ALL_USERS, Permission.PERMISSION_READ);
+			FileInputStream fis = new FileInputStream(file);
+			s3Obj.setDataInputStream(fis);
+			s3Obj.setContentLength(file.length());
+			s3Obj.setAcl(acl);
+			s3.putObject(bucket, s3Obj);
+			
+			// TODO: Replace with something less hardcoded
+			return 
+				"https://s3-us-west-2.amazonaws.com/" +
+				BUCKET + "/" +
+				folderPath +
+				file.getName();
+			
+		} catch (S3ServiceException e) {
+			logging.info(e);
+			//e.printStackTrace();
+		} catch (Exception e) {
+			logging.info(e);
+			//e.printStackTrace();
 		}
 		return null; // Resource could not be uploaded
 	}
@@ -105,7 +155,8 @@ public class JetS3Impl implements JetS3{
 			s3.putObject(bucket, file);
 			}catch(Exception e)
 			{
-				e.printStackTrace();
+				logging.info(e);
+				//e.printStackTrace();
 				return false;
 			}	
 			return true;
@@ -122,7 +173,8 @@ public class JetS3Impl implements JetS3{
 		s3.putObject(bucket, file);
 		}catch(Exception e)
 		{
-			e.printStackTrace();
+			logging.info(e);
+			//e.printStackTrace();
 			return false;
 		}	
 		return true;
@@ -134,7 +186,8 @@ public class JetS3Impl implements JetS3{
 			s3.deleteObject(bucket, filename);
 		}catch(Exception e)
 		{
-			e.printStackTrace();
+			logging.info(e);
+			//e.printStackTrace();
 			return false;
 		}	
 		return true;
