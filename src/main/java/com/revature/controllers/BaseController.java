@@ -30,7 +30,7 @@ public class BaseController {
 	}
 	@RequestMapping(value="/create-blog", method=RequestMethod.GET)
 	public String createBlog(HttpServletRequest req, HttpServletResponse resp){
-	
+		req.setAttribute("blog", new Blog());
 		return "create-blog";
 	}
 	@RequestMapping(value="add-blog.do", method=RequestMethod.POST)
@@ -40,6 +40,7 @@ public class BaseController {
 			HttpServletRequest req,
 			HttpServletResponse resp) {
 		System.out.println(blog.getBlogTitle());
+		System.out.println(blog.getBlogSubtitle());
 		System.out.println(blog.getBlogContent());
 		return "create-blog";
 	}
