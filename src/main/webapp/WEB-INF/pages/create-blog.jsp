@@ -2,6 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:og="http://ogp.me/ns#" xmlns:fb="http://www.facebook.com/2008/fbml">
 <head>
+  <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+  <script>tinymce.init({ selector:'textarea' });</script>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta property="og:url" content="http://dev.pjw6193:7001/pages/create-blog.jsp" />
 <meta property="og:type"content="article" />
@@ -59,5 +61,5 @@
 	<div class="fb-comments" data-href="http://dev.pjw6193:7001/pages/create-blog.jsp" data-numposts="5"></div>
 	
 </body>
-<script src="${pageContext.servletContext.contextPath }/resources/scripts/facebookConnection.js"></script>
+<script src="${pageContext.servletContext.contextPath }/resources/js/facebookConnection.js"></script>
 </html>
