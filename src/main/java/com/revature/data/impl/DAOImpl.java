@@ -23,7 +23,10 @@ public class DAOImpl implements DAO{
 		this.sessionFactory = sessionFactory;
 		this.session = this.sessionFactory.openSession();
 	}
-	
+	public Session getSession() {
+		return session;
+	}
+
 	public DAOImpl(){
 		super();
 	}

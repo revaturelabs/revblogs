@@ -2,6 +2,8 @@ package com.revature.data.impl;
 
 import java.util.List;
 
+import org.hibernate.Session;
+
 import com.revature.beans.Blog;
 import com.revature.beans.Evidence;
 import com.revature.beans.Tags;
@@ -16,6 +18,9 @@ public class DataServiceImpl implements DataService{
 
 	public void setDao(DAO dao) {
 		this.dao = dao;
+	}
+	public Session grabSession(){
+		return dao.getSession();
 	}
 	
 	// Push
