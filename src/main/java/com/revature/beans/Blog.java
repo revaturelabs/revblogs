@@ -1,34 +1,63 @@
 package com.revature.beans;
 
-import java.sql.*;
+import java.sql.Clob;
+import java.util.Date;
 import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 @Entity
-@Table(name="REV_BLOG_BLOG")
+@Table(name="PP_BLOG")
 public class Blog {
 	
-		@Id
-		@Column(name="REV_BLOG_BLOG_ID")
+	//----------------------------------
+	// Attributes
+	@Id
+	@Column(name="BLOG_ID")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="blogSequence")
+	@SequenceGenerator(name="blogSequence",sequenceName="BLOG_SEQUENCE",initialValue=1,allocationSize=1)
 	private int blogId;
-		@Column(name="REV_BLOG_BLOG_TITLE", unique=true, nullable=false)
+	
+	@Column(name="BLOG_TITLE", unique=true, nullable=false)
 	private String blogTitle;
-		@Column(name="REV_BLOG_BLOG_CONTENT", nullable=false)
-	private Clob blogContent;
-		@Column(name="REV_BLOG_BLOG_VIEWS")
+	
+	@Column(name="BLOG_SUBTITLE")
+	private String blogSubtitle;
+	
+	@Column(name="BLOG_CONTENT", nullable=false)
+	private String blogContent;
+	
+	@Column(name="BLOG_VIEWS")
 	private int blogViews;
-		@Column(name="REV_BLOG_BLOG_PUBLISH_DATE")
-	private Timestamp publishDate;
-		@Column(name="REV_BLOG_BLOG_ACTIVE", nullable=false)
+	
+	@Column(name="BLOG_PUBLISH_DATE")
+	private Date publishDate;
+	
+	@Column(name="BLOG_ACTIVE", nullable=false)
 	private boolean blogActive;
-		@OneToMany
-		@JoinColumn(name="REV_BLOG_BLOG_EVIDENCE")
+	
+	private Clob staticHTML;
+	
+	//----------------------------------
+	// Realationship Mapping
+	@OneToMany
+	@JoinColumn(name="BLOG_EVIDENCE")
 	private Set<Evidence> evidences;
-		@ManyToMany
-		@JoinTable(name="REV_BLOG_BLOG_TAGS",
-			joinColumns=@JoinColumn(name="REV_BLOG_BLOG_ID"),
-			inverseJoinColumns=@JoinColumn(name="REV_BLOG_TAG_ID"))
+		
+	@ManyToMany
+	@JoinTable(name="BLOG_TAGS",
+		joinColumns=@JoinColumn(name="BLOG_ID"),
+		inverseJoinColumns=@JoinColumn(name="TAG_ID"))
 	private Set<Tags> tags;
 	
 	/**
@@ -37,17 +66,18 @@ public class Blog {
 	public Blog() {
 		super();
 	}	
-	public Blog(int blogId, String blogTitle, Clob blogContent, int blogViews, Timestamp publishDate,
-			boolean blogActive, Set<Evidence> evidences, Set<Tags> tags) {
+	public Blog(String blogTitle, String blogSubtitle, String blogContent, Set<Tags> tags) {
 		super();
-		this.blogId = blogId;
 		this.blogTitle = blogTitle;
+		this.blogSubtitle = blogSubtitle;
 		this.blogContent = blogContent;
-		this.blogViews = blogViews;
-		this.publishDate = publishDate;
-		this.blogActive = blogActive;
-		this.evidences = evidences;
 		this.tags = tags;
+		
+		// Blogs publish date is the date of construction
+		this.publishDate = new Date();
+		
+		// Blogs always start active
+		this.blogActive = true;
 	}
 
 	/**
@@ -65,10 +95,16 @@ public class Blog {
 	public void setBlogTitle(String blogTitle) {
 		this.blogTitle = blogTitle;
 	}
-	public Clob getBlogContent() {
+	public String getBlogSubtitle() {
+		return blogSubtitle;
+	}
+	public void setBlogSubtitle(String blogSubtitle) {
+		this.blogSubtitle = blogSubtitle;
+	}
+	public String getBlogContent() {
 		return blogContent;
 	}
-	public void setBlogContent(Clob blogContent) {
+	public void setBlogContent(String blogContent) {
 		this.blogContent = blogContent;
 	}
 	public int getBlogViews() {
@@ -77,10 +113,10 @@ public class Blog {
 	public void setBlogViews(int blogViews) {
 		this.blogViews = blogViews;
 	}
-	public Timestamp getPublishDate() {
+	public Date getPublishDate() {
 		return publishDate;
 	}
-	public void setPublishDate(Timestamp publishDate) {
+	public void setPublishDate(Date publishDate) {
 		this.publishDate = publishDate;
 	}
 	public boolean isBlogActive() {
@@ -101,5 +137,10 @@ public class Blog {
 	public void setTags(Set<Tags> tags) {
 		this.tags = tags;
 	}
-	
+	public Clob getStaticHTML() {
+		return staticHTML;
+	}
+	public void setStaticHTML(Clob staticHTML) {
+		this.staticHTML = staticHTML;
+	}
 }

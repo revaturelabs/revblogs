@@ -19,6 +19,17 @@
 <link rel="stylesheet" href="bootstrap-social.css">
 <script src="https://use.fontawesome.com/ebec39e24e.js"></script>
 
+<!-- Javascript SDK for FB Comments -->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.7&appId=139998182166";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+</script>
+
 <title>Blog Post</title>
 </head>
 <body>
@@ -43,6 +54,10 @@
 </a>
 <br>
 <button type="button">Submit</button>
+
+<!-- Facebook Comments Code, the data-href must point to the website the page will be on -->
+	<div class="fb-comments" data-href="http://dev.pjw6193:7001/pages/create-blog.jsp" data-numposts="5"></div>
+	
 </body>
 <script src="${pageContext.servletContext.contextPath }/resources/scripts/facebookConnection.js"></script>
 </html>

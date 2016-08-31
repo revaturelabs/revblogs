@@ -2,6 +2,8 @@ package com.revature.service.impl;
 
 import java.util.List;
 
+import org.hibernate.Session;
+
 import com.revature.beans.Blog;
 import com.revature.beans.Evidence;
 import com.revature.beans.Tags;
@@ -21,6 +23,9 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	}
 	public void setServiceLocator(ServiceLocator serviceLocator) {
 		this.serviceLocator = serviceLocator;
+	}
+	public Session requestSession(){
+		return dataService.grabSession();
 	}
 	
 	// Push

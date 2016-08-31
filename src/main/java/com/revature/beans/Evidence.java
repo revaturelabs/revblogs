@@ -3,14 +3,19 @@ package com.revature.beans;
 import javax.persistence.*;
 
 @Entity
-@Table(name="REV_BLOG_EVIDENCE")
+@Table(name="PP_EVIDENCE")
 public class Evidence {
 	
-		@Id
-		@Column(name="REV_BLOG_EVIDENCE_ID")
+	//----------------------------------
+	// Attributes
+	@Id
+	@Column(name="EVIDENCE_ID")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="evidenceSequence")
+	@SequenceGenerator(name="evidenceSequence",sequenceName="EVIDENCE_SEQUENCE",initialValue=1,allocationSize=1)
 	private int evidenceId;
-		@Column(name="REV_BLOG_EVIDENCE_ADDRESS", unique=true, nullable=false)
-	private String evidenceAddress;
+		
+	@Column(name="EVIDENCE_URL", unique=true)
+	private String evidenceURL;
 	
 	/**
 	 * 	Constructors
@@ -18,10 +23,9 @@ public class Evidence {
 	public Evidence() {
 		super();
 	}
-	public Evidence(int evidenceId, String evidenceAddress) {
+	public Evidence(int evidenceId, String evidenceURL) {
 		super();
-		this.evidenceId = evidenceId;
-		this.evidenceAddress = evidenceAddress;
+		this.evidenceURL = evidenceURL;
 	}
 	
 	/**
@@ -33,11 +37,11 @@ public class Evidence {
 	public void setEvidenceId(int evidenceId) {
 		this.evidenceId = evidenceId;
 	}
-	public String getEvidenceAddress() {
-		return evidenceAddress;
+	public String getEvidenceURL() {
+		return evidenceURL;
 	}
-	public void setEvidenceAddress(String evidenceAddress) {
-		this.evidenceAddress = evidenceAddress;
+	public void setEvidenceURL(String evidenceURL) {
+		this.evidenceURL = evidenceURL;
 	}
 	
 	
