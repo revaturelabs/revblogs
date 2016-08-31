@@ -22,7 +22,9 @@ public interface JetS3 {
 	public String uploadPage(File file);
 	
 	/**
-	 * Used as a base for uploading data to S3
+	 * Used as a base for uploading data to S3, should not be used 
+	 * @param fileName the destination name of the file, a valid extension should be included
+	 * @param filedata the string to be stored in the
 	 */
 	public boolean uploadText(String filename,String filedata);
 	/**
