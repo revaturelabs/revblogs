@@ -8,9 +8,16 @@
 </head>
 <body>
 
-<h2>File Upload Example</h2>
-<form method="POST" action="uploadFile.do" enctype="multipart/form-data">
-	<%-- <input type="hidden" name="upc" value="${param.upc}"> --%>
+<h2>Resource Upload Example</h2>
+<form method="POST" action="upload-resource" enctype="multipart/form-data">
+	<%-- <input type="hidden" name="identifier" value="${identifier}"> --%>
+	<input type="file" name="file" id="fileChooser" /><br />
+	<input type="submit" name="upload" value="Upload" />
+</form>
+
+<h2>Page Upload Example</h2>
+<form method="POST" action="upload-page" enctype="multipart/form-data">
+	<%-- <input type="hidden" name="identifier" value="${identifier}"> --%>
 	<input type="file" name="file" id="fileChooser" /><br />
 	<input type="submit" name="upload" value="Upload" />
 </form>
