@@ -1,6 +1,12 @@
 package com.revature.service;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public interface JetS3 {
+	/**
+	 * Used for uploading html from 
+	 */
+	public boolean uploadFile(MultipartFile file);
 	/**
 	 * Used as a base for uploading data to S3
 	 */
