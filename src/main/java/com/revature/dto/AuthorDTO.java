@@ -1,5 +1,6 @@
 package com.revature.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.revature.beans.User;
 
 public class AuthorDTO {
@@ -7,6 +8,9 @@ public class AuthorDTO {
 	int id;
 	String name;
 	String link;
+	
+	@JsonProperty("profile_photo")
+	String profilePhoto;
 	public int getId() {
 		return id;
 	}
@@ -27,6 +31,12 @@ public class AuthorDTO {
 	}
 	public AuthorDTO() {
 		super();
+	}
+	public String getProfilePhoto() {
+		return profilePhoto;
+	}
+	public void setProfilePhoto(String profilePhoto) {
+		this.profilePhoto = profilePhoto;
 	}
 	public AuthorDTO(User author) {
 		this();

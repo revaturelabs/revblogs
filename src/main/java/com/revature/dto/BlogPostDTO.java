@@ -17,6 +17,7 @@ public class BlogPostDTO {
 	String title = null;
 	String subtitle = null;
 	String content = null;
+	String thumbnail = null;
 	ArrayList<String> tags = new ArrayList<>();
 	AuthorDTO author = new AuthorDTO();
 	
@@ -74,7 +75,7 @@ public class BlogPostDTO {
 		this.title = post.getBlogTitle();
 		this.subtitle = post.getBlogSubtitle();
 		this.content = post.getBlogContent();
-		this.content = new HtmlToPlainText().getPlainText(Jsoup.parse(content));
+		this.content = Jsoup.parse(content).text();
 		Set<Tags> t = post.getTags();
 		for (Tags tag: t) {
 			this.tags.add(tag.getDescription());

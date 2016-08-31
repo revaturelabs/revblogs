@@ -1,13 +1,23 @@
 package com.revature.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class BlogPostCollectionDTO {
 	
 	int page = 0;
+	
+	@JsonProperty("total_pages")
 	int totalPages = 0;
+	
+	@JsonProperty("total_posts")
 	int totalPosts = 0;
+	
 	String prev = null;
 	String next = null;
-	BlogPostDTO[] posts = {};
+	List<BlogPostDTO> posts = new ArrayList<>();
 	public int getPage() {
 		return page;
 	}
@@ -38,10 +48,10 @@ public class BlogPostCollectionDTO {
 	public void setNext(String next) {
 		this.next = next;
 	}
-	public BlogPostDTO[] getPosts() {
+	public List<BlogPostDTO> getPosts() {
 		return posts;
 	}
-	public void setPosts(BlogPostDTO[] posts) {
+	public void setPosts(List<BlogPostDTO> posts) {
 		this.posts = posts;
 	}
 	public BlogPostCollectionDTO() {
