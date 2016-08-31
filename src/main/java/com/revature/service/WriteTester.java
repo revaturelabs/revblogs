@@ -31,7 +31,7 @@ public class WriteTester {
 			testWriter.render(HtmlWriter.DEFAULT_PATH);
 		} catch (IOException e) {
 			logging.info(e);
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 

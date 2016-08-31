@@ -37,7 +37,7 @@ public class TemporaryFile {
 			if ( temporaryFileContainer.createTemporaryFile(multipartFile) )
 				return temporaryFileContainer;
 		}
-		catch ( Throwable t ) {log.info(t);}
+		catch ( IOException t ) {log.info(t);}
 		
 		if ( temporaryFileContainer != null )
 			temporaryFileContainer.destroy();
@@ -53,10 +53,8 @@ public class TemporaryFile {
 	}
 	
 	public void destroy() {
-		try { removeTemporaryFile();	  } 
-		catch ( Throwable t ) {log.info(t);}
-		try { removeTemporaryDirectory(); } 
-		catch ( Throwable t ) {log.info(t);}
+		removeTemporaryFile();
+		removeTemporaryDirectory();
 	}
 	
 	@Override

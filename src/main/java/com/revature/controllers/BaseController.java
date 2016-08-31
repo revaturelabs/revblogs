@@ -66,7 +66,7 @@ public class BaseController {
 			writer.append("<html><body><img src=\"" + url + "\" /></body></html>");
 		} catch (IOException e) {
 			logging.info(e);
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 	@RequestMapping(value="/upload-page", method=RequestMethod.POST)
@@ -80,7 +80,7 @@ public class BaseController {
 			writer.append("<html><body><a href=\"" + url + "\">" + url + "</a></body></html>");
 		} catch (IOException e) {
 			logging.info(e);
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 }
