@@ -1,7 +1,6 @@
 /**
  * 
  */
-
 tinymce.init({ 
 	selector:'textarea',
 	plugins: ['codesample','emoticons',
@@ -28,3 +27,4 @@ tinymce.init({
 	  ]
 	  
 });
+

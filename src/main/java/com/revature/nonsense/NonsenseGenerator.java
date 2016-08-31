@@ -99,10 +99,11 @@ public class NonsenseGenerator {
      * @return the generated text.
      */
     public String makeText(int numSentences) {
+    	int temp = numSentences;
         StringBuilder sb = new StringBuilder();
-        while (numSentences-- > 0) {
+        while (temp-- > 0) {
             sb.append(makeSentence(false) + ".");
-            if (numSentences > 0) {
+            if (temp > 0) {
                 sb.append(" ");
             }
         }
