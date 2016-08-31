@@ -25,9 +25,18 @@ public class JetS3Impl implements JetS3{
 	private final static String BUCKET = "alpha-beta-jar";
 	static
 	{
-		//Temporarily changed credentials
-		//Get rid of spaces for correct key
-		credentials = new AWSCredentials("AKIAI K25JLJZ BAYEQDJQ", "Uzdkfp2JZd woK4xZVMq26i3 Ot6IuQKm0ac+i/cs8");
+		//For String 1
+		//Part1: AKIAI
+		//Part2: K25JLJZ
+		//Part3: BAYEQDJQ
+		//For String 2
+		//Part1: Uzdkfp2JZd
+		//Part2: woK4xZVMq26i3
+		//Part3: Ot6IuQKm0ac+i/cs8
+		//Place all together for string atm until
+		//	credentials are in the database and
+		//	we can grab them from there
+		credentials = new AWSCredentials("","");
 		s3 = new RestS3Service(credentials);
 	}
 	
