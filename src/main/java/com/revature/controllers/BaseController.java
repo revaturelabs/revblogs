@@ -2,12 +2,16 @@ package com.revature.controllers;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.revature.beans.Blog;
 import com.revature.service.BusinessDelegate;
 
 @Controller
@@ -29,6 +33,16 @@ public class BaseController {
 	
 		return "create-blog";
 	}
+	@RequestMapping(value="add-blog.do", method=RequestMethod.POST)
+	public String addBlog(
+			@ModelAttribute("blog") @Valid Blog blog, 
+			BindingResult bindingResult,
+			HttpServletRequest req,
+			HttpServletResponse resp) {
+		System.out.println(blog.getBlogTitle());
+		System.out.println(blog.getBlogContent());
+		return "create-blog";
+	}
 	/*
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	public ModelAndView home(){
@@ -36,4 +50,5 @@ public class BaseController {
 		return mv;
 	}
 	*/
+	
 }
