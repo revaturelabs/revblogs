@@ -18,17 +18,19 @@ public class HtmlWriter {
 	private BufferedWriter blogWriter;
 	private Blog blog;
 	private User author;
+	private String tempPath;
 	
 	public HtmlWriter(Blog blog, User author, String tempPath) throws FileNotFoundException {
 		this.blog = blog;
 		this.author = author;
-		tempReader = new BufferedReader(new FileReader(tempPath));
+		this.tempPath = tempPath;
 	}
 	
 	public String render(String outPath) throws IOException {
 		String line;
 		String title = ""+blog.getBlogTitle().hashCode()+blog.getPublishDate().hashCode();
 		String fileName = outPath+title+".html";
+		tempReader = new BufferedReader(new FileReader(tempPath));
 		blogWriter = new BufferedWriter(new FileWriter(new File(fileName)));
 		while ((line=tempReader.readLine()) != null) {
 			blogWriter.write(line+"\n");
@@ -46,12 +48,7 @@ public class HtmlWriter {
 				blogWriter.write(author.getDescription());
 		}
 		blogWriter.close();
-		return outPath;
-	}
-	
-	@Override
-	protected void finalize() throws Throwable {
 		tempReader.close();
-	}
-	
+		return outPath;
+	}	
 }
