@@ -57,12 +57,6 @@ public class TemporaryFile {
 		removeTemporaryDirectory();
 	}
 	
-	@Override
-	protected void finalize() throws Throwable {
-		destroy();
-		super.finalize();
-	}
-	
 	protected boolean createTemporaryFile(MultipartFile multipartFile) throws IOException {
 		
 		if ( createTemporaryDirectory() ) {
