@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
-
 import com.revature.beans.UserRoles;
 import com.revature.service.BusinessDelegate;
 
@@ -23,11 +22,4 @@ public class GherkinGetController {
 	public List<UserRoles> instantiateRoleDrop(){
 		return businessDelegate.requestRoles();
 	}
-	
-	
-	
-	
-	
-	
-	
 }

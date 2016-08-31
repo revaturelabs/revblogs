@@ -25,6 +25,7 @@
 
 	<bean name="baseController" class="com.revature.controllers.BaseController">
 		<property name="businessDelegate" ref="businessDelegate" />
+		<property name="population" ref="population" />
 	</bean>
 	<bean name="businessDelegate" class="com.revature.service.impl.BusinessDelegateImpl">
 		<property name="dataService" ref="dataService" />
@@ -36,6 +37,9 @@
 	</bean>
 	<bean name="dataService" class="com.revature.data.impl.DataServiceImpl">
 		<property name="dao" ref="dao" />
+	</bean>
+	<bean name="population" class="com.revature.service.Population">
+		<property name="delegate" ref="businessDelegate" />
 	</bean>
 		
 	<tx:annotation-driven />
