@@ -1,9 +1,6 @@
 package com.revature.service;
 
-import java.io.File;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.revature.beans.Blog;
@@ -11,6 +8,7 @@ import com.revature.beans.User;
 
 public class WriteTester {
 	
+	private static Logging logging;
 	private static HtmlWriter testWriter;
 
 	public static void main(String[] args) throws IOException {
@@ -32,7 +30,7 @@ public class WriteTester {
 		try {
 			testWriter.render(HtmlWriter.DEFAULT_PATH);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			logging.info(e);
 			e.printStackTrace();
 		}
 	}

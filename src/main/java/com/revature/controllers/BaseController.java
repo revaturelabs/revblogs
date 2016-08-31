@@ -1,8 +1,6 @@
 package com.revature.controllers;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -22,10 +20,12 @@ import org.springframework.web.servlet.ModelAndView;
 import com.revature.app.TemporaryFile;
 import com.revature.beans.Blog;
 import com.revature.service.BusinessDelegate;
+import com.revature.service.Logging;
 
 @Controller
 public class BaseController {
-
+	
+	private Logging logging;
 	private BusinessDelegate businessDelegate;
 
 	public void setBusinessDelegate(BusinessDelegate businessDelegate){
@@ -69,6 +69,7 @@ public class BaseController {
 			PrintWriter writer = resp.getWriter();
 			writer.append("<html><body><img src=\"" + url + "\" /></body></html>");
 		} catch (IOException e) {
+			logging.info(e);
 			e.printStackTrace();
 		}
 	}
@@ -82,6 +83,7 @@ public class BaseController {
 			PrintWriter writer = resp.getWriter();
 			writer.append("<html><body><a href=\"" + url + "\">" + url + "</a></body></html>");
 		} catch (IOException e) {
+			logging.info(e);
 			e.printStackTrace();
 		}
 	}

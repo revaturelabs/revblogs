@@ -16,10 +16,12 @@ import org.jets3t.service.security.AWSCredentials;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.revature.service.JetS3;
+import com.revature.service.Logging;
 
 public class JetS3Impl implements JetS3{
 	private static AWSCredentials credentials;
 	private static S3Service s3;
+	private static Logging logging;
 	//This pushes to Patrick's S3
 	//private final static String BUCKET = "dan-pickles-jar";
 	private final static String BUCKET = "alpha-beta-jar";
@@ -88,10 +90,13 @@ public class JetS3Impl implements JetS3{
 				fileName;
 			
 		} catch (S3ServiceException e) {
+			logging.info(e);
 			e.printStackTrace();
 		} catch (IOException e) {
+			logging.info(e);
 			e.printStackTrace();
 		} catch (Exception e) {
+			logging.info(e);
 			e.printStackTrace();
 		}
 		return null; // Resource could not be uploaded
@@ -126,8 +131,10 @@ public class JetS3Impl implements JetS3{
 				file.getName();
 			
 		} catch (S3ServiceException e) {
+			logging.info(e);
 			e.printStackTrace();
 		} catch (Exception e) {
+			logging.info(e);
 			e.printStackTrace();
 		}
 		return null; // Resource could not be uploaded
@@ -148,6 +155,7 @@ public class JetS3Impl implements JetS3{
 			s3.putObject(bucket, file);
 			}catch(Exception e)
 			{
+				logging.info(e);
 				e.printStackTrace();
 				return false;
 			}	
@@ -165,6 +173,7 @@ public class JetS3Impl implements JetS3{
 		s3.putObject(bucket, file);
 		}catch(Exception e)
 		{
+			logging.info(e);
 			e.printStackTrace();
 			return false;
 		}	
@@ -177,6 +186,7 @@ public class JetS3Impl implements JetS3{
 			s3.deleteObject(bucket, filename);
 		}catch(Exception e)
 		{
+			logging.info(e);
 			e.printStackTrace();
 			return false;
 		}	
