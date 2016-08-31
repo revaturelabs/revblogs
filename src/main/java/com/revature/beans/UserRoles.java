@@ -8,13 +8,18 @@ import javax.persistence.*;
  */
 
 @Entity
-@Table(name="REV_BLOG_USER_ROLES")
+@Table(name="PP_ROLES")
 public class UserRoles {
 	
-		@Id
-		@Column(name="REV_BLOG_USER_ROLE_ID")
+	//----------------------------------
+	// Attributes
+	@Id
+	@Column(name="ROLE_ID")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="roleSequence")
+	@SequenceGenerator(name="roleSequence",sequenceName="ROLE_SEQUENCE",initialValue=1,allocationSize=1)
 	private int userRoleId;
-		@Column(name="REV_BLOG_ROLE", nullable=false)
+	
+	@Column(name="ROLE_ROLE", unique=true, nullable=false)
 	private String role;
 				
 	/**
@@ -23,12 +28,10 @@ public class UserRoles {
 		
 	public UserRoles() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 		
-	public UserRoles(int userRoleId, String role) {
+	public UserRoles(String role) {
 		super();
-		this.userRoleId = userRoleId;
 		this.role = role;
 	}
 	
