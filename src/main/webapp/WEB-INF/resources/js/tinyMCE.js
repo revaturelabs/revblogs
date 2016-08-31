@@ -9,6 +9,16 @@ tinymce.init({
 	          'textcolor colorpicker textpattern',
 	          'insertdatetime nonbreaking save table contextmenu directionality'],
 	toolbar: 'insertfile undo redo | styleselect forecolor backcolor | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | codesample | emoticons |  print',
+	menubar: ["default","tools"],
+	setup: function(editor){
+		editor.addMenuItem('s3', {
+			 text: 'Upload Picture',
+		      context: 'tools',
+		      onclick: function(){
+		        //to do
+		      }
+		});
+	},
 	imagetools_cors_hosts: ['tinymce.com', 'codepen.io'],
 	  content_css: [
 	    '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
