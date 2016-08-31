@@ -67,6 +67,12 @@ public class BaseController {
 			HttpServletResponse resp) {
 		return "create-blog";
 	}
+
+	@RequestMapping(value="/", method=RequestMethod.GET)
+	public ModelAndView home(){
+		ModelAndView mv = new ModelAndView("index");
+		return mv;
+	}
 	
 	@RequestMapping(value="/upload-example", method=RequestMethod.GET)
 	public ModelAndView uploadExamplePage() {

@@ -1,0 +1,181 @@
+html, body {
+    font-family: 'Source Sans Pro', 'Helvetica Neue', helvetica, arial, sans-serif;
+    background-color: #F9F9F9;
+  }
+  .navbar {
+    border-radius: 0;
+    background-color: white;
+    box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+  }
+
+  .navbar .nav li a {
+    padding: 0 20px;
+    line-height: 60px;
+    font-size: 1.25em;
+  }
+
+  .navbar-default .navbar-nav > li > a:hover,
+  .navbar-default .navbar-nav > li > a:focus,
+  .navbar-default .navbar-nav > .active > a,
+  .navbar-default .navbar-nav > .active > a:hover,
+  .navbar-default .navbar-nav > .active > a:focus {
+  	color: #f66d20;
+    background: none;
+  	box-shadow: inset 0px -6px 0px 0px #f66d20;
+  }
+
+
+
+  .navbar .nav li {
+    line-height: 60px;
+  }
+  .navbar .navbar-brand {
+    height: 60px;
+    padding: 10px 20px;
+  }
+  .navbar .navbar-header {
+    height: 60px;
+  }
+  .navbar-brand img {
+    height: 40px;
+  }
+  .navbar-form {
+    height: 40px;
+    margin: 10px auto;
+  }
+  .input-group input {
+    height: 40px;
+    border-radius: 0;
+  }
+  .input-group .input-group-btn .btn {
+    height: 40px;
+    border-radius: 0;
+  }
+  
+  @media(min-width: 768px) {
+  	.page-content {
+    	margin-top: 80px;
+  	}
+  }
+  .author {
+    padding: 10px;
+  }
+  .author-name {
+    float: left;
+    line-height: 50px;
+    padding-left: 20px;
+    font-weight: bold;
+    font-size: 1.5em;
+  }
+  .author-image {
+    float: left;
+  }
+  .author-image img {
+    width: 70px;
+    height: 70px;
+  }
+  .hero-image-container {
+
+  }
+  .hero-image {
+    position: relative;
+    overflow: hidden;
+    background: url(http://lifeatrevature.com/wp-content/uploads/2016/07/AugustDeut-Presentation-900x500.jpg) no-repeat scroll 50% 50%;
+    background-size: 100% auto;
+    max-height: 300px;
+  }
+  .dummy {
+    padding-top: 40%;
+  }
+  .panel {
+    padding: 0;
+    border-radius: 0;
+    border: 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.25);
+  }
+  .panel .panel-heading {
+    border-radius: 0;
+  }
+  .panel .panel-heading * {
+    font-weight: bold;
+  }
+  .panel-primary .panel-heading {
+    background-color: #f66d20;
+    border: 0;
+    font-weight: bold;
+  }
+  .post-heading .post-title {
+    margin-top: 0.5em;
+    border-bottom: 1px solid #dddddd;
+    color: #474c55;
+    margin-bottom: 0.25em;
+    padding-bottom: 0.25em;
+  }
+  .post-heading .post-meta {
+    font-weight: bold;
+    color: #444444;
+  }
+  .post-heading .post-author:before {
+    content: "|";
+    padding: 0 0.5em;
+  }
+  .post-content {
+    padding: 2em;
+  }
+  .post-title a {
+  	color: #474c55;
+  }
+  .post-preview .post-author,
+  .post-preview .post-date {
+  	display: inline-block;
+  }
+  
+  .post-preview .post-date {
+  	color: #777777;
+  	float: right;
+  }
+  .post-title a:hover,
+  .post-title a:focus,
+  .post-title a:active {
+  	color: #33373e;
+  }
+  .footer {
+    min-height: 200px;
+    background-color: #474c55;
+    padding: 30px 0;
+  }
+  a {
+    color: #f66d20;
+  }
+  a:hover {
+    color: #bd4705;
+  }
+  .btn-primary {
+    background-color: #f66d20;
+    border-color: #bd4705;
+  }
+  .btn-primary:hover,
+  .btn-primary:focus {
+    background-color: #bd4705;
+    border-color: #8e3504;
+  }
+  .btn-primary:active,
+  .btn-primary:target {
+    background-color: #8e3504 !important;
+    border-color: #662603 !important;
+  }
+  .post-preview {
+ 	padding: 1em; 
+  }
+  .post-preview h3 {
+  	margin-top: 0;
+  }
+  .post-thumbnail {
+  	padding-bottom:100%; 
+  	overflow:hidden; 
+  	position:relative;
+  }
+  .post-thumbnail img {
+  	position: absolute;
+  	height: 100%;
+  }
