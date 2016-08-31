@@ -1,5 +1,10 @@
 Manifest-Version: 1.0
+<<<<<<< HEAD
 Built-By: Trey McDeane
 Build-Jdk: 1.8.0_102
+=======
+Built-By: Chris
+Build-Jdk: 1.8.0_91
+>>>>>>> e515c284a77019ce6cb14e865235ba515c5b6f39
 Created-By: Maven Integration for Eclipse
 
