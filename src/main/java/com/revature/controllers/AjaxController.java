@@ -99,7 +99,7 @@ public class AjaxController {
 					return p2.getPublishDate().compareTo(p1.getPublishDate());
 				}
 			})
-			.skip((page-1)*perPage)
+			.skip((long)(page-1)*perPage)
 			.limit(perPage)
 			.forEach(new Consumer<Blog>() {
 				@Override
