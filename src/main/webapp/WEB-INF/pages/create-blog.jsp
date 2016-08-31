@@ -39,7 +39,10 @@
 <body>
 <h2>Create new blog post</h2>
 <form:form action="add-blog.do" method="post" commandName="blog">
+	Title <br>
 	<form:input path="blogTitle"/>
+	Subtitle <br>
+	<form:input path="blogSubtitle"/>
 	<button type="button">Attach Image</button>
 	<button type="button">Attach File</button>
 	<br>
