@@ -91,13 +91,13 @@ public class JetS3Impl implements JetS3{
 			
 		} catch (S3ServiceException e) {
 			logging.info(e);
-			e.printStackTrace();
+			//e.printStackTrace();
 		} catch (IOException e) {
 			logging.info(e);
-			e.printStackTrace();
+			//e.printStackTrace();
 		} catch (Exception e) {
 			logging.info(e);
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		return null; // Resource could not be uploaded
 	}
@@ -132,10 +132,10 @@ public class JetS3Impl implements JetS3{
 			
 		} catch (S3ServiceException e) {
 			logging.info(e);
-			e.printStackTrace();
+			//e.printStackTrace();
 		} catch (Exception e) {
 			logging.info(e);
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		return null; // Resource could not be uploaded
 	}
@@ -156,7 +156,7 @@ public class JetS3Impl implements JetS3{
 			}catch(Exception e)
 			{
 				logging.info(e);
-				e.printStackTrace();
+				//e.printStackTrace();
 				return false;
 			}	
 			return true;
@@ -174,7 +174,7 @@ public class JetS3Impl implements JetS3{
 		}catch(Exception e)
 		{
 			logging.info(e);
-			e.printStackTrace();
+			//e.printStackTrace();
 			return false;
 		}	
 		return true;
@@ -187,7 +187,7 @@ public class JetS3Impl implements JetS3{
 		}catch(Exception e)
 		{
 			logging.info(e);
-			e.printStackTrace();
+			//e.printStackTrace();
 			return false;
 		}	
 		return true;
