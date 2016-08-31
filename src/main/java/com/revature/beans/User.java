@@ -5,37 +5,55 @@ import java.util.Set;
 import javax.persistence.*;
 
 @Entity
-@Table(name="REV_BLOG_USER")
+@Table(name="PP_USER")
 public class User {
 	
-		@Id
-		@Column(name="REV_BLOG_USER_ID")
+	//----------------------------------
+	// Attributes
+	@Id
+	@Column(name="USER_ID")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="userSequence")
+	@SequenceGenerator(name="userSequence",sequenceName="USER_SEQUENCE",initialValue=1,allocationSize=1)
 	private int userId;
-		@Column(name="REV_BLOG_USERNAME", unique=true, nullable=false)
+		
+	@Column(name="USER_USERNAME", unique=true, nullable=false)
 	private String username;
-		@Column(name="REV_BLOG_PASSWORD", nullable=false)
+		
+	@Column(name="USER_PASSWORD", nullable=false)
 	private String password;
-		@Column(name="REV_BLOG_EMAIL", unique=true, nullable=false)
+		
+	@Column(name="USER_EMAIL", unique=true, nullable=false)
 	private String email;
-		@Column(name="REV_BLOG_FIRST_NAME", nullable=false)
+		
+	@Column(name="USER_FIRST", nullable=false)
 	private String firstName;
-		@Column(name="REV_BLOG_LAST_NAME", nullable=false)
+		
+	@Column(name="USER_LAST", nullable=false)
 	private String lastName;
-		@Column(name="REV_BLOG_PROFILE_PICTURE", unique=true)
+		
+	@Column(name="USER_PICTURE", unique=true)
 	private String profilePicture;
-		@Column(name="REV_BLOG_JOB_TITLE", nullable=false)
+		
+	@Column(name="USER_TITLE", nullable=false)
 	private String jobTitle;
-		@Column(name="REV_BLOG_LINKEDIN_ADDRESS", unique=true)
-	private String linkedInAddress;
-		@Column(name="REV_BLOG_DESCRIPTION", nullable=false)
+		
+	@Column(name="USER_LINKEDIN", unique=true)
+	private String linkedInURL;
+		
+	@Column(name="USER_DESCRIPTION", nullable=false)
 	private String description;
-		@ManyToOne
-		@JoinColumn(name="REV_BLOG_USER_ROLE_ID", nullable=false)
-	private UserRoles userRole;
-		@Column(name="REV_BLOG_ACTIVE", nullable=false)
+	
+	@Column(name="USER_ACTIVE", nullable=false)
 	private boolean active;
-		@OneToMany
-		@JoinColumn(name="REV_BLOG_BLOGS")
+	
+	//----------------------------------
+	// Realationship Mapping
+	@ManyToOne
+	@JoinColumn(name="USER_ROLE", nullable=false)
+	private UserRoles userRole;
+		
+	@OneToMany
+	@JoinColumn(name="USER_BLOGS")
 	private Set<Blog> blogs;
 		
 	/**
@@ -44,23 +62,21 @@ public class User {
 	public User() {
 		super();
 	}
-	public User(int userId, String username, String password, String email, String firstName, String lastName,
-			String profilePicture, String jobTitle, String linkedInAddress, String description, UserRoles userRole,
-			boolean active, Set<Blog> blogs) {
+	public User(String username, String password, String email, String firstName, String lastName,
+				String jobTitle, String linkedInURL, String description, UserRoles userRole) {
 		super();
-		this.userId = userId;
 		this.username = username;
 		this.password = password;
 		this.email = email;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.profilePicture = profilePicture;
 		this.jobTitle = jobTitle;
-		this.linkedInAddress = linkedInAddress;
+		this.linkedInURL = linkedInURL;
 		this.description = description;
 		this.userRole = userRole;
-		this.active = active;
-		this.blogs = blogs;
+		
+		// User always starts active
+		this.active = true;
 	}
 	
 	/**
@@ -114,11 +130,11 @@ public class User {
 	public void setJobTitle(String jobTitle) {
 		this.jobTitle = jobTitle;
 	}
-	public String getLinkedInAddress() {
-		return linkedInAddress;
+	public String getLinkedInURL() {
+		return linkedInURL;
 	}
-	public void setLinkedInAddress(String linkedInAddress) {
-		this.linkedInAddress = linkedInAddress;
+	public void setLinkedInURL(String linkedInURL) {
+		this.linkedInURL = linkedInURL;
 	}
 	public String getDescription() {
 		return description;
