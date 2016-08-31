@@ -49,16 +49,12 @@ public class BaseController {
 			BindingResult bindingResult,
 			HttpServletRequest req,
 			HttpServletResponse resp) {
-		System.out.println(blog.getBlogTitle());
-		System.out.println(blog.getBlogSubtitle());
-		System.out.println(blog.getBlogContent());
 		return "create-blog";
 	}
 	
 	@RequestMapping(value="/upload-example", method=RequestMethod.GET)
 	public ModelAndView uploadExamplePage() {
-		ModelAndView mv = new ModelAndView("upload-example");
-		return mv;
+		return new ModelAndView("upload-example");
 	}
 	
 	@RequestMapping(value="/upload-resource", method=RequestMethod.POST)
@@ -87,12 +83,4 @@ public class BaseController {
 			e.printStackTrace();
 		}
 	}
-	
-	/*
-	@RequestMapping(value="/", method=RequestMethod.GET)
-	public ModelAndView home(){
-		ModelAndView mv = new ModelAndView("index");
-		return mv;
-	}
-	*/
 }
