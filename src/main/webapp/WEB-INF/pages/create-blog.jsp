@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:og="http://ogp.me/ns#" xmlns:fb="http://www.facebook.com/2008/fbml">
 <head>
   <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
-  <script>tinymce.init({ selector:'#tinyMCE' });</script>
+
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta property="og:url" content="http://dev.pjw6193:7001/pages/create-blog.jsp" />
 <meta property="og:type"content="article" />
@@ -67,4 +67,5 @@
 	
 </body>
 <script src="${pageContext.servletContext.contextPath }/resources/js/facebookConnection.js"></script>
+<script src="${pageContext.servletContext.contextPath }/resources/js/tinyMCE.js"></script>
 </html>
