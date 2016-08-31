@@ -3,6 +3,7 @@ package com.revature.service.impl;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.springframework.stereotype.Service;
 
 import com.revature.beans.Blog;
 import com.revature.beans.Evidence;
@@ -11,8 +12,10 @@ import com.revature.beans.User;
 import com.revature.beans.UserRoles;
 import com.revature.data.DataService;
 import com.revature.service.BusinessDelegate;
+import com.revature.service.Population;
 import com.revature.service.ServiceLocator;
 
+@Service
 public class BusinessDelegateImpl implements BusinessDelegate{
 
 	private DataService dataService;

@@ -6,6 +6,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Repository;
 
 import com.revature.beans.Blog;
 import com.revature.beans.Evidence;
@@ -14,6 +15,7 @@ import com.revature.beans.User;
 import com.revature.beans.UserRoles;
 import com.revature.data.DAO;
 
+@Repository
 public class DAOImpl implements DAO{
 
 	private SessionFactory sessionFactory;
@@ -21,9 +23,11 @@ public class DAOImpl implements DAO{
 
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
-		this.session = this.sessionFactory.openSession();
 	}
-	public Session getSession() {
+	public void setSession(Session session){
+		this.session = session;
+	}
+	public Session getSession(){
 		return session;
 	}
 
@@ -45,10 +49,16 @@ public class DAOImpl implements DAO{
 	
 	public void insertRecord(Object _obj){
 		
-		Object mergedObj = session.merge(_obj);
-		session.saveOrUpdate(mergedObj);
-	}
+		Session session = sessionFactory.getCurrentSession();
+		setSession(session);
 
+		session.save(_obj);
+	}
+	
+	public void editRecord(Object _obj){
+		
+		session.update(_obj);
+	}
 
 	// Pull
 	public User getUsers(String _username){
@@ -59,13 +69,13 @@ public class DAOImpl implements DAO{
 	}
 	
 	public List<User> getUsers(){
-	
+			
 		Criteria criteria = session.createCriteria(User.class);
 		List<User> users = (List<User>)criteria.list();
 		return users;
 	}
 	public List<Blog> getBlogs(){
-	
+		
 		Criteria criteria = session.createCriteria(Blog.class);
 		List<Blog> blogs = (List<Blog>)criteria.list();
 		return blogs;
@@ -77,13 +87,13 @@ public class DAOImpl implements DAO{
 		return tags;
 	}
 	public List<UserRoles> getRoles(){
-	
+		
 		Criteria criteria = session.createCriteria(UserRoles.class);
 		List<UserRoles> roles = (List<UserRoles>)criteria.list();
 		return roles;
 	}
 	public List<Evidence> getEvidence(){
-		
+
 		Criteria criteria = session.createCriteria(Evidence.class);
 		List<Evidence> evidence = (List<Evidence>)criteria.list();
 		return evidence;
