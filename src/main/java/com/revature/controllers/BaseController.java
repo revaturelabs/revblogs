@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.revature.beans.Blog;
 import com.revature.service.BusinessDelegate;
 
 @Controller
@@ -20,7 +22,7 @@ public class BaseController {
 
 	private BusinessDelegate businessDelegate;
 
-	public void setBusinessDelegate(BusinessDelegate businessDelegate) {
+	public void setBusinessDelegate(BusinessDelegate businessDelegate){
 		this.businessDelegate = businessDelegate;
 	}
 	
@@ -31,7 +33,19 @@ public class BaseController {
 	}
 	@RequestMapping(value="/create-blog", method=RequestMethod.GET)
 	public String createBlog(HttpServletRequest req, HttpServletResponse resp){
+		req.setAttribute("blog", new Blog());
+		return "create-blog";
+	}
 	
+	@RequestMapping(value="add-blog.do", method=RequestMethod.POST)
+	public String addBlog(
+			@ModelAttribute("blog") @Valid Blog blog, 
+			BindingResult bindingResult,
+			HttpServletRequest req,
+			HttpServletResponse resp) {
+		System.out.println(blog.getBlogTitle());
+		System.out.println(blog.getBlogSubtitle());
+		System.out.println(blog.getBlogContent());
 		return "create-blog";
 	}
 	
