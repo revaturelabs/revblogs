@@ -35,7 +35,6 @@ public class Population {
 		populateTags();
 		populateUsers();
 		populateBlogs();
-		populateProperties();
 	}
 	
 	//-----------------------------------
@@ -274,7 +273,7 @@ public class Population {
 		UserRoles contributor = (UserRoles) criteria2.uniqueResult();
 		
 		//Use a new constructor or use as is below
-    //Setting to null tells the GC it can be destroyed
+		//Setting to null tells the GC it can be destroyed
 		//In this case if that happens code breaks
 		UserRoles myRole;
 		
@@ -313,14 +312,14 @@ public class Population {
 		
 		String[][] props = new String[][]{
 			
-			{"Revature"},
-			{"Revature Blogs"},
-			{"blogs.pjw6193.tech"},
-			{"dev.pjw6193.tech:7001"},
-			{"ci.pjw6193.tech:9000"},
-			{"cube.pjw6193.tech:9000"},
-			{"AKIAISITZJSMPIICMLWQ"},
-			{"ALNGBXrKFyFvW3ow1ql29aprCdza3ytdeCnAW8Vn"}
+			{},
+			{},
+			{},
+			{},
+			{},
+			{},
+			{},
+			{}
 		};
 		
 		for(int i = 0; i < props.length; i++){
