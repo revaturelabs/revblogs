@@ -7,7 +7,10 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
+import com.revature.app.TemporaryFile;
 import com.revature.beans.Blog;
 import com.revature.beans.User;
 
@@ -19,19 +22,30 @@ public class HtmlWriter {
 	private Blog blog;
 	private User author;
 	private String tempPath;
+	private InputStream templateStream;
 	
-	public HtmlWriter(Blog blog, User author, String tempPath) throws FileNotFoundException {
+	public HtmlWriter(Blog blog, User author, InputStream templateStream) throws FileNotFoundException {
 		this.blog = blog;
 		this.author = author;
-		this.tempPath = tempPath;
+		this.templateStream = templateStream;
+		InputStreamReader isr = new InputStreamReader(templateStream);
+		tempReader = new BufferedReader(isr);
 	}
 	
-	public String render(String outPath) throws IOException {
+	public TemporaryFile render() throws IOException {
 		String line;
 		String title = ""+blog.getBlogTitle().hashCode()+blog.getPublishDate().hashCode();
-		String fileName = outPath+title+".html";
+//		String fileName = outPath+title+".html";
+		String fileName = title+".html";
+//		tempReader = new BufferedReader(new FileReader(tempPath));
+//		byte[] templateStreamBytes = new byte[templateStream.available()];
+//		int bytesRead = 0;
+//		while ( (bytesRead = templateStream.read(templateStreamBytes)) >= 0 ) {
+//			
+//		}
+		TemporaryFile tempFile = TemporaryFile.make(fileName);
 		tempReader = new BufferedReader(new FileReader(tempPath));
-		blogWriter = new BufferedWriter(new FileWriter(new File(fileName)));
+		blogWriter = new BufferedWriter(new FileWriter(tempFile.getTemporaryFile()));
 		while ((line=tempReader.readLine()) != null) {
 			blogWriter.write(line+"\n");
 			if (line.contains("post-date"))
@@ -49,6 +63,6 @@ public class HtmlWriter {
 		}
 		blogWriter.close();
 		tempReader.close();
-		return outPath;
+		return tempFile;
 	}	
 }

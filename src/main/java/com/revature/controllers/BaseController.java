@@ -1,7 +1,9 @@
 package com.revature.controllers;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +26,7 @@ import com.revature.beans.Blog;
 import com.revature.beans.User;
 import com.revature.beans.UserRoles;
 import com.revature.service.BusinessDelegate;
+import com.revature.service.HtmlWriter;
 import com.revature.service.Logging;
 import com.revature.service.Population;
 
@@ -78,7 +81,24 @@ public class BaseController {
 			BindingResult bindingResult,
 			HttpServletRequest req,
 			HttpServletResponse resp) {
-		return "create-blog";
+		
+		HtmlWriter htmlWriter;
+		try {
+			User author = new User();
+			author.setFirstName("Simon");
+			author.setLastName("& Garfunkel");
+			author.setDescription("Simon and Garfunkel are Paul Simon and Art Garfunkel. They are musicians who one day decided to start recording together. <i>The Sound of Silence</i> might be their most well-known song.");
+			InputStream templateStream = this.getClass().getClassLoader().getResourceAsStream("template.html");
+			htmlWriter = new HtmlWriter(blog, author, templateStream);
+			TemporaryFile tempFile = htmlWriter.render();
+			String tempPath = tempFile.getTemporaryFile().getPath();
+			req.setAttribute("path", tempPath);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		return "preview-blog";
 	}
 
 	@RequestMapping(value="/", method=RequestMethod.GET)
