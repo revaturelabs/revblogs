@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -88,8 +90,12 @@ public class AjaxController {
 			@RequestParam(value="page", required=false, defaultValue="1") int page,
 			@RequestParam(value="per_page", required=false, defaultValue="10") int perPage,
 			@RequestParam(value="author", required=false, defaultValue="0") int authorId,
-			@RequestParam(value="q", required=false) String searchQuery) {
+			@RequestParam(value="q", required=false) String searchQuery,
+			HttpServletRequest request) {
+		
+		// Instantiate post collection DTO
 		BlogPostCollectionDTO postCollection = new BlogPostCollectionDTO();
+		
 		final List<BlogPostDTO> postList = postCollection.getPosts();
 		posts.values()
 			.stream()
@@ -107,6 +113,22 @@ public class AjaxController {
 					postList.add(new BlogPostDTO(p));
 				}
 			});
+		postCollection.setPage(page);
+		int totalPosts = posts.values().size();
+		int totalPages = (int) Math.ceil((double)totalPosts/perPage);
+		postCollection.setTotalPosts(totalPosts);
+		postCollection.setTotalPages(totalPages);
+		
+		if (page == 1) {
+			postCollection.setPrev(null);
+		}
+		else {
+			postCollection.setPrev("");
+		}
+		if (page == totalPages) {
+			postCollection.setNext(null);
+		}
+		
 		return postCollection;
 	}
 	
