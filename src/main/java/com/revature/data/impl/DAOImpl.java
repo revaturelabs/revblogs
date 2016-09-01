@@ -10,12 +10,14 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.revature.beans.ApplicationProperties;
 import com.revature.beans.Blog;
 import com.revature.beans.Evidence;
 import com.revature.beans.Tags;
 import com.revature.beans.User;
 import com.revature.beans.UserRoles;
 import com.revature.data.DAO;
+import com.revature.service.impl.Crypt;
 
 @Repository
 @Transactional
@@ -121,5 +123,43 @@ public class DAOImpl implements DAO{
 		
 		Criteria criteria = session.createCriteria(Evidence.class);
 		return (List<Evidence>)criteria.list();
+	}
+	
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public String getProperty(PropertyType type){
+		
+		Session session = sessionFactory.getCurrentSession();
+		setSession(session);
+		
+		Criteria criteria = session.createCriteria(ApplicationProperties.class);
+		ApplicationProperties props = (ApplicationProperties) criteria.uniqueResult();
+
+		switch(type){
+		
+			case COMPANY:
+			
+				props.setCompany(Crypt.decrypt(props.getCompany(), props.getApp(), props.getS3()));
+				
+				System.out.println("Company is = " + props.getCompany());
+				
+				return props.getCompany();
+				
+			case APP:
+				break;
+			case S3:
+				break;
+			case SERVER:
+				break;
+			case JENKINS:
+				break;
+			case SONARQUBE:
+				break;
+			case K:
+				break;
+			case V:
+				break;
+		}
+		
+		return null;
 	}
 }

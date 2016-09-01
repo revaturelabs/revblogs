@@ -55,6 +55,7 @@ public class Blog {
 	private boolean blogActive;
 	
 	private Clob staticHTML;
+	private Clob staticContent;
 	
 	private transient String blogTagsString;
 	
@@ -159,6 +160,12 @@ public class Blog {
 	}
 	public void setStaticHTML(Clob staticHTML) {
 		this.staticHTML = staticHTML;
+	}
+	public Clob getStaticContent() {
+		return staticContent;
+	}
+	public void setStaticContent(Clob staticContent) {
+		this.staticContent = staticContent;
 	}
 	public User getAuthor() {
 		return author;

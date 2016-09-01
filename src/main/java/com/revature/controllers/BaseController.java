@@ -20,9 +20,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.revature.app.TemporaryFile;
+import com.revature.beans.ApplicationProperties;
 import com.revature.beans.Blog;
 import com.revature.beans.User;
 import com.revature.beans.UserRoles;
+import com.revature.data.impl.PropertyType;
 import com.revature.service.BusinessDelegate;
 import com.revature.service.Logging;
 import com.revature.service.Population;
@@ -68,6 +70,10 @@ public class BaseController {
 	@RequestMapping(value="/populate", method=RequestMethod.GET)
 	public String populate(HttpServletRequest req, HttpServletResponse resp){
 	
+		String props = businessDelegate.requestProperty(PropertyType.COMPANY);
+		
+		System.out.println("Company is = " + props);
+		
 		return "login";
 	}
 	@RequestMapping(value="/create-blog", method=RequestMethod.GET)
