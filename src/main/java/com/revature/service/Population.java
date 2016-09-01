@@ -19,14 +19,15 @@ import com.revature.service.impl.Crypt;
 @Transactional
 public class Population {
 	
+	// ALL TAGS
+	List<Tags> tagList = new ArrayList<>();
+	
+	private Logging logger = new Logging();
 	private BusinessDelegate delegate;
 	
 	public void setDelegate(BusinessDelegate delegate) {
 		this.delegate = delegate;
 	}
-
-	// ALL TAGS
-	List<Tags> tagList = new ArrayList<Tags>();
 	
 	//-----------------------------------
 	// Complete Population (Besides Evidence)
@@ -52,7 +53,10 @@ public class Population {
 		
 		String[] roles = new String[]{"ADMIN", "CONTRIBUTOR"};
 		
-		UserRoles role = null;
+		//Assigning null indicates it is ready for GC, which can
+		//cause error in this situation, please avoid this practice
+		//Assign either new constructor or leave as is below.
+		UserRoles role;
 		
 		for(int i = 0; i < roles.length; i++){
 			
@@ -61,7 +65,7 @@ public class Population {
 			delegate.putRecord(role);
 		}
 		
-		System.out.println("-- Done Populating Role Table --");
+		logger.log("-- Done Populating Role Table --");
 	}
 	
 	//-----------------------------------
@@ -79,7 +83,10 @@ public class Population {
 		
 		String[] tags = new String[]{"Java", "SQL", "Apian", "JSP", "Servlet", "Hibernate", "Spring", "REST", "SOAP"};
 		
-		Tags tag = null;
+		//Assigning null indicates it is ready for GC, which can
+		//cause error in this situation, please avoid this practice
+		//Assign either new constructor or leave as is below.
+		Tags tag;
 		
 		for(int i = 0; i < tags.length; i++){
 			
@@ -90,7 +97,7 @@ public class Population {
 			delegate.putRecord(tag);
 		}
 		
-		System.out.println("-- Done Populating Tags Table --");
+		logger.log("-- Done Populating Tags Table --");
 	}
 	
 	//-----------------------------------
@@ -139,18 +146,19 @@ public class Population {
 			+ "volutpat ac.",
 			
 			// 2
-			"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris dapibus, est non sodales blandit, "
-			+ "dolor odio blandit lorem, eget euismod eros dolor sit amet tortor. Aenean malesuada tempor accumsan. "
-			+ "In hac habitasse platea dictumst. Duis commodo metus nulla, et pharetra ipsum venenatis a. Mauris "
-			+ "cursus fringilla fermentum. Suspendisse vitae ante nulla. Donec auctor quam ex, at tincidunt lacus "
-			+ "volutpat ac.",
+			// 
+			"Etiam quis velit fermentum, scelerisque velit eget, dapibus metus. Ut eu diam gravida ligula mollis "
+			+ "feugiat sed pellentesque ligula. Nullam commodo, leo vel accumsan cursus, elit quam commodo diam, "
+			+ "ullamcorper auctor ante dolor in nibh. Cras mattis nunc at felis accumsan pellentesque. Nulla "
+			+ "tincidunt dapibus tortor, mattis fringilla turpis. Nam nulla enim, posuere at mauris et, varius "
+			+ "sollicitudin tellus. Quisque cursus vel tellus non fringilla.",
 			
 			// 3
-			"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris dapibus, est non sodales blandit, "
-			+ "dolor odio blandit lorem, eget euismod eros dolor sit amet tortor. Aenean malesuada tempor accumsan. "
-			+ "In hac habitasse platea dictumst. Duis commodo metus nulla, et pharetra ipsum venenatis a. Mauris "
-			+ "cursus fringilla fermentum. Suspendisse vitae ante nulla. Donec auctor quam ex, at tincidunt lacus "
-			+ "volutpat ac."
+			"Donec facilisis urna sit amet quam varius, eu porttitor tortor imperdiet. Duis justo felis, elementum"
+			+ "eu ante vitae, dignissim tincidunt lectus. Pellentesque odio tellus, blandit a metus sit amet, "
+			+ "dignissim sollicitudin tortor. In hac habitasse platea dictumst. Aenean dui risus, auctor non luctus "
+			+ "vel, condimentum a turpis. Aenean eu massa malesuada, suscipit purus quis, tristique sapien."
+			+ "Aliquam leo nisl, feugiat in porta et, laoreet non purus."
 		};
 		
 		// Tag Population Nonsense
@@ -184,7 +192,10 @@ public class Population {
 		
 		List<User> users = delegate.requestUsers();
 		
-		Blog blog = null;
+		//Assigning null indicates it is ready for GC, which can
+		//cause error in this situation, please avoid this practice
+		//Assign either new constructor or leave as is below.
+		Blog blog;
 		
 		for(int i = 0; i < blogTitle.length; i++){
 			
@@ -203,7 +214,7 @@ public class Population {
 			delegate.putRecord(blog);
 		}
 
-		System.out.println("-- Done Populating Blogs Table --");
+		logger.log("-- Done Populating Blogs Table --");
 	}
 	
 	//-----------------------------------
@@ -290,6 +301,6 @@ public class Population {
 			delegate.putRecord(user);
 		}
 		
-		System.out.println("-- Done Populating Users Table --");
+		logger.log("-- Done Populating Users Table --");
 	}
 }

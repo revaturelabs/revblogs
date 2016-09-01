@@ -22,9 +22,10 @@ public class JetS3Impl implements JetS3{
 	private static AWSCredentials credentials;
 	private static S3Service s3;
 	private static Logging logging;
-	//This pushes to Patrick's S3
-	//private final static String BUCKET = "dan-pickles-jar";
-	private final static String BUCKET = "alpha-beta-jar";
+	private static final String BUCKET = "alpha-beta-jar";
+	//This pushes to Patrick's S3:
+	//"dan-pickles-jar"
+	//need patrick's credentials
 	static
 	{
 		//For String 1
@@ -88,16 +89,9 @@ public class JetS3Impl implements JetS3{
 				BUCKET + "/" +
 				folderPath +
 				fileName;
-			
-		} catch (S3ServiceException e) {
-			logging.info(e);
-			//e.printStackTrace();
-		} catch (IOException e) {
-			logging.info(e);
-			//e.printStackTrace();
+			//If specific execptions are needed enter here
 		} catch (Exception e) {
 			logging.info(e);
-			//e.printStackTrace();
 		}
 		return null; // Resource could not be uploaded
 	}
@@ -129,13 +123,9 @@ public class JetS3Impl implements JetS3{
 				BUCKET + "/" +
 				folderPath +
 				file.getName();
-			
-		} catch (S3ServiceException e) {
-			logging.info(e);
-			//e.printStackTrace();
+			//If specific execptions are needed enter here
 		} catch (Exception e) {
 			logging.info(e);
-			//e.printStackTrace();
 		}
 		return null; // Resource could not be uploaded
 	}
@@ -156,7 +146,6 @@ public class JetS3Impl implements JetS3{
 			}catch(Exception e)
 			{
 				logging.info(e);
-				//e.printStackTrace();
 				return false;
 			}	
 			return true;
@@ -174,7 +163,6 @@ public class JetS3Impl implements JetS3{
 		}catch(Exception e)
 		{
 			logging.info(e);
-			//e.printStackTrace();
 			return false;
 		}	
 		return true;
@@ -187,7 +175,6 @@ public class JetS3Impl implements JetS3{
 		}catch(Exception e)
 		{
 			logging.info(e);
-			//e.printStackTrace();
 			return false;
 		}	
 		return true;
