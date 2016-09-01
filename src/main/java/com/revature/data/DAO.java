@@ -17,10 +17,10 @@ public interface DAO {
 	public Session getSession();
 	
 	// Push
-	public void insertRecord(Object _obj);
+	public void insertRecord(Object obj);
 	
 	// Pull
-	public User getUsers(String _username);
+	public User getUsers(String username);
 	
 	public List<User> getUsers();
 	public List<Blog> getBlogs();
