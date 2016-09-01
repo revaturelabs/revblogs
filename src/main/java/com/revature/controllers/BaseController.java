@@ -46,10 +46,14 @@ public class BaseController {
 	public void setPopulation(Population population) {
 		this.population = population;
 	}
-	@RequestMapping(value="/login", method=RequestMethod.GET)
+	
+	
+	//CHANGED LOGIN TO FUNCTION CORRECTLY
+	
+	@RequestMapping(value="/loginPage")
 	public String login(HttpServletRequest req, HttpServletResponse resp){
 	
-		return "login";
+		return "loginPage";
 	}
 	@RequestMapping(value="/temp-AddClient", method=RequestMethod.GET)
 	public String newClient(HttpServletRequest req, HttpServletResponse resp){
@@ -130,6 +134,31 @@ public class BaseController {
 		} catch (IOException e) {
 			logging.info(e);
 		}
+	}
+	
+	//SEPARATE THE LOGINS FOR ADMIN AND CONTRIBUTOR
+	
+	@RequestMapping(value="/admin**")
+	public ModelAndView viewAdmin(){
+		
+		ModelAndView model = new ModelAndView();
+		model.setViewName("/home");
+		model.addObject("title", "That one guy");
+		model.addObject("message", "Welcome");
+		
+		return model;
+	}
+	
+	
+	@RequestMapping(value="/contributor**")
+	public ModelAndView viewContributor(){
+		
+		ModelAndView model = new ModelAndView();
+		model.setViewName("/home");
+		model.addObject("title", "That one guy");
+		model.addObject("message", "Welcome");
+		
+		return model;
 	}
 	
 }
