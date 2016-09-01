@@ -71,7 +71,7 @@ public class BaseController {
 		req.setAttribute("blog", new Blog());
 		return "create-blog";
 	}
-	
+
 	@RequestMapping(value="add-blog.do", method=RequestMethod.POST)
 	public String addBlog(
 			@ModelAttribute("blog") @Valid Blog blog, 
@@ -116,4 +116,20 @@ public class BaseController {
 			logging.info(e);
 		}
 	}
+	@RequestMapping(value="/add-picture", method=RequestMethod.GET)
+	public String addPicture(HttpServletRequest req, HttpServletResponse resp){
+		return "add-picture";
+	}
+	@RequestMapping(value="/upload-picture", method=RequestMethod.POST)
+	public void uploadPictureHandler(@RequestParam("file") MultipartFile file, HttpServletResponse resp)
+	{
+		String url = businessDelegate.uploadEvidence(file.getOriginalFilename(), file);
+		try {
+			PrintWriter writer = resp.getWriter();
+			writer.append(url);
+		} catch (IOException e) {
+			logging.info(e);
+		}
+	}
+	
 }
