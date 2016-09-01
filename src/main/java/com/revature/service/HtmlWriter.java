@@ -44,8 +44,9 @@ public class HtmlWriter {
 //			
 //		}
 		TemporaryFile tempFile = TemporaryFile.make(fileName);
-		tempReader = new BufferedReader(new FileReader(tempPath));
-		blogWriter = new BufferedWriter(new FileWriter(tempFile.getTemporaryFile()));
+		File file = tempFile.getTemporaryFile();
+		FileWriter fw = new FileWriter(file);
+		blogWriter = new BufferedWriter(fw);
 		while ((line=tempReader.readLine()) != null) {
 			blogWriter.write(line+"\n");
 			if (line.contains("post-date"))

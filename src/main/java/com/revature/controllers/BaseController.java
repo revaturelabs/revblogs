@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -82,14 +83,11 @@ public class BaseController {
 			HttpServletRequest req,
 			HttpServletResponse resp) {
 		
+		blog.setPublishDate(new Date());
 		HtmlWriter htmlWriter;
 		try {
-			User author = new User();
-			author.setFirstName("Simon");
-			author.setLastName("& Garfunkel");
-			author.setDescription("Simon and Garfunkel are Paul Simon and Art Garfunkel. They are musicians who one day decided to start recording together. <i>The Sound of Silence</i> might be their most well-known song.");
 			InputStream templateStream = this.getClass().getClassLoader().getResourceAsStream("template.html");
-			htmlWriter = new HtmlWriter(blog, author, templateStream);
+			htmlWriter = new HtmlWriter(blog, blog.getAuthor(), templateStream);
 			TemporaryFile tempFile = htmlWriter.render();
 			String tempPath = tempFile.getTemporaryFile().getPath();
 			req.setAttribute("path", tempPath);
