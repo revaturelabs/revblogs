@@ -18,6 +18,7 @@ public interface DataService {
 	
 	// Push
 	public void makeRecord(Object obj);
+	public void changeRecord(Object obj);
 	
 	// Pull
 	public User grabUsers(String username);
