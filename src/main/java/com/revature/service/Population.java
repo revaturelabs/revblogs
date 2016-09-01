@@ -8,6 +8,7 @@ import java.util.Set;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 
+import com.revature.beans.ApplicationProperties;
 import com.revature.beans.Blog;
 import com.revature.beans.Tags;
 import com.revature.beans.User;
@@ -34,6 +35,7 @@ public class Population {
 		populateTags();
 		populateUsers();
 		populateBlogs();
+		populateProperties();
 	}
 	
 	//-----------------------------------
@@ -298,5 +300,56 @@ public class Population {
 		}
 		
 		logger.log("-- Done Populating Users Table --");
+	}
+	
+	//-----------------------------------
+	// Properties
+	public void populateProperties(){
+		
+		/**
+		 *  Insantiate 1 entry with all the encrypted properties.
+		 *  Save that entry in the database.
+		 */
+		
+		String[][] props = new String[][]{
+			
+			{"Revature"},
+			{"Revature Blogs"},
+			{"blogs.pjw6193.tech"},
+			{"dev.pjw6193.tech:7001"},
+			{"ci.pjw6193.tech:9000"},
+			{"cube.pjw6193.tech:9000"},
+			{"AKIAISITZJSMPIICMLWQ"},
+			{"ALNGBXrKFyFvW3ow1ql29aprCdza3ytdeCnAW8Vn"}
+		};
+		
+		for(int i = 0; i < props.length; i++){
+			
+			switch(i){
+			
+				case 0: props[i][0] = Crypt.encrypt(props[i][0], props[1][0], props[2][0]); break;
+				case 1: props[i][0] = Crypt.encrypt(props[i][0], props[2][0], props[3][0]); break;
+				case 2: props[i][0] = Crypt.encrypt(props[i][0], props[3][0], props[4][0]); break;
+				case 3: props[i][0] = Crypt.encrypt(props[i][0], props[4][0], props[5][0]); break;
+				case 4: props[i][0] = Crypt.encrypt(props[i][0], props[5][0], props[6][0]); break;
+				case 5: props[i][0] = Crypt.encrypt(props[i][0], props[6][0], props[7][0]); break;
+				case 6: props[i][0] = Crypt.encrypt(props[i][0], props[7][0], props[0][0]); break;
+				case 7: props[i][0] = Crypt.encrypt(props[i][0], props[0][0], props[1][0]); break;
+			}
+		}
+
+		ApplicationProperties propObj = new ApplicationProperties(	props[0][0], 
+																	props[1][0], 
+																	props[2][0],
+																	props[3][0],
+																	props[4][0], 
+																	props[5][0], 
+																	props[6][0], 
+																	props[7][0]);
+		
+		delegate.putRecord(propObj);
+		
+		
+		logger.log("-- Done Populating Properties Table --");
 	}
 }
