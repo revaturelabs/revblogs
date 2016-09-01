@@ -29,6 +29,9 @@ public class DataServiceImpl implements DataService{
 	public void makeRecord(Object obj){
 		dao.insertRecord(obj);
 	}
+	public void changeRecord(Object obj) {
+		dao.editRecord(obj);
+	}
 	
 	// Pull
 	public User grabUsers(String username){
