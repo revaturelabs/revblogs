@@ -11,10 +11,10 @@
 <title>Profile</title>
 </head>
 <body>
-
+<div>
+<h3>Update Profile</h3><br />
 <form:form action="updateUser.do" method="post" commandName="updateUser">
 	Username: <form:input path="username" /> <br />
-	Password: <form:password path="password" /> <br />
 	Email: <form:input path="email" /> <br />
 	First Name: <form:input path="firstName" /> <br />
 	Last Name: <form:input path="lastName" /> <br />
@@ -24,6 +24,12 @@
 	Description: <form:textarea path="description" /> <br />
 	<input type="submit" value="Update Profile" /> <br />
 </form:form>
-
+</div>
+<div>
+<h3>Update Password</h3> <br />
+<form:form action="updatePassword.do" method="post" commandName="updateUser">
+	Password: <form:input path="password" /> <br />
+</form:form>
+</div>
 </body>
 </html>
