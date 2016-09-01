@@ -56,6 +56,8 @@ public class Blog {
 	
 	private Clob staticHTML;
 	
+	transient private String blogTagsString;
+	
 	//----------------------------------
 	// Realationship Mapping
 	@ManyToOne
@@ -163,5 +165,11 @@ public class Blog {
 	}
 	public void setAuthor(User author) {
 		this.author = author;
+	}
+	public String getBlogTagsString() {
+		return blogTagsString;
+	}
+	public void setBlogTagsString(String blogTagsString) {
+		this.blogTagsString = blogTagsString;
 	}
 }
