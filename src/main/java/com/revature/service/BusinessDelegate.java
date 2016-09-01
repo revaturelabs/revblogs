@@ -33,10 +33,10 @@ public interface BusinessDelegate {
 	public String uploadPage(File file);
 	
 	// Push
-	public void putRecord(Object _obj);
+	public void putRecord(Object obj);
 	
 	// Pull
-	public User requestUsers(String _username);
+	public User requestUsers(String username);
 	
 	public List<User> requestUsers();
 	public List<Blog> requestBlogs();

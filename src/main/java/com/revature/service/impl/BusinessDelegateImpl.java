@@ -53,13 +53,13 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	}
 	
 	// Push
-	public void putRecord(Object _obj){
-		dataService.makeRecord(_obj);
+	public void putRecord(Object obj){
+		dataService.makeRecord(obj);
 	}
 	
 	// Pull
-	public User requestUsers(String _username){
-		return dataService.grabUsers(_username);
+	public User requestUsers(String username){
+		return dataService.grabUsers(username);
 	}
 	
 	public List<User> requestUsers(){

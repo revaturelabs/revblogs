@@ -17,10 +17,10 @@ public interface DataService {
 	public Session grabSession();
 	
 	// Push
-	public void makeRecord(Object _obj);
+	public void makeRecord(Object obj);
 	
 	// Pull
-	public User grabUsers(String _username);
+	public User grabUsers(String username);
 	
 	public List<User> grabUsers();
 	public List<Blog> grabBlogs();
