@@ -21,7 +21,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.revature.app.TemporaryFile;
 import com.revature.beans.Blog;
-import com.revature.beans.Tags;
 import com.revature.beans.User;
 import com.revature.beans.UserRoles;
 import com.revature.service.BusinessDelegate;
@@ -52,11 +51,19 @@ public class BaseController {
 	
 		return "login";
 	}
+	@RequestMapping(value="/temp-AddClient", method=RequestMethod.GET)
+	public String newClient(HttpServletRequest req, HttpServletResponse resp){
+		req.setAttribute("user", new User());
+		List<UserRoles> arrl = new ArrayList<>();
+		arrl.add(new UserRoles(1, "Manager"));
+		arrl.add(new UserRoles(2, "Employee"));
+		
+		req.setAttribute("roleDropDown", arrl);
+		return "makeClientAccount";
+	}
 	@RequestMapping(value="/populate", method=RequestMethod.GET)
 	public String populate(HttpServletRequest req, HttpServletResponse resp){
 	
-		population.populateProperties();
-		
 		return "login";
 	}
 	@RequestMapping(value="/create-blog", method=RequestMethod.GET)
@@ -64,7 +71,7 @@ public class BaseController {
 		req.setAttribute("blog", new Blog());
 		return "create-blog";
 	}
-	
+
 	@RequestMapping(value="add-blog.do", method=RequestMethod.POST)
 	public String addBlog(
 			@ModelAttribute("blog") @Valid Blog blog, 
@@ -109,4 +116,20 @@ public class BaseController {
 			logging.info(e);
 		}
 	}
+	@RequestMapping(value="/add-picture", method=RequestMethod.GET)
+	public String addPicture(HttpServletRequest req, HttpServletResponse resp){
+		return "add-picture";
+	}
+	@RequestMapping(value="/upload-picture", method=RequestMethod.POST)
+	public void uploadPictureHandler(@RequestParam("file") MultipartFile file, HttpServletResponse resp)
+	{
+		String url = businessDelegate.uploadEvidence(file.getOriginalFilename(), file);
+		try {
+			PrintWriter writer = resp.getWriter();
+			writer.append(url);
+		} catch (IOException e) {
+			logging.info(e);
+		}
+	}
+	
 }

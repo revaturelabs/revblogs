@@ -204,6 +204,11 @@
 		    <artifactId>jsoup</artifactId>
 		    <version>1.8.3</version>
 		</dependency>
+		<dependency>
+		   <groupId>org.hibernate</groupId>
+		   <artifactId>hibernate-search-orm</artifactId>
+		   <version>5.5.4.Final</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>revblogs</finalName>

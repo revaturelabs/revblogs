@@ -35,6 +35,7 @@ public interface JetS3 {
 	 * @param filedata the string to be stored in the
 	 */
 	public boolean uploadText(String filename,String filedata);
+	
 	/**
 	 * Used to delete any file from the bucket as long
 	 * as the name matches in the S3

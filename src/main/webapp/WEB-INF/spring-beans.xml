@@ -48,7 +48,7 @@
 		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
-
+	
 	<bean name="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="packagesToScan" value="com.revature.beans" />
@@ -60,8 +60,15 @@
 				<prop key="hibernate.hbm2ddl.auto">
 					update
 				</prop>
+				<prop key="hibernate.search.default.directory_provider">
+					filesystem
+				</prop>
+				<prop key="hibernate.search.default.indexBase">
+					/var/hibernate/indexes
+				</prop>
 			</props>
 		</property>
+		
 	</bean>
 
 

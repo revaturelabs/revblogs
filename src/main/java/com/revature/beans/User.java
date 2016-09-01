@@ -2,7 +2,18 @@ package com.revature.beans;
 
 import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+import org.hibernate.search.annotations.Field;
 
 @Entity
 @Table(name="PP_USER")
@@ -26,9 +37,11 @@ public class User {
 	private String email;
 		
 	@Column(name="USER_FIRST", nullable=false)
+	@Field
 	private String firstName;
 		
 	@Column(name="USER_LAST", nullable=false)
+	@Field
 	private String lastName;
 		
 	@Column(name="USER_PICTURE", unique=true)
