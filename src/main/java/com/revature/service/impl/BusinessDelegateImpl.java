@@ -66,6 +66,9 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	public void putRecord(Object obj){
 		dataService.makeRecord(obj);
 	}
+	public void updateRecord(Object obj){
+		dataService.changeRecord(obj);
+	}
 	
 	// Pull
 	public User requestUsers(String username){
