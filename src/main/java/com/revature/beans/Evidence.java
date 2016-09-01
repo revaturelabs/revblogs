@@ -23,7 +23,7 @@ public class Evidence {
 	public Evidence() {
 		super();
 	}
-	public Evidence(int evidenceId, String evidenceURL) {
+	public Evidence( String evidenceURL) {
 		super();
 		this.evidenceURL = evidenceURL;
 	}
