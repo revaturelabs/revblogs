@@ -126,7 +126,7 @@ public class BaseController {
 		String url = businessDelegate.uploadEvidence(file.getOriginalFilename(), file);
 		try {
 			PrintWriter writer = resp.getWriter();
-			writer.append(url);
+			writer.append("<html><body><h3>Copy URL into Add Image</h3><br></body></html>" + url);
 		} catch (IOException e) {
 			logging.info(e);
 		}
