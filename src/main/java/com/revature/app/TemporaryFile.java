@@ -1,6 +1,7 @@
 package com.revature.app;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -37,12 +38,58 @@ public class TemporaryFile {
 			if ( temporaryFileContainer.createTemporaryFile(multipartFile) )
 				return temporaryFileContainer;
 		}
-		catch ( IOException t ) {log.info(t);}
+		catch ( IOException e ) {log.info(e);}
 		
 		if ( temporaryFileContainer != null )
 			temporaryFileContainer.destroy();
 		
 		return null;
+	}
+	
+	public static TemporaryFile make(File file) {
+		
+		TemporaryFile temporaryFileContainer = null;
+		try
+		{
+			temporaryFileContainer = new TemporaryFile();
+			if ( temporaryFileContainer.createTemporaryFile(file) )
+				return temporaryFileContainer;
+		}
+		catch ( IOException e ) {log.info(e);}
+		
+		if ( temporaryFileContainer != null )
+			temporaryFileContainer.destroy();
+		
+		return null;
+	}
+	
+	public static TemporaryFile make(String fileName, byte[] fileBytes) {
+		
+		TemporaryFile temporaryFileContainer = null;
+		try
+		{
+			temporaryFileContainer = new TemporaryFile();
+			if ( temporaryFileContainer.createTemporaryFile(fileName, fileBytes) )
+				return temporaryFileContainer;
+		}
+		catch ( IOException e ) {log.info(e);}
+		
+		if ( temporaryFileContainer != null )
+			temporaryFileContainer.destroy();
+		
+		return null;
+	}
+	
+	public static TemporaryFile make(byte[] fileBytes) {
+		return make("temp.tmp", fileBytes);
+	}
+	
+	public static TemporaryFile make(String fileName, String fileContents) {
+		return make(fileName, fileContents.getBytes());
+	}
+	
+	public static TemporaryFile make(String fileString) {
+		return make("temp.tmp", fileString.getBytes());
 	}
 	
 	public File getTemporaryFile() {
@@ -65,6 +112,37 @@ public class TemporaryFile {
 			fos.write(multipartFile.getBytes());
 		    fos.close();
 		    return true;
+		}
+		return false;
+	}
+	
+	protected boolean createTemporaryFile(File file) throws IOException {
+		
+		if ( createTemporaryDirectory() ) {
+			tempFile = new File(temporaryDirectoryPath + "/" + file.getName());
+			FileOutputStream fos = new FileOutputStream(tempFile);
+			FileInputStream fis = new FileInputStream(file);
+			
+			byte[] bytes = new byte[32768];
+			int lengthRead = 0;
+			while ( (lengthRead = fis.read(bytes)) >= 0 ) {
+				fos.write(bytes, 0, lengthRead);
+			}
+			fis.close();
+			fos.close();
+			return true;
+		}
+		return false;
+	}
+	
+	protected boolean createTemporaryFile(String fileName, byte[] fileBytes) throws IOException {
+		
+		if ( createTemporaryDirectory() ) {
+			tempFile = new File(temporaryDirectoryPath + "/" + fileName);
+			FileOutputStream fos = new FileOutputStream(tempFile);
+			fos.write(fileBytes);
+			fos.close();
+			return true;
 		}
 		return false;
 	}
