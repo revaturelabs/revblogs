@@ -88,8 +88,21 @@ public class TemporaryFile {
 		return make(fileName, fileContents.getBytes());
 	}
 	
-	public static TemporaryFile make(String fileContents) {
-		return make("temp.tmp", fileContents.getBytes());
+	public static TemporaryFile make(String fileName) {
+		
+		TemporaryFile temporaryFileContainer = null;
+		try
+		{
+			temporaryFileContainer = new TemporaryFile();
+			if ( temporaryFileContainer.createTemporaryFile(fileName) )
+				return temporaryFileContainer;
+		}
+		catch ( IOException e ) {log.info(e);}
+		
+		if ( temporaryFileContainer != null )
+			temporaryFileContainer.destroy();
+		
+		return null;
 	}
 	
 	public File getTemporaryFile() {
@@ -147,6 +160,15 @@ public class TemporaryFile {
 			FileOutputStream fos = new FileOutputStream(tempFile);
 			fos.write(fileBytes);
 			fos.close();
+			return true;
+		}
+		return false;
+	}
+	
+	protected boolean createTemporaryFile(String fileName) throws IOException {
+		
+		if ( createTemporaryDirectory() ) {
+			tempFile = new File(temporaryDirectoryPath + "/" + fileName);
 			return true;
 		}
 		return false;
