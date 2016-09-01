@@ -3,6 +3,8 @@ package com.revature.controllers;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,9 +21,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.revature.app.TemporaryFile;
 import com.revature.beans.Blog;
+import com.revature.beans.User;
+import com.revature.beans.UserRoles;
 import com.revature.service.BusinessDelegate;
-import com.revature.service.Population;
 import com.revature.service.Logging;
+import com.revature.service.Population;
 
 @Controller
 public class BaseController {
@@ -46,6 +50,16 @@ public class BaseController {
 	public String login(HttpServletRequest req, HttpServletResponse resp){
 	
 		return "login";
+	}
+	@RequestMapping(value="/temp-AddClient", method=RequestMethod.GET)
+	public String newClient(HttpServletRequest req, HttpServletResponse resp){
+		req.setAttribute("user", new User());
+		List<UserRoles> arrl = new ArrayList<>();
+		arrl.add(new UserRoles(1, "Manager"));
+		arrl.add(new UserRoles(2, "Employee"));
+		
+		req.setAttribute("roleDropDown", arrl);
+		return "makeClientAccount";
 	}
 	@RequestMapping(value="/populate", method=RequestMethod.GET)
 	public String populate(HttpServletRequest req, HttpServletResponse resp){
