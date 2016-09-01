@@ -97,24 +97,6 @@ public class Blog {
 		// Blogs always start active
 		this.blogActive = true;
 	}
-	
-	//temporary test constructor
-	public Blog(String blogTitle, String blogSubtitle, String blogContent) {
-		super();
-		this.blogTitle = blogTitle;
-		this.blogSubtitle = blogSubtitle;
-		this.blogContent = blogContent;
-		User author = new User();
-		author.setFirstName("Simon");
-		author.setLastName("& Garfunkel");
-		author.setDescription("Simon and Garfunkel are Paul Simon and Art Garfunkel. "
-				+ "They are musicians who one day decided to start recording together. "
-				+ "<i>The Sound of Silence</i> might be their most well-known song.");
-		// Blogs publish date is the date of construction
-		this.publishDate = new Date();
-		// Blogs always start active
-		this.blogActive = true;
-	}
 
 	/**
 	 *   Getters & Setters

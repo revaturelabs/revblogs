@@ -132,17 +132,11 @@ public class BaseController {
 			}
 			blog.setTags(tmpTags);
 		}
-		
-//		User author = new User();
-//		author.setFirstName("Simon");
-//		author.setLastName("& Garfunkel");
-//		author.setDescription("Simon and Garfunkel are Paul Simon and Art Garfunkel. "
-//				+ "They are musicians who one day decided to start recording together. "
-//				+ "<i>The Sound of Silence</i> might be their most well-known song.");
 		User author = businessDelegate.requestUsers("dpickles");
 		blog.setAuthor(author);
 		blog.setPublishDate(new Date());
-//		businessDelegate.putRecord(blog);
+		
+		businessDelegate.putRecord(blog);
 		
 		HtmlWriter htmlWriter;
 		try {
@@ -151,9 +145,7 @@ public class BaseController {
 			TemporaryFile blogTempFile = htmlWriter.render();
 			req.setAttribute("blog", blog);
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
 		} catch (IOException e1) {
-			e1.printStackTrace();
 		}
 		return "preview-blog";
 	}
