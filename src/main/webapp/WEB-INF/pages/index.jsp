@@ -17,46 +17,8 @@
 </head>
 
 <body ng-app="app" ng-controller="BlogIndexController">
-  <nav class="page-navigation navbar navbar-default navbar-fixed-top">
-    <div class="container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="#"><img src="resources/img/rev-brand.png" /></a>
-      </div>
-
-      <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav">
-          <li class="active"><a href="#">Home</a></li>
-          <li><a href="#">About</a></li>
-        </ul>
-        <form class="navbar-form navbar-right .hidden-xs">
-          <div class="form-group input-group post-search">
-            <input type="text" class="form-control" placeholder="Search">
-            <span class="input-group-btn">
-              <button class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
-            </span>
-          </div>
-        </form>
-      </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-  </nav>
-  <div class="container visible-xs-block" style="margin-top: 80px">
-  	<form>
-       <div class="form-group input-group post-search">
-         <input type="text" class="form-control" placeholder="Search">
-         <span class="input-group-btn">
-           <button class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
-         </span>
-       </div>
-     </form>
-  </div>
-  
+  <jsp:include page="navbar.jsp"></jsp:include>
+  <script>document.getElementById("navhome").className="active";</script>
   <div class="container page-content">
   	<div class="row">
   		<div class="col-xs-12">
@@ -82,15 +44,6 @@
       </div>
     </div>
   </div>
-  <div class="footer">
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-6">
-          <img class="img-responsive" src="resources/img/rev-footer.png" />
-        </div>
-      </div>
-    </div>
-  </div>
-  <script type="text/javascript" src="resources/js/ui.js"></script>
+  <jsp:include page="footer.jsp"></jsp:include>
 </body>
 </html>
