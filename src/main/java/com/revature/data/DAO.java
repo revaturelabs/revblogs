@@ -18,6 +18,7 @@ public interface DAO {
 	
 	// Push
 	public void insertRecord(Object obj);
+	public void editRecord(Object obj);
 	
 	// Pull
 	public User getUsers(String username);
