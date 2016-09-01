@@ -2,10 +2,8 @@ package com.revature.service.impl;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 
 import org.jets3t.service.S3Service;
-import org.jets3t.service.S3ServiceException;
 import org.jets3t.service.acl.AccessControlList;
 import org.jets3t.service.acl.GroupGrantee;
 import org.jets3t.service.acl.Permission;
