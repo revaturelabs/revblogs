@@ -7,8 +7,6 @@ import java.util.Set;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.revature.beans.Blog;
 import com.revature.beans.Tags;
@@ -16,7 +14,6 @@ import com.revature.beans.User;
 import com.revature.beans.UserRoles;
 import com.revature.service.impl.Crypt;
 
-@Transactional
 public class Population {
 	
 	// ALL TAGS
@@ -41,7 +38,6 @@ public class Population {
 	
 	//-----------------------------------
 	// Roles
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void populateRoles(){
 		
 		/**
@@ -70,7 +66,6 @@ public class Population {
 	
 	//-----------------------------------
 	// Tags
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void populateTags(){
 		
 		/**
@@ -102,7 +97,6 @@ public class Population {
 	
 	//-----------------------------------
 	// Blogs
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void populateBlogs(){
 		
 		/**
@@ -219,7 +213,6 @@ public class Population {
 	
 	//-----------------------------------
 	// Users
-	@Transactional(propagation = Propagation.REQUIRED)
 	public void populateUsers(){
 		
 		String[] username = new String[]{
