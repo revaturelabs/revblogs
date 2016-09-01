@@ -22,24 +22,7 @@ public class BlogPostDTO {
 	
 	@JsonProperty("post_date")
 	Date postDate = new Date();
-	
-	public BlogPostDTO() {
-		super();
-	}
-	public BlogPostDTO(Blog post) {
-		super();
-		this.id = post.getBlogId();
-		this.title = post.getBlogTitle();
-		this.subtitle = post.getBlogSubtitle();
-		this.content = post.getBlogContent();
-		this.content = Jsoup.parse(content).text();
-		Set<Tags> t = post.getTags();
-		for (Tags tag: t) {
-			this.tags.add(tag.getDescription());
-		}
-		this.author = new AuthorDTO();
-		this.postDate = post.getPublishDate();
-	}
+
 	public int getId() {
 		return id;
 	}
@@ -81,5 +64,23 @@ public class BlogPostDTO {
 	}
 	public void setPostDate(Date postDate) {
 		this.postDate = postDate;
+	}
+
+	public BlogPostDTO() {
+		super();
+	}
+	public BlogPostDTO(Blog post) {
+		super();
+		this.id = post.getBlogId();
+		this.title = post.getBlogTitle();
+		this.subtitle = post.getBlogSubtitle();
+		this.content = post.getBlogContent();
+		this.content = Jsoup.parse(content).text();
+		Set<Tags> t = post.getTags();
+		for (Tags tag: t) {
+			this.tags.add(tag.getDescription());
+		}
+		this.author = new AuthorDTO(post.getAuthor());
+		this.postDate = post.getPublishDate();
 	}
 }

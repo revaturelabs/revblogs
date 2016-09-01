@@ -2,7 +2,16 @@ package com.revature.beans;
 
 import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+import org.hibernate.search.annotations.Field;
 
 @Entity
 @Table(name="PP_TAGS")
@@ -17,6 +26,7 @@ public class Tags {
 	private int tagId;
 	
 	@Column(name="TAG_DESCRIPTION", unique=true, nullable=false)
+	@Field
 	private String description;
 	
 	//----------------------------------

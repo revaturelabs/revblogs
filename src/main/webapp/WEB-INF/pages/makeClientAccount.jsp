@@ -11,11 +11,13 @@
 </head>
 <body>
 	<div>
-		<form:form commandName="">
+		<form:form commandName="user">
 			<form:input id="email" path="email" /><br />
 			<form:password id="pass" path="password" /><br />
 			<form:select id="role" path="jobTitle">
-				<form:options items="${roleDropDown}"/>
+				<c:forEach var="t" items="${roleDropDown}">
+					<form:option value="${t.userRoleId}" ><c:out value="${t.role}"></c:out></form:option>
+				</c:forEach>
 			</form:select>
 			<input type="button" value="Add User"/>
 		</form:form>

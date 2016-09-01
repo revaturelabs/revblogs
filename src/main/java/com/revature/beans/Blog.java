@@ -17,8 +17,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
+
 @Entity
 @Table(name="PP_BLOG")
+@Indexed
 public class Blog {
 	
 	//----------------------------------
@@ -30,9 +35,11 @@ public class Blog {
 	private int blogId;
 	
 	@Column(name="BLOG_TITLE", unique=true, nullable=false)
+	@Field
 	private String blogTitle;
 	
 	@Column(name="BLOG_SUBTITLE")
+	@Field
 	private String blogSubtitle;
 	
 	@Column(name="BLOG_CONTENT", length=3000, nullable=false)
@@ -53,6 +60,7 @@ public class Blog {
 	// Realationship Mapping
 	@ManyToOne
 	@JoinColumn(name="BLOG_AUTHOR", nullable=false)
+	@IndexedEmbedded
 	private User author;
 	
 	@OneToMany
@@ -63,6 +71,7 @@ public class Blog {
 	@JoinTable(name="BLOG_TAGS",
 		joinColumns=@JoinColumn(name="BLOG_ID"),
 		inverseJoinColumns=@JoinColumn(name="TAG_ID"))
+	@IndexedEmbedded
 	private Set<Tags> tags;
 	
 	/**
