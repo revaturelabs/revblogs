@@ -6,8 +6,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,6 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.revature.app.TemporaryFile;
 import com.revature.beans.Blog;
+import com.revature.beans.Tags;
 import com.revature.beans.User;
 import com.revature.beans.UserRoles;
 import com.revature.service.BusinessDelegate;
@@ -82,8 +86,46 @@ public class BaseController {
 			BindingResult bindingResult,
 			HttpServletRequest req,
 			HttpServletResponse resp) {
+		/*
+		 * Blog Bean will be generated with proper tags and fields
+		 */
 		
-		blog.setPublishDate(new Date());
+		if(blog.getBlogTagsString().isEmpty()){
+			blog.setTags(new HashSet<Tags>());
+		}
+		else{
+			String tmp = blog.getBlogTagsString();
+			List<String> myList = Arrays.asList(tmp.split(","));
+			Set<Tags> tmpTags = new HashSet<Tags>();
+			List<Tags> dbTags = businessDelegate.requestTags();
+			/*
+			 * loop through List of tag descriptions the user types in
+			 */
+			for(String a : myList){
+				boolean check = false;
+				String tagDesc = a.toLowerCase().replaceAll("\\s+","");
+				/*
+				 * loop through database Tags to check with user input tags
+				 * if theres a match, put instance of database Tag into User bean, if not, create new Tag bean
+				 */
+				for(Tags b : dbTags){
+					if(b.getDescription().equals(tagDesc)){
+						tmpTags.add(b);
+						check = true;
+					}
+				}
+				if(!check){
+					tmpTags.add(new Tags(tagDesc));
+					businessDelegate.putRecord(new Tags(tagDesc));
+				}
+			}
+			blog.setTags(tmpTags);
+		}
+		
+		User tmpUser = businessDelegate.requestUsers("dpickles");
+		blog.setAuthor(tmpUser);
+		businessDelegate.putRecord(blog);
+		
 		HtmlWriter htmlWriter;
 		try {
 			InputStream templateStream = this.getClass().getClassLoader().getResourceAsStream("template.html");
