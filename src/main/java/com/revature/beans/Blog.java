@@ -56,7 +56,7 @@ public class Blog {
 	
 	private Clob staticHTML;
 	
-	transient private String blogTagsString;
+	private transient String blogTagsString;
 	
 	//----------------------------------
 	// Realationship Mapping
