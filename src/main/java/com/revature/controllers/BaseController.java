@@ -55,8 +55,6 @@ public class BaseController {
 	@RequestMapping(value="/populate", method=RequestMethod.GET)
 	public String populate(HttpServletRequest req, HttpServletResponse resp){
 	
-		population.populateProperties();
-		
 		return "login";
 	}
 	@RequestMapping(value="/create-blog", method=RequestMethod.GET)
