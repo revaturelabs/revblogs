@@ -6,22 +6,29 @@ import javax.persistence.*;
 @Table(name="PP_PROPERTIES")
 public class ApplicationProperties {
 	
-		@Id
-		@Column(name="COMPANY")
+	@Id
+	@Column(name="COMPANY", unique=true)
 	private String company;
-		@Column(name="APP")
+	
+	@Column(name="APP", unique=true)
 	private String app;
-		@Column(name="S3")
+	
+	@Column(name="S3", unique=true)
 	private String s3;
-		@Column(name="SERVER")
+	
+	@Column(name="SERVER", unique=true)
 	private String server;
-		@Column(name="JENKINS")
+	
+	@Column(name="JENKINS", unique=true)
 	private String jenkins;
-		@Column(name="SONARQUBE")
+	
+	@Column(name="SONARQUBE", unique=true)
 	private String sonarqube;
-		@Column(name="K")
+	
+	@Column(name="K", unique=true)
 	private String k;
-		@Column(name="V")
+	
+	@Column(name="V", unique=true)
 	private String v;
 	
 	/**

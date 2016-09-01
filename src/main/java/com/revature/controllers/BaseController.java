@@ -3,6 +3,8 @@ package com.revature.controllers;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,9 +21,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.revature.app.TemporaryFile;
 import com.revature.beans.Blog;
+import com.revature.beans.Tags;
+import com.revature.beans.User;
+import com.revature.beans.UserRoles;
 import com.revature.service.BusinessDelegate;
-import com.revature.service.Population;
 import com.revature.service.Logging;
+import com.revature.service.Population;
 
 @Controller
 public class BaseController {
@@ -50,7 +55,8 @@ public class BaseController {
 	@RequestMapping(value="/populate", method=RequestMethod.GET)
 	public String populate(HttpServletRequest req, HttpServletResponse resp){
 	
-		//population.populateDatabase();
+		population.populateProperties();
+		
 		return "login";
 	}
 	@RequestMapping(value="/create-blog", method=RequestMethod.GET)
