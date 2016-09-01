@@ -4,17 +4,22 @@
 tinymce.init({ 
 	selector:'textarea',
 	plugins: ['codesample','emoticons',
-	          'print',
+	          'print image',
 	          'textcolor colorpicker textpattern',
 	          'insertdatetime nonbreaking save table contextmenu directionality'],
-	toolbar: 'insertfile undo redo | styleselect forecolor backcolor | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | codesample | emoticons |  print',
+	toolbar: 'insertfile undo redo | styleselect forecolor backcolor | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | codesample | image emoticons |  print',
 	menubar: ["default","tools"],
 	setup: function(editor){
 		editor.addMenuItem('s3', {
 			 text: 'Upload Picture',
 		      context: 'tools',
 		      onclick: function(){
-		        //to do
+		    	  editor.windowManager.open({
+		    		  title: 'My html dialog',
+		    		  url: 'add-picture',
+		    		  width: 700,
+		    		  height: 600
+		    		})
 		      }
 		});
 	},
