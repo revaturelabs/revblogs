@@ -90,41 +90,47 @@ public class BaseController {
 		 * Blog Bean will be generated with proper tags and fields
 		 */
 		
-		if(blog.getBlogTagsString().isEmpty()){
-			blog.setTags(new HashSet<Tags>());
-		}
-		else{
-			String tmp = blog.getBlogTagsString();
-			List<String> myList = Arrays.asList(tmp.split(","));
-			Set<Tags> tmpTags = new HashSet<Tags>();
-			List<Tags> dbTags = businessDelegate.requestTags();
-			/*
-			 * loop through List of tag descriptions the user types in
-			 */
-			for(String a : myList){
-				boolean check = false;
-				String tagDesc = a.toLowerCase().replaceAll("\\s+","");
-				/*
-				 * loop through database Tags to check with user input tags
-				 * if theres a match, put instance of database Tag into User bean, if not, create new Tag bean
-				 */
-				for(Tags b : dbTags){
-					if(b.getDescription().equals(tagDesc)){
-						tmpTags.add(b);
-						check = true;
-					}
-				}
-				if(!check){
-					tmpTags.add(new Tags(tagDesc));
-					businessDelegate.putRecord(new Tags(tagDesc));
-				}
-			}
-			blog.setTags(tmpTags);
-		}
+//		if(blog.getBlogTagsString().isEmpty()){
+//			blog.setTags(new HashSet<Tags>());
+//		}
+//		else{
+//			String tmp = blog.getBlogTagsString();
+//			List<String> myList = Arrays.asList(tmp.split(","));
+//			Set<Tags> tmpTags = new HashSet<Tags>();
+//			List<Tags> dbTags = businessDelegate.requestTags();
+//			/*
+//			 * loop through List of tag descriptions the user types in
+//			 */
+//			for(String a : myList){
+//				boolean check = false;
+//				String tagDesc = a.toLowerCase().replaceAll("\\s+","");
+//				/*
+//				 * loop through database Tags to check with user input tags
+//				 * if theres a match, put instance of database Tag into User bean, if not, create new Tag bean
+//				 */
+//				for(Tags b : dbTags){
+//					if(b.getDescription().equals(tagDesc)){
+//						tmpTags.add(b);
+//						check = true;
+//					}
+//				}
+//				if(!check){
+//					tmpTags.add(new Tags(tagDesc));
+//					businessDelegate.putRecord(new Tags(tagDesc));
+//				}
+//			}
+//			blog.setTags(tmpTags);
+//		}
 		
-		User tmpUser = businessDelegate.requestUsers("dpickles");
-		blog.setAuthor(tmpUser);
-		businessDelegate.putRecord(blog);
+		User author = new User();
+		author.setFirstName("Simon");
+		author.setLastName("& Garfunkel");
+		author.setDescription("Simon and Garfunkel are Paul Simon and Art Garfunkel. "
+				+ "They are musicians who one day decided to start recording together. "
+				+ "<i>The Sound of Silence</i> might be their most well-known song.");
+		blog.setAuthor(author);
+		blog.setPublishDate(new Date());
+//		businessDelegate.putRecord(blog);
 		
 		HtmlWriter htmlWriter;
 		try {
