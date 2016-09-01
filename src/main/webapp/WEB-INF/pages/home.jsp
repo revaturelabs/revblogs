@@ -12,7 +12,7 @@
 	<h1>${title}</h1>
 	<h2>${message}</h2>
 	
-	<sec:authorize access="hasRole('ADMIN')" >Welcome admin!</sec:authorize>
-	<sec:authorize access="hasRole('USER')" >Welcome user!</sec:authorize>
+	<sec:authorize access="hasRole('ADMIN')" >Welcome Admin!</sec:authorize>
+	<sec:authorize access="hasRole('CONTRIBUTOR')" >Welcome Contributor!</sec:authorize>
 </body>
 </html>
