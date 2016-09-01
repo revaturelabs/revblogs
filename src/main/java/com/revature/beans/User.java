@@ -19,8 +19,9 @@ import org.hibernate.search.annotations.Field;
 @Table(name="PP_USER")
 public class User {
 	
-	//----------------------------------
-	// Attributes
+	/**
+	 *  User Attributes
+	 */
 	@Id
 	@Column(name="USER_ID")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="userSequence")
@@ -59,8 +60,9 @@ public class User {
 	@Column(name="USER_ACTIVE", nullable=false)
 	private boolean active;
 	
-	//----------------------------------
-	// Realationship Mapping
+	/**
+	 *  Relationship Mapping
+	 */
 	@ManyToOne
 	@JoinColumn(name="USER_ROLE", nullable=false)
 	private UserRoles userRole;
@@ -87,6 +89,46 @@ public class User {
 		this.linkedInURL = linkedInURL;
 		this.description = description;
 		this.userRole = userRole;
+		
+		// User always starts active
+		this.active = true;
+	}		
+		/**
+		 *  	Constructor without password, user role and profile picture
+		 */
+	public User(String username, String email, String firstName, String lastName, String jobTitle,
+				String linkedInURL, String description){
+		super();
+		this.username = username;
+		this.email = email;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.jobTitle = jobTitle;
+		this.linkedInURL = linkedInURL;
+		this.description = description;
+		
+		// User always starts active
+		this.active = true;
+		
+	}
+		/**
+		 * 	Constructor for updating User password
+		 */
+	public User(String password){
+		super();
+		this.password = password;
+		
+		// User always starts active
+		this.active = true;
+	}
+	
+		/**
+		 * 	Constructor for Admin to create new Contributor
+		 */
+	public User(String email, String password){
+		super();
+		this.email = email;
+		this.password = password;
 		
 		// User always starts active
 		this.active = true;
