@@ -62,14 +62,14 @@ public class AjaxController {
 			StringBuilder content = new StringBuilder();
 			for (int j=0; j<numParagraphs; j++) {
 				content.append("<p>");
-				content.append(ng.makeText((int)(rand.nextInt(5))+3));
+				content.append(ng.makeText((rand.nextInt(5))+3));
 				content.append("</p>");
 			}
 			post.setBlogContent(content.toString());
 			
 			int date2008 = 1199145600;
 			int date2017 = 1483228800;
-			int randomDate = (int)(rand.nextInt(date2017-date2008))+date2008;
+			int randomDate = (rand.nextInt(date2017-date2008))+date2008;
 			
 			post.setPublishDate(new Date(randomDate));
 			Set<Evidence> files = new HashSet<>();
