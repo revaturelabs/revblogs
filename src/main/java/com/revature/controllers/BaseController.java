@@ -111,8 +111,10 @@ public class BaseController {
 					}
 				}
 				if(!check){
-					tmpTags.add(new Tags(tagDesc));
-					businessDelegate.putRecord(new Tags(tagDesc));
+					Tags myTag = new Tags(tagDesc);
+					businessDelegate.putRecord(myTag);
+					tmpTags.add(myTag);
+					
 				}
 			}
 			blog.setTags(tmpTags);
