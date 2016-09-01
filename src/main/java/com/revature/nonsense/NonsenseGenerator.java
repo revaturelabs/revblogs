@@ -61,15 +61,15 @@ public class NonsenseGenerator {
             "expected to buy", "expected to sell", "reported to have met with", "works together with",
             "plans cease fire against", "starts war with", "signs truce with", "now manages" };
 
+    private NonsenseGenerator() {
+      mRandom = new Random();
+    }
+    
     public static synchronized NonsenseGenerator getInstance() {
         if (sInstance == null) {
             sInstance = new NonsenseGenerator();
         }
         return sInstance;
-    }
-
-    private NonsenseGenerator() {
-        mRandom = new Random();
     }
 
     /** Produces something that reads like a headline. */
@@ -85,7 +85,7 @@ public class NonsenseGenerator {
      * @return the generated sentence.
      */
     public String makeSentence(boolean isHeadline) {
-        List<String> words = new ArrayList<String>();
+        List<String> words = new ArrayList<>();
         generateSentence(words, isHeadline);
         words.set(0, String.valueOf(Character.toUpperCase(words.get(0).charAt(0))) + words.get(0).substring(1));
         return joinWords(words);
@@ -120,12 +120,12 @@ public class NonsenseGenerator {
      */
     private void generateSentence(List<String> words, boolean isHeadline) {
         if (!isHeadline && mRandom.nextInt(4) == 0)
-            generateTimeClause(words, isHeadline);
+            generateTimeClause(words);
         generateAgent(words, isHeadline);
         generatePredicate(words, isHeadline);
     }
-
-    private void generateTimeClause(List<String> words, boolean isHeadline) {
+    
+    private void generateTimeClause(List<String> words) {
         if (mRandom.nextInt(2) == 0) {
             words.add(pickOneOf("today", "yesterday", "this afternoon", "this morning", "last evening"));
         } else {
@@ -171,7 +171,7 @@ public class NonsenseGenerator {
 
     private static String joinWords(List<String> words) {
         int i;
-        if (words.size() == 0) {
+        if (words.isEmpty()) {
             return "";
         }
         StringBuilder sb = new StringBuilder();

@@ -2,8 +2,8 @@ package com.revature.service.impl;
 
 public class Crypt {
 
-	public Crypt(){
-		//Empty constructor
+	private Crypt(){
+		throw new IllegalAccessError("Utility class");
 	}
 	
 	// Encryption 

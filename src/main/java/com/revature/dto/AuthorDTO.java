@@ -11,6 +11,15 @@ public class AuthorDTO {
 	
 	@JsonProperty("profile_photo")
 	String profilePhoto;
+	public AuthorDTO() {
+		super();
+	}
+	public AuthorDTO(User author) {
+		this();
+		this.id = author.getUserId();
+		this.name = author.getFirstName() + " " + author.getLastName();
+		this.link = "/api/posts?author=" + id;
+	}
 	public int getId() {
 		return id;
 	}
@@ -29,19 +38,10 @@ public class AuthorDTO {
 	public void setLink(String link) {
 		this.link = link;
 	}
-	public AuthorDTO() {
-		super();
-	}
 	public String getProfilePhoto() {
 		return profilePhoto;
 	}
 	public void setProfilePhoto(String profilePhoto) {
 		this.profilePhoto = profilePhoto;
 	}
-	public AuthorDTO(User author) {
-		this();
-		this.id = author.getUserId();
-		this.name = author.getFirstName() + " " + author.getLastName();
-		this.link = "/api/posts?author=" + id;
-	}	
 }
