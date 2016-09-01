@@ -133,15 +133,14 @@ public class BaseController {
 		User author = businessDelegate.requestUsers("dpickles");
 		blog.setAuthor(author);
 		blog.setPublishDate(new Date());
-		businessDelegate.putRecord(blog);
+//		businessDelegate.putRecord(blog);
 		
 		HtmlWriter htmlWriter;
 		try {
 			InputStream templateStream = this.getClass().getClassLoader().getResourceAsStream("template.html");
 			htmlWriter = new HtmlWriter(blog, blog.getAuthor(), templateStream);
-			TemporaryFile tempFile = htmlWriter.render();
-			String tempPath = tempFile.getTemporaryFile().getPath();
-			req.setAttribute("path", tempPath);
+			TemporaryFile blogTempFile = htmlWriter.render();
+			req.setAttribute("blog", blog);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e1) {

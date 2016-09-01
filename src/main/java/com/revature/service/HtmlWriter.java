@@ -3,6 +3,7 @@ package com.revature.service;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -35,14 +36,8 @@ public class HtmlWriter {
 	public TemporaryFile render() throws IOException {
 		String line;
 		String title = ""+blog.getBlogTitle().hashCode()+blog.getPublishDate().hashCode();
-//		String fileName = outPath+title+".html";
 		String fileName = title+".html";
-//		tempReader = new BufferedReader(new FileReader(tempPath));
-//		byte[] templateStreamBytes = new byte[templateStream.available()];
-//		int bytesRead = 0;
-//		while ( (bytesRead = templateStream.read(templateStreamBytes)) >= 0 ) {
-//			
-//		}
+
 		TemporaryFile tempFile = TemporaryFile.make(fileName);
 		File file = tempFile.getTemporaryFile();
 		FileWriter fw = new FileWriter(file);
@@ -64,6 +59,7 @@ public class HtmlWriter {
 		}
 		blogWriter.close();
 		tempReader.close();
+
 		return tempFile;
 	}	
 }

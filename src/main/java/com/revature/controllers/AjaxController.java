@@ -71,7 +71,7 @@ public class AjaxController {
 			
 			post.setPublishDate(new Date(randomDate));
 			Set<Evidence> files = new HashSet<>();
-			files.add(new Evidence(1, "http://placekitten.com/500/500"));
+			files.add(new Evidence("http://placekitten.com/500/500"));
 			post.setEvidences(files);
 			Set<Tags> t = new HashSet<>();
 			t.add(new Tags("Java"));
