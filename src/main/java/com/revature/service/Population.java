@@ -199,7 +199,7 @@ public class Population {
 		
 		for(int i = 0; i < blogTitle.length; i++){
 			
-			Set<Tags> tagsSet = new HashSet<Tags>();
+			Set<Tags> tagsSet = new HashSet<>();
 			
 			// Attach the set of Product Categories that correspond to THIS particular product.
 			for(int j = 0; j < tagIndexes.length; j++){
@@ -278,7 +278,10 @@ public class Population {
 		UserRoles admin = (UserRoles) criteria1.uniqueResult();
 		UserRoles contributor = (UserRoles) criteria2.uniqueResult();
 		
-		UserRoles myRole = null;
+		//Use a new constructor or use as is below
+    //Setting to null tells the GC it can be destroyed
+		//In this case if that happens code breaks
+		UserRoles myRole;
 		
 		for(int i = 0; i < username.length; i++){
 			

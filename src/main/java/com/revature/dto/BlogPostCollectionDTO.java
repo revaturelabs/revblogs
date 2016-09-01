@@ -18,6 +18,9 @@ public class BlogPostCollectionDTO {
 	String prev = null;
 	String next = null;
 	List<BlogPostDTO> posts = new ArrayList<>();
+	public BlogPostCollectionDTO() {
+		super();
+	}
 	public int getPage() {
 		return page;
 	}
@@ -54,10 +57,5 @@ public class BlogPostCollectionDTO {
 	public void setPosts(List<BlogPostDTO> posts) {
 		this.posts = posts;
 	}
-	public BlogPostCollectionDTO() {
-		super();
-		
-	}
-	
 	
 }
