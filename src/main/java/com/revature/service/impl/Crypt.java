@@ -2,6 +2,10 @@ package com.revature.service.impl;
 
 public class Crypt {
 
+	public Crypt(){
+		//Empty constructor
+	}
+	
 	// Encryption 
 	public  static String encrypt(String _password, String _username, String _email){
 		
@@ -26,7 +30,9 @@ public class Crypt {
 		
         int keyBase = tempUsername.length;
         int keyCeil = tempUsername.length;
-        int keyIndex = 0;
+        //Use a new constructor or use as is below
+        //Setting to 0 then reassigning is a waste of resources
+        int keyIndex;
         
 		for(int i = 0; i < tempPassword.length; i++){
 			
@@ -69,15 +75,13 @@ public class Crypt {
 			}
 		}
 		
-		String result = new String(tempResult);
-		
-		return result;
+		return new String(tempResult);
 	}
 	private static char cipherLetter(char[] _alpha1, char[] _alpha2, char _letter, int _keyIndex, char[] _keyword){
 		
-		char temp;
-		
-		int cipherLetter = 0;
+		//Use a new constructor or use as is below
+    //Setting to 0 then reassigning is a waste of resources
+		int cipherLetter;
 		int indexLetter = 0;
 		int indexKey = 0;
 		
@@ -105,10 +109,7 @@ public class Crypt {
 			cipherLetter -= 26;
 		}
 		
-		 
-		temp = _alpha1[cipherLetter];
-		
-		return temp;
+		return _alpha1[cipherLetter];
 	}
 	private static char cipherNumber(char _number){
 		
@@ -141,7 +142,10 @@ public class Crypt {
 		}
 	}
 	private static char cipherOther(char _other){
-		
+		//For future practice please limit cases to
+		//at most 30 cases, reduces complexity.
+		//This can be solved by nested method
+		//calls in cases like _other<60
 		switch(_other){
 		
 			case 32:  return 45;
@@ -206,7 +210,9 @@ public class Crypt {
         
         int keyBase = tempUsername.length;
         int keyCeil = tempUsername.length;
-        int keyIndex = 0;
+        //Use a new constructor or use as is below
+        //Setting to 0 then reassigning is a waste of resources
+        int keyIndex;
         
 		for(int i = 0; i < tempPassword.length; i++){
 			
@@ -249,14 +255,12 @@ public class Crypt {
 			}
 		}
 		
-		String result = new String(tempResult);
-		
-		return result;
+		return new String(tempResult);
 	}
 	private static char decipherLetter(char[] _alpha1, char[] _alpha2, char _letter, int _keyIndex, char[] _keyword){
 		
-		char temp;
-		
+		//Use a new constructor or use as is below
+    //Setting to 0 then reassigning is a waste of resources
 		int cipherLetter = 0;
 		int indexLetter = 0;
 		int indexKey = 0;
@@ -285,14 +289,12 @@ public class Crypt {
 			cipherLetter += 26;
 		}
 		
-		temp = _alpha1[cipherLetter];
-		
-		return temp;
+		return _alpha1[cipherLetter];
 	}
 	private static char decipherNumber(char _number){
 		
 		int trueNumber = Character.getNumericValue(_number);
-		
+
 		switch(trueNumber){
 		
 			case 0:
@@ -320,7 +322,10 @@ public class Crypt {
 		}
 	}
 	private static char decipherOther(char _other){
-		
+		//For future practice please limit cases to
+		//at most 30 cases, reduces complexity.
+		//This can be solved by nested method
+		//calls in cases like _other<60
 		switch(_other){
 		
 		case 32: return 37;
