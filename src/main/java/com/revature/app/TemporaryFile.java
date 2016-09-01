@@ -88,8 +88,8 @@ public class TemporaryFile {
 		return make(fileName, fileContents.getBytes());
 	}
 	
-	public static TemporaryFile make(String fileString) {
-		return make("temp.tmp", fileString.getBytes());
+	public static TemporaryFile make(String fileContents) {
+		return make("temp.tmp", fileContents.getBytes());
 	}
 	
 	public File getTemporaryFile() {
@@ -102,6 +102,11 @@ public class TemporaryFile {
 	public void destroy() {
 		removeTemporaryFile();
 		removeTemporaryDirectory();
+	}
+	
+	public boolean isDestroyed() {
+		return (tempFile == null || !tempFile.exists()) &&
+			   (temporaryDirectory == null || !temporaryDirectory.exists());
 	}
 	
 	protected boolean createTemporaryFile(MultipartFile multipartFile) throws IOException {
@@ -163,7 +168,7 @@ public class TemporaryFile {
 	}
 	
 	protected boolean removeTemporaryDirectory() {
-		
+				
 		return temporaryDirectory == null ||
 			   !temporaryDirectory.exists() ||
 			   temporaryDirectory.delete();
