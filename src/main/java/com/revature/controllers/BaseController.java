@@ -21,7 +21,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.revature.app.TemporaryFile;
 import com.revature.beans.Blog;
-import com.revature.beans.Tags;
 import com.revature.beans.User;
 import com.revature.beans.UserRoles;
 import com.revature.service.BusinessDelegate;
@@ -52,11 +51,19 @@ public class BaseController {
 	
 		return "login";
 	}
+	@RequestMapping(value="/temp-AddClient", method=RequestMethod.GET)
+	public String newClient(HttpServletRequest req, HttpServletResponse resp){
+		req.setAttribute("user", new User());
+		List<UserRoles> arrl = new ArrayList<>();
+		arrl.add(new UserRoles(1, "Manager"));
+		arrl.add(new UserRoles(2, "Employee"));
+		
+		req.setAttribute("roleDropDown", arrl);
+		return "makeClientAccount";
+	}
 	@RequestMapping(value="/populate", method=RequestMethod.GET)
 	public String populate(HttpServletRequest req, HttpServletResponse resp){
 	
-		population.populateProperties();
-		
 		return "login";
 	}
 	@RequestMapping(value="/create-blog", method=RequestMethod.GET)
