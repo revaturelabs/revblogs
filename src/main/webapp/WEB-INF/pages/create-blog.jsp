@@ -51,6 +51,11 @@
 	<!-- <button type="button">Add Reference</button>
 	<br>
 	<textarea rows="5" cols="100"></textarea> -->
+	<br>
+ 	Apply tags (separated by commas):
+ 	<br>
+	<form:input path="blogTagsString" id="tagList" style="resize: none" style="width: 300px"></form:input>
+	<br>
 	<div>Share:</div>
 	<a class="btn btn-social-icon btn-linkedin" target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url=http://dev.pjw6193.tech/pages/create-blog.jsp">
 		<span class="fa fa-linkedin"></span>	

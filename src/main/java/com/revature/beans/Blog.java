@@ -55,6 +55,9 @@ public class Blog {
 	private boolean blogActive;
 	
 	private Clob staticHTML;
+	private Clob staticContent;
+	
+	private transient String blogTagsString;
 	
 	//----------------------------------
 	// Realationship Mapping
@@ -158,10 +161,22 @@ public class Blog {
 	public void setStaticHTML(Clob staticHTML) {
 		this.staticHTML = staticHTML;
 	}
+	public Clob getStaticContent() {
+		return staticContent;
+	}
+	public void setStaticContent(Clob staticContent) {
+		this.staticContent = staticContent;
+	}
 	public User getAuthor() {
 		return author;
 	}
 	public void setAuthor(User author) {
 		this.author = author;
+	}
+	public String getBlogTagsString() {
+		return blogTagsString;
+	}
+	public void setBlogTagsString(String blogTagsString) {
+		this.blogTagsString = blogTagsString;
 	}
 }

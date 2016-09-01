@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 import java.util.function.Consumer;
 
@@ -52,26 +53,27 @@ public class AjaxController {
 		
 		// Generate random posts
 		for (int i=1; i<=55; i++) {
+			Random rand = new Random();
 			Blog post = new Blog();
 			post.setBlogTitle(ng.makeHeadline());
 			post.setBlogSubtitle(ng.makeHeadline());
-			
-			int numParagraphs = (int)(Math.random()*10)+5;
+
+			int numParagraphs = rand.nextInt(10) + 5;
 			StringBuilder content = new StringBuilder();
 			for (int j=0; j<numParagraphs; j++) {
 				content.append("<p>");
-				content.append(ng.makeText((int)(Math.random()*5)+3));
+				content.append(ng.makeText((rand.nextInt(5))+3));
 				content.append("</p>");
 			}
 			post.setBlogContent(content.toString());
 			
 			int date2008 = 1199145600;
 			int date2017 = 1483228800;
-			int randomDate = (int)(Math.random()*(date2017-date2008))+date2008;
+			int randomDate = (rand.nextInt(date2017-date2008))+date2008;
 			
 			post.setPublishDate(new Date(randomDate));
 			Set<Evidence> files = new HashSet<>();
-			files.add(new Evidence(1, "http://placekitten.com/500/500"));
+			files.add(new Evidence("http://placekitten.com/500/500"));
 			post.setEvidences(files);
 			Set<Tags> t = new HashSet<>();
 			t.add(new Tags("Java"));

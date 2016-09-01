@@ -15,14 +15,27 @@ tinymce.init({
 		      context: 'tools',
 		      onclick: function(){
 		    	  editor.windowManager.open({
-		    		  title: 'My html dialog',
+		    		  title: 'Upload Picture',
 		    		  url: 'add-picture',
-		    		  width: 700,
-		    		  height: 600
+		    		  width: 200,
+		    		  height: 130
 		    		})
 		      }
 		});
-	},
+		editor.on('keydown', function(event) {
+	        if (event.keyCode == 9) { // tab pressed
+	          if (event.shiftKey) {
+	            editor.execCommand('Outdent');
+	          }
+	          else {
+	            editor.execCommand('Indent');
+	          }
+
+	          event.preventDefault();
+	          return false;
+	        }
+	    });
+		},
 	imagetools_cors_hosts: ['tinymce.com', 'codepen.io'],
 	  content_css: [
 	    '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',

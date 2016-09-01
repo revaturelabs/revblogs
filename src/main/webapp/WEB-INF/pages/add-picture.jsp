@@ -7,11 +7,10 @@
 <title>Upload Picture</title>
 </head>
 <body>
-<h2>Upload Picture</h2>
 <form method="POST" action="upload-picture" enctype="multipart/form-data">
 	<input type="file" name="file" id="fileChooser" /><br />
 	<input type="submit" name="upload" value="Upload" />
 </form>
-<div id="pictureURL"></div>
+
 </body>
 </html>

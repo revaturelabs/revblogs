@@ -1,10 +1,9 @@
 package com.revature.appTest;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -22,11 +21,14 @@ public class TemporaryFileTest {
 		String contents = "SillyFile";
 		temporaryFile = TemporaryFile.make(contents);
 		File testTempFile = temporaryFile.getTemporaryFile();
-		BufferedReader buff = new BufferedReader(new FileReader(testTempFile));
+		FileReader fileReader = new FileReader(testTempFile);
+		BufferedReader buff = new BufferedReader(fileReader);
 		String line = buff.readLine();
 		while ( (line = buff.readLine()) != null ) {
 			assertTrue(line.equals(contents));
 		}
+		buff.close();
+		fileReader.close();
 		temporaryFile.destroy();
 	}
 	
