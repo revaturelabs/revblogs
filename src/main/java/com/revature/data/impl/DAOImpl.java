@@ -21,6 +21,15 @@ public class DAOImpl implements DAO{
 	private SessionFactory sessionFactory;
 	private Session session;
 
+	public DAOImpl(){
+		super();
+	}
+	
+	public DAOImpl(SessionFactory _factory){
+		this();
+		setSessionFactory(_factory);
+	}
+	
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
@@ -29,15 +38,6 @@ public class DAOImpl implements DAO{
 	}
 	public Session getSession(){
 		return session;
-	}
-
-	public DAOImpl(){
-		super();
-	}
-	
-	public DAOImpl(SessionFactory _factory){
-		this();
-		setSessionFactory(_factory);
 	}
 	
 	// Push
@@ -64,38 +64,32 @@ public class DAOImpl implements DAO{
 	public User getUsers(String _username){
 		
 		Criteria criteria = session.createCriteria(User.class).add(Restrictions.eq("username", _username));
-		User user = (User)criteria.uniqueResult();
-		return user;
+		return (User)criteria.uniqueResult();
 	}
 	
 	public List<User> getUsers(){
 			
 		Criteria criteria = session.createCriteria(User.class);
-		List<User> users = (List<User>)criteria.list();
-		return users;
+		return (List<User>)criteria.list();
 	}
 	public List<Blog> getBlogs(){
 		
 		Criteria criteria = session.createCriteria(Blog.class);
-		List<Blog> blogs = (List<Blog>)criteria.list();
-		return blogs;
+		return (List<Blog>)criteria.list();
 	}
 	public List<Tags> getTags(){
 		
 		Criteria criteria = session.createCriteria(Tags.class);
-		List<Tags> tags = (List<Tags>)criteria.list();
-		return tags;
+		return (List<Tags>)criteria.list();
 	}
 	public List<UserRoles> getRoles(){
 		
 		Criteria criteria = session.createCriteria(UserRoles.class);
-		List<UserRoles> roles = (List<UserRoles>)criteria.list();
-		return roles;
+		return (List<UserRoles>)criteria.list();
 	}
 	public List<Evidence> getEvidence(){
 
 		Criteria criteria = session.createCriteria(Evidence.class);
-		List<Evidence> evidence = (List<Evidence>)criteria.list();
-		return evidence;
+		return (List<Evidence>)criteria.list();
 	}
 }
