@@ -142,7 +142,7 @@ public class TemporaryFile {
 			FileInputStream fis = new FileInputStream(file);
 			
 			byte[] bytes = new byte[32768];
-			int lengthRead = 0;
+			int lengthRead;
 			while ( (lengthRead = fis.read(bytes)) >= 0 ) {
 				fos.write(bytes, 0, lengthRead);
 			}
