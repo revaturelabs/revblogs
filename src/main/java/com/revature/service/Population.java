@@ -7,16 +7,14 @@ import java.util.Set;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
+import com.revature.beans.ApplicationProperties;
 import com.revature.beans.Blog;
 import com.revature.beans.Tags;
 import com.revature.beans.User;
 import com.revature.beans.UserRoles;
 import com.revature.service.impl.Crypt;
 
-@Transactional
 public class Population {
 	
 	// ALL TAGS
@@ -41,7 +39,6 @@ public class Population {
 	
 	//-----------------------------------
 	// Roles
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void populateRoles(){
 		
 		/**
@@ -70,7 +67,6 @@ public class Population {
 	
 	//-----------------------------------
 	// Tags
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void populateTags(){
 		
 		/**
@@ -102,7 +98,6 @@ public class Population {
 	
 	//-----------------------------------
 	// Blogs
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void populateBlogs(){
 		
 		/**
@@ -199,7 +194,7 @@ public class Population {
 		
 		for(int i = 0; i < blogTitle.length; i++){
 			
-			Set<Tags> tagsSet = new HashSet<Tags>();
+			Set<Tags> tagsSet = new HashSet<>();
 			
 			// Attach the set of Product Categories that correspond to THIS particular product.
 			for(int j = 0; j < tagIndexes.length; j++){
@@ -219,7 +214,6 @@ public class Population {
 	
 	//-----------------------------------
 	// Users
-	@Transactional(propagation = Propagation.REQUIRED)
 	public void populateUsers(){
 		
 		String[] username = new String[]{
@@ -278,7 +272,10 @@ public class Population {
 		UserRoles admin = (UserRoles) criteria1.uniqueResult();
 		UserRoles contributor = (UserRoles) criteria2.uniqueResult();
 		
-		UserRoles myRole = null;
+		//Use a new constructor or use as is below
+		//Setting to null tells the GC it can be destroyed
+		//In this case if that happens code breaks
+		UserRoles myRole;
 		
 		for(int i = 0; i < username.length; i++){
 			
@@ -302,5 +299,56 @@ public class Population {
 		}
 		
 		logger.log("-- Done Populating Users Table --");
+	}
+	
+	//-----------------------------------
+	// Properties
+	public void populateProperties(){
+		
+		/**
+		 *  Insantiate 1 entry with all the encrypted properties.
+		 *  Save that entry in the database.
+		 */
+		
+		String[][] props = new String[][]{
+			
+			{},
+			{},
+			{},
+			{},
+			{},
+			{},
+			{},
+			{}
+		};
+		
+		for(int i = 0; i < props.length; i++){
+			
+			switch(i){
+			
+				case 0: props[i][0] = Crypt.encrypt(props[i][0], props[1][0], props[2][0]); break;
+				case 1: props[i][0] = Crypt.encrypt(props[i][0], props[2][0], props[3][0]); break;
+				case 2: props[i][0] = Crypt.encrypt(props[i][0], props[3][0], props[4][0]); break;
+				case 3: props[i][0] = Crypt.encrypt(props[i][0], props[4][0], props[5][0]); break;
+				case 4: props[i][0] = Crypt.encrypt(props[i][0], props[5][0], props[6][0]); break;
+				case 5: props[i][0] = Crypt.encrypt(props[i][0], props[6][0], props[7][0]); break;
+				case 6: props[i][0] = Crypt.encrypt(props[i][0], props[7][0], props[0][0]); break;
+				case 7: props[i][0] = Crypt.encrypt(props[i][0], props[0][0], props[1][0]); break;
+			}
+		}
+
+		ApplicationProperties propObj = new ApplicationProperties(	props[0][0], 
+																	props[1][0], 
+																	props[2][0],
+																	props[3][0],
+																	props[4][0], 
+																	props[5][0], 
+																	props[6][0], 
+																	props[7][0]);
+		
+		delegate.putRecord(propObj);
+		
+		
+		logger.log("-- Done Populating Properties Table --");
 	}
 }

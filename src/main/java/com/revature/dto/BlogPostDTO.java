@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.Set;
 
 import org.jsoup.Jsoup;
-import org.jsoup.examples.HtmlToPlainText;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.revature.beans.Blog;
@@ -23,7 +22,7 @@ public class BlogPostDTO {
 	
 	@JsonProperty("post_date")
 	Date postDate = new Date();
-	
+
 	public int getId() {
 		return id;
 	}
@@ -66,6 +65,7 @@ public class BlogPostDTO {
 	public void setPostDate(Date postDate) {
 		this.postDate = postDate;
 	}
+
 	public BlogPostDTO() {
 		super();
 	}

@@ -11,6 +11,10 @@ public class WriteTester {
 	private static Logging logging;
 	private static HtmlWriter testWriter;
 
+	private WriteTester(){
+		throw new IllegalAccessError("Utility class");
+	}
+	
 	public static void main(String[] args) throws IOException {
 		Blog testBlog = new Blog();
 		testBlog.setBlogTitle("The Sound of Silence");
@@ -31,7 +35,6 @@ public class WriteTester {
 			testWriter.render(HtmlWriter.DEFAULT_PATH);
 		} catch (IOException e) {
 			logging.info(e);
-			//e.printStackTrace();
 		}
 	}
 

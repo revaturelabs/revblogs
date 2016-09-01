@@ -34,9 +34,9 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	}
 	
 	/**
-	 * Attempts to upload a resource (such as an image) to the S3 server
+	 * Attempts to upload a resource (such as a CSS or JS file) to the S3 server
 	 * @param fileName the destination name of the file, a valid extension should be included
-	 * @param file a file that is to be uploaded to the database
+	 * @param file a file that is to be uploaded to the S3 server
 	 * @return the URL where the file was uploaded if successful, null otherwise
 	 */
 	public String uploadResource(String fileName, MultipartFile file) {
@@ -44,7 +44,7 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	}
 	
 	/**
-	 * Attempts to upload a front-end page to the S3 server
+	 * Attempts to upload a front-end page (html) to the S3 server
 	 * @param file a file that is to be uploaded to the database, the file should have a valid extension
 	 * @return the URL where the file was uploaded if successful, null otherwise
 	 */
@@ -52,14 +52,24 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 		return jetS3.uploadPage(file);
 	}
 	
+	/**
+	 * Attempts to upload an 'evidence' (picture, code, attachment) to the S3 server
+	 * @param fileName the destination name of the file, a valid extension should be included
+	 * @param file a file that is to be uploaded to the S3 server
+	 * @return the URL where the file was uploaded if successful, null otherwise
+	 */
+	public String uploadEvidence(String fileName, MultipartFile file) {
+		return jetS3.uploadEvidence(fileName, file);
+	}
+	
 	// Push
-	public void putRecord(Object _obj){
-		dataService.makeRecord(_obj);
+	public void putRecord(Object obj){
+		dataService.makeRecord(obj);
 	}
 	
 	// Pull
-	public User requestUsers(String _username){
-		return dataService.grabUsers(_username);
+	public User requestUsers(String username){
+		return dataService.grabUsers(username);
 	}
 	
 	public List<User> requestUsers(){

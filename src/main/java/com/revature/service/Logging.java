@@ -46,5 +46,7 @@ public class Logging {
 	 //------------------POINTCUTS------------------//
 	//Whenever any method is executed
 	@Pointcut("execution(* *(..))")
-	public void logPerformance(){}
+	public void logPerformance(){
+		//Empty for readability of above code
+	}
 }

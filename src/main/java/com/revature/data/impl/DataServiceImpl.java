@@ -26,13 +26,13 @@ public class DataServiceImpl implements DataService{
 	}
 	
 	// Push
-	public void makeRecord(Object _obj){
-		dao.insertRecord(_obj);
+	public void makeRecord(Object obj){
+		dao.insertRecord(obj);
 	}
 	
 	// Pull
-	public User grabUsers(String _username){
-		return dao.getUsers(_username);
+	public User grabUsers(String username){
+		return dao.getUsers(username);
 	}
 	
 	public List<User> grabUsers(){
