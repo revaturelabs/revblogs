@@ -10,6 +10,7 @@ import com.revature.beans.Evidence;
 import com.revature.beans.Tags;
 import com.revature.beans.User;
 import com.revature.beans.UserRoles;
+import com.revature.data.impl.PropertyType;
 
 @Repository
 public interface DAO {
@@ -22,6 +23,7 @@ public interface DAO {
 	
 	// Pull
 	public User getUsers(String username);
+	public String getProperty(PropertyType type);
 	
 	public List<User> getUsers();
 	public List<Blog> getBlogs();
