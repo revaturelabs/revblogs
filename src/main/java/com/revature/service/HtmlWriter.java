@@ -50,8 +50,10 @@ public class HtmlWriter {
 				blogWriter.write("by "+author.getFirstName()+" "+author.getLastName()+"\n");
 			if (line.contains("post-title"))
 				blogWriter.write(blog.getBlogTitle()+"\n");
+			if (line.contains("post-subtitle"))
+				blogWriter.write(blog.getBlogSubtitle());
 			if (line.contains("post-body"))
-				blogWriter.write(blog.getBlogContent()+"\n");
+				blogWriter.write(blog.getStaticContent()+"\n");
 			if (line.contains("author-name"))
 				blogWriter.write(author.getFirstName()+" "+author.getLastName());
 			if (line.contains("author-desc"))
