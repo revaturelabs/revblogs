@@ -139,7 +139,8 @@ public class BaseController {
 		User author = businessDelegate.requestUsers("dpickles");
 		blog.setAuthor(author);
 		blog.setPublishDate(new Date());
-		
+		blog.setBlogContent("empty");
+		System.out.println("----------------" + blog.getStaticContent() + "--------------");
 		businessDelegate.putRecord(blog);
 		req.getSession().setAttribute("blog", blog);
 		return "preview-blog";

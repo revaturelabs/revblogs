@@ -37,9 +37,12 @@
             <h1 class="post-title">
             	<c:out value="${blog.blogTitle}"></c:out>
             </h1>
+            <h3 class="post-subtitle">
+            	<c:out value="${blog.blogSubtitle}"></c:out>
+            </h3>
           </div>
           <div class="post-body">
-          	<c:out value="${blog.blogContent}" escapeXml="false"></c:out>
+          	<c:out value="${blog.staticContent}" escapeXml="false"></c:out>
           </div>
           <form action="/edit">
           	<button type="submit">Edit</button>

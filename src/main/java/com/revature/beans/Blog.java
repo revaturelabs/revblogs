@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -55,7 +56,9 @@ public class Blog {
 	private boolean blogActive;
 	
 	private Clob staticHTML;
-	private Clob staticContent;
+	
+	@Lob
+	private String staticContent;
 	
 	private transient String blogTagsString;
 	
@@ -161,10 +164,10 @@ public class Blog {
 	public void setStaticHTML(Clob staticHTML) {
 		this.staticHTML = staticHTML;
 	}
-	public Clob getStaticContent() {
+	public String getStaticContent() {
 		return staticContent;
 	}
-	public void setStaticContent(Clob staticContent) {
+	public void setStaticContent(String staticContent) {
 		this.staticContent = staticContent;
 	}
 	public User getAuthor() {

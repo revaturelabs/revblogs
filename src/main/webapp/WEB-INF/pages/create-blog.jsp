@@ -48,7 +48,7 @@
 	<button type="button">Attach Image</button>
 	<button type="button">Attach File</button>
 	<br>
-	<form:textarea path="blogContent" rows="30" cols="100" id="tinyMCE"></form:textarea>
+	<form:textarea path="staticContent" rows="30" cols="100" id="tinyMCE"></form:textarea>
 	<br>
 	<!-- <button type="button">Add Reference</button>
 	<br>
