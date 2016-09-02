@@ -111,7 +111,7 @@ public class BaseController {
 			 */
 			for(String a : myList){
 				boolean check = false;
-				String tagDesc = a.toLowerCase().replaceAll("\\s+","");
+				String tagDesc = a.toLowerCase().trim();
 				/*
 				 * loop through database Tags to check with user input tags
 				 * if theres a match, put instance of database Tag into User bean, if not, create new Tag bean
@@ -136,7 +136,6 @@ public class BaseController {
 		blog.setPublishDate(new Date());
 		
 		businessDelegate.putRecord(blog);
-		req.getSession().setAttribute("blog", blog);
 		return "preview-blog";
 	}
 	
@@ -247,7 +246,4 @@ public class BaseController {
 		
 		return model;
 	}
-	
-
-	
 }
