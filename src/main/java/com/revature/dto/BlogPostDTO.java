@@ -80,7 +80,10 @@ public class BlogPostDTO {
 		for (Tags tag: t) {
 			this.tags.add(tag.getDescription());
 		}
-		this.author = new AuthorDTO(post.getAuthor());
+		if (post.getAuthor() != null)
+			this.author = new AuthorDTO(post.getAuthor());
+		else
+			this.author = new AuthorDTO();
 		this.postDate = post.getPublishDate();
 	}
 }
