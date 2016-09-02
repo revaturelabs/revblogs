@@ -79,11 +79,7 @@ public class BaseController {
 	@RequestMapping(value="/populate", method=RequestMethod.GET)
 	public String populate(HttpServletRequest req, HttpServletResponse resp){
 	
-		String props = businessDelegate.requestProperty(PropertyType.COMPANY);
-		
-		System.out.println("Company is = " + props);
-		
-		return "login";
+		return "loginPage";
 	}
 	@RequestMapping(value="/create-blog", method=RequestMethod.GET)
 	public String createBlog(HttpServletRequest req, HttpServletResponse resp){
@@ -139,12 +135,12 @@ public class BaseController {
 		blog.setPublishDate(new Date());
 		
 		businessDelegate.putRecord(blog);
-		
 		HtmlWriter htmlWriter;
 		try {
 			InputStream templateStream = this.getClass().getClassLoader().getResourceAsStream("template.html");
 			htmlWriter = new HtmlWriter(blog, blog.getAuthor(), templateStream);
 			TemporaryFile blogTempFile = htmlWriter.render();
+			blogTempFile.destroy();
 			req.setAttribute("blog", blog);
 		} catch (FileNotFoundException e) {
 		} catch (IOException e1) {
@@ -203,11 +199,15 @@ public class BaseController {
 		}
 	}
 	
+	@RequestMapping(value="/profile", method=RequestMethod.GET)
+	public String profile(HttpServletRequest request, HttpServletRequest response){
+		return "profile";
+	}
+	
 	//SEPARATE THE LOGINS FOR ADMIN AND CONTRIBUTOR.
 	
 	@RequestMapping(value="/admin**")
 	public ModelAndView viewAdmin(HttpServletRequest request, HttpServletRequest response, Principal principal){
-		
 		String name = principal.getName();
 		User user = businessDelegate.requestUsers(name);
 		HttpSession session = request.getSession();
@@ -232,10 +232,12 @@ public class BaseController {
 		
 		ModelAndView model = new ModelAndView();
 		model.setViewName("/home");
-		model.addObject("title", "Logged in as " + user.getJobTitle());
+		model.addObject("title", "Logged in as " + user.getUsername());
 		model.addObject("message", "Welcome " + user.getUsername());
 		
 		return model;
 	}
+	
+
 	
 }

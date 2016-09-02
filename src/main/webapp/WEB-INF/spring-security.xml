@@ -11,7 +11,11 @@
 <!-- HTTP SECURITY FOR CONTROLLING ACCESS BASED ON ROLL -->	
 	<security:http auto-config="true" use-expressions="true">
 		<security:intercept-url pattern="/admin**" access="hasRole('ADMIN')"/>
+		<security:intercept-url pattern="/create-blog/**" access="hasAnyRole('CONTRIBUTOR','ADMIN')"/>
+		<security:intercept-url pattern="/makeClientAccount/**" access="hasRole('ADMIN')"/>
 		<security:intercept-url pattern="/contributor**" access="hasRole('CONTRIBUTOR')"/>
+		<security:intercept-url pattern="/profile/**" access="hasAnyRole('ADMIN','CONTRIBUTOR')"/>
+		<security:intercept-url pattern="/resources/**" access="permitAll" />
 
 <!-- FORM-LOGIN SECURITY FOR THE LOGIN PAGE -->		
 		<security:form-login  
