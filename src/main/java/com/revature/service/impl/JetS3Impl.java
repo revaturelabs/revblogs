@@ -23,10 +23,7 @@ public class JetS3Impl implements JetS3{
 	private static BusinessDelegate businessDelegate;
 	private static S3Service s3;
 	private static Logging logging;
-	private static final String BUCKET = "alpha-beta-jar";
-	//This pushes to Patrick's S3:
-	//"dan-pickles-jar"
-	//need patrick's credentials
+	private static final String BUCKET = "dan-pickles-jar";
 	
 	/**
 	 * Attempts to upload a resource (such as a CSS or JS file) to the S3 server
