@@ -136,6 +136,7 @@ public class BaseController {
 		blog.setPublishDate(new Date());
 		
 		businessDelegate.putRecord(blog);
+		req.getSession().setAttribute("blog", blog);
 		return "preview-blog";
 	}
 	
@@ -145,6 +146,7 @@ public class BaseController {
 		HtmlWriter htmlWriter;
 		try {
 			InputStream templateStream = this.getClass().getClassLoader().getResourceAsStream("template.html");
+			blog.getAuthor();
 			htmlWriter = new HtmlWriter(blog, blog.getAuthor(), templateStream);
 			TemporaryFile blogTempFile = htmlWriter.render();
 			JetS3 jetS3 = new JetS3Impl();
