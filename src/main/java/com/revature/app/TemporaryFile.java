@@ -169,6 +169,7 @@ public class TemporaryFile {
 		
 		if ( createTemporaryDirectory() ) {
 			tempFile = new File(temporaryDirectoryPath + "/" + fileName);
+			tempFile.createNewFile();
 			return true;
 		}
 		return false;

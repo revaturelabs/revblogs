@@ -12,6 +12,7 @@ import com.revature.beans.Tags;
 import com.revature.beans.User;
 import com.revature.beans.UserRoles;
 import com.revature.data.DataService;
+import com.revature.data.impl.PropertyType;
 import com.revature.service.BusinessDelegate;
 import com.revature.service.JetS3;
 import com.revature.service.ServiceLocator;
@@ -71,6 +72,9 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	// Pull
 	public User requestUsers(String username){
 		return dataService.grabUsers(username);
+	}
+	public String requestProperty(PropertyType type){
+		return dataService.grabProperty(type);
 	}
 	
 	public List<User> requestUsers(){

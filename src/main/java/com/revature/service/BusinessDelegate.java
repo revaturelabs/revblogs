@@ -11,6 +11,7 @@ import com.revature.beans.Evidence;
 import com.revature.beans.Tags;
 import com.revature.beans.User;
 import com.revature.beans.UserRoles;
+import com.revature.data.impl.PropertyType;
 
 @Service
 public interface BusinessDelegate {
@@ -46,6 +47,7 @@ public interface BusinessDelegate {
 	
 	// Pull
 	public User requestUsers(String username);
+	public String requestProperty(PropertyType type);
 	
 	public List<User> requestUsers();
 	public List<Blog> requestBlogs();

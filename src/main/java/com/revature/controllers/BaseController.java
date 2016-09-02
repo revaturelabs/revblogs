@@ -1,16 +1,21 @@
 package com.revature.controllers;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -27,7 +32,9 @@ import com.revature.beans.Blog;
 import com.revature.beans.Tags;
 import com.revature.beans.User;
 import com.revature.beans.UserRoles;
+import com.revature.data.impl.PropertyType;
 import com.revature.service.BusinessDelegate;
+import com.revature.service.HtmlWriter;
 import com.revature.service.Logging;
 import com.revature.service.Population;
 
@@ -50,10 +57,14 @@ public class BaseController {
 	public void setPopulation(Population population) {
 		this.population = population;
 	}
-	@RequestMapping(value="/login", method=RequestMethod.GET)
+	
+	
+	//CHANGED LOGIN TO FUNCTION CORRECTLY
+	
+	@RequestMapping(value="/loginPage")
 	public String login(HttpServletRequest req, HttpServletResponse resp){
 	
-		return "login";
+		return "loginPage";
 	}
 	@RequestMapping(value="/temp-AddClient", method=RequestMethod.GET)
 	public String newClient(HttpServletRequest req, HttpServletResponse resp){
@@ -68,7 +79,7 @@ public class BaseController {
 	@RequestMapping(value="/populate", method=RequestMethod.GET)
 	public String populate(HttpServletRequest req, HttpServletResponse resp){
 	
-		return "login";
+		return "loginPage";
 	}
 	@RequestMapping(value="/create-blog", method=RequestMethod.GET)
 	public String createBlog(HttpServletRequest req, HttpServletResponse resp){
@@ -119,11 +130,22 @@ public class BaseController {
 			}
 			blog.setTags(tmpTags);
 		}
+		User author = businessDelegate.requestUsers("dpickles");
+		blog.setAuthor(author);
+		blog.setPublishDate(new Date());
 		
-		User tmpUser = businessDelegate.requestUsers("dpickles");
-		blog.setAuthor(tmpUser);
 		businessDelegate.putRecord(blog);
-		return "create-blog";
+		HtmlWriter htmlWriter;
+		try {
+			InputStream templateStream = this.getClass().getClassLoader().getResourceAsStream("template.html");
+			htmlWriter = new HtmlWriter(blog, blog.getAuthor(), templateStream);
+			TemporaryFile blogTempFile = htmlWriter.render();
+			blogTempFile.destroy();
+			req.setAttribute("blog", blog);
+		} catch (FileNotFoundException e) {
+		} catch (IOException e1) {
+		}
+		return "preview-blog";
 	}
 
 	@RequestMapping(value="/", method=RequestMethod.GET)
@@ -171,10 +193,51 @@ public class BaseController {
 		String url = businessDelegate.uploadEvidence(file.getOriginalFilename(), file);
 		try {
 			PrintWriter writer = resp.getWriter();
-			writer.append("<html><body><h3>Copy URL into Add Image</h3><br></body></html>" + url);
+			writer.append(url);
 		} catch (IOException e) {
 			logging.info(e);
 		}
 	}
+	
+	@RequestMapping(value="/profile", method=RequestMethod.GET)
+	public String profile(HttpServletRequest request, HttpServletRequest response){
+		return "profile";
+	}
+	
+	//SEPARATE THE LOGINS FOR ADMIN AND CONTRIBUTOR.
+	
+	@RequestMapping(value="/admin**")
+	public ModelAndView viewAdmin(HttpServletRequest request, HttpServletRequest response, Principal principal){
+		String name = principal.getName();
+		User user = businessDelegate.requestUsers(name);
+		HttpSession session = request.getSession();
+		session.setAttribute("user", user);
+		
+		ModelAndView model = new ModelAndView();
+		model.setViewName("/home");
+		model.addObject("title", "Logged in as " + user.getJobTitle());
+		model.addObject("message", "Welcome " + user.getUsername());
+		
+		return model;
+	}
+	
+	
+	@RequestMapping(value="/contributor**")
+	public ModelAndView viewContributor(HttpServletRequest request, HttpServletRequest response, Principal principal){
+		
+		String name = principal.getName();
+		User user = businessDelegate.requestUsers(name);
+		HttpSession session = request.getSession();
+		session.setAttribute("user", user);
+		
+		ModelAndView model = new ModelAndView();
+		model.setViewName("/home");
+		model.addObject("title", "Logged in as " + user.getUsername());
+		model.addObject("message", "Welcome " + user.getUsername());
+		
+		return model;
+	}
+	
+
 	
 }
