@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <title>Revature Blog</title>
@@ -8,12 +7,40 @@
 <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
-<link href="resources/css/main.css" rel="stylesheet">
+<link href="url to css style sheet" rel="stylesheet">
 
 </head>
 
 <body>
-<jsp:include page="navbar.jsp"></jsp:include>
+  <nav class="page-navigation navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#"><img src="url to revature brand" /></a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li><a href="#">Home</a></li>
+          <li><a href="#">About</a></li>
+        </ul>
+        <form class="navbar-form navbar-right">
+          <div class="form-group input-group post-search">
+            <input type="text" class="form-control" placeholder="Search">
+            <span class="input-group-btn">
+              <button class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
+            </span>
+          </div>
+        </form>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
   <div class="container page-content">
     <div class="row">
       <div class="panel panel-default col-sm-8">
@@ -27,19 +54,14 @@
           <div class="post-heading">
             <div class="post-meta">
               <span class="post-date">
-              	<c:out value="${blog.publishDate}"></c:out>
               </span>
               <span class="post-author">
-              	<c:out value="${blog.author.firstName}"></c:out> 
-              	<c:out value="${blog.author.lastName}"></c:out>
               </span>
             </div>
             <h1 class="post-title">
-            	<c:out value="${blog.blogTitle}"></c:out>
             </h1>
           </div>
           <div class="post-body">
-          	<c:out value="${blog.blogContent}" escapeXml="false"></c:out>
           </div>
           <form action="/edit">
           	<button type="submit">Edit</button>
@@ -54,16 +76,12 @@
           <div class="panel-body">
             <div class="row author">
               <div class="col-xs-12 author-image">
-              	<img src="${blog.author.profilePicture}" />
               </div>
               <div class="col-xs-12 author-name text-center">
-              	<c:out value="${blog.author.firstName}"></c:out> 
-              	<c:out value="${blog.author.lastName}"></c:out>
               </div>
             </div>
             <div class="row">
               <div class="col-xs-12 author-desc">
-              	<c:out value="${blog.author.description}"></c:out>
               </div>
             </div>
           </div>
@@ -96,7 +114,7 @@
     <div class="container">
       <div class="row">
         <div class="col-sm-6">
-          <img class="img-responsive" src="resources/img/rev-footer.png" />
+          <img class="img-responsive" src="url to revature footer logo" />
         </div>
       </div>
     </div>
