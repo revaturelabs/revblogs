@@ -134,7 +134,7 @@ public class BaseController {
 		blog.setAuthor(author);
 		blog.setPublishDate(new Date());
 		
-//		businessDelegate.putRecord(blog);
+		businessDelegate.putRecord(blog);
 		HtmlWriter htmlWriter;
 		try {
 			InputStream templateStream = this.getClass().getClassLoader().getResourceAsStream("template.html");
