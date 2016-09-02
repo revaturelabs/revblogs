@@ -56,4 +56,16 @@ public class DataServiceImpl implements DataService{
 	public List<Evidence> grabEvidence(){
 		return dao.getEvidence();
 	}
+	public PaginatedResultList<Blog> grabBlogs(int start, int max){
+		return dao.getBlogs(start, max);
+	}
+	public List<Blog> grabBlogs(User author, int start, int max){
+		return dao.getBlogs(author, start, max);
+	}
+	public List<Blog> grabBlogs(Tags category, int start, int max){
+		return dao.getBlogs(category, start, max);
+	}
+	public List<Blog> grabBlogs(String search, int start, int max){
+		return dao.getBlogs(search, start, max);
+	}
 }
