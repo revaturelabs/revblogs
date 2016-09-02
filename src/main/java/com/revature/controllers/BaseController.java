@@ -155,8 +155,8 @@ public class BaseController {
 			htmlWriter = new HtmlWriter(blog, blog.getAuthor(), templateStream);
 			TemporaryFile blogTempFile = htmlWriter.render();
 			System.out.println(blogTempFile.getTemporaryFile().getName());
-			String link = "https://s3-us-west-2.amazonaws.com/dan-pickles-jar/content/pages/" + blogTempFile.getTemporaryFile().getName();
-			req.setAttribute("link", link);
+			String fileName = blogTempFile.getTemporaryFile().getName();
+			req.setAttribute("fileName", fileName);
 			JetS3 jetS3 = new JetS3Impl();
 			businessDelegate.putRecord(blog);
 			jetS3.uploadPage(blogTempFile.getTemporaryFile());

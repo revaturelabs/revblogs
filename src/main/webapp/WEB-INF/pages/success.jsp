@@ -8,7 +8,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-Success!
-<c:out value="${link}"></c:out>
+<c:out value="${fileName}"></c:out>
 </body>
 </html>
