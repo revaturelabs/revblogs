@@ -18,6 +18,7 @@
 		<a href="${pageContext.servletContext.contextPath}/makeClientAccount">Add a Client</a>
 		<a href="${pageContext.servletContext.contextPath}/create-blog">Create a Blog</a>
 		<a href="${pageContext.servletContext.contextPath}/">View Blogs</a>
+		<a href="${pageContext.servletContext.contextPath}">Logout</a>
 		
 		
 	</c:if>
@@ -26,6 +27,7 @@
 		<a href="${pageContext.servletContext.contextPath}/profile">Profile</a>
 		<a href="${pageContext.servletContext.contextPath}/create-blog">Create a Blog</a>
 		<a href="${pageContext.servletContext.contextPath}/">View Blogs</a>
+		<a href="${pageContext.servletContext.contextPath}">Logout</a>
 	</c:if>
 </body>
 </html>
