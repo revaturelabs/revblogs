@@ -44,6 +44,9 @@
           <form action="/edit">
           	<button type="submit">Edit</button>
           </form>
+          <form action="publish.do" method="post">
+          	<button type="submit">Publish</button>
+          </form>
         </div>
       </div>
       <div class="col-sm-4">

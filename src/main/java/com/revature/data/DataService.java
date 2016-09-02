@@ -10,6 +10,7 @@ import com.revature.beans.Evidence;
 import com.revature.beans.Tags;
 import com.revature.beans.User;
 import com.revature.beans.UserRoles;
+import com.revature.data.impl.PaginatedResultList;
 import com.revature.data.impl.PropertyType;
 
 @Service
@@ -30,4 +31,8 @@ public interface DataService {
 	public List<Tags> grabTags();
 	public List<UserRoles> grabRoles();
 	public List<Evidence> grabEvidence();
+	public PaginatedResultList<Blog> grabBlogs(int start, int max);
+	public List<Blog> grabBlogs(User author, int start, int max);
+	public List<Blog> grabBlogs(Tags category, int start, int max);
+	public List<Blog> grabBlogs(String search, int start, int max);
 }

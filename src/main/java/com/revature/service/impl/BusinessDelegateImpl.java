@@ -1,17 +1,22 @@
 package com.revature.service.impl;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
 import com.revature.beans.Blog;
 import com.revature.beans.Evidence;
 import com.revature.beans.Tags;
 import com.revature.beans.User;
 import com.revature.beans.UserRoles;
 import com.revature.data.DataService;
+import com.revature.data.impl.PaginatedResultList;
+import com.revature.dto.BlogPostCollectionDTO;
+import com.revature.dto.BlogPostDTO;
 import com.revature.data.impl.PropertyType;
 import com.revature.service.BusinessDelegate;
 import com.revature.service.JetS3;
@@ -28,7 +33,7 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	}
 	public void setServiceLocator(ServiceLocator serviceLocator) {
 	}
-	public Session requestSession(){
+	public Session requestSession() {
 		return dataService.grabSession();
 	}
 	
@@ -91,5 +96,33 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	}
 	public List<Evidence> requestEvidence(){
 		return dataService.grabEvidence();
+	}
+	public BlogPostCollectionDTO requestBlogPosts(int page, int perPage) throws IllegalArgumentException {
+		
+		if (page < 1 || perPage < 1) {
+			throw new IllegalArgumentException("page and perPage must be positive integers");
+		}
+		
+		// Instantiate post collection DTO
+		BlogPostCollectionDTO postCollection = new BlogPostCollectionDTO();
+		
+		int start = (page-1)*perPage;
+		int maxResults = perPage;
+		
+		PaginatedResultList<Blog> results = dataService.grabBlogs(start, maxResults);
+		List<BlogPostDTO> postList = new ArrayList<>();
+		for (Blog p: results.getItems()) {
+			postList.add(new BlogPostDTO(p));
+		}
+		long totalItems = results.getTotalItems();
+		int totalPages = (int)Math.ceil((double)totalItems/perPage);
+		
+		postCollection.setPosts(postList);
+		postCollection.setPage(page);
+		postCollection.setTotalPosts(totalItems);
+		postCollection.setTotalPages(totalPages);
+		postCollection.setPerPage(perPage);
+		
+		return postCollection;
 	}
 }

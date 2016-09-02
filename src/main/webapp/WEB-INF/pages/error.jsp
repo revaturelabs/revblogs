@@ -14,11 +14,13 @@
 </head>
 <body>
 	<jsp:include page="navbar.jsp"></jsp:include>
-	<h2>Error <c:out value="${pageContext.errorData.statusCode}" /> Occurred</h2>
-	<br />
-	<br />
-	<br />
-	<img src="${pageContext.servletContext.contextPath}/resources/images/error.gif"/>
+	<div class="container page-content">
+		<h2>Error <c:out value="${pageContext.errorData.statusCode}" /> Occurred</h2>
+		<br />
+		<br />
+		<br />
+		<img src="${pageContext.servletContext.contextPath}/resources/images/error.gif"/>
+	</div>
 	<jsp:include page="footer.jsp"></jsp:include>
 </body>
 </html>
