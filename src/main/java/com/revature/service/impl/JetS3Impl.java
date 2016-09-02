@@ -13,6 +13,7 @@ import org.jets3t.service.model.S3Object;
 import org.jets3t.service.security.AWSCredentials;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.revature.service.BusinessDelegate;
 import com.revature.service.JetS3;
 import com.revature.service.Logging;
 

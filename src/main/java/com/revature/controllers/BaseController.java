@@ -135,17 +135,23 @@ public class BaseController {
 		blog.setPublishDate(new Date());
 		
 		businessDelegate.putRecord(blog);
+		req.getSession().setAttribute("blog", blog);
+		return "preview-blog";
+	}
+	
+	@RequestMapping(value="publish.do", method=RequestMethod.POST)
+	public String publishBlog(HttpServletRequest req, HttpServletResponse resp) {
+		Blog blog = (Blog) req.getSession().getAttribute("blog");
 		HtmlWriter htmlWriter;
 		try {
 			InputStream templateStream = this.getClass().getClassLoader().getResourceAsStream("template.html");
 			htmlWriter = new HtmlWriter(blog, blog.getAuthor(), templateStream);
 			TemporaryFile blogTempFile = htmlWriter.render();
 			blogTempFile.destroy();
-			req.setAttribute("blog", blog);
 		} catch (FileNotFoundException e) {
 		} catch (IOException e1) {
 		}
-		return "preview-blog";
+		return "success";
 	}
 
 	@RequestMapping(value="/", method=RequestMethod.GET)
