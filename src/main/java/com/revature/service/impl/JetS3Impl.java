@@ -192,7 +192,7 @@ public class JetS3Impl implements JetS3{
 	}
 
 	public void setBusinessDelegate(BusinessDelegate businessDelegate) {
-		this.businessDelegate = businessDelegate;
+		JetS3Impl.businessDelegate = businessDelegate;
 	}
 	
 }
