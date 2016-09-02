@@ -33,6 +33,7 @@
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
 </script>
+<script src="resources/js/img-mgmt.js"></script>
 
 <title>Blog Post</title>
 </head>
@@ -40,14 +41,17 @@
 <jsp:include page="navbar.jsp"></jsp:include>
 <div class="container">
 <h2>Create new blog post</h2>
+
+
+
 <form:form action="add-blog.do" method="post" commandName="blog">
-	Title <br>
-	<form:input path="blogTitle"/>
-	Subtitle <br>
-	<form:input path="blogSubtitle"/>
+	Title
+	<form:input path="blogTitle"/><br />
+	Subtitle
+	<form:input path="blogSubtitle"/><br />
 	<button type="button">Attach Image</button>
 	<button type="button">Attach File</button>
-	<br>
+	<br />
 	<form:textarea path="blogContent" rows="30" cols="100" id="tinyMCE"></form:textarea>
 	<br>
 	<!-- <button type="button">Add Reference</button>
