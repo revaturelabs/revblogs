@@ -58,7 +58,9 @@ public class BaseController {
 	public void setPopulation(Population population) {
 		this.population = population;
 	}
-	
+	public void setLogging(Logging logging) {
+		this.logging = logging;
+	}
 	
 	//CHANGED LOGIN TO FUNCTION CORRECTLY
 	
