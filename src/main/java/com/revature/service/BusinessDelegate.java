@@ -11,6 +11,7 @@ import com.revature.beans.Evidence;
 import com.revature.beans.Tags;
 import com.revature.beans.User;
 import com.revature.beans.UserRoles;
+import com.revature.dto.BlogPostCollectionDTO;
 import com.revature.data.impl.PropertyType;
 
 @Service
@@ -54,4 +55,5 @@ public interface BusinessDelegate {
 	public List<Tags> requestTags();
 	public List<UserRoles> requestRoles();
 	public List<Evidence> requestEvidence();
+	public BlogPostCollectionDTO requestBlogPosts(int page, int perPage);
 }

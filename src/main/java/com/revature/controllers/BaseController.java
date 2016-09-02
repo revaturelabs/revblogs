@@ -34,8 +34,10 @@ import com.revature.beans.User;
 import com.revature.beans.UserRoles;
 import com.revature.service.BusinessDelegate;
 import com.revature.service.HtmlWriter;
+import com.revature.service.JetS3;
 import com.revature.service.Logging;
 import com.revature.service.Population;
+import com.revature.service.impl.JetS3Impl;
 
 @Controller
 public class BaseController {
@@ -56,18 +58,21 @@ public class BaseController {
 	public void setPopulation(Population population) {
 		this.population = population;
 	}
+	
+	public Logging getLogging() {
+		return logging;
+	}
 	public void setLogging(Logging logging) {
 		this.logging = logging;
 	}
 	
 	//CHANGED LOGIN TO FUNCTION CORRECTLY
-	
 	@RequestMapping(value="/loginPage")
 	public String login(HttpServletRequest req, HttpServletResponse resp){
 	
 		return "loginPage";
 	}
-	@RequestMapping(value="/temp-AddClient", method=RequestMethod.GET)
+	@RequestMapping(value="/makeClientAccount", method=RequestMethod.GET)
 	public String newClient(HttpServletRequest req, HttpServletResponse resp){
 		req.setAttribute("user", new User());
 		List<UserRoles> arrl = new ArrayList<>();
@@ -111,7 +116,7 @@ public class BaseController {
 			 */
 			for(String a : myList){
 				boolean check = false;
-				String tagDesc = a.toLowerCase().trim();
+				String tagDesc = a.toLowerCase().replaceAll("\\s+","");
 				/*
 				 * loop through database Tags to check with user input tags
 				 * if theres a match, put instance of database Tag into User bean, if not, create new Tag bean
@@ -136,26 +141,35 @@ public class BaseController {
 		blog.setPublishDate(new Date());
 		
 		businessDelegate.putRecord(blog);
+		req.getSession().setAttribute("blog", blog);
+		return "preview-blog";
+	}
+	
+	@RequestMapping(value="publish.do", method=RequestMethod.POST)
+	public String publishBlog(HttpServletRequest req, HttpServletResponse resp) {
+		Blog blog = (Blog) req.getSession().getAttribute("blog");
 		HtmlWriter htmlWriter;
 		try {
 			InputStream templateStream = this.getClass().getClassLoader().getResourceAsStream("template.html");
+			blog.getAuthor();
 			htmlWriter = new HtmlWriter(blog, blog.getAuthor(), templateStream);
-			/**
-			 * TemporaryFile blogTempFile = htmlWriter.render();
-			 * blogTempFile.destroy();
-			 */
-			req.setAttribute("blog", blog);
+			TemporaryFile blogTempFile = htmlWriter.render();
+			System.out.println(blogTempFile.getTemporaryFile().getName());
+			JetS3 jetS3 = new JetS3Impl();
+			jetS3.uploadPage(blogTempFile.getTemporaryFile());
+			blogTempFile.destroy();
 		} catch (FileNotFoundException e) { 
 			logging.info(e);
 		} catch (IOException e1) {
 			logging.info(e1);
 		}
-		return "preview-blog";
+		return "success";
 	}
 
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	public ModelAndView home(){
-		return new ModelAndView("index");
+		ModelAndView mv = new ModelAndView("index");
+		return mv;
 	}
 	
 	@RequestMapping(value="/upload-example", method=RequestMethod.GET)
@@ -241,8 +255,4 @@ public class BaseController {
 		
 		return model;
 	}
-
-	
-
-	
 }
