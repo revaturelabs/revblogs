@@ -136,8 +136,8 @@ public class BaseController {
 			}
 			blog.setTags(tmpTags);
 		}
-//		User author = businessDelegate.requestUsers("dpickles");
-		User author = (User) req.getSession().getAttribute("user");
+		User author = businessDelegate.requestUsers("dpickles");
+//		User author = (User) req.getSession().getAttribute("user");
 		author.getFirstName();
 		blog.setAuthor(author);
 		blog.setPublishDate(new Date());
@@ -155,6 +155,8 @@ public class BaseController {
 			htmlWriter = new HtmlWriter(blog, blog.getAuthor(), templateStream);
 			TemporaryFile blogTempFile = htmlWriter.render();
 			System.out.println(blogTempFile.getTemporaryFile().getName());
+			String link = "https://s3-us-west-2.amazonaws.com/dan-pickles-jar/content/pages/" + blogTempFile.getTemporaryFile().getName();
+			req.setAttribute("link", link);
 			JetS3 jetS3 = new JetS3Impl();
 			businessDelegate.putRecord(blog);
 			jetS3.uploadPage(blogTempFile.getTemporaryFile());
