@@ -1,4 +1,5 @@
-app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http) {
+app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http) 
+{
 	// Domain DTO mockup
 	$scope.posts = {				/* 10 posts per page is default; can be changed by using ?perPage=25 */
 		page: 1,					/* current page */
@@ -9,6 +10,7 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 		posts: [					/* array of post objects */
 					{
 /* post id */			id: 1,
+/* post link */			link: "/post/yearMonthDayOfCreation/blogTitle.html",
 /* post title */		title: "The Joy of Coding",
 /* post subtitle */		subtitle: "40 ways to enhance your productivity whilst coding",
 /* post content, plain 
@@ -38,4 +40,180 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 					},
 			]
 		}
+	
+	$scope.numOfPages = [];
+	var totalPages = 10;
+	
+	for (var i = 0; i < totalPages; i++) 
+	{
+		$scope.numOfPages[i] = i+1		
+	}
+	
+	$scope.getPage = function(page, postsPP)
+	{
+		$http.get("/revblogs/api/posts?page=" + page).success(
+		    function(resp)
+			{
+				console.log("getPage");
+				//var postsPerPage = postsPP;  //postsPerPage, if implemented will be tacked onto url
+				var postsPerPage = 10;
+				var postsToDisplay = resp.ptd;  //array of posts
+				var tPages = resp.totalPages;  //totalPages
+				var tPosts = resp.totalPosts;  //totalPosts
+				var curPage = page;  //current page
+
+				console.log(curPage);
+				
+				var prevPage = curPage;
+				console.log(prevPage);
+				var nextPage = curPage;
+				
+				if(curPage > 1)
+				{
+					prevPage = curPage - 1;
+					console.log(prevPage);
+				}
+				
+				if(curPage < tPages)
+				{
+					nextPage = curPage + 1;
+				}
+
+				console.log(prevPage);
+				$scope.postPage = 
+				{									/* 10 posts per page is default; can be changed by using ?perPage=25 */
+						page: page,					/* current page */
+						totalPages: tPages,	/* total number of pages */
+						totalPosts: tPages,	/* total number of posts */
+						prev: prevPage,				/* link to previous set of posts */
+						next: nextPage,				/* link to next set of posts */
+						posts: resp.postsList
+				};
+				
+				if(curPage < tPages)
+				{
+					preloadPage(nextPage);
+				}
+				
+				preloadPage(nextPage);
+				
+				if(curPage > 1)
+				{
+					preloadPage(prevPage);
+				}
+			}
+		);
+	}
+	
+	function preloadPage(page, postsPP)
+	{
+		$http.get("/revblogs/api/posts?page=" + page).success(
+		    function(resp)
+			{
+				console.log("getPage");
+				//var postsPerPage = postsPP;  //postsPerPage, if implemented will be tacked onto url
+				var postsPerPage = 10;
+				var postsToDisplay = resp.posts;
+				var tPages = resp.tPages;  //totalPages
+				var tPosts = resp.tPosts;  //totalPosts
+				var curPage = page;
+				
+				if(curPage > 1)
+				{
+					var prePage = curPage - 1;
+				}
+				
+				if(curPage > 1)
+				{
+					var nextPage = curPage + 1;
+				}
+				
+				$scope.nextPostPage = 
+				{									/* 10 posts per page is default; can be changed by using ?perPage=25 */
+						page: page,					/* current page */
+						totalPages: resp.tPages,	/* total number of pages */
+						totalPosts: resp.tPages,	/* total number of posts */
+						prev: prevPage,				/* link to previous set of posts */
+						next: nextPage,				/* link to next set of posts */
+						posts: resp.ptd
+				};
+			}
+		);
+	}
+	
+	function prevPostPage(page, postsPP)
+	{
+		$http.get("/revblogs/api/posts?page=" + page).success(
+		    function(resp)
+			{
+				console.log("getPage");
+				//var postsPerPage = postsPP;  //postsPerPage, if implemented will be tacked onto url
+				var postsPerPage = 10;
+				var postsToDisplay = resp.ptd;
+				var tPages = resp.tPages;  //totalPages
+				var tPosts = resp.tPosts;  //totalPosts
+				var curPage = page;
+				
+				if(curPage > 1)
+				{
+					var prePage = curPage - 1;
+				}
+				
+				if(curPage > 1)
+				{
+					var nextPage = curPage + 1;
+				}
+				
+				$scope.nextPostPage = 
+				{									/* 10 posts per page is default; can be changed by using ?perPage=25 */
+						page: page,					/* current page */
+						totalPages: resp.tPages,	/* total number of pages */
+						totalPosts: resp.tPages,	/* total number of posts */
+						prev: prevPage,				/* link to previous set of posts */
+						next: nextPage,				/* link to next set of posts */
+						posts: resp.ptd
+				};
+			}
+		);
+	}
+	
+	$scope.pageBuffer = function(curPage)
+	{
+		var postsPerPage = 10;
+		var postsToDisplay = $http.getPosts;
+		
+		$scope.postsArray = 
+		{				/* 10 posts per page is default; can be changed by using ?perPage=25 */
+				page: curPage,					/* current page */
+				totalPages: 7,				/* total number of pages */
+				totalPosts: 65,				/* total number of posts */
+				prev: null,					/* link to previous set of posts */
+				next: "/api/posts?page=2",	/* link to next set of posts */
+				posts: $http.getPosts(curPage) 
+		}
+		if(curPage > 1)
+		{
+			
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }]);
