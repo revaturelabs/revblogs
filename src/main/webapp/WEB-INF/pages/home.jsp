@@ -13,9 +13,19 @@
 	<h2>${message}</h2>
 	
 	<sec:authorize access="hasRole('ADMIN')" >Welcome Admin!</sec:authorize>
-	<c:if test="${sesson.userRole.role eq ADMIN}">
+	<c:if test="${user.userRole.role eq 'ADMIN'}">
 		<a href="${pageContext.servletContext.contextPath}/profile">Profile</a>
+		<a href="${pageContext.servletContext.contextPath}/makeClientAccount">Add a Client</a>
+		<a href="${pageContext.servletContext.contextPath}/create-blog">Create a Blog</a>
+		<a href="${pageContext.servletContext.contextPath}/">View Blogs</a>
+		
+		
 	</c:if>
 	<sec:authorize access="hasRole('CONTRIBUTOR')" >Welcome Contributor!</sec:authorize>
+	<c:if test="${user.userRole.role eq 'CONTRIBUTOR'}">
+		<a href="${pageContext.servletContext.contextPath}/profile">Profile</a>
+		<a href="${pageContext.servletContext.contextPath}/create-blog">Create a Blog</a>
+		<a href="${pageContext.servletContext.contextPath}/">View Blogs</a>
+	</c:if>
 </body>
 </html>
