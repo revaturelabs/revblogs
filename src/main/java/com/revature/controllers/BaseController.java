@@ -256,4 +256,9 @@ public class BaseController {
 		
 		return model;
 	}
+	
+	@RequestMapping(value="/navbar-partial")
+	public String getNavbar() {
+		return "navbar";
+	}
 }
