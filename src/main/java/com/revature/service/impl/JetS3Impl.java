@@ -191,7 +191,7 @@ public class JetS3Impl implements JetS3{
 		return true;
 	}
 
-	public void setBusinessDelegate(BusinessDelegate businessDelegate) {
+	public synchronized static void setBusinessDelegate(BusinessDelegate businessDelegate) {
 		JetS3Impl.businessDelegate = businessDelegate;
 	}
 	
