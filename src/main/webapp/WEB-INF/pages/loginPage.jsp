@@ -11,11 +11,17 @@
 <title>RevBlogs || Login</title>
 </head>
 <body>
-<c:if test="${'fail' eq param.auth}">
+	<c:if test="${'fail' eq param.auth}">
 		<div>
               <h3>Failed to login. Please try again.</h3>
         </div>
-</c:if>
+	</c:if> 
+	<c:if test="${'logout' eq param.auth}">
+		<div>
+			<h3>You have successfully signed out.</h3>
+		</div>
+	</c:if>
+
 <br />
 <br />
 <br />
