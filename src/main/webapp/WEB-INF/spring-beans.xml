@@ -30,6 +30,9 @@
 		<property name="population" ref="population" />
 		<property name="logging" ref="logging" />
 	</bean>
+	<bean name="ajaxController" class="com.revature.controllers.AjaxController">
+		<property name="businessDelegate" ref="businessDelegate" />
+	</bean>
 	<bean name="businessDelegate" class="com.revature.service.impl.BusinessDelegateImpl">
 		<property name="dataService" ref="dataService" />
 		<property name="serviceLocator" ref="serviceLocator" />
@@ -77,7 +80,4 @@
 		</property>
 		
 	</bean>
-
-
-
 </beans>
