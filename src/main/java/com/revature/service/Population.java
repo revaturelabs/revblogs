@@ -35,6 +35,7 @@ public class Population {
 		populateTags();
 		populateUsers();
 		populateBlogs();
+		populateProperties();
 	}
 	
 	//-----------------------------------
@@ -216,24 +217,21 @@ public class Population {
 	// Users
 	public void populateUsers(){
 		
-		String[] username = new String[]{
+		
+		String[] email = new String[]{
 				
-				"dpickles",
-				"polkadots",
-				"tmarx"
+				"pickles@yahoo.com",
+				"dots@yahoo.com",
+				"admin@test.com"
 		};
+		
 		String[] password = new String[]{
 				
 				"password1",
 				"password1",
 				"password1"
 		};
-		String[] email = new String[]{
-				
-				"pickles@yahoo.com",
-				"dots@yahoo.com",
-				"marx@yahoo.com"
-		};
+		
 		String[] firstName = new String[]{
 				
 				"Dan",
@@ -272,12 +270,9 @@ public class Population {
 		UserRoles admin = (UserRoles) criteria1.uniqueResult();
 		UserRoles contributor = (UserRoles) criteria2.uniqueResult();
 		
-		//Use a new constructor or use as is below
-		//Setting to null tells the GC it can be destroyed
-		//In this case if that happens code breaks
 		UserRoles myRole;
 		
-		for(int i = 0; i < username.length; i++){
+		for(int i = 0; i < email.length; i++){
 			
 			// Find Role
 			if(isAdmin[i]){
@@ -289,11 +284,11 @@ public class Population {
 				myRole = contributor;
 			}
 			
-			User user = new User(username[i], password[i], email[i], firstName[i], lastName[i], jobTitle[i], linkedInURL[i], 
+			User user = new User(email[i], password[i], firstName[i], lastName[i], jobTitle[i], linkedInURL[i], 
 								 description[i], myRole);
 			
 			// Encrypt Password
-			user.setPassword(Crypt.encrypt(user.getPassword(), user.getUsername(), user.getEmail()));
+			user.setPassword(Crypt.encrypt(user.getPassword(), user.getEmail(), user.getFullname()));
 			
 			delegate.putRecord(user);
 		}
@@ -312,14 +307,32 @@ public class Population {
 		
 		String[][] props = new String[][]{
 			
-			{},
-			{},
-			{},
-			{},
-			{},
-			{},
-			{},
-			{}
+			/*
+			 * Company
+			 * App
+			 * S3
+			 * Server
+			 * Jenkins
+			 * Sonarqube
+			 * K
+			 * V
+			 * Facebook Auth
+			 * LinkedIn Token
+			 * S3 Bucket
+			 * 
+			 */
+			
+			{"Revature"},
+			{"Revature Blogs"},
+			{"blogs.pjw6193.tech"},
+			{"dev.pjw6193.tech:7001"},
+			{"ci.pjw6193.tech:8080/jenkins"},
+			{"cube.pjw6193.tech:9000"},
+			{"AKIAJOHXNDKOZ6GADVBQ"},
+			{"gSpDFgjtupPKSwnoau21fSbGexKFJsItrukYWXHv"},
+			{"1070815552754243"},
+			{"77NVK5bZ7r4MWJ"},
+			{"https://s3-us-west-2.amazonaws.com/dan-pickles-jar"}
 		};
 		
 		for(int i = 0; i < props.length; i++){
@@ -366,6 +379,21 @@ public class Population {
 												"TuJgzrAAFblqmFUfDvRyNHOtKQjVpxESLwrXecnGMSrSEJyhfkgPGvTccbPJ", 
 												"sesquipedalianism"); 
 					break;
+				case 8: 
+					props[i][0] = Crypt.encrypt(props[i][0], 
+												"JplYSkoJXvxUEIaEZtLMzYugcPINpzArbIoGHjwHwFzdoUtfNfMOetPvvsHn", 
+												"METHIONYLTHREONYLTHREONYGLUTAMINYLARGINY"); 
+					break;
+				case 9: 
+					props[i][0] = Crypt.encrypt(props[i][0], 
+												"iqGJkjoSepUYggqxsZCdxXzCSyjxADhQtsiMPhyNRMxJbGowMrGmlIQETFzC", 
+												"Aequeosalinocalcalinoceraceoaluminosocupreovitriolic"); 
+					break;
+				case 10: 
+					props[i][0] = Crypt.encrypt(props[i][0], 
+												"boosNkoVgLkjnWJUMEeHAGbUmwWhVlBOPZKZjUduUXunxwbsZmnNxKdAWePg ", 
+												"peobuefdvxjbtoajefspkfuccfngbf"); 
+					break;
 			}
 		}
 
@@ -376,7 +404,10 @@ public class Population {
 																	props[4][0], 
 																	props[5][0], 
 																	props[6][0], 
-																	props[7][0]);
+																	props[7][0],
+																	props[8][0],
+																	props[9][0],
+																	props[10][0]);
 		
 		delegate.putRecord(propObj);
 		

@@ -42,6 +42,10 @@ import com.revature.service.impl.JetS3Impl;
 @Controller
 public class BaseController {
 	
+	/**
+	 * 	Attributes && Getters/Setters
+	 * 
+	 */
 	private Logging logging;
 	private BusinessDelegate businessDelegate;
 	private Population population;
@@ -58,43 +62,109 @@ public class BaseController {
 	public void setPopulation(Population population) {
 		this.population = population;
 	}
-	
 	public Logging getLogging() {
 		return logging;
 	}
 	public void setLogging(Logging logging) {
 		this.logging = logging;
 	}
+
+	/**
+	 *  Default Controller
+	 *  
+	 */
 	
-	//CHANGED LOGIN TO FUNCTION CORRECTLY
-	@RequestMapping(value="/loginPage")
-	public String login(HttpServletRequest req, HttpServletResponse resp){
+	//------------------------------------------------
+	// Redirections (&& Population)
 	
-		return "loginPage";
-	}
-	@RequestMapping(value="/makeClientAccount", method=RequestMethod.GET)
-	public String newClient(HttpServletRequest req, HttpServletResponse resp){
-		req.setAttribute("user", new User());
-		List<UserRoles> arrl = new ArrayList<>();
-		arrl.add(new UserRoles(1, "Manager"));
-		arrl.add(new UserRoles(2, "Employee"));
+	// Default Page
+	@RequestMapping(value="/", method=RequestMethod.GET)
+	public String home(){
 		
-		req.setAttribute("roleDropDown", arrl);
-		return "makeClientAccount";
+		return "index";
 	}
-	@RequestMapping(value="/populate", method=RequestMethod.GET)
-	public String populate(HttpServletRequest req, HttpServletResponse resp){
 	
+	// Login Page
+	@RequestMapping(value="/loginPage", method=RequestMethod.GET)
+	public String login(HttpServletRequest req, HttpServletResponse resp){
+		
 		return "loginPage";
 	}
+	
+	// Create Blog Page
 	@RequestMapping(value="/create-blog", method=RequestMethod.GET)
 	public String createBlog(HttpServletRequest req, HttpServletResponse resp){
+		
 		req.setAttribute("blog", new Blog());
 		return "create-blog";
 	}
+	
+	// Upload Example Page
+	@RequestMapping(value="/upload-example", method=RequestMethod.GET)
+	public String uploadExamplePage() {
+		
+		return "upload-example";
+	}
+	
+	// Profile Page
+	@RequestMapping(value="/profile", method=RequestMethod.GET)
+	public String profile(HttpServletRequest request, HttpServletRequest response){
+		return "profile";
+	}
+	
+	// Add Picture Page
+	@RequestMapping(value="/add-picture", method=RequestMethod.GET)
+	public String addPicture(HttpServletRequest req, HttpServletResponse resp){
+		return "add-picture";
+	}
+	
+	// Database Population (Empty = Database Populated) - No Redirection
+	@RequestMapping(value="/populate", method=RequestMethod.GET)
+	public void populate(HttpServletRequest req, HttpServletResponse resp){
+		
+	}
+	
+	//------------------------------------------------
+	// SPRING SECURITY
+	
+	// Admin Page
+	@RequestMapping(value="/admin**")
+	public ModelAndView viewAdmin(HttpServletRequest request, HttpServletRequest response, Principal principal){
+		String name = principal.getName();
+		User user = businessDelegate.requestUsers(name);
+		HttpSession session = request.getSession();
+		session.setAttribute("user", user);
+		
+		ModelAndView model = new ModelAndView();
+		model.setViewName("/home");
+		model.addObject("title", "Logged in as " + user.getJobTitle());
+		model.addObject("message", "Welcome " + user.getFirstName());
+		
+		return model;
+	}
+	
+	// Contributor Page
+	@RequestMapping(value="/contributor**")
+	public ModelAndView viewContributor(HttpServletRequest request, HttpServletRequest response, Principal principal){
+		
+		String name = principal.getName();
+		User user = businessDelegate.requestUsers(name);
+		HttpSession session = request.getSession();
+		session.setAttribute("user", user);
+		
+		ModelAndView model = new ModelAndView();
+		model.setViewName("/home");
+		model.addObject("title", "Logged in as " + user.getJobTitle());
+		model.addObject("message", "Welcome " + user.getFirstName());
+		
+		return model;
+	}
 
+	//---------------------------------------------------------------------------------------------------------------
+	
 	@RequestMapping(value="add-blog.do", method=RequestMethod.POST)
 	public String addBlog(
+			
 			@ModelAttribute("blog") @Valid Blog blog, 
 			BindingResult bindingResult,
 			HttpServletRequest req,
@@ -164,95 +234,5 @@ public class BaseController {
 			logging.info(e1);
 		}
 		return "success";
-	}
-
-	@RequestMapping(value="/", method=RequestMethod.GET)
-	public ModelAndView home(){
-		ModelAndView mv = new ModelAndView("index");
-		return mv;
-	}
-	
-	@RequestMapping(value="/upload-example", method=RequestMethod.GET)
-	public ModelAndView uploadExamplePage() {
-		return new ModelAndView("upload-example");
-	}
-	
-	@RequestMapping(value="/upload-resource", method=RequestMethod.POST)
-	public void uploadResourceHandler(@RequestParam("file") MultipartFile file, HttpServletResponse resp)
-	{
-		String url = businessDelegate.uploadResource(file.getOriginalFilename(), file);
-		try {
-			PrintWriter writer = resp.getWriter();
-			writer.append("<html><body><img src=\"" + url + "\" /></body></html>");
-		} catch (IOException e) {
-			logging.info(e);
-		}
-	}
-	@RequestMapping(value="/upload-page", method=RequestMethod.POST)
-	public void uploadPageHandler(@RequestParam("file") MultipartFile file, HttpServletResponse resp)
-	{
-		TemporaryFile tempFile = TemporaryFile.make(file);
-		File convertedFile = tempFile.getTemporaryFile();
-		String url = businessDelegate.uploadPage(convertedFile);
-		try {
-			PrintWriter writer = resp.getWriter();
-			writer.append("<html><body><a href=\"" + url + "\">" + url + "</a></body></html>");
-		} catch (IOException e) {
-			logging.info(e);
-		}
-	}
-	@RequestMapping(value="/add-picture", method=RequestMethod.GET)
-	public String addPicture(HttpServletRequest req, HttpServletResponse resp){
-		return "add-picture";
-	}
-	@RequestMapping(value="/upload-picture", method=RequestMethod.POST)
-	public void uploadPictureHandler(@RequestParam("file") MultipartFile file, HttpServletResponse resp)
-	{
-		String url = businessDelegate.uploadEvidence(file.getOriginalFilename(), file);
-		try {
-			PrintWriter writer = resp.getWriter();
-			writer.append(url);
-		} catch (IOException e) {
-			logging.info(e);
-		}
-	}
-	
-	@RequestMapping(value="/profile", method=RequestMethod.GET)
-	public String profile(HttpServletRequest request, HttpServletRequest response){
-		return "profile";
-	}
-	
-	//SEPARATE THE LOGINS FOR ADMIN AND CONTRIBUTOR.
-	
-	@RequestMapping(value="/admin**")
-	public ModelAndView viewAdmin(HttpServletRequest request, HttpServletRequest response, Principal principal){
-		String name = principal.getName();
-		User user = businessDelegate.requestUsers(name);
-		HttpSession session = request.getSession();
-		session.setAttribute("user", user);
-		
-		ModelAndView model = new ModelAndView();
-		model.setViewName("/home");
-		model.addObject("title", "Logged in as " + user.getJobTitle());
-		model.addObject("message", "Welcome " + user.getUsername());
-		
-		return model;
-	}
-	
-	
-	@RequestMapping(value="/contributor**")
-	public ModelAndView viewContributor(HttpServletRequest request, HttpServletRequest response, Principal principal){
-		
-		String name = principal.getName();
-		User user = businessDelegate.requestUsers(name);
-		HttpSession session = request.getSession();
-		session.setAttribute("user", user);
-		
-		ModelAndView model = new ModelAndView();
-		model.setViewName("/home");
-		model.addObject("title", "Logged in as " + user.getUsername());
-		model.addObject("message", "Welcome " + user.getUsername());
-		
-		return model;
 	}
 }
