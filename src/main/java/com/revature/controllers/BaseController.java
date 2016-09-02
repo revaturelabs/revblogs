@@ -3,11 +3,13 @@ package com.revature.controllers;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -142,27 +144,37 @@ public class BaseController {
 		}
 	}
 	
-	//SEPARATE THE LOGINS FOR ADMIN AND CONTRIBUTOR
+	//SEPARATE THE LOGINS FOR ADMIN AND CONTRIBUTOR.
 	
 	@RequestMapping(value="/admin**")
-	public ModelAndView viewAdmin(){
+	public ModelAndView viewAdmin(HttpServletRequest request, HttpServletRequest response, Principal principal){
+		
+		String name = principal.getName();
+		User user = businessDelegate.requestUsers(name);
+		HttpSession session = request.getSession();
+		session.setAttribute("user", user);
 		
 		ModelAndView model = new ModelAndView();
 		model.setViewName("/home");
-		model.addObject("title", "That one guy");
-		model.addObject("message", "Welcome");
+		model.addObject("title", "Logged in as " + user.getJobTitle());
+		model.addObject("message", "Welcome " + user.getUsername());
 		
 		return model;
 	}
 	
 	
 	@RequestMapping(value="/contributor**")
-	public ModelAndView viewContributor(){
+	public ModelAndView viewContributor(HttpServletRequest request, HttpServletRequest response, Principal principal){
+		
+		String name = principal.getName();
+		User user = businessDelegate.requestUsers(name);
+		HttpSession session = request.getSession();
+		session.setAttribute("user", user);
 		
 		ModelAndView model = new ModelAndView();
 		model.setViewName("/home");
-		model.addObject("title", "That one guy");
-		model.addObject("message", "Welcome");
+		model.addObject("title", "Logged in as " + user.getJobTitle());
+		model.addObject("message", "Welcome " + user.getUsername());
 		
 		return model;
 	}

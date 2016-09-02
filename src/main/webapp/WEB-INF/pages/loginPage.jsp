@@ -11,6 +11,14 @@
 <title>RevBlogs || Login</title>
 </head>
 <body>
+<c:if test="${'fail' eq param.auth}">
+		<div>
+              <h3>Failed to login. Please try again.</h3>
+        </div>
+</c:if>
+<br />
+<br />
+<br />
 	<img src="${pageContext.servletContext.contextPath}/resources/images/RevLogo.jpg" alt="Revature Logo" width="318" height="72"/>
 	<div id="login">
 	<form name="loginForm" action="${pageContext.request.contextPath}/login" method="post">
