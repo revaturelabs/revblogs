@@ -22,7 +22,7 @@
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" href="bootstrap-social.css">
 <script src="https://use.fontawesome.com/ebec39e24e.js"></script>
-
+<link href="resources/css/main.css" rel="stylesheet">
 <!-- Javascript SDK for FB Comments -->
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -37,6 +37,8 @@
 <title>Blog Post</title>
 </head>
 <body>
+<jsp:include page="navbar.jsp"></jsp:include>
+<div class="container">
 <h2>Create new blog post</h2>
 <form:form action="add-blog.do" method="post" commandName="blog">
 	Title <br>
@@ -69,7 +71,8 @@
 
 <!-- Facebook Comments Code, the data-href must point to the website the page will be on -->
 	<div class="fb-comments" data-href="http://dev.pjw6193:7001/pages/create-blog.jsp" data-numposts="5"></div>
-	
+</div>
+<jsp:include page="footer.jsp"></jsp:include>
 </body>
 <script src="${pageContext.servletContext.contextPath }/resources/js/facebookConnection.js"></script>
 <script src="${pageContext.servletContext.contextPath }/resources/js/tinyMCE.js"></script>

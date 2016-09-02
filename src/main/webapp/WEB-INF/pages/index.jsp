@@ -17,8 +17,46 @@
 </head>
 
 <body ng-app="app" ng-controller="BlogIndexController">
-  <jsp:include page="navbar.jsp"></jsp:include>
-  <script>document.getElementById("navhome").className="active";</script>
+  <nav class="page-navigation navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#"><img src="resources/img/rev-brand.png" /></a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="#">About</a></li>
+        </ul>
+        <form class="navbar-form navbar-right .hidden-xs">
+          <div class="form-group input-group post-search">
+            <input type="text" class="form-control" placeholder="Search">
+            <span class="input-group-btn">
+              <button class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
+            </span>
+          </div>
+        </form>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+  <div class="container visible-xs-block" style="margin-top: 80px">
+  	<form>
+       <div class="form-group input-group post-search">
+         <input type="text" class="form-control" placeholder="Search">
+         <span class="input-group-btn">
+           <button class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
+         </span>
+       </div>
+     </form>
+  </div>
+  
   <div class="container page-content">
   	<div class="row">
   		<div class="col-xs-12">
@@ -43,7 +81,49 @@
         </div>
       </div>
     </div>
+  
+  <!-- Customize posts to view -->
+  <div id="postsPerPage">
+  <label>Number of posts to show: </label>
+  	<a ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 10]" href="#here" ng-click="getPage(curPage)">10</a>
+  	<a ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 25]" href="#here" ng-click="getPage(curPage)">25</a>
+  	<a ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 50]" href="#here" ng-click="getPage(curPage)">50</a>
   </div>
-  <jsp:include page="footer.jsp"></jsp:include>
+  
+  
+  <!-- PAGINATION -->
+  <nav id="pageNumsNav" aria-label="...">
+  	<div ng-controller="BlogIndexController">
+  	<ul id="pageNums" class="pagination">
+   	  <li ng:class="{true:'disabled', false:'enabled'}[curPage == 1]"><a ng-click="getPage(number-1)" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+      <li ng:class="{true:'active', false:''}[number == curPage]"><a ng-click="getPage(1)">1 <span class="sr-only">(current)</span></a></li>
+ 		<li ng-repeat="number in numOfPages" ng-if="number !== 1"> <a ng-click="getPage(number)">{{number}}</a> </li>    
+    	<!-- <li><a ng-click="getPage('{{$index}}')">{{$index}}</a></li> -->
+   	  <li ng:class="{true:'disabled', false:'enabled'}[curPage == numOfPages]"><a ng-click="getPage(curPage+1)" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+  	</ul>
+  	</div>
+  </nav>
+  <!-- PAGINATION -->
+  </div>
+  
+  <div class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6">
+          <img class="img-responsive" src="resources/img/rev-footer.png" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="resources/js/ui.js"></script>
+  
+  <input type="hidden" ng-model="blogsPerPage">
+  
 </body>
+
+<script type="text/javascript">
+
+
+</script>
+
 </html>
