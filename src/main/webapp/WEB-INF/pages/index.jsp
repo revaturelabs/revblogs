@@ -95,11 +95,11 @@
   <nav id="pageNumsNav" aria-label="...">
   	<div ng-controller="BlogIndexController">
   	<ul id="pageNums" class="pagination">
-   	  <li ng:class="{true:'disabled', false:'enabled'}[curPage == 1]"><a ng-click="getPage(number-1)" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+   	  <li ng:class="{true:'disabled', false:'enabled'}[curPage == 1]"><a ng-click="changeView(0)" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
       <li ng:class="{true:'active', false:''}[number == curPage]"><a ng-click="getPage(1)">1 <span class="sr-only">(current)</span></a></li>
  		<li ng-repeat="number in numOfPages" ng-if="number !== 1"> <a ng-click="getPage(number)">{{number}}</a> </li>    
     	<!-- <li><a ng-click="getPage('{{$index}}')">{{$index}}</a></li> -->
-   	  <li ng:class="{true:'disabled', false:'enabled'}[curPage == numOfPages]"><a ng-click="getPage(curPage+1)" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+   	  <li ng:class="{true:'disabled', false:'enabled'}[curPage == numOfPages]"><a ng-click="changeView(1)" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
   	</ul>
   	</div>
   </nav>
