@@ -203,11 +203,15 @@ public class BaseController {
 		}
 	}
 	
+	@RequestMapping(value="/profile", method=RequestMethod.GET)
+	public String profile(HttpServletRequest request, HttpServletRequest response){
+		return "profile";
+	}
+	
 	//SEPARATE THE LOGINS FOR ADMIN AND CONTRIBUTOR.
 	
 	@RequestMapping(value="/admin**")
 	public ModelAndView viewAdmin(HttpServletRequest request, HttpServletRequest response, Principal principal){
-		
 		String name = principal.getName();
 		User user = businessDelegate.requestUsers(name);
 		HttpSession session = request.getSession();
@@ -232,10 +236,12 @@ public class BaseController {
 		
 		ModelAndView model = new ModelAndView();
 		model.setViewName("/home");
-		model.addObject("title", "Logged in as " + user.getJobTitle());
+		model.addObject("title", "Logged in as " + user.getUsername());
 		model.addObject("message", "Welcome " + user.getUsername());
 		
 		return model;
 	}
+	
+
 	
 }

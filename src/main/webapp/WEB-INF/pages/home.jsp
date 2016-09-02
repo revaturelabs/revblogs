@@ -13,6 +13,9 @@
 	<h2>${message}</h2>
 	
 	<sec:authorize access="hasRole('ADMIN')" >Welcome Admin!</sec:authorize>
+	<c:if test="${sesson.userRole.role eq ADMIN}">
+		<a href="${pageContext.servletContext.contextPath}/profile">Profile</a>
+	</c:if>
 	<sec:authorize access="hasRole('CONTRIBUTOR')" >Welcome Contributor!</sec:authorize>
 </body>
 </html>
