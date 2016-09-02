@@ -39,7 +39,6 @@
 			        	<ul class="dropdown-menu">
 			        		<li><a href="${pageContext.servletContext.contextPath}/create-blog"><span class="glyphicon glyphicon-pencil"></span>&nbsp;New blog entry</a></li>
 			        		<li role="separator" class="divider"></li>
-		            		<li><a href="#"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Log out</a></li>
 			        	</ul>
 			        </li>
 		        </c:when>
@@ -55,7 +54,6 @@
 			        		<li><a href="#"><span class="glyphicon glyphicon-wrench"></span>&nbsp;Manage entries</a></li>
 			        		<li><a href="#"><span class="glyphicon glyphicon-wrench"></span>&nbsp;Manage Users</a></li>
 			        		<li role="separator" class="divider"></li>
-		            		<li><a href="#"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Log out</a></li>
 			        	</ul>
 			        </li>
 		        </c:when>
