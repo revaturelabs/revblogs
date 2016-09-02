@@ -3,6 +3,7 @@ package com.revature.service.impl;
 import java.io.File;
 import java.io.FileInputStream;
 
+import org.hibernate.validator.xml.PropertyType;
 import org.jets3t.service.S3Service;
 import org.jets3t.service.acl.AccessControlList;
 import org.jets3t.service.acl.GroupGrantee;
@@ -13,11 +14,13 @@ import org.jets3t.service.model.S3Object;
 import org.jets3t.service.security.AWSCredentials;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.revature.service.BusinessDelegate;
 import com.revature.service.JetS3;
 import com.revature.service.Logging;
 
 public class JetS3Impl implements JetS3{
 	private static AWSCredentials credentials;
+	private static BusinessDelegate businessDelegate;
 	private static S3Service s3;
 	private static Logging logging;
 	private static final String BUCKET = "alpha-beta-jar";
@@ -37,7 +40,7 @@ public class JetS3Impl implements JetS3{
 		//Place all together for string atm until
 		//	credentials are in the database and
 		//	we can grab them from there
-		credentials = new AWSCredentials("","");
+		credentials = new AWSCredentials(businessDelegate.requestProperty(com.revature.data.impl.PropertyType.K),businessDelegate.requestProperty(com.revature.data.impl.PropertyType.V));
 		s3 = new RestS3Service(credentials);
 	}
 	
@@ -187,4 +190,9 @@ public class JetS3Impl implements JetS3{
 		}	
 		return true;
 	}
+
+	public void setBusinessDelegate(BusinessDelegate businessDelegate) {
+		this.businessDelegate = businessDelegate;
+	}
+	
 }
