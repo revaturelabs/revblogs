@@ -27,22 +27,6 @@ public class JetS3Impl implements JetS3{
 	//This pushes to Patrick's S3:
 	//"dan-pickles-jar"
 	//need patrick's credentials
-	static
-	{
-		//For String 1
-		//Part1: AKIAI
-		//Part2: K25JLJZ
-		//Part3: BAYEQDJQ
-		//For String 2
-		//Part1: Uzdkfp2JZd
-		//Part2: woK4xZVMq26i3
-		//Part3: Ot6IuQKm0ac+i/cs8
-		//Place all together for string atm until
-		//	credentials are in the database and
-		//	we can grab them from there
-		credentials = new AWSCredentials(businessDelegate.requestProperty(com.revature.data.impl.PropertyType.K),businessDelegate.requestProperty(com.revature.data.impl.PropertyType.V));
-		s3 = new RestS3Service(credentials);
-	}
 	
 	/**
 	 * Attempts to upload a resource (such as a CSS or JS file) to the S3 server
@@ -197,6 +181,8 @@ public class JetS3Impl implements JetS3{
 	
 	public synchronized static void syncBusinessDelegate(BusinessDelegate businessDelegate){
 		JetS3Impl.businessDelegate = businessDelegate;
+		credentials = new AWSCredentials(businessDelegate.requestProperty(com.revature.data.impl.PropertyType.K),businessDelegate.requestProperty(com.revature.data.impl.PropertyType.V));
+		s3 = new RestS3Service(credentials);
 	}
 	
 }
