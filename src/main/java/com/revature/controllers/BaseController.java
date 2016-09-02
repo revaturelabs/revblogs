@@ -32,11 +32,12 @@ import com.revature.beans.Blog;
 import com.revature.beans.Tags;
 import com.revature.beans.User;
 import com.revature.beans.UserRoles;
-import com.revature.data.impl.PropertyType;
 import com.revature.service.BusinessDelegate;
 import com.revature.service.HtmlWriter;
+import com.revature.service.JetS3;
 import com.revature.service.Logging;
 import com.revature.service.Population;
+import com.revature.service.impl.JetS3Impl;
 
 @Controller
 public class BaseController {
@@ -147,17 +148,20 @@ public class BaseController {
 			InputStream templateStream = this.getClass().getClassLoader().getResourceAsStream("template.html");
 			htmlWriter = new HtmlWriter(blog, blog.getAuthor(), templateStream);
 			TemporaryFile blogTempFile = htmlWriter.render();
+			JetS3 jetS3 = new JetS3Impl();
+			jetS3.uploadPage(blogTempFile.getTemporaryFile());
 			blogTempFile.destroy();
-		} catch (FileNotFoundException e) {
+		} catch (FileNotFoundException e) { 
+			logging.info(e);
 		} catch (IOException e1) {
+			logging.info(e1);
 		}
 		return "success";
 	}
 
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	public ModelAndView home(){
-		ModelAndView mv = new ModelAndView("index");
-		return mv;
+		return new ModelAndView("index");
 	}
 	
 	@RequestMapping(value="/upload-example", method=RequestMethod.GET)
