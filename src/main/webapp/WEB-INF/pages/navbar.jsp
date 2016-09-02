@@ -19,23 +19,50 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#"><img src="resources/img/rev-brand.png" /></a>
+        <a class="navbar-brand" href="${pageContext.servletContext.contextPath}/"><img src="resources/img/rev-brand.png" /></a>
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul id="navs" class="nav navbar-nav">
-          <li id="navhome"><a href="#">Home</a></li>
-          <li id="navabout"><a href="#">About</a></li>
+          <li id="navhome"><a href="${pageContext.servletContext.contextPath}/">Home</a></li>
         </ul>
-        <form class="navbar-form navbar-right .hidden-xs">
-          <div class="form-group input-group post-search">
-            <input type="text" class="form-control" placeholder="Search">
-            <span class="input-group-btn">
-              <button class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
-            </span>
-          </div>
-        </form>
+        <ul id="rightnavs" class="nav navbar-nav navbar-right">
+	        <li id="navsearch">
+		        <form class="navbar-form navbar-right .hidden-xs">
+		          <div class="form-group input-group post-search">
+		            <input type="text" class="form-control" placeholder="Search">
+		            <span class="input-group-btn">
+		              <button class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
+		            </span>
+		          </div>
+		        </form>
+	        </li>
+	        <li id="navuser" class="dropdown">
+	        	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" 
+	        	aria-haspopup="true" aria-expanded="false">
+	        	<span class="glyphicon glyphicon-user"></span>
+	        	User <span class="caret"></span></a>
+	        	<ul class="dropdown-menu">
+	        		<li><a href=#><span class="glyphicon glyphicon-pencil"></span>&nbsp;New blog entry</a></li>
+	        		<li role="separator" class="divider"></li>
+            		<li><a href="#"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Log out</a></li>
+	        	</ul>
+	        </li>
+	        <li id="navadmin" class="dropdown">
+	        	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" 
+	        	aria-haspopup="true" aria-expanded="false">
+	        	<span class="glyphicon glyphicon-user"></span>
+	        	Admin <span class="caret"></span></a>
+	        	<ul class="dropdown-menu">
+	        		<li><a href=#><span class="glyphicon glyphicon-wrench"></span>&nbsp;Manage entries</a></li>
+	        		<li><a href=#><span class="glyphicon glyphicon-wrench"></span>&nbsp;Manage Users</a></li>
+	        		<li role="separator" class="divider"></li>
+            		<li><a href="#"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Log out</a></li>
+	        	</ul>
+	        </li>
+	        <li id="navlogin"><a href="${pageContext.servletContext.contextPath}/loginPage"><span class="glyphicon glyphicon-log-in"></span>&nbsp;Log in</a></li>
+        </ul>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
   </nav>
