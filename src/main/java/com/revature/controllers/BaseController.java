@@ -137,11 +137,11 @@ public class BaseController {
 			blog.setTags(tmpTags);
 		}
 		User author = businessDelegate.requestUsers("dpickles");
+//		User author = (User) req.getSession().getAttribute("user");
+		author.getFirstName();
 		blog.setAuthor(author);
 		blog.setPublishDate(new Date());
 		blog.setBlogContent("empty");
-		System.out.println("----------------" + blog.getStaticContent() + "--------------");
-		businessDelegate.putRecord(blog);
 		req.getSession().setAttribute("blog", blog);
 		return "preview-blog";
 	}
@@ -152,11 +152,13 @@ public class BaseController {
 		HtmlWriter htmlWriter;
 		try {
 			InputStream templateStream = this.getClass().getClassLoader().getResourceAsStream("template.html");
-			blog.getAuthor();
 			htmlWriter = new HtmlWriter(blog, blog.getAuthor(), templateStream);
 			TemporaryFile blogTempFile = htmlWriter.render();
 			System.out.println(blogTempFile.getTemporaryFile().getName());
+			String fileName = blogTempFile.getTemporaryFile().getName();
+			req.setAttribute("fileName", fileName);
 			JetS3 jetS3 = new JetS3Impl();
+			businessDelegate.putRecord(blog);
 			jetS3.uploadPage(blogTempFile.getTemporaryFile());
 			blogTempFile.destroy();
 		} catch (FileNotFoundException e) { 
