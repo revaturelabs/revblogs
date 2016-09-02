@@ -9,6 +9,20 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
 <link href="resources/css/main.css" rel="stylesheet">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta property="og:url" content="http://dev.pjw6193:7001/pages/create-blog.jsp" />
+<meta property="og:type"content="article" />
+<meta property="og:title"content="Different" />
+<meta property="og:description"content="this is only a testkhjkgkjhgkj" />
+<meta property="og:image"content="http://weknowyourdreams.com/images/cheese/cheese-03.jpg" />
+<meta property="og:image:width" content="450" />
+<meta property="og:image:height" content="298" />
+<meta property="fb:app_id" content="1070815552954243"/>
+<!-- LinkedIn Authenticator Token -->
+<script src="//platform.linkedin.com/in.js">
+    api_key:   77nvk5bz7r4mwj
+</script>
+<script src="https://use.fontawesome.com/ebec39e24e.js"></script>
 
 </head>
 
@@ -37,9 +51,12 @@
             <h1 class="post-title">
             	<c:out value="${blog.blogTitle}"></c:out>
             </h1>
+            <h3 class="post-subtitle">
+            	<c:out value="${blog.blogSubtitle}"></c:out>
+            </h3>
           </div>
           <div class="post-body">
-          	<c:out value="${blog.blogContent}" escapeXml="false"></c:out>
+          	<c:out value="${blog.staticContent}" escapeXml="false"></c:out>
           </div>
           <form action="/edit">
           	<button type="submit">Edit</button>
@@ -77,7 +94,13 @@
             <h3 class="panel-title">Share this post</h3>
           </div>
           <div class="panel-body">
-            <p>(Social sharing icons here)</p>
+                   <div>Share:</div>
+			<a class="btn btn-social-icon btn-linkedin" target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url=http://dev.pjw6193.tech/pages/create-blog.jsp">
+				<span class="fa fa-linkedin"></span>	
+			</a>
+			<a class="btn btn-social-icon btn-facebook" target="_blank" id="shareBtn">
+				<span class="fa fa-facebook"></span>
+			</a>
           </div>
         </div>
 
@@ -105,4 +128,5 @@
     </div>
   </div>
 </body>
+<script src="${pageContext.servletContext.contextPath }/resources/js/facebookConnection.js"></script>
 </html>
