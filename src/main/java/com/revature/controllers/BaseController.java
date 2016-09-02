@@ -4,10 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,10 +20,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.revature.app.TemporaryFile;
+import com.revature.beans.ApplicationProperties;
 import com.revature.beans.Blog;
-import com.revature.beans.Tags;
 import com.revature.beans.User;
 import com.revature.beans.UserRoles;
+import com.revature.data.impl.PropertyType;
 import com.revature.service.BusinessDelegate;
 import com.revature.service.Logging;
 import com.revature.service.Population;
@@ -50,10 +48,14 @@ public class BaseController {
 	public void setPopulation(Population population) {
 		this.population = population;
 	}
-	@RequestMapping(value="/login", method=RequestMethod.GET)
+	
+	
+	//CHANGED LOGIN TO FUNCTION CORRECTLY
+	
+	@RequestMapping(value="/loginPage")
 	public String login(HttpServletRequest req, HttpServletResponse resp){
 	
-		return "login";
+		return "loginPage";
 	}
 	@RequestMapping(value="/temp-AddClient", method=RequestMethod.GET)
 	public String newClient(HttpServletRequest req, HttpServletResponse resp){
@@ -68,6 +70,10 @@ public class BaseController {
 	@RequestMapping(value="/populate", method=RequestMethod.GET)
 	public String populate(HttpServletRequest req, HttpServletResponse resp){
 	
+		String props = businessDelegate.requestProperty(PropertyType.COMPANY);
+		
+		System.out.println("Company is = " + props);
+		
 		return "login";
 	}
 	@RequestMapping(value="/create-blog", method=RequestMethod.GET)
@@ -82,47 +88,6 @@ public class BaseController {
 			BindingResult bindingResult,
 			HttpServletRequest req,
 			HttpServletResponse resp) {
-		/*
-		 * Blog Bean will be generated with proper tags and fields
-		 */
-		
-		if(blog.getBlogTagsString().isEmpty()){
-			blog.setTags(new HashSet<Tags>());
-		}
-		else{
-			String tmp = blog.getBlogTagsString();
-			List<String> myList = Arrays.asList(tmp.split(","));
-			Set<Tags> tmpTags = new HashSet<Tags>();
-			List<Tags> dbTags = businessDelegate.requestTags();
-			/*
-			 * loop through List of tag descriptions the user types in
-			 */
-			for(String a : myList){
-				boolean check = false;
-				String tagDesc = a.toLowerCase().replaceAll("\\s+","");
-				/*
-				 * loop through database Tags to check with user input tags
-				 * if theres a match, put instance of database Tag into User bean, if not, create new Tag bean
-				 */
-				for(Tags b : dbTags){
-					if(b.getDescription().equals(tagDesc)){
-						tmpTags.add(b);
-						check = true;
-					}
-				}
-				if(!check){
-					Tags myTag = new Tags(tagDesc);
-					businessDelegate.putRecord(myTag);
-					tmpTags.add(myTag);
-					
-				}
-			}
-			blog.setTags(tmpTags);
-		}
-		
-		User tmpUser = businessDelegate.requestUsers("dpickles");
-		blog.setAuthor(tmpUser);
-		businessDelegate.putRecord(blog);
 		return "create-blog";
 	}
 
@@ -171,10 +136,35 @@ public class BaseController {
 		String url = businessDelegate.uploadEvidence(file.getOriginalFilename(), file);
 		try {
 			PrintWriter writer = resp.getWriter();
-			writer.append("<html><body><h3>Copy URL into Add Image</h3><br></body></html>" + url);
+			writer.append(url);
 		} catch (IOException e) {
 			logging.info(e);
 		}
+	}
+	
+	//SEPARATE THE LOGINS FOR ADMIN AND CONTRIBUTOR
+	
+	@RequestMapping(value="/admin**")
+	public ModelAndView viewAdmin(){
+		
+		ModelAndView model = new ModelAndView();
+		model.setViewName("/home");
+		model.addObject("title", "That one guy");
+		model.addObject("message", "Welcome");
+		
+		return model;
+	}
+	
+	
+	@RequestMapping(value="/contributor**")
+	public ModelAndView viewContributor(){
+		
+		ModelAndView model = new ModelAndView();
+		model.setViewName("/home");
+		model.addObject("title", "That one guy");
+		model.addObject("message", "Welcome");
+		
+		return model;
 	}
 	
 }
