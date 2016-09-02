@@ -70,11 +70,7 @@ public class BaseController {
 	@RequestMapping(value="/populate", method=RequestMethod.GET)
 	public String populate(HttpServletRequest req, HttpServletResponse resp){
 	
-		String props = businessDelegate.requestProperty(PropertyType.COMPANY);
-		
-		System.out.println("Company is = " + props);
-		
-		return "login";
+		return "loginPage";
 	}
 	@RequestMapping(value="/create-blog", method=RequestMethod.GET)
 	public String createBlog(HttpServletRequest req, HttpServletResponse resp){
