@@ -118,9 +118,13 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 				var tPosts = resp.tPosts;  //totalPosts
 				var curPage = page;
 				
+				var prevPage = curPage;
+				console.log(prevPage);
+				var nextPage = curPage;
+				
 				if(curPage > 1)
 				{
-					var prePage = curPage - 1;
+					var prepPage = curPage - 1;
 				}
 				
 				if(curPage > 1)
