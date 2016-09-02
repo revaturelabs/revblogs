@@ -22,7 +22,9 @@
 		<property name="username" value="dan" />
 		<property name="password" value="pickles" />
 	</bean>
-
+	<bean name="logging" class="com.revature.service.Logging">
+		
+	</bean>
 	<bean name="baseController" class="com.revature.controllers.BaseController">
 		<property name="businessDelegate" ref="businessDelegate" />
 		<property name="population" ref="population" />
@@ -45,9 +47,7 @@
 	<bean name="jetS3" class="com.revature.service.impl.JetS3Impl">
 		<property name="businessDelegate" ref="businessDelegate" />
 	</bean>
-	<bean name="logging" class="com.revature.service.Logging">
-		
-	</bean>
+
 		
 	<tx:annotation-driven />
 
