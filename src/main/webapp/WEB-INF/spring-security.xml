@@ -14,13 +14,13 @@
 		<security:intercept-url pattern="/contributor**" access="hasRole('CONTRIBUTOR')"/>
 
 <!-- FORM-LOGIN SECURITY FOR THE LOGIN PAGE -->		
-		<security:form-login 
+		<security:form-login  
 			login-processing-url="/login" login-page="/loginPage"
 			username-parameter="username"
 			password-parameter="password"
 			default-target-url="/home"
 			authentication-success-handler-ref="roleHandler"
-			authentication-failure-url="/login?auth=fail" />
+			authentication-failure-url="/loginPage?auth=fail" />
 			
 	</security:http>
 	
