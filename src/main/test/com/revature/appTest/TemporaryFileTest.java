@@ -18,8 +18,9 @@ public class TemporaryFileTest {
 	
 	@Test
 	public void testPlainString() throws IOException {
+		String fileName = "myFileName.txt";
 		String contents = "SillyFile";
-		temporaryFile = TemporaryFile.make(contents);
+		temporaryFile = TemporaryFile.make(fileName, contents);
 		File testTempFile = temporaryFile.getTemporaryFile();
 		FileReader fileReader = new FileReader(testTempFile);
 		BufferedReader buff = new BufferedReader(fileReader);
@@ -27,6 +28,7 @@ public class TemporaryFileTest {
 		while ( (line = buff.readLine()) != null ) {
 			assertTrue(line.equals(contents));
 		}
+		assertTrue(testTempFile.getName().equals(fileName));
 		buff.close();
 		fileReader.close();
 		temporaryFile.destroy();
