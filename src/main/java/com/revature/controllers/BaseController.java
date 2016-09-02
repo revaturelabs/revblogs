@@ -66,7 +66,7 @@ public class BaseController {
 	
 		return "loginPage";
 	}
-	@RequestMapping(value="/temp-AddClient", method=RequestMethod.GET)
+	@RequestMapping(value="/makeClientAccount", method=RequestMethod.GET)
 	public String newClient(HttpServletRequest req, HttpServletResponse resp){
 		req.setAttribute("user", new User());
 		List<UserRoles> arrl = new ArrayList<>();
@@ -238,6 +238,5 @@ public class BaseController {
 		return model;
 	}
 	
-
 	
 }
