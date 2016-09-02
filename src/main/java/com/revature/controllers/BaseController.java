@@ -149,6 +149,7 @@ public class BaseController {
 			blog.getAuthor();
 			htmlWriter = new HtmlWriter(blog, blog.getAuthor(), templateStream);
 			TemporaryFile blogTempFile = htmlWriter.render();
+			System.out.println(blogTempFile.getTemporaryFile().getName());
 			JetS3 jetS3 = new JetS3Impl();
 			jetS3.uploadPage(blogTempFile.getTemporaryFile());
 			blogTempFile.destroy();
