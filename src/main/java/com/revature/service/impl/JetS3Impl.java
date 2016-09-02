@@ -3,6 +3,7 @@ package com.revature.service.impl;
 import java.io.File;
 import java.io.FileInputStream;
 
+import org.hibernate.validator.xml.PropertyType;
 import org.jets3t.service.S3Service;
 import org.jets3t.service.acl.AccessControlList;
 import org.jets3t.service.acl.GroupGrantee;
@@ -13,33 +14,19 @@ import org.jets3t.service.model.S3Object;
 import org.jets3t.service.security.AWSCredentials;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.revature.service.BusinessDelegate;
 import com.revature.service.JetS3;
 import com.revature.service.Logging;
 
 public class JetS3Impl implements JetS3{
 	private static AWSCredentials credentials;
+	private static BusinessDelegate businessDelegate;
 	private static S3Service s3;
 	private static Logging logging;
 	private static final String BUCKET = "alpha-beta-jar";
 	//This pushes to Patrick's S3:
 	//"dan-pickles-jar"
 	//need patrick's credentials
-	static
-	{
-		//For String 1
-		//Part1: AKIAI
-		//Part2: K25JLJZ
-		//Part3: BAYEQDJQ
-		//For String 2
-		//Part1: Uzdkfp2JZd
-		//Part2: woK4xZVMq26i3
-		//Part3: Ot6IuQKm0ac+i/cs8
-		//Place all together for string atm until
-		//	credentials are in the database and
-		//	we can grab them from there
-		credentials = new AWSCredentials("","");
-		s3 = new RestS3Service(credentials);
-	}
 	
 	/**
 	 * Attempts to upload a resource (such as a CSS or JS file) to the S3 server
@@ -187,4 +174,15 @@ public class JetS3Impl implements JetS3{
 		}	
 		return true;
 	}
+
+	public void setBusinessDelegate(BusinessDelegate businessDelegate) {
+		JetS3Impl.syncBusinessDelegate(businessDelegate);
+	}
+	
+	public synchronized static void syncBusinessDelegate(BusinessDelegate businessDelegate){
+		JetS3Impl.businessDelegate = businessDelegate;
+		credentials = new AWSCredentials(businessDelegate.requestProperty(com.revature.data.impl.PropertyType.K),businessDelegate.requestProperty(com.revature.data.impl.PropertyType.V));
+		s3 = new RestS3Service(credentials);
+	}
+	
 }

@@ -11,6 +11,7 @@ import com.revature.beans.Tags;
 import com.revature.beans.User;
 import com.revature.beans.UserRoles;
 import com.revature.data.impl.PaginatedResultList;
+import com.revature.data.impl.PropertyType;
 
 @Service
 public interface DataService {
@@ -19,9 +20,11 @@ public interface DataService {
 	
 	// Push
 	public void makeRecord(Object obj);
+	public void changeRecord(Object obj);
 	
 	// Pull
 	public User grabUsers(String username);
+	public String grabProperty(PropertyType type);
 	
 	public List<User> grabUsers();
 	public List<Blog> grabBlogs();

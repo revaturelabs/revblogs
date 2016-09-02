@@ -30,9 +30,9 @@ public class WriteTester {
 		author.setFirstName("Simon");
 		author.setLastName("& Garfunkel");
 		author.setDescription("Simon and Garfunkel are Paul Simon and Art Garfunkel. They are musicians who one day decided to start recording together. <i>The Sound of Silence</i> might be their most well-known song.");
-		testWriter = new HtmlWriter(testBlog, author, "src/main/resources/template.html");
+		testWriter = new HtmlWriter(testBlog, author, WriteTester.class.getClassLoader().getResourceAsStream("template.html"));
 		try {
-			testWriter.render(HtmlWriter.DEFAULT_PATH);
+			testWriter.render();
 		} catch (IOException e) {
 			logging.info(e);
 		}

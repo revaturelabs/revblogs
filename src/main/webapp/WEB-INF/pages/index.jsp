@@ -81,7 +81,31 @@
         </div>
       </div>
     </div>
+  
+  <!-- Customize posts to view -->
+  <div id="postsPerPage">
+  <label>Number of posts to show: </label>
+  	<a ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 10]" href="#here" ng-click="getPage(curPage)">10</a>
+  	<a ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 25]" href="#here" ng-click="getPage(curPage)">25</a>
+  	<a ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 50]" href="#here" ng-click="getPage(curPage)">50</a>
   </div>
+  
+  
+  <!-- PAGINATION -->
+  <nav id="pageNumsNav" aria-label="...">
+  	<div ng-controller="BlogIndexController">
+  	<ul id="pageNums" class="pagination">
+   	  <li ng:class="{true:'disabled', false:'enabled'}[curPage == 1]"><a ng-click="getPage(number-1)" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+      <li ng:class="{true:'active', false:''}[number == curPage]"><a ng-click="getPage(1)">1 <span class="sr-only">(current)</span></a></li>
+ 		<li ng-repeat="number in numOfPages" ng-if="number !== 1"> <a ng-click="getPage(number)">{{number}}</a> </li>    
+    	<!-- <li><a ng-click="getPage('{{$index}}')">{{$index}}</a></li> -->
+   	  <li ng:class="{true:'disabled', false:'enabled'}[curPage == numOfPages]"><a ng-click="getPage(curPage+1)" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+  	</ul>
+  	</div>
+  </nav>
+  <!-- PAGINATION -->
+  </div>
+  
   <div class="footer">
     <div class="container">
       <div class="row">
@@ -92,5 +116,14 @@
     </div>
   </div>
   <script type="text/javascript" src="resources/js/ui.js"></script>
+  
+  <input type="hidden" ng-model="blogsPerPage">
+  
 </body>
+
+<script type="text/javascript">
+
+
+</script>
+
 </html>
