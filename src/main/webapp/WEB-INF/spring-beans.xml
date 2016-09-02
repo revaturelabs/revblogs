@@ -42,7 +42,7 @@
 		<property name="delegate" ref="businessDelegate" />
 	</bean>
 	<bean name="jetS3" class="com.revature.service.impl.JetS3Impl">
-		<property name="businessDeligate" ref="businessDelegate" />
+		<property name="businessDelegate" ref="businessDelegate" />
 	</bean>
 		
 	<tx:annotation-driven />
