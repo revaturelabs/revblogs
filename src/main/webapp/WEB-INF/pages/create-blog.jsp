@@ -38,7 +38,7 @@
 </head>
 <body>
 <jsp:include page="navbar.jsp"></jsp:include>
-<div class="container">
+<div class="container page-content">
 <h2>Create new blog post</h2>
 <form:form action="add-blog.do" method="post" commandName="blog">
 	Title <br>
