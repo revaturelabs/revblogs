@@ -58,9 +58,14 @@ public class BaseController {
 		this.population = population;
 	}
 	
+	public Logging getLogging() {
+		return logging;
+	}
+	public void setLogging(Logging logging) {
+		this.logging = logging;
+	}
 	
 	//CHANGED LOGIN TO FUNCTION CORRECTLY
-	
 	@RequestMapping(value="/loginPage")
 	public String login(HttpServletRequest req, HttpServletResponse resp){
 	
