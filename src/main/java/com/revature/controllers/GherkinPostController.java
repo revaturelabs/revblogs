@@ -51,7 +51,7 @@ public class GherkinPostController {
 	public String updatePassword(@RequestParam("newPassword") String password,
 			HttpServletRequest req, HttpServletResponse resp){
 		
-		User loggedIn = (User) req.getAttribute("loggedIn");
+		User loggedIn = (User) req.getAttribute("user");
 		loggedIn.setPassword(password);
 		businessDelegate.putRecord(loggedIn);
 		return "index";

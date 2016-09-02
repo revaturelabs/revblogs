@@ -18,11 +18,16 @@
 <body>
 <jsp:include page="navbar.jsp"></jsp:include>
 <div class="container page-content">
-<c:if test="${'fail' eq param.auth}">
+	<c:if test="${'fail' eq param.auth}">
 		<div>
               <h3>Failed to login. Please try again.</h3>
         </div>
-</c:if>
+	</c:if>
+	<c:if test="${'logout' eq param.auth}">
+		<div>
+			<h3>You have successfully signed out.</h3>
+		</div>
+	</c:if>
 	<img src="${pageContext.servletContext.contextPath}/resources/images/RevLogo.jpg" alt="Revature Logo" width="318" height="72"/>
 	<br><br>
 	<div id="login">
