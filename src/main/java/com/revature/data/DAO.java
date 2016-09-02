@@ -10,6 +10,7 @@ import com.revature.beans.Evidence;
 import com.revature.beans.Tags;
 import com.revature.beans.User;
 import com.revature.beans.UserRoles;
+import com.revature.data.impl.PaginatedResultList;
 
 @Repository
 public interface DAO {
@@ -24,6 +25,10 @@ public interface DAO {
 	
 	public List<User> getUsers();
 	public List<Blog> getBlogs();
+	public PaginatedResultList<Blog> getBlogs(int start, int max);
+	public List<Blog> getBlogs(String search, int start, int max);
+	public List<Blog> getBlogs(User author, int start, int max);
+	public List<Blog> getBlogs(Tags category, int start, int max);
 	public List<Tags> getTags();
 	public List<UserRoles> getRoles();
 	public List<Evidence> getEvidence();

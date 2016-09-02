@@ -12,8 +12,11 @@ public class BlogPostCollectionDTO {
 	@JsonProperty("total_pages")
 	int totalPages = 0;
 	
+	@JsonProperty("per_page")
+	int perPage = 0;
+	
 	@JsonProperty("total_posts")
-	int totalPosts = 0;
+	long totalPosts = 0;
 	
 	String prev = null;
 	String next = null;
@@ -33,10 +36,10 @@ public class BlogPostCollectionDTO {
 	public void setTotalPages(int totalPages) {
 		this.totalPages = totalPages;
 	}
-	public int getTotalPosts() {
+	public long getTotalPosts() {
 		return totalPosts;
 	}
-	public void setTotalPosts(int totalPosts) {
+	public void setTotalPosts(long totalPosts) {
 		this.totalPosts = totalPosts;
 	}
 	public String getPrev() {
@@ -57,5 +60,10 @@ public class BlogPostCollectionDTO {
 	public void setPosts(List<BlogPostDTO> posts) {
 		this.posts = posts;
 	}
-	
+	public int getPerPage() {
+		return perPage;
+	}
+	public void setPerPage(int perPage) {
+		this.perPage = perPage;
+	}
 }
