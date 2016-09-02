@@ -18,6 +18,7 @@
 
 <body ng-app="app" ng-controller="BlogIndexController">
   <jsp:include page="navbar.jsp"></jsp:include>
+  <script type="text/javascript">$("#navhome").addClass("active");</script>
   <div class="container visible-xs-block" style="margin-top: 80px">
   	<form>
        <div class="form-group input-group post-search">
