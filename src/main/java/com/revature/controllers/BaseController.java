@@ -141,16 +141,7 @@ public class BaseController {
 		blog.setPublishDate(new Date());
 		
 		businessDelegate.putRecord(blog);
-		HtmlWriter htmlWriter;
-		try {
-			InputStream templateStream = this.getClass().getClassLoader().getResourceAsStream("template.html");
-			htmlWriter = new HtmlWriter(blog, blog.getAuthor(), templateStream);
-			TemporaryFile blogTempFile = htmlWriter.render();
-			blogTempFile.destroy();
-			req.setAttribute("blog", blog);
-		} catch (FileNotFoundException e) {
-		} catch (IOException e1) {
-		}
+		req.getSession().setAttribute("blog", blog);
 		return "preview-blog";
 	}
 	
