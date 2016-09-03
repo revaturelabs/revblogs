@@ -12,6 +12,10 @@
 <script src="${pageContext.servletContext.contextPath }/resources/js/validatePassword.js"></script>
 <link href="resources/css/main.css" rel="stylesheet">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<!-- HEADERS NEEDED TO PREVENT BACK BUTTON ON LOGOUT. DO NOT REMOVE ME! -->
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Expires" content="Sat, 01 Dec 2001 00:00:00 GMT">
 <title>Profile</title>
 </head>
 <body>
