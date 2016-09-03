@@ -28,14 +28,11 @@ public class User {
 	@SequenceGenerator(name="userSequence",sequenceName="USER_SEQUENCE",initialValue=1,allocationSize=1)
 	private int userId;
 		
-	@Column(name="USER_USERNAME", unique=true, nullable=false)
-	private String username;
-		
-	@Column(name="USER_PASSWORD", nullable=false)
-	private String password;
-		
 	@Column(name="USER_EMAIL", unique=true, nullable=false)
 	private String email;
+	
+	@Column(name="USER_PASSWORD", nullable=false)
+	private String password;
 		
 	@Column(name="USER_FIRST", nullable=false)
 	@Field
@@ -60,6 +57,9 @@ public class User {
 	@Column(name="USER_ACTIVE", nullable=false)
 	private boolean active;
 	
+	@Column(name="USER_NEW", nullable=false)
+	private boolean newUser;
+	
 	/**
 	 *  Relationship Mapping
 	 */
@@ -77,45 +77,10 @@ public class User {
 	public User() {
 		super();
 	}
-	public User(String username, String password, String email, String firstName, String lastName,
-				String jobTitle, String linkedInURL, String description, UserRoles userRole) {
-		super();
-		this.username = username;
-		this.password = password;
-		this.email = email;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.jobTitle = jobTitle;
-		this.linkedInURL = linkedInURL;
-		this.description = description;
-		this.userRole = userRole;
-		
-		// User always starts active
-		this.active = true;
-	}		
-		/**
-		 *  	Constructor without password, user role and profile picture
-		 */
-	public User(String username, String email, String firstName, String lastName, String jobTitle,
-				String linkedInURL, String description){
-		super();
-		this.username = username;
-		this.email = email;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.jobTitle = jobTitle;
-		this.linkedInURL = linkedInURL;
-		this.description = description;
-		
-		System.err.println("running constructor for user");
-		
-		// User always starts active
-		this.active = true;
-		
-	}
-		/**
-		 * 	Constructor for updating User password
-		 */
+	
+	/**
+	 * 	Constructor for updating User password
+	 */
 	public User(String password){
 		super();
 		this.password = password;
@@ -124,9 +89,9 @@ public class User {
 		this.active = true;
 	}
 	
-		/**
-		 * 	Constructor for Admin to create new Contributor
-		 */
+	/**
+	 * 	Constructor for Admin to create new Contributor
+	 */
 	public User(String email, String password){
 		super();
 		this.email = email;
@@ -137,6 +102,44 @@ public class User {
 	}
 	
 	/**
+	 *  	Constructor without password, user role and profile picture
+	 */ 
+	public User(String email, String firstName, String lastName, String jobTitle, String linkedInURL, String description){
+		super();
+		this.email = email;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.jobTitle = jobTitle;
+		this.linkedInURL = linkedInURL;
+		this.description = description;
+		
+		System.err.println("running constructor for user");
+		
+
+		// User always starts active && new
+		this.active = true;
+		this.newUser = true;
+		
+	}
+	
+	public User(String email, String password, String firstName, String lastName, String jobTitle, 
+				String linkedInURL, String description, UserRoles userRole) {
+		super();
+		this.email = email;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.jobTitle = jobTitle;
+		this.linkedInURL = linkedInURL;
+		this.description = description;
+		this.userRole = userRole;
+		
+		// User always starts active && new
+		this.active = true;
+		this.newUser = true;
+	}		
+		
+	/**
 	 * 	Getters & Setters
 	 */
 	public int getUserId() {
@@ -144,12 +147,6 @@ public class User {
 	}
 	public void setUserId(int userId) {
 		this.userId = userId;
-	}
-	public String getUsername() {
-		return username;
-	}
-	public void setUsername(String username) {
-		this.username = username;
 	}
 	public String getPassword() {
 		return password;
@@ -216,6 +213,8 @@ public class User {
 	}
 	public void setBlogs(Set<Blog> blogs) {
 		this.blogs = blogs;
-	}		
-	
+	}
+	public String getFullname(){
+		return this.lastName + ", " + this.firstName;
+	}
 }

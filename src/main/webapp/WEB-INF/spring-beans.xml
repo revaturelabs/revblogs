@@ -33,11 +33,13 @@
 	<bean name="ajaxController" class="com.revature.controllers.AjaxController">
 		<property name="businessDelegate" ref="businessDelegate" />
 	</bean>
-	<bean name="gherkinPostController" class="com.revature.controllers.GherkinPostController">
+	<bean name="postController" class="com.revature.controllers.PostController">
 		<property name="businessDelegate" ref="businessDelegate" />
+		<property name="logging" ref="logging" />
 	</bean>
-	<bean name="gherkinGetController" class="com.revature.controllers.GherkinGetController">
+	<bean name="getController" class="com.revature.controllers.GetController">
 		<property name="businessDelegate" ref="businessDelegate" />
+		<property name="logging" ref="logging" />
 	</bean>
 	<bean name="businessDelegate" class="com.revature.service.impl.BusinessDelegateImpl">
 		<property name="dataService" ref="dataService" />
@@ -57,7 +59,6 @@
 		<property name="businessDelegate" ref="businessDelegate" />
 	</bean>
 	
-		
 	<tx:annotation-driven />
 
 	<bean name="transactionManager" 

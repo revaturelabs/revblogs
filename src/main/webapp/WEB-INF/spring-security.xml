@@ -26,6 +26,8 @@
 			authentication-success-handler-ref="roleHandler"
 			authentication-failure-url="/loginPage?auth=fail" />
 			
+		<security:logout logout-url="/go-logout" logout-success-url="/loginPage?auth=logout"
+			invalidate-session="true"  />
 	</security:http>
 	
 <!-- AUTHENTICATION SECURITY FOR CALLING THE DATABASE AND QUERYING -->
@@ -33,11 +35,11 @@
 		<security:authentication-provider>
 			<security:jdbc-user-service 
 			id="userService" data-source-ref="dataSource"
-			users-by-username-query="SELECT USER_USERNAME, USER_PASSWORD, USER_ACTIVE FROM PP_USER WHERE USER_USERNAME=?"
-			authorities-by-username-query="SELECT U.USER_USERNAME, R.ROLE_ROLE 
+			users-by-username-query="SELECT USER_EMAIL, USER_PASSWORD, USER_ACTIVE FROM PP_USER WHERE USER_EMAIL=?"
+			authorities-by-username-query="SELECT U.USER_EMAIL, R.ROLE_ROLE 
 											FROM PP_USER U, PP_ROLES R
 											WHERE U.USER_ROLE = R.ROLE_ID
-											AND U.USER_USERNAME=?"	
+											AND U.USER_EMAIL=?"	
 			/>
 		</security:authentication-provider>
 	</security:authentication-manager>

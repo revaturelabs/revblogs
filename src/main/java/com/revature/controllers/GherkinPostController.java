@@ -45,8 +45,6 @@ public class GherkinPostController {
 			return "profile";
 		}
 		User loggedIn = (User) req.getSession().getAttribute("user");
-		System.out.println(loggedIn.getUsername());
-		loggedIn.setUsername(updateUser.getUsername());
 		loggedIn.setEmail(updateUser.getEmail());
 		loggedIn.setFirstName(updateUser.getFirstName());
 		loggedIn.setLastName(updateUser.getLastName());
@@ -56,7 +54,6 @@ public class GherkinPostController {
 		
 		System.out.println();
 		System.out.println(loggedIn.getUserId());
-		System.out.println(loggedIn.getUsername());
 		System.out.println(loggedIn.getEmail());
 		System.out.println(loggedIn.getFirstName());
 		System.out.println(loggedIn.getLastName());

@@ -21,7 +21,6 @@
 	<div>
 	<h3>Update Profile</h3><br />
 		<form:form action="updateUser.do" method="post" commandName="updateUser">
-			Username: <form:input path="username" /> <br />
 			Email: <form:input path="email" /> <br />
 			First Name: <form:input path="firstName" /> <br />
 			Last Name: <form:input path="lastName" /> <br />

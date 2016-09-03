@@ -92,7 +92,8 @@
             <h3 class="panel-title">Share this post</h3>
           </div>
           <div class="panel-body">
-            <p>(Social sharing icons here)</p>
+     
+	<br>
           </div>
         </div>
 
