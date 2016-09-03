@@ -26,7 +26,8 @@
 			authentication-success-handler-ref="roleHandler"
 			authentication-failure-url="/loginPage?auth=fail" />
 			
-		<security:logout logout-url="/go-logout" logout-success-url="/loginPage?auth=logout" />
+		<security:logout logout-url="/go-logout" logout-success-url="/loginPage?auth=logout"
+			invalidate-session="true"  />
 	</security:http>
 	
 <!-- AUTHENTICATION SECURITY FOR CALLING THE DATABASE AND QUERYING -->
