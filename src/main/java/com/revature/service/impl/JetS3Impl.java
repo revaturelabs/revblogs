@@ -22,10 +22,13 @@ public class JetS3Impl implements JetS3{
 	
 	private static AWSCredentials credentials;
 	private static S3Service s3;
-	private static Logging logging;
+//	private Logging logging;
 	private static final String BUCKET = "dan-pickles-jar";
 	
 	private BusinessDelegate businessDelegate;
+//	public void setLogging(Logging logging) {
+//		this.logging = logging;
+//	}
 	
 	public void setBusinessDelegate(BusinessDelegate businessDelegate) {
 		
@@ -54,6 +57,7 @@ public synchronized static void syncBusinessDelegate(BusinessDelegate businessDe
    	s3 = new RestS3Service(credentials);
    	
 }
+
 	/**
 	 * Attempts to upload a resource (such as a CSS or JS file) to the S3 server
 	 * @param fileName the destination name of the file, a valid extension should be included
@@ -112,7 +116,7 @@ public synchronized static void syncBusinessDelegate(BusinessDelegate businessDe
 			
 			//If specific execptions are needed enter here
 		} catch (Exception e) {
-			logging.info(e);
+			//logging.info(e);
 		}
 		return null; // Resource could not be uploaded
 	}
@@ -144,7 +148,7 @@ public synchronized static void syncBusinessDelegate(BusinessDelegate businessDe
 			
 			//If specific execptions are needed enter here
 		} catch (Exception e) {
-			logging.info(e);
+			//logging.info(e);
 		}
 		return null; // Resource could not be uploaded
 	}
@@ -164,7 +168,7 @@ public synchronized static void syncBusinessDelegate(BusinessDelegate businessDe
 			s3.putObject(bucket, file);
 			}catch(Exception e)
 			{
-				logging.info(e);
+				//logging.info(e);
 				return false;
 			}	
 			return true;
@@ -181,7 +185,7 @@ public synchronized static void syncBusinessDelegate(BusinessDelegate businessDe
 		s3.putObject(bucket, file);
 		}catch(Exception e)
 		{
-			logging.info(e);
+			//logging.info(e);
 			return false;
 		}	
 		return true;
@@ -193,9 +197,15 @@ public synchronized static void syncBusinessDelegate(BusinessDelegate businessDe
 			s3.deleteObject(bucket, filename);
 		}catch(Exception e)
 		{
-			logging.info(e);
+			//logging.info(e);
 			return false;
 		}	
 		return true;
 	}
+
+
+
+
+
+
 }
