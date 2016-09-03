@@ -137,4 +137,32 @@ public class BaseController {
 		
 		return model;
 	}
+	
+	@RequestMapping(value="/go-admin")
+	public ModelAndView getViewAdmin(HttpServletRequest request, HttpServletResponse response){
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+		
+		ModelAndView model = new ModelAndView();
+		model.setViewName("/home");
+		model.addObject("title", "Logged in as " + user.getJobTitle());
+		model.addObject("message", "Welcome " + user.getFirstName());
+		
+		return model;
+		
+	}
+	
+	@RequestMapping(value="/go-contributor")
+	public ModelAndView getViewContributor(HttpServletRequest request, HttpServletResponse response){
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+		
+		ModelAndView model = new ModelAndView();
+		model.setViewName("/home");
+		model.addObject("title", "Logged in as " + user.getJobTitle());
+		model.addObject("message", "Welcome " + user.getFirstName());
+		
+		return model;
+		
+	}
 }
