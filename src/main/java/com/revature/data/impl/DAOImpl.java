@@ -58,6 +58,13 @@ public class DAOImpl implements DAO{
 		this.session = session;
 	}
 	public Session getSession(){
+		
+		if(session == null){
+			
+			Session ses = sessionFactory.openSession();
+			setSession(ses);
+		}
+		
 		return session;
 	}
 	

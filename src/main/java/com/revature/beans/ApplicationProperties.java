@@ -1,46 +1,43 @@
 package com.revature.beans;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name="PP_PROPERTIES")
 public class ApplicationProperties {
 	
 	@Id
-	@Column(name="PROPERTY_COMPANY", unique=true)
+	@Column(name="PROPERTY_COMPANY")
 	private String company;
 	
-	@Column(name="PROPERTY_APP", unique=true)
+	@Column(name="PROPERTY_APP", unique=true, nullable=false)
 	private String app;
 	
-	@Column(name="PROPERTY_S3", unique=true)
+	@Column(name="PROPERTY_S3", unique=true, nullable=false)
 	private String s3;
 	
-	@Column(name="PROPERTY_SERVER", unique=true)
+	@Column(name="PROPERTY_SERVER", unique=true, nullable=false)
 	private String server;
 	
-	@Column(name="PROPERTY_JENKINS", unique=true)
+	@Column(name="PROPERTY_JENKINS", unique=true, nullable=false)
 	private String jenkins;
 	
-	@Column(name="PROPERTY_SONARQUBE", unique=true)
+	@Column(name="PROPERTY_SONARQUBE", unique=true, nullable=false)
 	private String sonarqube;
 	
-	@Column(name="PROPERTY_K", unique=true)
+	@Column(name="PROPERTY_K", unique=true, nullable=false)
 	private String k;
 	
-	@Column(name="PROPERTY_V", unique=true)
+	@Column(name="PROPERTY_V", unique=true, nullable=false)
 	private String v;
 	
-	@Column(name="PROPERTY_FAPP", unique=true)
+	@Column(name="PROPERTY_FAPP", unique=true, nullable=false)
 	private String fapp;
 	
-	@Column(name="PROPERTY_LINKTOKEN", unique=true)
+	@Column(name="PROPERTY_LINKTOKEN", unique=true, nullable=false)
 	private String linkToken;
 	
-	@Column(name="PROPERTY_S3BUCKET", unique=true)
+	@Column(name="PROPERTY_S3BUCKET", unique=true, nullable=false)
 	private String bucketURL;
 	
 	/**

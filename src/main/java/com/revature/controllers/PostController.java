@@ -1,8 +1,15 @@
 package com.revature.controllers;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,9 +21,14 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.revature.app.TemporaryFile;
+import com.revature.beans.Blog;
+import com.revature.beans.Tags;
 import com.revature.beans.User;
 import com.revature.service.BusinessDelegate;
+import com.revature.service.HtmlWriter;
+import com.revature.service.JetS3;
 import com.revature.service.Logging;
+import com.revature.service.impl.JetS3Impl;
 
 @Controller
 public class PostController {
@@ -82,7 +94,7 @@ public class PostController {
 	public String updatePassword(@RequestParam("newPassword") String password,
 			HttpServletRequest req, HttpServletResponse resp){
 		
-		User loggedIn = (User) req.getAttribute("loggedIn");
+		User loggedIn = (User) req.getAttribute("user");
 		loggedIn.setPassword(password);
 		businessDelegate.putRecord(loggedIn);
 		return "index";
@@ -137,5 +149,82 @@ public class PostController {
 		} catch (IOException e) {
 			logging.info(e);
 		}
+	}
+	
+	@RequestMapping(value="add-blog.do", method=RequestMethod.POST)
+	public String addBlog(
+			
+			@ModelAttribute("blog") @Valid Blog blog, 
+			BindingResult bindingResult,
+			HttpServletRequest req,
+			HttpServletResponse resp) {
+		/*
+		 * Blog Bean will be generated with proper tags and fields
+		 */
+		
+		if(blog.getBlogTagsString().isEmpty()){
+			blog.setTags(new HashSet<Tags>());
+		}
+		else{
+			String tmp = blog.getBlogTagsString();
+			List<String> myList = Arrays.asList(tmp.split(","));
+			Set<Tags> tmpTags = new HashSet<Tags>();
+			List<Tags> dbTags = businessDelegate.requestTags();
+			/*
+			 * loop through List of tag descriptions the user types in
+			 */
+			for(String a : myList){
+				boolean check = false;
+				String tagDesc = a.toLowerCase().replaceAll("\\s+","");
+				/*
+				 * loop through database Tags to check with user input tags
+				 * if theres a match, put instance of database Tag into User bean, if not, create new Tag bean
+				 */
+				for(Tags b : dbTags){
+					if(b.getDescription().equals(tagDesc)){
+						tmpTags.add(b);
+						check = true;
+					}
+				}
+				if(!check){
+					Tags myTag = new Tags(tagDesc);
+					businessDelegate.putRecord(myTag);
+					tmpTags.add(myTag);
+					
+				}
+			}
+			blog.setTags(tmpTags);
+		}
+		User author = businessDelegate.requestUsers("dpickles");
+//		User author = (User) req.getSession().getAttribute("user");
+		author.getFirstName();
+		blog.setAuthor(author);
+		blog.setPublishDate(new Date());
+		blog.setBlogContent("empty");
+		req.getSession().setAttribute("blog", blog);
+		return "preview-blog";
+	}
+	
+	@RequestMapping(value="publish.do", method=RequestMethod.POST)
+	public String publishBlog(HttpServletRequest req, HttpServletResponse resp) {
+		Blog blog = (Blog) req.getSession().getAttribute("blog");
+		HtmlWriter htmlWriter;
+		try {
+			InputStream templateStream = this.getClass().getClassLoader().getResourceAsStream("template.html");
+			htmlWriter = new HtmlWriter(blog, blog.getAuthor(), templateStream);
+			TemporaryFile blogTempFile = htmlWriter.render();
+			System.out.println(blogTempFile.getTemporaryFile().getName());
+			String fileName = blogTempFile.getTemporaryFile().getName();
+			req.setAttribute("fileName", fileName);
+			JetS3 jetS3 = new JetS3Impl();
+			businessDelegate.putRecord(blog);
+			jetS3.uploadPage(blogTempFile.getTemporaryFile());
+			blogTempFile.destroy();
+		} catch (FileNotFoundException e) { 
+			logging.info(e);
+		} catch (IOException e1) {
+			logging.info(e1);
+		}
+		return "success";
 	}
 }

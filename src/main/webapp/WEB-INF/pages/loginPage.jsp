@@ -18,22 +18,81 @@
 <body>
 <jsp:include page="navbar.jsp"></jsp:include>
 <div class="container page-content">
-<c:if test="${'fail' eq param.auth}">
+	<c:if test="${'fail' eq param.auth}">
 		<div>
               <h3>Failed to login. Please try again.</h3>
         </div>
-</c:if>
-	<img src="${pageContext.servletContext.contextPath}/resources/images/RevLogo.jpg" alt="Revature Logo" width="318" height="72"/>
+	</c:if>
+	<c:if test="${'logout' eq param.auth}">
+		<div>
+			<h3>You have successfully signed out.</h3>
+		</div>
+	</c:if>
 	<br><br>
 	<div id="login">
-	<form name="loginForm" action="${pageContext.request.contextPath}/login" method="post">
-		Username: <input type="text" id="userAuth" name="username"/><br/>
-		Password: <input type="password" id="passAuth" name="password"/>
-		<hr/>
-		<input type="submit" name="submit" value="Submit"/>
+	<form name="loginForm" action="${pageContext.request.contextPath}/login" onsubmit="return validateForm()" method="post">
+	<table>	
+		<tr>
+			<td>
+				Username
+			</td> 
+			<td>
+				<input type="text" id="userAuth" name="username" class="form-control"/><span id="userMsg"></span><br/>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Password
+			</td>
+			<td> 
+				<input type="password" id="passAuth" name="password" class="form-control"/><span id="passMsg"></span>
+			</td>
+		</tr>
+		<tr><td colspan=2><hr/></td></tr>
+		<tr>
+			<td></td>
+			<td><input type="submit" name="submit" value="Submit" class="btn btn-primary form-control"/></td>
+		</tr>
+		<tr><td colspan=2><br/><br/></td></tr>
+	</table>	
 	</form>
 	</div>
 </div>
 <jsp:include page="footer.jsp"></jsp:include>
 </body>
+<script type="text/javascript">
+function validateForm(){
+	
+	var element = document.querySelector("loginForm");
+	
+	
+	
+	var username = document.forms["loginForm"]["username"].value;
+	var password = document.forms["loginForm"]["password"].value;
+	var userError = document.getElementById("userMsg");
+	var passError = document.getElementById("passMsg");
+	
+	if((username == null || username == "")||(password == null || password == "")){
+			
+		event.preventDefault();
+		
+		if(username == null || username == ""){
+			userError.innerHTML = "Please enter a username.";
+			userError.style.color = "red";
+		} else{
+			userError.innerHTML = "";
+		}
+		
+		if(password == null || password == ""){
+			passError.innerHTML ="Please enter a password.";
+			passError.style.color = "red";
+
+		} else{
+			passError.innerHTML = "";
+		}
+		
+		return false;
+	}
+}
+</script>
 </html>

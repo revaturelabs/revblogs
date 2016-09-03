@@ -60,8 +60,8 @@ public class GetController {
 	public String newClient(HttpServletRequest req, HttpServletResponse resp){
 		req.setAttribute("user", new User());
 		List<UserRoles> arrl = new ArrayList<>();
-		arrl.add(new UserRoles(1, "Manager"));
-		arrl.add(new UserRoles(2, "Employee"));
+		arrl.add(new UserRoles("Manager"));
+		arrl.add(new UserRoles("Employee"));
 		
 		req.setAttribute("roleDropDown", arrl);
 		return "makeClientAccount";

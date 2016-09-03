@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import com.revature.beans.ApplicationProperties;
@@ -16,12 +17,10 @@ import com.revature.beans.UserRoles;
 import com.revature.service.impl.Crypt;
 
 public class Population {
-	
-	// ALL TAGS
-	List<Tags> tagList = new ArrayList<>();
-	
+
 	private Logging logger = new Logging();
 	private BusinessDelegate delegate;
+	private Session session;
 	
 	public void setDelegate(BusinessDelegate delegate) {
 		this.delegate = delegate;
@@ -31,11 +30,11 @@ public class Population {
 	// Complete Population (Besides Evidence)
 	public void populateDatabase(){
 		
+		populateProperties();
 		populateRoles();
 		populateTags();
 		populateUsers();
 		populateBlogs();
-		populateProperties();
 	}
 	
 	//-----------------------------------
@@ -56,9 +55,9 @@ public class Population {
 		//Assign either new constructor or leave as is below.
 		UserRoles role;
 		
-		for(int i = 0; i < roles.length; i++){
+		for(int i = 0; i < 2; i++){
 			
-			role = new UserRoles(i, roles[i]);
+			role = new UserRoles(roles[i]);
 		
 			delegate.putRecord(role);
 		}
@@ -88,9 +87,7 @@ public class Population {
 		for(int i = 0; i < tags.length; i++){
 			
 			tag = new Tags(tags[i]);
-			
-			tagList.add(tag);
-			
+					
 			delegate.putRecord(tag);
 		}
 		
@@ -107,6 +104,14 @@ public class Population {
 		 *  Insantiate a new Blog for each corresponding data element.
 		 *  Save that blog in the database.
 		 */
+		
+		session = delegate.requestSession();
+		
+		List<Tags> tagList = new ArrayList<>();
+		
+		Criteria criteria = session.createCriteria(Tags.class);
+		tagList = (List<Tags>)criteria.list();
+	
 		
 		String[] blogTitle = new String[]{
 			
@@ -195,7 +200,7 @@ public class Population {
 		
 		for(int i = 0; i < blogTitle.length; i++){
 			
-			Set<Tags> tagsSet = new HashSet<>();
+			Set<Tags> tagsSet = new HashSet<Tags>();
 			
 			// Attach the set of Product Categories that correspond to THIS particular product.
 			for(int j = 0; j < tagIndexes.length; j++){
@@ -217,7 +222,8 @@ public class Population {
 	// Users
 	public void populateUsers(){
 		
-		
+		session = delegate.requestSession();
+			
 		String[] email = new String[]{
 				
 				"pickles@yahoo.com",
@@ -264,8 +270,8 @@ public class Population {
 		};
  		boolean[] isAdmin = new boolean[]{true,false,true};
 		
-		Criteria criteria1 = delegate.requestSession().createCriteria(UserRoles.class).add(Restrictions.eq("role", "ADMIN"));
-		Criteria criteria2 = delegate.requestSession().createCriteria(UserRoles.class).add(Restrictions.eq("role", "CONTRIBUTOR"));
+		Criteria criteria1 = session.createCriteria(UserRoles.class).add(Restrictions.eq("role", "ADMIN"));
+		Criteria criteria2 = session.createCriteria(UserRoles.class).add(Restrictions.eq("role", "CONTRIBUTOR"));
 		
 		UserRoles admin = (UserRoles) criteria1.uniqueResult();
 		UserRoles contributor = (UserRoles) criteria2.uniqueResult();
@@ -305,7 +311,7 @@ public class Population {
 		 *  Save that entry in the database.
 		 */
 		
-		String[][] props = new String[][]{
+		String[] props = new String[]{
 			
 			/*
 			 * Company
@@ -322,17 +328,17 @@ public class Population {
 			 * 
 			 */
 			
-			{"Revature"},
-			{"Revature Blogs"},
-			{"blogs.pjw6193.tech"},
-			{"dev.pjw6193.tech:7001"},
-			{"ci.pjw6193.tech:8080/jenkins"},
-			{"cube.pjw6193.tech:9000"},
-			{"AKIAJOHXNDKOZ6GADVBQ"},
-			{"gSpDFgjtupPKSwnoau21fSbGexKFJsItrukYWXHv"},
-			{"1070815552754243"},
-			{"77NVK5bZ7r4MWJ"},
-			{"https://s3-us-west-2.amazonaws.com/dan-pickles-jar"}
+			"Revature",
+			"Revature Blogs",
+			"blogs.pjw6193.tech",
+			"dev.pjw6193.tech:7001",
+			"ci.pjw6193.tech:8080/jenkins",
+			"cube.pjw6193.tech:9000",
+			"AKIAJOHXNDKOZ6GADVBQ",
+			"gSpDFgjtupPKSwnoau21fSbGexKFJsItrukYWXHv",
+			"1070815552954243",
+			"77nvk5bz7r4mwj",
+			"https://s3-us-west-2.amazonaws.com/dan-pickles-jar/"
 		};
 		
 		for(int i = 0; i < props.length; i++){
@@ -340,77 +346,78 @@ public class Population {
 			switch(i){
 			
 				case 0: 
-					props[i][0] = Crypt.encrypt(props[i][0], 
+					props[i] = Crypt.encrypt(	props[i], 
 												"CZmTgoznKnJocTkGuFFURvZjUDuVvBhoETorfnzPOfqymleBbOOHfqPCSSty", 
 												"pneumonoultramicroscopicsilicovolcanoconiosis"); 
 					break;
 				case 1: 
-					props[i][0] = Crypt.encrypt(props[i][0], 
+					props[i] = Crypt.encrypt(	props[i], 
 												"GSXWzGGiiDBvlYxTNddabeUOsSPLHoYnibqBEAtRrSDnZPrACvUjBMGxcoBZ", 
 												"Pseudopseudohypoparathyroidism"); 
 					break;
 				case 2: 
-					props[i][0] = Crypt.encrypt(props[i][0], 
+					props[i] = Crypt.encrypt(	props[i], 
 												"cCpQZBETFySMWXeMTQDQomszbDhIgTCWNfjzrBQjwyzcMIrNeFGZggWpzSdQ", 
 												"Floccinaucinihilipilification"); 
 					break;
 				case 3: 
-					props[i][0] = Crypt.encrypt(props[i][0], 
+					props[i] = Crypt.encrypt(	props[i], 
 												"UjVheJqfrHXEuciEaIEibjRYjaxGEJFPrLcZNuugxZQmpHdeoBJRVLFeEDfc", 
 												"Antidisestablishmentarianism"); 
 					break;
 				case 4: 
-					props[i][0] = Crypt.encrypt(props[i][0], 
+					props[i] = Crypt.encrypt(	props[i], 
 												"BhXCFkEevSCHlJMCJyvqhyOiNnKDaoxwcdWrNGxUZySIJspidexHSROVXDAh", 
 												"supercalifragilisticexpialidocious"); 
 					break;
 				case 5: 
-					props[i][0] = Crypt.encrypt(props[i][0], 
+					props[i] = Crypt.encrypt(	props[i], 
 												"RnhHIlwovrapdVzySrOIfmMZPOPOEACAsVScsBIflnsIphgireiIRKkmINdr", 
 												"Incomprehensibilities"); 
 					break;
 				case 6: 
-					props[i][0] = Crypt.encrypt(props[i][0], 
+					props[i] = Crypt.encrypt(	props[i], 
 												"momGKfMimvxYGNKmZCzdXNSBGpvQngTbtvxETwjePoZWyirhkyAWMhkFzxQI", 
 												"honorificabilitudinitatibus"); 
 					break;
 				case 7: 
-					props[i][0] = Crypt.encrypt(props[i][0], 
+					props[i] = Crypt.encrypt(	props[i], 
 												"TuJgzrAAFblqmFUfDvRyNHOtKQjVpxESLwrXecnGMSrSEJyhfkgPGvTccbPJ", 
 												"sesquipedalianism"); 
 					break;
 				case 8: 
-					props[i][0] = Crypt.encrypt(props[i][0], 
+					props[i] = Crypt.encrypt(	props[i], 
 												"JplYSkoJXvxUEIaEZtLMzYugcPINpzArbIoGHjwHwFzdoUtfNfMOetPvvsHn", 
 												"METHIONYLTHREONYLTHREONYGLUTAMINYLARGINY"); 
 					break;
 				case 9: 
-					props[i][0] = Crypt.encrypt(props[i][0], 
+					props[i] = Crypt.encrypt(	props[i], 
 												"iqGJkjoSepUYggqxsZCdxXzCSyjxADhQtsiMPhyNRMxJbGowMrGmlIQETFzC", 
 												"Aequeosalinocalcalinoceraceoaluminosocupreovitriolic"); 
 					break;
 				case 10: 
-					props[i][0] = Crypt.encrypt(props[i][0], 
+					props[i] = Crypt.encrypt(	props[i], 
 												"boosNkoVgLkjnWJUMEeHAGbUmwWhVlBOPZKZjUduUXunxwbsZmnNxKdAWePg ", 
 												"peobuefdvxjbtoajefspkfuccfngbf"); 
 					break;
 			}
+			
+			
 		}
 
-		ApplicationProperties propObj = new ApplicationProperties(	props[0][0], 
-																	props[1][0], 
-																	props[2][0],
-																	props[3][0],
-																	props[4][0], 
-																	props[5][0], 
-																	props[6][0], 
-																	props[7][0],
-																	props[8][0],
-																	props[9][0],
-																	props[10][0]);
-		
+		ApplicationProperties propObj = new ApplicationProperties(	props[0], 
+																	props[1], 
+																	props[2],
+																	props[3],
+																	props[4], 
+																	props[5], 
+																	props[6], 
+																	props[7],
+																	props[8],
+																	props[9],
+																	props[10]);
+			
 		delegate.putRecord(propObj);
-		
 		
 		logger.log("-- Done Populating Properties Table --");
 	}

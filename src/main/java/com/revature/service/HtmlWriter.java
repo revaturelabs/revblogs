@@ -3,9 +3,7 @@ package com.revature.service;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -50,6 +48,8 @@ public class HtmlWriter {
 				blogWriter.write("by "+author.getFirstName()+" "+author.getLastName()+"\n");
 			if (line.contains("post-title"))
 				blogWriter.write(blog.getBlogTitle()+"\n");
+			if (line.contains("post-subtitle"))
+				blogWriter.write(blog.getBlogSubtitle());
 			if (line.contains("post-body"))
 				blogWriter.write(blog.getBlogContent()+"\n");
 			if (line.contains("author-name"))
