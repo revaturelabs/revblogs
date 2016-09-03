@@ -84,12 +84,6 @@ public class BaseController {
 		return "upload-example";
 	}
 	
-	// Profile Page
-	@RequestMapping(value="/profile", method=RequestMethod.GET)
-	public String profile(HttpServletRequest request, HttpServletRequest response){
-		return "profile";
-	}
-	
 	// Add Picture Page
 	@RequestMapping(value="/add-picture", method=RequestMethod.GET)
 	public String addPicture(HttpServletRequest req, HttpServletResponse resp){

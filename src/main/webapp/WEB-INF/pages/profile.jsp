@@ -10,6 +10,7 @@
 <script src="${pageContext.servletContext.contextPath }/resources/js/angular.min.js"></script>
 <script src="${pageContext.servletContext.contextPath }/resources/js/angular-route.js"></script>
 <script src="${pageContext.servletContext.contextPath }/resources/js/validatePassword.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <link href="resources/css/main.css" rel="stylesheet">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <!-- HEADERS NEEDED TO PREVENT BACK BUTTON ON LOGOUT. DO NOT REMOVE ME! -->
@@ -19,12 +20,11 @@
 <title>Profile</title>
 </head>
 <body>
-<jsp:include page="navbar.jsp"></jsp:include>
+
 <div class="container page-content">
 	<div>
 	<h3>Update Profile</h3><br />
 		<form:form action="updateUser.do" method="post" commandName="updateUser">
-			Username: <form:input path="username" /> <br />
 			Email: <form:input path="email" /> <br />
 			First Name: <form:input path="firstName" /> <br />
 			Last Name: <form:input path="lastName" /> <br />
@@ -36,10 +36,10 @@
 	</div>
 	<div>
 		<h3>Upload Profile Picture</h3>
-		<form method="POST" action="uploadProfilePicture" enctype="multipart/form-data">
+<%-- 		<form method="POST" action="uploadProfilePicture" enctype="multipart/form-data"> --%>
 			<input type="file" name="profilePicture" id="fileChooser" /><br />
-			<input type="submit" name="upload" value="Upload" />
-		</form>
+			<input class="fileUploadButton" type="submit" name="upload" value="Upload" />
+<%-- 		</form> --%>
 	</div>
 	<div>
 		<div >
@@ -55,4 +55,30 @@
 </div>
 <jsp:include page="footer.jsp"></jsp:include>
 </body>
+<script type="text/javascript">
+$(document).ready(function(){
+	$(".fileUploadButton").click(function(e){
+		var data = new FormData($("#fileChooser")[0].files);
+		
+		data.append("profilePicture",$("#fileChooser")[0].files[0]);
+		$.ajax({
+			url: "uploadProfilePicture",
+			data: data,
+			contentType: false,
+			processData: false,
+			type: "POST",
+			cache: false,
+			success: function(response){
+				console.log(response);
+			}		
+		});
+		
+		e.preventDefault();
+	})
+
+})
+
+
+
+</script>
 </html>

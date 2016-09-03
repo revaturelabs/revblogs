@@ -41,7 +41,6 @@
 		<property name="businessDelegate" ref="businessDelegate" />
 		<property name="logging" ref="logging" />
 	</bean>
-	
 	<bean name="businessDelegate" class="com.revature.service.impl.BusinessDelegateImpl">
 		<property name="dataService" ref="dataService" />
 		<property name="serviceLocator" ref="serviceLocator" />
