@@ -111,10 +111,7 @@ public class User {
 		this.lastName = lastName;
 		this.jobTitle = jobTitle;
 		this.linkedInURL = linkedInURL;
-		this.description = description;
-		
-		System.err.println("running constructor for user");
-		
+		this.description = description;		
 
 		// User always starts active && new
 		this.active = true;
