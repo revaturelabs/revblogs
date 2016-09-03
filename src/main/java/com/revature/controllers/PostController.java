@@ -69,7 +69,6 @@ public class PostController {
 		if(req.getSession().getAttribute("updateUser") == null){
 			req.setAttribute("updateUser", new User());
 			req.getSession().getAttribute("user");
-			System.out.println("new user created");
 		}
 		return "profile";
 	}
@@ -84,27 +83,18 @@ public class PostController {
 	@RequestMapping(value="updateUser.do", method=RequestMethod.POST)
 	public String updateUser(@ModelAttribute("updateUser") @Valid User updateUser, BindingResult bindingResult,
 			HttpServletRequest req, HttpServletResponse resp){
-		System.out.println("inside update user");
+
 		if(bindingResult.hasErrors()){
 			return "profile";
 		}
 		User loggedIn = (User) req.getSession().getAttribute("user");
+		
 		loggedIn.setEmail(updateUser.getEmail());
 		loggedIn.setFirstName(updateUser.getFirstName());
 		loggedIn.setLastName(updateUser.getLastName());
 		loggedIn.setJobTitle(updateUser.getJobTitle());
 		loggedIn.setLinkedInURL(updateUser.getLinkedInURL());
 		loggedIn.setDescription(updateUser.getDescription());
-		
-		System.out.println();
-		System.out.println(loggedIn.getUserId());
-		System.out.println(loggedIn.getEmail());
-		System.out.println(loggedIn.getFirstName());
-		System.out.println(loggedIn.getLastName());
-		System.out.println(loggedIn.getJobTitle());
-		System.out.println(loggedIn.getLinkedInURL());
-		System.out.println(loggedIn.getDescription());
-		System.out.println();
 		
 		businessDelegate.updateRecord(loggedIn);
 		
@@ -131,10 +121,8 @@ public class PostController {
 			HttpServletRequest req, HttpServletResponse resp)
 	{
 		String url = businessDelegate.uploadEvidence(profilePicture.getOriginalFilename(), profilePicture);
-		System.out.println(url);
 		User loggedIn = (User) req.getSession().getAttribute("user");
 		loggedIn.setProfilePicture(url);
-		System.out.println(loggedIn.getProfilePicture());
 		businessDelegate.updateRecord(loggedIn);
 		return loggedIn.getProfilePicture();
 	}

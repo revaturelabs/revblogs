@@ -18,11 +18,7 @@
 		<form:form commandName="user">
 			<form:input id="email" path="email" /><br />
 			<form:password id="pass" path="password" /><br />
-			<form:select id="role" path="jobTitle">
-				<c:forEach var="t" items="${roleDropDown}">
-					<form:option value="${t.userRoleId}" ><c:out value="${t.role}"></c:out></form:option>
-				</c:forEach>
-			</form:select>
+			<form:select id="role" path="userRole" items="${roleDropDown}" />
 			<input type="button" value="Add User"/>
 		</form:form>
 	</div>

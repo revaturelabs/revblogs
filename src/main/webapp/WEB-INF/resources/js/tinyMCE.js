@@ -1,8 +1,9 @@
 /**
  * 
  */
-tinymce.init({ 
-	selector:'textarea',
+  window.onload= function() {
+window.tinymce.init({ 
+	selector: 'textarea',
 	plugins: ['codesample','emoticons',
 	          'print image',
 	          'textcolor colorpicker textpattern',
@@ -45,4 +46,4 @@ tinymce.init({
 	  ]
 	  
 });
-
+  }
