@@ -42,7 +42,7 @@ public class Mailer {
 			System.out.println("Done");
 
 		} catch (MessagingException e) {
-			throw new RuntimeException(e);
+			//nothing
 		}
     }
 }
