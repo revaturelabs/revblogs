@@ -48,7 +48,7 @@
 	<button type="button">Attach Image</button>
 	<button type="button">Attach File</button>
 	<br>
-	<form:textarea path="staticContent" rows="30" cols="100" id="tinyMCE"></form:textarea>
+	<form:textarea path="blogContent" rows="30" cols="100" id="tinyMCE"></form:textarea>
 	<br>
 	<!-- <button type="button">Add Reference</button>
 	<br>
@@ -68,5 +68,5 @@
 <jsp:include page="footer.jsp"></jsp:include>
 </body>
 <script src="https://s3-us-west-2.amazonaws.com/dan-pickles-jar/content/resources/js/facebookConnection.js"></script>
-<script src="https://s3-us-west-2.amazonaws.com/dan-pickles-jar/content/resources/js/tinyMCE.js"></script>
+<script src="${pageContext.servletContext.contextPath}/resources/js/tinyMCE.js"></script>
 </html>
