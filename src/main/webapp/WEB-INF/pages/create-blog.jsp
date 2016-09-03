@@ -4,7 +4,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:og="http://ogp.me/ns#" xmlns:fb="http://www.facebook.com/2008/fbml">
 <head>
-  <script src="https://s3-us-west-2.amazonaws.com/dan-pickles-jar/content/resources/tinymce/js/tinymce/tinymce.min.js"></script>
+  <script src="${pageContext.servletContext.contextPath}/resources/tinymce/js/tinymce/tinymce.min.js"></script>
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta property="og:url" content="http://dev.pjw6193:7001/pages/create-blog.jsp" />
@@ -48,7 +48,7 @@
 	<button type="button">Attach Image</button>
 	<button type="button">Attach File</button>
 	<br>
-	<form:textarea path="blogContent" rows="30" cols="100" id="tinyMCE"></form:textarea>
+	<form:textarea path="blogContent" rows="30" cols="100" ></form:textarea>
 	<br>
 	<!-- <button type="button">Add Reference</button>
 	<br>
