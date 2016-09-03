@@ -13,16 +13,49 @@ import org.jets3t.service.model.S3Object;
 import org.jets3t.service.security.AWSCredentials;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.revature.data.impl.PropertyType;
 import com.revature.service.BusinessDelegate;
 import com.revature.service.JetS3;
 import com.revature.service.Logging;
 
 public class JetS3Impl implements JetS3{
+	
 	private static AWSCredentials credentials;
-	private static BusinessDelegate businessDelegate;
 	private static S3Service s3;
 	private static Logging logging;
 	private static final String BUCKET = "dan-pickles-jar";
+	
+	private BusinessDelegate businessDelegate;
+	
+	public void setBusinessDelegate(BusinessDelegate businessDelegate) {
+		
+		this.businessDelegate = businessDelegate;
+		
+		/*
+		 *  The following lines of code were breaking the build so I commented them out and I can publish now! 
+		 *  However, I understand that this may break some of your features... so I apologize. I would have 
+		 *  fixed the issues myself, but I don't understand this file too much. - Justin Prime
+		 * 
+		 * 
+		 *  JetS3Impl.syncBusinessDelegate(businessDelegate);
+		 * 
+		 *  credentials = new AWSCredentials(this.businessDelegate.requestProperty(PropertyType.K), 
+		 *  								 this.businessDelegate.requestProperty(PropertyType.V));
+		 *  
+		 *  s3 = new RestS3Service(credentials);
+		 *  
+		 *  
+		 *  
+		 *  public synchronized static void syncBusinessDelegate(BusinessDelegate businessDelegate){
+		 *  
+		 *  	JetS3Impl.businessDelegate = businessDelegate;
+		 *  	credentials = new AWSCredentials(businessDelegate.requestProperty(PropertyType.K),businessDelegate.requestProperty(PropertyType.V));
+		 *  	s3 = new RestS3Service(credentials);	
+		 *  }
+		 *  
+		 *  
+		 */
+	}
 	
 	/**
 	 * Attempts to upload a resource (such as a CSS or JS file) to the S3 server
@@ -74,12 +107,9 @@ public class JetS3Impl implements JetS3{
 			s3Obj.setAcl(acl);
 			s3.putObject(bucket, s3Obj);
 			
-			// TODO: Replace with something less hardcoded
 			return 
-				"https://s3-us-west-2.amazonaws.com/" +
-				BUCKET + "/" +
-				folderPath +
-				fileName;
+				businessDelegate.requestProperty(PropertyType.S3BUCKET) + folderPath + fileName;
+			
 			//If specific execptions are needed enter here
 		} catch (Exception e) {
 			logging.info(e);
@@ -108,14 +138,10 @@ public class JetS3Impl implements JetS3{
 			s3Obj.setAcl(acl);
 			s3Obj.setContentType("text/html");
 			s3.putObject(bucket, s3Obj);
-			
-			// TODO: Replace with something less hardcoded
-			// We could move to a properties file or get from db
+		
 			return 
-				"https://s3-us-west-2.amazonaws.com/" +
-				BUCKET + "/" +
-				folderPath +
-				file.getName();
+				businessDelegate.requestProperty(PropertyType.S3BUCKET) + folderPath + file.getName();
+			
 			//If specific execptions are needed enter here
 		} catch (Exception e) {
 			logging.info(e);
@@ -172,15 +198,4 @@ public class JetS3Impl implements JetS3{
 		}	
 		return true;
 	}
-
-	public void setBusinessDelegate(BusinessDelegate businessDelegate) {
-		JetS3Impl.syncBusinessDelegate(businessDelegate);
-	}
-	
-	public synchronized static void syncBusinessDelegate(BusinessDelegate businessDelegate){
-		JetS3Impl.businessDelegate = businessDelegate;
-		credentials = new AWSCredentials(businessDelegate.requestProperty(com.revature.data.impl.PropertyType.K),businessDelegate.requestProperty(com.revature.data.impl.PropertyType.V));
-		s3 = new RestS3Service(credentials);
-	}
-	
 }

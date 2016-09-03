@@ -1,6 +1,5 @@
 package com.revature.beans;
 
-import java.sql.Clob;
 import java.util.Date;
 import java.util.Set;
 
@@ -43,7 +42,8 @@ public class Blog {
 	@Field
 	private String blogSubtitle;
 	
-	@Column(name="BLOG_CONTENT", length=3000, nullable=false)
+	@Column(name="BLOG_CONTENT", nullable=false)
+	@Lob
 	private String blogContent;
 	
 	@Column(name="BLOG_VIEWS")
@@ -55,10 +55,9 @@ public class Blog {
 	@Column(name="BLOG_ACTIVE", nullable=false)
 	private boolean blogActive;
 	
-	private Clob staticHTML;
-	
+	@Column(name="BLOG_HTML")
 	@Lob
-	private String staticContent;
+	private String staticHTML;
 	
 	private transient String blogTagsString;
 	
@@ -158,17 +157,11 @@ public class Blog {
 	public void setTags(Set<Tags> tags) {
 		this.tags = tags;
 	}
-	public Clob getStaticHTML() {
+	public String getStaticHTML() {
 		return staticHTML;
 	}
-	public void setStaticHTML(Clob staticHTML) {
+	public void setStaticHTML(String staticHTML) {
 		this.staticHTML = staticHTML;
-	}
-	public String getStaticContent() {
-		return staticContent;
-	}
-	public void setStaticContent(String staticContent) {
-		this.staticContent = staticContent;
 	}
 	public User getAuthor() {
 		return author;

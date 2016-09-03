@@ -28,31 +28,32 @@
 			<h3>You have successfully signed out.</h3>
 		</div>
 	</c:if>
-	<img src="${pageContext.servletContext.contextPath}/resources/images/RevLogo.jpg" alt="Revature Logo" width="318" height="72"/>
 	<br><br>
 	<div id="login">
 	<form name="loginForm" action="${pageContext.request.contextPath}/login" onsubmit="return validateForm()" method="post">
 	<table>	
 		<tr>
 			<td>
-				Username:
+				Username
 			</td> 
 			<td>
-				<input type="text" id="userAuth" name="username"/><span id="userMsg"></span><br/>
+				<input type="text" id="userAuth" name="username" class="form-control"/><span id="userMsg"></span><br/>
 			</td>
 		</tr>
 		<tr>
 			<td>
-				Password:
+				Password
 			</td>
 			<td> 
-				<input type="password" id="passAuth" name="password"/><span id="passMsg"></span>
+				<input type="password" id="passAuth" name="password" class="form-control"/><span id="passMsg"></span>
 			</td>
 		</tr>
+		<tr><td colspan=2><hr/></td></tr>
 		<tr>
-			<td colspan="2"><input type="submit" name="submit" value="Submit"/></td>
-			
-			
+			<td></td>
+			<td><input type="submit" name="submit" value="Submit" class="btn btn-primary form-control"/></td>
+		</tr>
+		<tr><td colspan=2><br/><br/></td></tr>
 	</table>	
 	</form>
 	</div>
