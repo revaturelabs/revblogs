@@ -7,13 +7,11 @@
 <title>Upload Picture</title>
 </head>
 <body>
-<jsp:include page="navbar.jsp"></jsp:include>
 <div class="container page-content">
 	<form method="POST" action="upload-picture" enctype="multipart/form-data">
 		<input type="file" name="file" id="fileChooser" /><br />
 		<input type="submit" name="upload" value="Upload" />
 	</form>
 </div>
-<jsp:include page="footer.jsp"></jsp:include>
 </body>
 </html>
