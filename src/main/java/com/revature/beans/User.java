@@ -113,6 +113,9 @@ public class User {
 		this.linkedInURL = linkedInURL;
 		this.description = description;
 		
+		System.err.println("running constructor for user");
+		
+
 		// User always starts active && new
 		this.active = true;
 		this.newUser = true;
