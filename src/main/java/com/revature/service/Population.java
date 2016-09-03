@@ -327,23 +327,32 @@ public class Population {
 			 * S3 Bucket
 			 * 
 			 */
-			
-			"Revature",
-			"Revature Blogs",
-			"blogs.pjw6193.tech",
-			"dev.pjw6193.tech:7001",
-			"ci.pjw6193.tech:8080/jenkins",
-			"cube.pjw6193.tech:9000",
-			"AKIAJOHXNDKOZ6GADVBQ",
-			"gSpDFgjtupPKSwnoau21fSbGexKFJsItrukYWXHv",
-			"1070815552954243",
-			"77nvk5bz7r4mwj",
-			"https://s3-us-west-2.amazonaws.com/dan-pickles-jar/"
+		
+			/*
+			 * Properties removed to keep credentials secure once pushed to GitHub.
+			 * Additionally, properties already instantiated in database. This field
+			 * was kept so that populating different properties would be as easy as
+			 * plugging them in here and re-running this method (you may need to drop old
+			 * properties to avoid unique contraint though).
+			 * 
+			 */
 		};
 		
 		for(int i = 0; i < props.length; i++){
 			
 			switch(i){
+			
+				/*
+				 * Crypt.encrypt was developed to encrypt passwords. Which is why the fields are labeled as:
+				 * password, username, and email. However, these declarations are perfectly valid! The first
+				 * parameter is the String that you want encrypted (your juicy data). The second parameter is
+				 * a keyword; I utilized a custom Vigenere Cipher to shift the keys in the first parameter with
+				 * the corresponding values in the keyword. Data wrapping is programmed too, meaning that you 
+				 * can have a keyword that is shorter than the value you want encrypted, it will automatically
+				 * wrap back to the beginning of the word when it hits the end. Finally, the third parameter 
+				 * takes the length of the argument and runs the cipher to encrypt the first parameter the number
+				 * of times equal to the length. 
+				 */
 			
 				case 0: 
 					props[i] = Crypt.encrypt(	props[i], 

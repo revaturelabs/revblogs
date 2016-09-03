@@ -88,7 +88,7 @@ public class Crypt {
 	private static char cipherLetter(char[] alpha1, char[] alpha2, char letter, int keyIndex, char[] keyword){
 		
 		//Use a new constructor or use as is below
-    //Setting to 0 then reassigning is a waste of resources
+		//Setting to 0 then reassigning is a waste of resources
 		int cipherLetter;
 		int indexLetter = 0;
 		int indexKey = 0;
