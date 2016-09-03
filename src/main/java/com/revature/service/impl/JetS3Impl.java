@@ -31,32 +31,29 @@ public class JetS3Impl implements JetS3{
 		
 		this.businessDelegate = businessDelegate;
 		
-		/*
-		 *  The following lines of code were breaking the build so I commented them out and I can publish now! 
-		 *  However, I understand that this may break some of your features... so I apologize. I would have 
-		 *  fixed the issues myself, but I don't understand this file too much. - Justin Prime
-		 * 
-		 * 
-		 *  JetS3Impl.syncBusinessDelegate(businessDelegate);
-		 * 
-		 *  credentials = new AWSCredentials(this.businessDelegate.requestProperty(PropertyType.K), 
-		 *  								 this.businessDelegate.requestProperty(PropertyType.V));
-		 *  
-		 *  s3 = new RestS3Service(credentials);
-		 *  
-		 *  
-		 *  
-		 *  public synchronized static void syncBusinessDelegate(BusinessDelegate businessDelegate){
-		 *  
-		 *  	JetS3Impl.businessDelegate = businessDelegate;
-		 *  	credentials = new AWSCredentials(businessDelegate.requestProperty(PropertyType.K),businessDelegate.requestProperty(PropertyType.V));
-		 *  	s3 = new RestS3Service(credentials);	
-		 *  }
-		 *  
-		 *  
-		 */
-	}
+//		   The following lines of code were breaking the build so I commented them out and I can publish now! 
+//		  However, I understand that this may break some of your features... so I apologize. I would have 
+//		   fixed the issues myself, but I don't understand this file too much. - Justin Prime
+//		  
+		  
+		   JetS3Impl.syncBusinessDelegate(businessDelegate);
+		   
+		   
+		   
+
+		   }
 	
+		   
+		   
+		
+	
+public synchronized static void syncBusinessDelegate(BusinessDelegate businessDelegate){
+	   
+
+   	credentials = new AWSCredentials(businessDelegate.requestProperty(PropertyType.K),businessDelegate.requestProperty(PropertyType.V));
+   	s3 = new RestS3Service(credentials);
+   	
+}
 	/**
 	 * Attempts to upload a resource (such as a CSS or JS file) to the S3 server
 	 * @param fileName the destination name of the file, a valid extension should be included
@@ -94,8 +91,9 @@ public class JetS3Impl implements JetS3{
 	 * @return the URL where the file was uploaded if successful, null otherwise
 	 */
 	protected String uploadFile(String folderPath, String fileName, MultipartFile file) {
-		
+
 		try {
+			
 			S3Bucket bucket = s3.getBucket(BUCKET);
 			S3Object s3Obj = new S3Object(folderPath + fileName);
 			s3Obj.setContentType(file.getContentType());
@@ -106,7 +104,9 @@ public class JetS3Impl implements JetS3{
 			s3Obj.setContentLength(file.getSize());
 			s3Obj.setAcl(acl);
 			s3.putObject(bucket, s3Obj);
-			
+			System.out.println("**************************before*******************************");
+			System.out.println(businessDelegate.requestProperty(PropertyType.S3BUCKET));
+			System.out.println("**************************after*******************************");
 			return 
 				businessDelegate.requestProperty(PropertyType.S3BUCKET) + folderPath + fileName;
 			
