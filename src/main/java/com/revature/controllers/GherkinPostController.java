@@ -1,9 +1,13 @@
 package com.revature.controllers;
 
+import java.io.IOException;
+
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -23,19 +27,25 @@ public class GherkinPostController {
 		this.businessDelegate = businessDelegate;
 	}
 	
-	@ModelAttribute("updateUser")
-	public User instantializeNewUser(){
-		return new User();
+	@RequestMapping(value="/profile", method=RequestMethod.GET)
+	public String instantializeNewUser(HttpServletRequest req){
+		if(req.getSession().getAttribute("updateUser") == null){
+			req.setAttribute("updateUser", new User());
+			req.getSession().getAttribute("user");
+			System.out.println("new user created");
+		}
+		return "profile";
 	}
 	
 	@RequestMapping(value="updateUser.do", method=RequestMethod.POST)
 	public String updateUser(@ModelAttribute("updateUser") @Valid User updateUser, BindingResult bindingResult,
 			HttpServletRequest req, HttpServletResponse resp){
-		
+		System.out.println("inside update user");
 		if(bindingResult.hasErrors()){
 			return "profile";
 		}
-		User loggedIn = (User) req.getAttribute("loggedIn");
+		User loggedIn = (User) req.getSession().getAttribute("user");
+		System.out.println(loggedIn.getUsername());
 		loggedIn.setUsername(updateUser.getUsername());
 		loggedIn.setEmail(updateUser.getEmail());
 		loggedIn.setFirstName(updateUser.getFirstName());
@@ -43,28 +53,46 @@ public class GherkinPostController {
 		loggedIn.setJobTitle(updateUser.getJobTitle());
 		loggedIn.setLinkedInURL(updateUser.getLinkedInURL());
 		loggedIn.setDescription(updateUser.getDescription());
-		businessDelegate.putRecord(loggedIn);
-		return "index";
+		
+		System.out.println();
+		System.out.println(loggedIn.getUserId());
+		System.out.println(loggedIn.getUsername());
+		System.out.println(loggedIn.getEmail());
+		System.out.println(loggedIn.getFirstName());
+		System.out.println(loggedIn.getLastName());
+		System.out.println(loggedIn.getJobTitle());
+		System.out.println(loggedIn.getLinkedInURL());
+		System.out.println(loggedIn.getDescription());
+		System.out.println();
+		
+		businessDelegate.updateRecord(loggedIn);
+		
+		return "profile";
 	}
 	
 	@RequestMapping(value="updatePassword.do", method=RequestMethod.POST)
 	public String updatePassword(@RequestParam("newPassword") String password,
 			HttpServletRequest req, HttpServletResponse resp){
 		
-		User loggedIn = (User) req.getAttribute("loggedIn");
+		User loggedIn = (User) req.getSession().getAttribute("user");
 		loggedIn.setPassword(password);
-		businessDelegate.putRecord(loggedIn);
+		businessDelegate.updateRecord(loggedIn);
 		return "index";
 		
 	}
 	
-	@RequestMapping(value="uploadProfilePicture", method=RequestMethod.POST)
-	public void uploadProfilePicture(@RequestParam("profilePicture") MultipartFile profilePicture, 
+	@RequestMapping(value="uploadProfilePicture", method=RequestMethod.POST, consumes=MediaType.MULTIPART_FORM_DATA_VALUE,
+			produces=MediaType.TEXT_PLAIN_VALUE)
+	@ResponseBody
+	public String uploadProfilePicture(@RequestParam("profilePicture") MultipartFile profilePicture, 
 			HttpServletRequest req, HttpServletResponse resp)
 	{
 		String url = businessDelegate.uploadEvidence(profilePicture.getOriginalFilename(), profilePicture);
-		User loggedIn = (User) req.getAttribute("loggedIn");
+		System.out.println(url);
+		User loggedIn = (User) req.getSession().getAttribute("user");
 		loggedIn.setProfilePicture(url);
-		businessDelegate.putRecord(loggedIn);
+		System.out.println(loggedIn.getProfilePicture());
+		businessDelegate.updateRecord(loggedIn);
+		return loggedIn.getProfilePicture();
 	}
 }

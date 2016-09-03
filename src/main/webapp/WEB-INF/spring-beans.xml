@@ -33,6 +33,12 @@
 	<bean name="ajaxController" class="com.revature.controllers.AjaxController">
 		<property name="businessDelegate" ref="businessDelegate" />
 	</bean>
+	<bean name="gherkinPostController" class="com.revature.controllers.GherkinPostController">
+		<property name="businessDelegate" ref="businessDelegate" />
+	</bean>
+	<bean name="gherkinGetController" class="com.revature.controllers.GherkinGetController">
+		<property name="businessDelegate" ref="businessDelegate" />
+	</bean>
 	<bean name="businessDelegate" class="com.revature.service.impl.BusinessDelegateImpl">
 		<property name="dataService" ref="dataService" />
 		<property name="serviceLocator" ref="serviceLocator" />

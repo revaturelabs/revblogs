@@ -217,10 +217,10 @@ public class BaseController {
 		}
 	}
 	
-	@RequestMapping(value="/profile", method=RequestMethod.GET)
+/*	@RequestMapping(value="/profile", method=RequestMethod.GET)
 	public String profile(HttpServletRequest request, HttpServletRequest response){
 		return "profile";
-	}
+	}*/
 	
 	//SEPARATE THE LOGINS FOR ADMIN AND CONTRIBUTOR.
 	
