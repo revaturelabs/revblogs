@@ -30,31 +30,13 @@ public class JetS3Impl implements JetS3{
 	public void setBusinessDelegate(BusinessDelegate businessDelegate) {
 		
 		this.businessDelegate = businessDelegate;
-		
-		/*
-		 *  The following lines of code were breaking the build so I commented them out and I can publish now! 
-		 *  However, I understand that this may break some of your features... so I apologize. I would have 
-		 *  fixed the issues myself, but I don't understand this file too much. - Justin Prime
-		 * 
-		 * 
-		 *  JetS3Impl.syncBusinessDelegate(businessDelegate);
-		 * 
-		 *  credentials = new AWSCredentials(this.businessDelegate.requestProperty(PropertyType.K), 
-		 *  								 this.businessDelegate.requestProperty(PropertyType.V));
-		 *  
-		 *  s3 = new RestS3Service(credentials);
-		 *  
-		 *  
-		 *  
-		 *  public synchronized static void syncBusinessDelegate(BusinessDelegate businessDelegate){
-		 *  
-		 *  	JetS3Impl.businessDelegate = businessDelegate;
-		 *  	credentials = new AWSCredentials(businessDelegate.requestProperty(PropertyType.K),businessDelegate.requestProperty(PropertyType.V));
-		 *  	s3 = new RestS3Service(credentials);	
-		 *  }
-		 *  
-		 *  
-		 */
+	}
+	
+	 public synchronized static void syncBusinessDelegate(BusinessDelegate businessDelegate){
+		   
+		   	credentials = new AWSCredentials(businessDelegate.requestProperty(PropertyType.K),
+		   									 businessDelegate.requestProperty(PropertyType.V));
+		   	s3 = new RestS3Service(credentials);	
 	}
 	
 	/**
@@ -112,6 +94,7 @@ public class JetS3Impl implements JetS3{
 			
 			//If specific execptions are needed enter here
 		} catch (Exception e) {
+		
 			logging.info(e);
 		}
 		return null; // Resource could not be uploaded

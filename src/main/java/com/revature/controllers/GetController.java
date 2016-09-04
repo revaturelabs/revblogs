@@ -21,7 +21,7 @@ import com.revature.service.Logging;
 @SessionAttributes("roleDropDown")
 public class GetController {
 
-	/**
+	/*
 	 * 	Attributes && Getters/Setters
 	 * 
 	 */
@@ -41,7 +41,7 @@ public class GetController {
 		this.logging = logging;
 	}
 	
-	/**
+	/*
 	 *  Model Attributes
 	 *  
 	 */
@@ -51,7 +51,7 @@ public class GetController {
 		return businessDelegate.requestRoles();
 	}
 	
-	/**
+	/*
 	 *  Methods that pull from the database
 	 *  
 	 */
@@ -66,6 +66,4 @@ public class GetController {
 		req.setAttribute("roleDropDown", arrl);
 		return "makeClientAccount";
 	}
-	
-	
 }
