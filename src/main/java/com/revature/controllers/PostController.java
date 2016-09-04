@@ -29,6 +29,7 @@ import com.revature.app.TemporaryFile;
 import com.revature.beans.Blog;
 import com.revature.beans.Tags;
 import com.revature.beans.User;
+import com.revature.dto.UserDTO;
 import com.revature.service.BusinessDelegate;
 import com.revature.service.HtmlWriter;
 import com.revature.service.JetS3;
@@ -39,7 +40,7 @@ import com.revature.service.impl.JetS3Impl;
 @Controller
 public class PostController {
 
-	/**
+	/*
 	 * 	Attributes && Getters/Setters
 	 * 
 	 */
@@ -59,22 +60,7 @@ public class PostController {
 		this.logging = logging;
 	}
 	
-	
-	/**
-	 *  Model Attributes
-	 *  
-	 */
-	
-	@RequestMapping(value="/profile", method=RequestMethod.GET)
-	public String instantializeNewUser(HttpServletRequest req){
-		if(req.getSession().getAttribute("updateUser") == null){
-			req.setAttribute("updateUser", new User());
-			req.getSession().getAttribute("user");
-		}
-		return "profile";
-	}
-	
-	/**
+	/*
 	 *  Methods that effect the database
 	 *  
 	 */
@@ -83,21 +69,25 @@ public class PostController {
 	// Update a User
 	@RequestMapping(value="updateUser.do", method=RequestMethod.POST)
 	public String updateUser(@ModelAttribute("updateUser") @Valid User updateUser, BindingResult bindingResult,
-			HttpServletRequest req, HttpServletResponse resp){
-
+							 HttpServletRequest req, HttpServletResponse resp){
+		
 		if(bindingResult.hasErrors()){
 			return "profile";
 		}
+		
 		User loggedIn = (User) req.getSession().getAttribute("user");
+		
 		//password needed to be decrypted first
 		loggedIn.setPassword(Crypt.decrypt(loggedIn.getPassword(), loggedIn.getEmail(), loggedIn.getFullname()));
 		//end decryption
+		
 		loggedIn.setEmail(updateUser.getEmail());
 		loggedIn.setFirstName(updateUser.getFirstName());
 		loggedIn.setLastName(updateUser.getLastName());
 		loggedIn.setJobTitle(updateUser.getJobTitle());
 		loggedIn.setLinkedInURL(updateUser.getLinkedInURL());
 		loggedIn.setDescription(updateUser.getDescription());
+		
 		//re-encrypt password
 		loggedIn.setPassword(Crypt.encrypt(loggedIn.getPassword(), loggedIn.getEmail(), loggedIn.getFullname()));
 		//end re-encryption
@@ -109,23 +99,34 @@ public class PostController {
 	}
 	
 	// Update a Users Password
+	/*
+	 * @RequestParam("newPassword")
+	 */
+	
+	
 	@RequestMapping(value="updatePassword.do", method=RequestMethod.POST)
-	public String updatePassword(@RequestParam("newPassword") String password,
-			HttpServletRequest req, HttpServletResponse resp){
+	public String updatePassword(@ModelAttribute("updatePassword") @Valid UserDTO passwordDTO, BindingResult bindingResult,
+							   HttpServletRequest req, HttpServletResponse resp){
 		
-		User loggedIn = (User) req.getSession().getAttribute("user");
-		User user = businessDelegate.requestUsers(loggedIn.getEmail());
-		user.setPassword(Crypt.encrypt(password, user.getEmail(), user.getFullname()));
-		
-		if(user.isNewUser() == true){
-			user.setNewUser(false);
+		if(bindingResult.hasErrors()){
+			
+			return "profile";
 		}
 		
-		req.getSession().setAttribute("user", user);
-		businessDelegate.updateRecord(user);
+		String password = passwordDTO.getNewPassword();
+		
+		User loggedIn = (User) req.getSession().getAttribute("user");
+		
+		loggedIn.setPassword(Crypt.encrypt(password, loggedIn.getEmail(), loggedIn.getFullname()));
+		
+		if(loggedIn.isNewUser() == true){
+			loggedIn.setNewUser(false);
+		}
+		
+		req.getSession().setAttribute("user", loggedIn);
+		businessDelegate.updateRecord(loggedIn);
 		
 		return "profile";
-		
 	}
 	
 	// Updates a Users Profile Picture

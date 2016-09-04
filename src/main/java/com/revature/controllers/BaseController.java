@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.revature.beans.Blog;
 import com.revature.beans.User;
+import com.revature.dto.UserDTO;
 import com.revature.service.BusinessDelegate;
 import com.revature.service.Logging;
 import com.revature.service.Population;
@@ -20,7 +21,7 @@ import com.revature.service.Population;
 @Controller
 public class BaseController {
 	
-	/**
+	/*
 	 * 	Attributes && Getters/Setters
 	 * 
 	 */
@@ -47,7 +48,7 @@ public class BaseController {
 		this.logging = logging;
 	}
 
-	/**
+	/*
 	 *  Default Controller
 	 *  
 	 */
@@ -64,14 +65,35 @@ public class BaseController {
 	
 	// Login Page
 	@RequestMapping(value="/loginPage", method=RequestMethod.GET)
-	public String login(HttpServletRequest req, HttpServletResponse resp){
+	public String login(){
 		
 		return "loginPage";
 	}
 	
+	// Login Page
+	@RequestMapping(value="/profile", method=RequestMethod.GET)
+	public String profile(HttpServletRequest req){
+		
+		User myUser = (User) req.getSession().getAttribute("user");
+		
+		if(myUser.isNewUser()){
+			
+			req.setAttribute("updatePassword", new UserDTO());
+			
+			return "password";
+			
+		} else {
+			
+			req.setAttribute("updateUser", new User());
+			req.setAttribute("updatePassword", new UserDTO());
+			
+			return "profile";
+		}
+	}
+	
 	// Create Blog Page
 	@RequestMapping(value="/create-blog", method=RequestMethod.GET)
-	public String createBlog(HttpServletRequest req, HttpServletResponse resp){
+	public String createBlog(HttpServletRequest req){
 		
 		req.setAttribute("blog", new Blog());
 		return "create-blog";
@@ -86,7 +108,7 @@ public class BaseController {
 	
 	// Add Picture Page
 	@RequestMapping(value="/add-picture", method=RequestMethod.GET)
-	public String addPicture(HttpServletRequest req, HttpServletResponse resp){
+	public String addPicture(){
 		return "add-picture";
 	}
 	
@@ -98,7 +120,7 @@ public class BaseController {
 	
 	// Database Population (Empty = Database Populated) - No Redirection
 	@RequestMapping(value="/populate", method=RequestMethod.GET)
-	public void populate(HttpServletRequest req, HttpServletResponse resp){
+	public void populate(){
 			
 	}
 	
