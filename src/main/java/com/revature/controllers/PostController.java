@@ -89,14 +89,20 @@ public class PostController {
 			return "profile";
 		}
 		User loggedIn = (User) req.getSession().getAttribute("user");
-		
+		//password needed to be decrypted first
+		loggedIn.setPassword(Crypt.decrypt(loggedIn.getPassword(), loggedIn.getEmail(), loggedIn.getFullname()));
+		//end decryption
 		loggedIn.setEmail(updateUser.getEmail());
 		loggedIn.setFirstName(updateUser.getFirstName());
 		loggedIn.setLastName(updateUser.getLastName());
 		loggedIn.setJobTitle(updateUser.getJobTitle());
 		loggedIn.setLinkedInURL(updateUser.getLinkedInURL());
 		loggedIn.setDescription(updateUser.getDescription());
+		//re-encrypt password
+		loggedIn.setPassword(Crypt.encrypt(loggedIn.getPassword(), loggedIn.getEmail(), loggedIn.getFullname()));
+		//end re-encryption
 		
+		req.getSession().setAttribute("user", loggedIn);
 		businessDelegate.updateRecord(loggedIn);
 		
 		return "profile";
@@ -114,8 +120,10 @@ public class PostController {
 		if(user.isNewUser() == true){
 			user.setNewUser(false);
 		}
-		businessDelegate.updateRecord(user);
+		
 		req.getSession().setAttribute("user", user);
+		businessDelegate.updateRecord(user);
+		
 		return "profile";
 		
 	}
