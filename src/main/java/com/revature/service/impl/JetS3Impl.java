@@ -23,7 +23,7 @@ public class JetS3Impl implements JetS3{
 	private static AWSCredentials credentials;
 	private static S3Service s3;
 //	private Logging logging;
-	private static final String BUCKET = "dan-pickles-jar";
+	private static final String BUCKET = "blogs.pjw6193.tech";
 	
 	private BusinessDelegate businessDelegate;
 //	public void setLogging(Logging logging) {
