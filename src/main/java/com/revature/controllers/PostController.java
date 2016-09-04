@@ -218,7 +218,6 @@ public class PostController {
 		author.getFirstName();
 		blog.setAuthor(author);
 		blog.setPublishDate(new Date());
-		blog.setBlogContent("empty");
 		req.getSession().setAttribute("blog", blog);
 		return "preview-blog";
 	}
