@@ -211,6 +211,12 @@ public class User {
 	public void setBlogs(Set<Blog> blogs) {
 		this.blogs = blogs;
 	}
+	public boolean isNewUser() {
+		return newUser;
+	}
+	public void setNewUser(boolean newUser) {
+		this.newUser = newUser;
+	}
 	public String getFullname(){
 		return this.lastName + ", " + this.firstName;
 	}
