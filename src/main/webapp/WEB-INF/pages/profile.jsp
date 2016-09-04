@@ -21,6 +21,23 @@
 </head>
 <body>
 
+<c:if test="${user.newUser eq true}">
+<div class="container page-content">
+	<div>
+		<div >
+			<h3>Update Password</h3> <br />
+			<form>
+				Password: <input type="password" name="oldPassword" id="oldPassword" required /> <br />
+				Confirm Password: <input type="password" name="newPassword" id="newPassword" required
+					onkeyup="validatePassword(); return false;"/> <span id="confirmMessage" /><br />
+				<input type="submit" name="changePassword" value="Update Password" />
+			</form>
+		</div>
+	</div>
+</div>
+</c:if>
+
+<c:if test="${user.newUser eq false}">
 <div class="container page-content">
 	<div>
 	<h3>Update Profile</h3><br />
@@ -53,6 +70,7 @@
 		</div>
 	</div>
 </div>
+</c:if>
 <jsp:include page="footer.jsp"></jsp:include>
 </body>
 <script type="text/javascript">

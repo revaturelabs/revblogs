@@ -19,11 +19,11 @@
 	<!-- place change form here. Have a post call, change it, 
 	update it and the newUser parameter, and then redirect 
 	to page with reload. -->
+	
 	<c:if test="${user.newUser eq true}">
-		<jsp:forward page="${pageContext.servletContext.contextPath}/profile"></jsp:forward>
+		<c:redirect url="/profile"/>
 	</c:if>
 	
-	<c:if test="${user.newUser eq false}">
 	<sec:authorize access="hasRole('ADMIN')" >Welcome Admin!</sec:authorize>
 	<c:if test="${user.userRole.role eq 'ADMIN'}">
 		<a href="${pageContext.servletContext.contextPath}/profile">Profile</a>
@@ -41,6 +41,6 @@
 		<a href="${pageContext.servletContext.contextPath}/">View Blogs</a>
 		<a href="${pageContext.servletContext.contextPath}/go-logout">Logout</a>
 	</c:if>
-	</c:if>
+
 </body>
 </html>
