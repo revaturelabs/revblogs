@@ -10,8 +10,9 @@
 <script src="${pageContext.servletContext.contextPath }/resources/js/angular.min.js"></script>
 <script src="${pageContext.servletContext.contextPath }/resources/js/angular-route.js"></script>
 <script src="${pageContext.servletContext.contextPath }/resources/js/validatePassword.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<link href="resources/css/main.css" rel="stylesheet">
+<link href="${pageContext.servletContext.contextPath }resources/css/main.css" rel="stylesheet">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <!-- HEADERS NEEDED TO PREVENT BACK BUTTON ON LOGOUT. DO NOT REMOVE ME! -->
 <meta http-equiv="Pragma" content="no-cache">
@@ -20,7 +21,6 @@
 <title>Profile</title>
 </head>
 <body>
-
 <c:if test="${user.newUser eq true}">
 <div class="container page-content">
 	<div>
@@ -30,32 +30,35 @@
 			<table>
 			<tr>
 				<td>
-					Old Password:
+					Old Password:&nbsp;&nbsp;&nbsp;
 				</td>
 				<td> 
-					<input type="password" name="oldPassword" id="oldPassword" required />
+					<input type="password" name="oldPassword" id="oldPassword" class="form-control" required />
 				</td>
 			</tr>
 			<tr>
 				<td>
-					New Password: 
+					New Password:&nbsp;&nbsp;&nbsp;
 				</td>
 				<td>
-					<input type="password" name="newPassword" id="newPassword" required/>
+					<input type="password" name="newPassword" id="newPassword" class="form-control" required/>
 				</td>
 			</tr>
 			<tr>
 				<td>
-					Confirm Password:
+					Confirm Password:&nbsp;&nbsp;&nbsp;
 				</td>
 				<td> 
-					<input type="password" name="confirmPassword" id="confirmPassword" required
+					<input type="password" name="confirmPassword" 
+					class="form-control" id="confirmPassword" required
 					onkeyup="validatePassword()"/> <span id="confirmMessage" />
 				</td>
 			</tr>
 			<tr>
 				<td colspan=2>
-					<input type="submit" name="changePassword" id="changePassword" value="Update Password" />
+					<input type="submit" name="changePassword" 
+					class="btn btn-primary form-control" id="changePassword" 
+					value="Update Password" />
 				</td>
 			</tr>
 			</table>
@@ -73,55 +76,55 @@
 		<table>
 		<tr>
 			<td>
-				Email:
+				Email:&nbsp;&nbsp;&nbsp;
 			</td>
 			<td>
-				<form:input path="email" value="${user.email}"/>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				First Name: 
-			</td>
-			<td>
-				<form:input path="firstName" value="${user.firstName}"/>
+				<form:input path="email" class="form-control" value="${user.email}"/>
 			</td>
 		</tr>
 		<tr>
 			<td>
-				Last Name: 
+				First Name:&nbsp;&nbsp;&nbsp; 
 			</td>
 			<td>
-				<form:input path="lastName" value="${user.lastName}"/>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				Job Title: 
-			</td>
-			<td>
-				<form:input path="jobTitle" value="${user.jobTitle}"/>
+				<form:input path="firstName" class="form-control" value="${user.firstName}"/>
 			</td>
 		</tr>
 		<tr>
 			<td>
-				LinkedIn URL: 
+				Last Name:&nbsp;&nbsp;&nbsp; 
 			</td>
 			<td>
-				<form:input path="linkedInURL" value="${user.linkedInURL}"/>
+				<form:input path="lastName" class="form-control" value="${user.lastName}"/>
 			</td>
 		</tr>
 		<tr>
 			<td>
-				Description: 
+				Job Title:&nbsp;&nbsp;&nbsp; 
 			</td>
 			<td>
-				<form:textarea path="description" value="${user.description}"/>
+				<form:input path="jobTitle" class="form-control" value="${user.jobTitle}"/>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				LinkedIn URL:&nbsp;&nbsp;&nbsp; 
+			</td>
+			<td>
+				<form:input path="linkedInURL" class="form-control" value="${user.linkedInURL}"/>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Description:&nbsp;&nbsp;&nbsp; 
+			</td>
+			<td>
+				<form:textarea path="description" class="form-control" value="${user.description}"/>
 			</td>
 		</tr>
 		<tr>
 			<td colspan=2>
-				<input type="submit" value="Update Profile" />
+				<input type="submit" class="btn btn-primary form-control" value="Update Profile" />
 			</td>
 		</tr>
 		</table>
@@ -141,32 +144,38 @@
 			<table>
 			<tr>
 				<td>
-					Old Password:
+					Old Password:&nbsp;&nbsp;&nbsp;
 				</td>
 				<td> 
-					<input type="password" name="oldPassword" id="oldPassword" required />
+					<input type="password" name="oldPassword" id="oldPassword" 
+					class="form-control" required />
 				</td>
 			</tr>
 			<tr>
 				<td>
-					New Password: 
+					New Password:&nbsp;&nbsp;&nbsp; 
 				</td>
 				<td>
-					<input type="password" name="newPassword" id="newPassword" required/>
+					<input type="password" name="newPassword" id="newPassword" 
+					class="form-control" required/>
 				</td>
 			</tr>
 			<tr>
 				<td>
-					Confirm Password:
+					Confirm Password:&nbsp;&nbsp;&nbsp;
 				</td>
 				<td> 
-					<input type="password" name="confirmPassword" id="confirmPassword" required
+					<input type="password" name="confirmPassword" 
+					class="form-control" 
+					id="confirmPassword" required
 					onkeyup="validatePassword()"/> <span id="confirmMessage" />
 				</td>
 			</tr>
 			<tr>
 				<td colspan=2>
-					<input type="submit" name="changePassword" id="changePassword" value="Update Password" />
+					<input type="submit" name="changePassword" 
+					class="btn btn-primary form-control" 
+					id="changePassword" value="Update Password" />
 				</td>
 			</tr>
 			</table>
