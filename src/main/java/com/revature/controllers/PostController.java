@@ -33,6 +33,7 @@ import com.revature.service.BusinessDelegate;
 import com.revature.service.HtmlWriter;
 import com.revature.service.JetS3;
 import com.revature.service.Logging;
+import com.revature.service.impl.Crypt;
 import com.revature.service.impl.JetS3Impl;
 
 @Controller
@@ -88,14 +89,20 @@ public class PostController {
 			return "profile";
 		}
 		User loggedIn = (User) req.getSession().getAttribute("user");
-		
+		//password needed to be decrypted first
+		loggedIn.setPassword(Crypt.decrypt(loggedIn.getPassword(), loggedIn.getEmail(), loggedIn.getFullname()));
+		//end decryption
 		loggedIn.setEmail(updateUser.getEmail());
 		loggedIn.setFirstName(updateUser.getFirstName());
 		loggedIn.setLastName(updateUser.getLastName());
 		loggedIn.setJobTitle(updateUser.getJobTitle());
 		loggedIn.setLinkedInURL(updateUser.getLinkedInURL());
 		loggedIn.setDescription(updateUser.getDescription());
+		//re-encrypt password
+		loggedIn.setPassword(Crypt.encrypt(loggedIn.getPassword(), loggedIn.getEmail(), loggedIn.getFullname()));
+		//end re-encryption
 		
+		req.getSession().setAttribute("user", loggedIn);
 		businessDelegate.updateRecord(loggedIn);
 		
 		return "profile";
@@ -107,11 +114,16 @@ public class PostController {
 			HttpServletRequest req, HttpServletResponse resp){
 		
 		User loggedIn = (User) req.getSession().getAttribute("user");
-		loggedIn.setPassword(password);
-		if(loggedIn.isNewUser() == true){
-			loggedIn.setNewUser(false);
+		User user = businessDelegate.requestUsers(loggedIn.getEmail());
+		user.setPassword(Crypt.encrypt(password, user.getEmail(), user.getFullname()));
+		
+		if(user.isNewUser() == true){
+			user.setNewUser(false);
 		}
-		businessDelegate.updateRecord(loggedIn);
+		
+		req.getSession().setAttribute("user", user);
+		businessDelegate.updateRecord(user);
+		
 		return "profile";
 		
 	}
