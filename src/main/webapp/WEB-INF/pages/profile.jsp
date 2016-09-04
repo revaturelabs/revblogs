@@ -27,10 +27,38 @@
 		<div >
 			<h3>Update Password</h3> <br />
 			<form>
-				Password: <input type="password" name="oldPassword" id="oldPassword" required /> <br />
-				Confirm Password: <input type="password" name="newPassword" id="newPassword" required
-					onkeyup="validatePassword(); return false;"/> <span id="confirmMessage" /><br />
-				<input type="submit" name="changePassword" value="Update Password" />
+			<table>
+			<tr>
+				<td>
+					Old Password:
+				</td>
+				<td> 
+					<input type="password" name="oldPassword" id="oldPassword" required />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					New Password: 
+				</td>
+				<td>
+					<input type="password" name="newPassword" id="newPassword" required/>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Confirm Password:
+				</td>
+				<td> 
+					<input type="password" name="confirmPassword" id="confirmPassword" required
+					onkeyup="validatePassword()"/> <span id="confirmMessage" />
+				</td>
+			</tr>
+			<tr>
+				<td colspan=2>
+					<input type="submit" name="changePassword" id="changePassword" value="Update Password" />
+				</td>
+			</tr>
+			</table>
 			</form>
 		</div>
 	</div>
@@ -42,13 +70,61 @@
 	<div>
 	<h3>Update Profile</h3><br />
 		<form:form action="updateUser.do" method="post" commandName="updateUser">
-			Email: <form:input path="email" value="${user.email}"/> <br />
-			First Name: <form:input path="firstName" value="${user.firstName}"/> <br />
-			Last Name: <form:input path="lastName" value="${user.lastName}"/> <br />
-			Job Title: <form:input path="jobTitle" value="${user.jobTitle}"/> <br />
-			LinkedIn URL: <form:input path="linkedInURL" value="${user.linkedInURL}"/> <br />
-			Description: <form:textarea path="description" value="${user.description}"/> <br />
-			<input type="submit" value="Update Profile" /> <br />
+		<table>
+		<tr>
+			<td>
+				Email:
+			</td>
+			<td>
+				<form:input path="email" value="${user.email}"/>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				First Name: 
+			</td>
+			<td>
+				<form:input path="firstName" value="${user.firstName}"/>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Last Name: 
+			</td>
+			<td>
+				<form:input path="lastName" value="${user.lastName}"/>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Job Title: 
+			</td>
+			<td>
+				<form:input path="jobTitle" value="${user.jobTitle}"/>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				LinkedIn URL: 
+			</td>
+			<td>
+				<form:input path="linkedInURL" value="${user.linkedInURL}"/>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Description: 
+			</td>
+			<td>
+				<form:textarea path="description" value="${user.description}"/>
+			</td>
+		</tr>
+		<tr>
+			<td colspan=2>
+				<input type="submit" value="Update Profile" />
+			</td>
+		</tr>
+		</table>
 		</form:form>
 	</div>
 	<div>
@@ -62,10 +138,38 @@
 		<div >
 			<h3>Update Password</h3> <br />
 			<form>
-				Password: <input type="password" name="oldPassword" id="oldPassword" required /> <br />
-				Confirm Password: <input type="password" name="newPassword" id="newPassword" required
-					onkeyup="validatePassword(); return false;"/> <span id="confirmMessage" /><br />
-				<input type="submit" name="changePassword" value="Update Password" />
+			<table>
+			<tr>
+				<td>
+					Old Password:
+				</td>
+				<td> 
+					<input type="password" name="oldPassword" id="oldPassword" required />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					New Password: 
+				</td>
+				<td>
+					<input type="password" name="newPassword" id="newPassword" required/>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Confirm Password:
+				</td>
+				<td> 
+					<input type="password" name="confirmPassword" id="confirmPassword" required
+					onkeyup="validatePassword()"/> <span id="confirmMessage" />
+				</td>
+			</tr>
+			<tr>
+				<td colspan=2>
+					<input type="submit" name="changePassword" id="changePassword" value="Update Password" />
+				</td>
+			</tr>
+			</table>
 			</form>
 		</div>
 	</div>
@@ -92,7 +196,32 @@ $(document).ready(function(){
 		});
 		
 		e.preventDefault();
-	})
+	});
+
+});
+
+$(document).ready(function(){
+	$("#confirmPassword").keyup(function(){
+		var newPass = $("#newPassword").val();
+		var conPass = $("#confirmPassword").val();
+		
+		if(newPass !== conPass){
+			
+			$("#changePassword").attr("disabled","true");
+			$("#confirmMessage").text("Passwords do not match.");
+			$("#confirmMessage").css("color", "red");
+		}
+		
+		else{
+			
+			$("#changePassword").attr("disabled","false");
+			$("#confirmMessage").text("");
+			$("#confirmMessage").css("color", "black");
+			
+		}
+		
+			
+	});
 
 })
 
