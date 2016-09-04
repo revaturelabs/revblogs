@@ -18,84 +18,54 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Cache-Control" content="no-cache">
 <meta http-equiv="Expires" content="Sat, 01 Dec 2001 00:00:00 GMT">
-<title>Profile</title>
+<title>Password</title>
 </head>
 <body>
 <div class="container page-content">
 	<div>
-	<h3>Update Profile</h3><br />
-		<form:form action="updateUser.do" method="post" commandName="updateUser">
-		<table>
-		<tr>
-			<td>
-				Email:&nbsp;&nbsp;&nbsp;
-			</td>
-			<td>
-				<form:input path="email" class="form-control" value="${user.email}"/>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				First Name:&nbsp;&nbsp;&nbsp; 
-			</td>
-			<td>
-				<form:input path="firstName" class="form-control" value="${user.firstName}"/>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				Last Name:&nbsp;&nbsp;&nbsp; 
-			</td>
-			<td>
-				<form:input path="lastName" class="form-control" value="${user.lastName}"/>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				Job Title:&nbsp;&nbsp;&nbsp; 
-			</td>
-			<td>
-				<form:input path="jobTitle" class="form-control" value="${user.jobTitle}"/>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				LinkedIn URL:&nbsp;&nbsp;&nbsp; 
-			</td>
-			<td>
-				<form:input path="linkedInURL" class="form-control" value="${user.linkedInURL}"/>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				Description:&nbsp;&nbsp;&nbsp; 
-			</td>
-			<td>
-				<form:textarea path="description" class="form-control" value="${user.description}"/>
-			</td>
-		</tr>
-		<tr>
-			<td colspan=2>
-				<input type="submit" class="btn btn-primary form-control" value="Update Profile" />
-			</td>
-		</tr>
-		<tr>
-			<td>
-				Password:&nbsp;&nbsp;&nbsp; 
-			</td>
-			<td>
-				<input type="submit" class="btn btn-primary form-control" value="Update Password" />
-			</td>
-		</tr>
-		</table>
-		</form:form>
-	</div>
-	<div>
-		<h3>Upload Profile Picture</h3>
-<%-- 		<form method="POST" action="uploadProfilePicture" enctype="multipart/form-data"> --%>
-			<input type="file" name="profilePicture" id="fileChooser" /><br />
-			<input class="fileUploadButton" type="submit" name="upload" value="Upload" />
-<%-- 		</form> --%>
+		<div >
+			<h3>Update Password</h3> <br />
+			<form:form action="updatePassword.do" method="post" commandName="updatePassword">
+			<table>
+			<tr>
+				<td>
+					Old Password:&nbsp;&nbsp;&nbsp;
+				</td>
+				<td> 
+					<form:hidden path="newUser" val="${user.newUser}"/>
+					<form:password path="oldPassword" name="oldPassword" id="oldPassword" class="form-control" required />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					New Password:&nbsp;&nbsp;&nbsp;
+				</td>
+				<td>
+					<form:password path="newPassword" name="newPassword" id="newPassword" class="form-control" required/>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Confirm Password:&nbsp;&nbsp;&nbsp;
+				</td>
+				<td> 
+					<form:password path="confirmPassword" name="confirmPassword" 
+					class="form-control" id="confirmPassword" required
+					onkeyup="validatePassword()"/> <span id="confirmMessage" />
+				</td>
+			</tr>
+			<tr>
+				<td colspan=2>
+					<input  type="submit" 
+							name="changePassword" 
+							class="btn btn-primary form-control" 
+							id="changePassword" 
+							value="Update Password" />
+				</td>
+			</tr>
+			</table>
+			</form:form>
+		</div>
 	</div>
 </div>
 <jsp:include page="footer.jsp"></jsp:include>
