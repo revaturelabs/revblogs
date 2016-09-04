@@ -27,7 +27,7 @@
     api_key:   77nvk5bz7r4mwj
 </script>
 <script src="https://use.fontawesome.com/ebec39e24e.js"></script>
-
+<link href="resources/css/bootstrap-social.css" rel="stylesheet">
 </head>
 
 <body>
