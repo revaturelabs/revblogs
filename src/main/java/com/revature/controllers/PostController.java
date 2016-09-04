@@ -225,12 +225,11 @@ public class PostController {
 			}
 			blog.setTags(tmpTags);
 		}
-		User author = businessDelegate.requestUsers("dpickles");
-//		User author = (User) req.getSession().getAttribute("user");
+//		User author = businessDelegate.requestUsers("pick");
+		User author = (User) req.getSession().getAttribute("user");
 		author.getFirstName();
 		blog.setAuthor(author);
 		blog.setPublishDate(new Date());
-		blog.setBlogContent("empty");
 		req.getSession().setAttribute("blog", blog);
 		return "preview-blog";
 	}
@@ -239,13 +238,15 @@ public class PostController {
 	public String publishBlog(HttpServletRequest req, HttpServletResponse resp) {
 		Blog blog = (Blog) req.getSession().getAttribute("blog");
 		HtmlWriter htmlWriter;
+		String url = "";
 		try {
 			InputStream templateStream = this.getClass().getClassLoader().getResourceAsStream("template.html");
 			htmlWriter = new HtmlWriter(blog, blog.getAuthor(), templateStream);
 			TemporaryFile blogTempFile = htmlWriter.render();
 			System.out.println(blogTempFile.getTemporaryFile().getName());
 			String fileName = blogTempFile.getTemporaryFile().getName();
-			req.setAttribute("fileName", fileName);
+			url = "https://s3-us-west-2.amazonaws.com/blogs.pjw6193.tech/content/pages/" + fileName;
+			req.setAttribute("url", url);
 			JetS3 jetS3 = new JetS3Impl();
 			businessDelegate.putRecord(blog);
 			jetS3.uploadPage(blogTempFile.getTemporaryFile());
@@ -255,6 +256,6 @@ public class PostController {
 		} catch (IOException e1) {
 			logging.info(e1);
 		}
-		return "success";
+		return "redirect: " + url;
 	}
 }

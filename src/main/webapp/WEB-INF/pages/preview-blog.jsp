@@ -24,7 +24,7 @@
 <meta property="fb:app_id" content="1070815552954243"/>
 <!-- LinkedIn Authenticator Token -->
 <script src="//platform.linkedin.com/in.js">
-    api_key:   77nvk5bz7r4mwj
+    api_key:   77nvk5bz7r4mwj;
 </script>
 <script src="https://use.fontawesome.com/ebec39e24e.js"></script>
 
@@ -60,7 +60,7 @@
             </h3>
           </div>
           <div class="post-body">
-          	<c:out value="${blog.staticContent}" escapeXml="false"></c:out>
+          	<c:out value="${blog.blogContent}" escapeXml="false"></c:out>
           </div>
           <form action="/edit">
           	<button type="submit">Edit</button>
