@@ -20,7 +20,7 @@
 	update it and the newUser parameter, and then redirect 
 	to page with reload. -->
 	<c:if test="${user.newUser eq true}">
-		<jsp:forward page="/profile"></jsp:forward>
+		<jsp:forward page="${pageContext.servletContext.contextPath}/profile"></jsp:forward>
 	</c:if>
 	
 	<c:if test="${user.newUser eq false}">

@@ -57,6 +57,11 @@
 	</bean>
 	<bean name="jetS3" class="com.revature.service.impl.JetS3Impl">
 		<property name="businessDelegate" ref="businessDelegate" />
+<!-- 		<property name="logging" ref="logging" /> -->
+	</bean>
+	<bean id="cryptImpl" class="com.revature.service.impl.CryptImpl">
+		<property name="businessDelegate" ref="businessDelegate"/>
+		<property name="ajax" ref="ajaxController"/>
 	</bean>
 	
 	<tx:annotation-driven />
