@@ -6,10 +6,13 @@
 <head>
 <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 <script src="resources/js/img-mgmt.js"></script>
-  <script src="${pageContext.servletContext.contextPath }/resources/tinymce/js/tinymce/tinymce.min.js"></script>
-  <script src="https://s3-us-west-2.amazonaws.com/dan-pickles-jar/content/resources/tinymce/js/tinymce/tinymce.min.js"></script>
+  <script src="${pageContext.servletContext.contextPath}/resources/tinymce/js/tinymce/tinymce.min.js"></script>
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<!-- HEADERS NEEDED TO PREVENT BACK BUTTON ON LOGOUT. DO NOT REMOVE ME! -->
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Expires" content="Sat, 01 Dec 2001 00:00:00 GMT">
 <meta property="og:url" content="http://dev.pjw6193:7001/pages/create-blog.jsp" />
 <meta property="og:type"content="article" />
 <meta property="og:title"content="Different" />
@@ -54,7 +57,7 @@
 	<button type="button">Attach Image</button>
 	<button type="button">Attach File</button>
 	<br>
-	<form:textarea path="blogContent" rows="30" cols="100" id="tinyMCE"></form:textarea>
+	<form:textarea path="blogContent" rows="30" cols="100" ></form:textarea>
 	<br>
 	<!-- <button type="button">Add Reference</button>
 	<br>

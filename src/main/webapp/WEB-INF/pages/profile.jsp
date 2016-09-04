@@ -13,6 +13,10 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <link href="resources/css/main.css" rel="stylesheet">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<!-- HEADERS NEEDED TO PREVENT BACK BUTTON ON LOGOUT. DO NOT REMOVE ME! -->
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Expires" content="Sat, 01 Dec 2001 00:00:00 GMT">
 <title>Profile</title>
 </head>
 <body>
@@ -21,12 +25,12 @@
 	<div>
 	<h3>Update Profile</h3><br />
 		<form:form action="updateUser.do" method="post" commandName="updateUser">
-			Email: <form:input path="email" /> <br />
-			First Name: <form:input path="firstName" /> <br />
-			Last Name: <form:input path="lastName" /> <br />
-			Job Title: <form:input path="jobTitle" /> <br />
-			LinkedIn URL: <form:input path="linkedInURL" /> <br />
-			Description: <form:textarea path="description" /> <br />
+			Email: <form:input path="email" value="${user.email}"/> <br />
+			First Name: <form:input path="firstName" value="${user.firstName}"/> <br />
+			Last Name: <form:input path="lastName" value="${user.lastName}"/> <br />
+			Job Title: <form:input path="jobTitle" value="${user.jobTitle}"/> <br />
+			LinkedIn URL: <form:input path="linkedInURL" value="${user.linkedInURL}"/> <br />
+			Description: <form:textarea path="description" value="${user.description}"/> <br />
 			<input type="submit" value="Update Profile" /> <br />
 		</form:form>
 	</div>

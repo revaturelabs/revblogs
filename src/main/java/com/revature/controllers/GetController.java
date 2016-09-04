@@ -59,11 +59,7 @@ public class GetController {
 	@RequestMapping(value="/makeClientAccount", method=RequestMethod.GET)
 	public String newClient(HttpServletRequest req, HttpServletResponse resp){
 		req.setAttribute("user", new User());
-		List<UserRoles> arrl = new ArrayList<>();
-		arrl.add(new UserRoles("Manager"));
-		arrl.add(new UserRoles("Employee"));
-		
-		req.setAttribute("roleDropDown", arrl);
+		req.setAttribute("roleDropDown", businessDelegate.requestRoles());
 		return "makeClientAccount";
 	}
 }
