@@ -34,11 +34,11 @@
 	</c:if>
 	<br><br>
 	<div id="login">
-	<form name="loginForm" action="${pageContext.request.contextPath}/login" onsubmit="return validateForm()" method="post">
+	<form id="form" name="loginForm" action="${pageContext.request.contextPath}/login" onsubmit="return validateForm()" method="post">
 	<table>	
 		<tr>
 			<td>
-				Username
+				Email&nbsp;&nbsp;&nbsp;
 			</td> 
 			<td>
 				<input type="text" id="userAuth" name="username" class="form-control"/><span id="userMsg"></span><br/>
@@ -46,7 +46,7 @@
 		</tr>
 		<tr>
 			<td>
-				Password
+				Password&nbsp;&nbsp;&nbsp;
 			</td>
 			<td> 
 				<input type="password" id="passAuth" name="password" class="form-control"/><span id="passMsg"></span>
@@ -55,7 +55,7 @@
 		<tr><td colspan=2><hr/></td></tr>
 		<tr>
 			<td></td>
-			<td><input type="submit" name="submit" value="Submit" class="btn btn-primary form-control"/></td>
+			<td><button id="send" class="btn btn-primary form-control">Login</button></td>
 		</tr>
 		<tr><td colspan=2><br/><br/></td></tr>
 	</table>	
@@ -64,6 +64,19 @@
 </div>
 <jsp:include page="footer.jsp"></jsp:include>
 </body>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#send").click(function(){
+		
+		var email = $("#userAuth").val();
+		
+		$.get("http://localhost:7001/revblogs/api/bindUser?u=" + email, function(response){
+				
+			$("#form").submit();
+		});
+	});
+});
+</script>
 <script type="text/javascript">
 function validateForm(){
 	

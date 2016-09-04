@@ -33,30 +33,16 @@ public class JetS3Impl implements JetS3{
 	public void setBusinessDelegate(BusinessDelegate businessDelegate) {
 		
 		this.businessDelegate = businessDelegate;
-		
-//		   The following lines of code were breaking the build so I commented them out and I can publish now! 
-//		  However, I understand that this may break some of your features... so I apologize. I would have 
-//		   fixed the issues myself, but I don't understand this file too much. - Justin Prime
-//		  
-		  
-		   JetS3Impl.syncBusinessDelegate(businessDelegate);
-		   
-		   
-		   
+		JetS3Impl.syncBusinessDelegate(businessDelegate);
+	}
 
-		   }
-	
+	public synchronized static void syncBusinessDelegate(BusinessDelegate businessDelegate){
 		   
-		   
-		
 	
-public synchronized static void syncBusinessDelegate(BusinessDelegate businessDelegate){
-	   
-
-   	credentials = new AWSCredentials(businessDelegate.requestProperty(PropertyType.K),businessDelegate.requestProperty(PropertyType.V));
-   	s3 = new RestS3Service(credentials);
-   	
-}
+	   	credentials = new AWSCredentials(businessDelegate.requestProperty(PropertyType.K),businessDelegate.requestProperty(PropertyType.V));
+	   	s3 = new RestS3Service(credentials);
+	   	
+	}
 
 	/**
 	 * Attempts to upload a resource (such as a CSS or JS file) to the S3 server
@@ -111,11 +97,12 @@ public synchronized static void syncBusinessDelegate(BusinessDelegate businessDe
 			System.out.println("**************************before*******************************");
 			System.out.println(businessDelegate.requestProperty(PropertyType.S3BUCKET));
 			System.out.println("**************************after*******************************");
+			
 			return 
 				businessDelegate.requestProperty(PropertyType.S3BUCKET) + folderPath + fileName;
 			
-			//If specific execptions are needed enter here
 		} catch (Exception e) {
+			
 			//logging.info(e);
 		}
 		return null; // Resource could not be uploaded
@@ -142,11 +129,10 @@ public synchronized static void syncBusinessDelegate(BusinessDelegate businessDe
 			s3Obj.setAcl(acl);
 			s3Obj.setContentType("text/html");
 			s3.putObject(bucket, s3Obj);
-		
+			
 			return 
 				businessDelegate.requestProperty(PropertyType.S3BUCKET) + folderPath + file.getName();
 			
-			//If specific execptions are needed enter here
 		} catch (Exception e) {
 			//logging.info(e);
 		}
@@ -202,10 +188,4 @@ public synchronized static void syncBusinessDelegate(BusinessDelegate businessDe
 		}	
 		return true;
 	}
-
-
-
-
-
-
 }
