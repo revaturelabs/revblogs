@@ -230,7 +230,8 @@ public class PostController {
 			TemporaryFile blogTempFile = htmlWriter.render();
 			System.out.println(blogTempFile.getTemporaryFile().getName());
 			String fileName = blogTempFile.getTemporaryFile().getName();
-			req.setAttribute("fileName", fileName);
+			String url = "https://s3-us-west-2.amazonaws.com/dan-pickles-jar/content/pages/" + fileName;
+			req.setAttribute("url", url);
 			JetS3 jetS3 = new JetS3Impl();
 			businessDelegate.putRecord(blog);
 			jetS3.uploadPage(blogTempFile.getTemporaryFile());

@@ -12,6 +12,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<c:out value="${fileName}"></c:out>
+<a href="${url}">Blog post on the line</a>
 </body>
 </html>
