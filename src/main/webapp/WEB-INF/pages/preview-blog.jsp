@@ -24,10 +24,10 @@
 <meta property="fb:app_id" content="1070815552954243"/>
 <!-- LinkedIn Authenticator Token -->
 <script src="//platform.linkedin.com/in.js">
-    api_key:   77nvk5bz7r4mwj
+    api_key:   77nvk5bz7r4mwj;
 </script>
 <script src="https://use.fontawesome.com/ebec39e24e.js"></script>
-
+<link href="resources/css/bootstrap-social.css" rel="stylesheet">
 </head>
 
 <body>
