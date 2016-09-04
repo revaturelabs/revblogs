@@ -114,6 +114,7 @@ public class BaseController {
 		session.setAttribute("user", user);
 		
 		ModelAndView model = new ModelAndView();
+		
 		model.setViewName("/home");
 		model.addObject("title", "Logged in as " + user.getJobTitle());
 		model.addObject("message", "Welcome " + user.getFirstName());

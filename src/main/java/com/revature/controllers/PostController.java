@@ -108,6 +108,9 @@ public class PostController {
 		
 		User loggedIn = (User) req.getSession().getAttribute("user");
 		loggedIn.setPassword(password);
+		if(loggedIn.isNewUser() == true){
+			loggedIn.setNewUser(false);
+		}
 		businessDelegate.updateRecord(loggedIn);
 		return "profile";
 		
