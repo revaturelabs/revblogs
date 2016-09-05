@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.revature.app.TemporaryFile;
 import com.revature.beans.Blog;
@@ -68,11 +69,13 @@ public class PostController {
 	
 	// Update a User
 	@RequestMapping(value="updateUser.do", method=RequestMethod.POST)
-	public String updateUser(@ModelAttribute("updateUser") @Valid User updateUser, BindingResult bindingResult,
+	public ModelAndView updateUser(@ModelAttribute("updateUser") @Valid User updateUser, BindingResult bindingResult,
 							 HttpServletRequest req, HttpServletResponse resp){
 		
+		ModelAndView model = new ModelAndView();
+		model.setViewName("/profile");
 		if(bindingResult.hasErrors()){
-			return "profile";
+			return model;
 		}
 		
 		User loggedIn = (User) req.getSession().getAttribute("user");
@@ -94,8 +97,8 @@ public class PostController {
 		
 		req.getSession().setAttribute("user", loggedIn);
 		businessDelegate.updateRecord(loggedIn);
-		
-		return "profile";
+		req.setAttribute("updateUser", new User());
+		return model;
 	}
 	
 	// Update a Users Password
@@ -105,12 +108,14 @@ public class PostController {
 	
 	
 	@RequestMapping(value="updatePassword.do", method=RequestMethod.POST)
-	public String updatePassword(@ModelAttribute("updatePassword") @Valid UserDTO passwordDTO, BindingResult bindingResult,
+	public ModelAndView updatePassword(@ModelAttribute("updatePassword") @Valid UserDTO passwordDTO, BindingResult bindingResult,
 							   HttpServletRequest req, HttpServletResponse resp){
 		
+		ModelAndView model = new ModelAndView();
+		model.setViewName("/password");
 		if(bindingResult.hasErrors()){
 			
-			return "profile";
+			return model;
 		}
 		
 		String password = passwordDTO.getNewPassword();
@@ -125,8 +130,7 @@ public class PostController {
 		
 		req.getSession().setAttribute("user", loggedIn);
 		businessDelegate.updateRecord(loggedIn);
-		
-		return "profile";
+		return model;
 	}
 	
 	// Updates a Users Profile Picture
