@@ -98,10 +98,7 @@ public class JetS3Impl implements JetS3{
 			s3Obj.setContentLength(file.getSize());
 			s3Obj.setAcl(acl);
 			s3.putObject(bucket, s3Obj);
-			log.info("**************************before*******************************");
-			log.info(credBucket);
-			log.info("**************************after*******************************");
-			
+				
 			return 
 				"http://" + BUCKET+ "/" + folderPath + fileName;
 			
@@ -135,7 +132,7 @@ public class JetS3Impl implements JetS3{
 			s3.putObject(bucket, s3Obj);
 			
 			return 
-				businessDelegate.requestProperty(PropertyType.S3BUCKET) + folderPath + file.getName();
+					"http://" + BUCKET+ "/" + folderPath + file.getName();
 			
 		} catch (Exception e) {
 			log.info(e);
