@@ -37,11 +37,11 @@
 			<security:password-encoder ref="cryptImpl" />
 			<security:jdbc-user-service 
 			id="userService" data-source-ref="dataSource"
-			users-by-username-query="SELECT USER_EMAIL, USER_PASSWORD, USER_ACTIVE FROM PP_USER WHERE USER_EMAIL=?"
+			users-by-username-query="SELECT USER_EMAIL, USER_PASSWORD, USER_ACTIVE FROM PP_USER WHERE LOWER(USER_EMAIL)=LOWER(?)"
 			authorities-by-username-query="SELECT U.USER_EMAIL, R.ROLE_ROLE 
 											FROM PP_USER U, PP_ROLES R
 											WHERE U.USER_ROLE = R.ROLE_ID
-											AND U.USER_EMAIL=?"	
+											AND LOWER(U.USER_EMAIL)=LOWER(?)"	
 			/>
 		</security:authentication-provider>
 	</security:authentication-manager>

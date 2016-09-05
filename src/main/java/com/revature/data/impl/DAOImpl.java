@@ -30,7 +30,7 @@ import com.revature.service.impl.Crypt;
 @Transactional
 public class DAOImpl implements DAO{
 
-	/**
+	/*
 	 * 	Attributes && Getters/Setters
 	 * 
 	 */
@@ -67,7 +67,7 @@ public class DAOImpl implements DAO{
 		return session;
 	}
 	
-	/**
+	/*
 	 *  Database Altering Methods
 	 */
 	
@@ -91,7 +91,7 @@ public class DAOImpl implements DAO{
 		session.update(obj);
 	}
 
-	/**
+	/*
 	 *  Database Query Methods
 	 */
 	
@@ -206,7 +206,7 @@ public class DAOImpl implements DAO{
 				return value;	
 		}
 		
-		return "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
+		return null;
 	}
 	
 	// All Users
