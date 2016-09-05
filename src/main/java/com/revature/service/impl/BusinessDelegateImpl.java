@@ -40,7 +40,7 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	public Session requestSession() {
 		return dataService.grabSession();
 	}
-	
+
 	/**
 	 * Attempts to upload a resource (such as a CSS or JS file) to the S3 server
 	 * @param fileName the destination name of the file, a valid extension should be included

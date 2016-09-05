@@ -91,7 +91,7 @@
 	<table>
 		<tr>
 			<td colspan=2>
-				<button class="btn btn-primary form-control"><a href="${pageContext.servletContext.contextPath}/password">Update Password</a></button>
+				<a href="${pageContext.servletContext.contextPath}/password"><input type="button" value="Update Password" class="btn btn-primary form-control"></input></a>
 			</td>
 		</tr>
 	</table>
