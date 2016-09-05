@@ -7,6 +7,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<!-- HEADERS NEEDED TO PREVENT BACK BUTTON ON LOGOUT. DO NOT REMOVE ME! -->
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Expires" content="Sat, 01 Dec 2001 00:00:00 GMT">
 <title>Insert title here</title>
 </head>
 <body>
@@ -14,11 +18,7 @@
 		<form:form commandName="user">
 			<form:input id="email" path="email" /><br />
 			<form:password id="pass" path="password" /><br />
-			<form:select id="role" path="jobTitle">
-				<c:forEach var="t" items="${roleDropDown}">
-					<form:option value="${t.userRoleId}" ><c:out value="${t.role}"></c:out></form:option>
-				</c:forEach>
-			</form:select>
+			<form:select id="role" path="userRole" items="${roleDropDown}" />
 			<input type="button" value="Add User"/>
 		</form:form>
 	</div>

@@ -13,17 +13,37 @@ import org.jets3t.service.model.S3Object;
 import org.jets3t.service.security.AWSCredentials;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.revature.data.impl.PropertyType;
 import com.revature.service.BusinessDelegate;
 import com.revature.service.JetS3;
 import com.revature.service.Logging;
 
 public class JetS3Impl implements JetS3{
-	private static AWSCredentials credentials;
-	private static BusinessDelegate businessDelegate;
-	private static S3Service s3;
-	private static Logging logging;
-	private static final String BUCKET = "dan-pickles-jar";
 	
+	private static AWSCredentials credentials;
+	private static S3Service s3;
+//	private Logging logging;
+	private static final String BUCKET = "blogs.pjw6193.tech";
+	
+	private BusinessDelegate businessDelegate;
+//	public void setLogging(Logging logging) {
+//		this.logging = logging;
+//	}
+	
+	public void setBusinessDelegate(BusinessDelegate businessDelegate) {
+		
+		this.businessDelegate = businessDelegate;
+		JetS3Impl.syncBusinessDelegate(businessDelegate);
+	}
+
+	public synchronized static void syncBusinessDelegate(BusinessDelegate businessDelegate){
+		   
+	
+	   	credentials = new AWSCredentials(businessDelegate.requestProperty(PropertyType.K),businessDelegate.requestProperty(PropertyType.V));
+	   	s3 = new RestS3Service(credentials);
+	   	
+	}
+
 	/**
 	 * Attempts to upload a resource (such as a CSS or JS file) to the S3 server
 	 * @param fileName the destination name of the file, a valid extension should be included
@@ -50,7 +70,7 @@ public class JetS3Impl implements JetS3{
 	 * @return the URL where the file was uploaded if successful, null otherwise
 	 */
 	public String uploadEvidence(String fileName, MultipartFile file) {
-		return uploadFile("content/evidence", fileName, file);
+		return uploadFile("content/evidence/", fileName, file);
 	}
 	
 	/**
@@ -61,8 +81,9 @@ public class JetS3Impl implements JetS3{
 	 * @return the URL where the file was uploaded if successful, null otherwise
 	 */
 	protected String uploadFile(String folderPath, String fileName, MultipartFile file) {
-		
+
 		try {
+			
 			S3Bucket bucket = s3.getBucket(BUCKET);
 			S3Object s3Obj = new S3Object(folderPath + fileName);
 			s3Obj.setContentType(file.getContentType());
@@ -73,16 +94,16 @@ public class JetS3Impl implements JetS3{
 			s3Obj.setContentLength(file.getSize());
 			s3Obj.setAcl(acl);
 			s3.putObject(bucket, s3Obj);
+			System.out.println("**************************before*******************************");
+			System.out.println(businessDelegate.requestProperty(PropertyType.S3BUCKET));
+			System.out.println("**************************after*******************************");
 			
-			// TODO: Replace with something less hardcoded
 			return 
-				"https://s3-us-west-2.amazonaws.com/" +
-				BUCKET + "/" +
-				folderPath +
-				fileName;
-			//If specific execptions are needed enter here
+				businessDelegate.requestProperty(PropertyType.S3BUCKET) + folderPath + fileName;
+			
 		} catch (Exception e) {
-			logging.info(e);
+			
+			//logging.info(e);
 		}
 		return null; // Resource could not be uploaded
 	}
@@ -106,17 +127,14 @@ public class JetS3Impl implements JetS3{
 			s3Obj.setDataInputStream(fis);
 			s3Obj.setContentLength(file.length());
 			s3Obj.setAcl(acl);
+			s3Obj.setContentType("text/html");
 			s3.putObject(bucket, s3Obj);
 			
-			// TODO: Replace with something less hardcoded
 			return 
-				"https://s3-us-west-2.amazonaws.com/" +
-				BUCKET + "/" +
-				folderPath +
-				file.getName();
-			//If specific execptions are needed enter here
+				businessDelegate.requestProperty(PropertyType.S3BUCKET) + folderPath + file.getName();
+			
 		} catch (Exception e) {
-			logging.info(e);
+			//logging.info(e);
 		}
 		return null; // Resource could not be uploaded
 	}
@@ -136,7 +154,7 @@ public class JetS3Impl implements JetS3{
 			s3.putObject(bucket, file);
 			}catch(Exception e)
 			{
-				logging.info(e);
+				//logging.info(e);
 				return false;
 			}	
 			return true;
@@ -153,7 +171,7 @@ public class JetS3Impl implements JetS3{
 		s3.putObject(bucket, file);
 		}catch(Exception e)
 		{
-			logging.info(e);
+			//logging.info(e);
 			return false;
 		}	
 		return true;
@@ -165,20 +183,9 @@ public class JetS3Impl implements JetS3{
 			s3.deleteObject(bucket, filename);
 		}catch(Exception e)
 		{
-			logging.info(e);
+			//logging.info(e);
 			return false;
 		}	
 		return true;
 	}
-
-	public void setBusinessDelegate(BusinessDelegate businessDelegate) {
-		JetS3Impl.syncBusinessDelegate(businessDelegate);
-	}
-	
-	public synchronized static void syncBusinessDelegate(BusinessDelegate businessDelegate){
-		JetS3Impl.businessDelegate = businessDelegate;
-		credentials = new AWSCredentials(businessDelegate.requestProperty(com.revature.data.impl.PropertyType.K),businessDelegate.requestProperty(com.revature.data.impl.PropertyType.V));
-		s3 = new RestS3Service(credentials);
-	}
-	
 }
