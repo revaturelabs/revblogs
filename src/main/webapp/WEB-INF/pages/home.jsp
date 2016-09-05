@@ -28,7 +28,7 @@
 	to page with reload. -->
 	
 	<c:if test="${user.newUser eq true}">
-		<c:redirect url="/profile"/>
+		<c:redirect url="/password"/>
 	</c:if>
 	
 	<sec:authorize access="hasRole('ADMIN')" >Welcome Admin!</sec:authorize>
