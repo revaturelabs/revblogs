@@ -42,7 +42,7 @@ public class User {
 	@Field
 	private String lastName;
 		
-	@Column(name="USER_PICTURE", unique=true)
+	@Column(name="USER_PICTURE")
 	private String profilePicture;
 		
 	@Column(name="USER_TITLE", nullable=false)
