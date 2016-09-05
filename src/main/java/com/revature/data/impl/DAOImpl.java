@@ -8,7 +8,6 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.search.FullTextSession;
@@ -207,7 +206,7 @@ public class DAOImpl implements DAO{
 				return value;	
 		}
 		
-		return "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
+		return "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
 	}
 	
 	// All Users
@@ -219,6 +218,18 @@ public class DAOImpl implements DAO{
 		
 		Criteria criteria = session.createCriteria(User.class);
 		return (List<User>)criteria.list();
+	}
+	
+	//Pull a single Role
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public UserRoles getRoles(int roleId) {
+		
+		Session ses = sessionFactory.getCurrentSession();
+		setSession(ses);
+		
+		Criteria criteria = session.createCriteria(UserRoles.class);
+		criteria.add(Restrictions.eq("userRoleId", roleId));
+		return (UserRoles) criteria.uniqueResult();
 	}
 	
 	// All Blogs

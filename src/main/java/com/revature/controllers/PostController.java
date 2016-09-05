@@ -11,10 +11,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.hibernate.search.annotations.Field;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -30,6 +32,7 @@ import com.revature.app.TemporaryFile;
 import com.revature.beans.Blog;
 import com.revature.beans.Tags;
 import com.revature.beans.User;
+import com.revature.beans.UserRoles;
 import com.revature.dto.UserDTO;
 import com.revature.service.BusinessDelegate;
 import com.revature.service.HtmlWriter;
@@ -37,6 +40,7 @@ import com.revature.service.JetS3;
 import com.revature.service.Logging;
 import com.revature.service.impl.Crypt;
 import com.revature.service.impl.JetS3Impl;
+import com.revature.service.impl.Mailer;
 
 @Controller
 public class PostController {
@@ -100,7 +104,31 @@ public class PostController {
 		req.setAttribute("updateUser", new User());
 		return model;
 	}
-	
+	//Create a new User
+	/*
+	 * @RequestParam("newUser")
+	 */
+	@RequestMapping(value="createAccount.do", method=RequestMethod.POST)
+	public ModelAndView createAccount(HttpServletRequest req, HttpServletResponse resp){
+		String email = req.getParameter("email");
+		String password = Crypt.encrypt(email, "asdlkfjsadlkfjsaklfjsdalkjsadklfj", "aDgfJaiouwAlkjaSkfljasdfOasjdfLkJ");
+		String firstName = "New";
+		String lastName = "User";
+		String profilePicture = null;
+		String jobTitle = "Developer";
+		String linkedInURL = null;
+		String description = "Unknown";
+		int role = Integer.parseInt(req.getParameter("role"));
+		UserRoles userRole = businessDelegate.requestRoles(role);
+		User newUser = new User(email, password, firstName, lastName, jobTitle,
+				linkedInURL, description, userRole);
+		businessDelegate.putRecord(newUser);
+		Mailer.sendMail(email, password);
+		
+		ModelAndView model = new ModelAndView();
+		model.setViewName("/home");
+		return model;
+	}
 	// Update a Users Password
 	/*
 	 * @RequestParam("newPassword")
