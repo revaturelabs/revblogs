@@ -23,12 +23,12 @@
 <jsp:include page="navbar.jsp"></jsp:include>
 <div class="container page-content">
 	<c:if test="${'fail' eq param.auth}">
-		<div>
+		<div id=failLogin">
               <h3>Failed to login. Please try again.</h3>
         </div>
 	</c:if>
 	<c:if test="${'logout' eq param.auth}">
-		<div>
+		<div id="logoutSuccess">
 			<h3>You have successfully signed out.</h3>
 		</div>
 	</c:if>

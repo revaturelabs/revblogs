@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,7 +29,8 @@ public class BaseController {
 	private Logging logging;
 	private BusinessDelegate businessDelegate;
 	private Population population;
-
+	private static Logger log = Logger.getRootLogger();
+	
 	public void setBusinessDelegate(BusinessDelegate businessDelegate){
 		this.businessDelegate = businessDelegate;
 	}
@@ -70,22 +72,27 @@ public class BaseController {
 		return "loginPage";
 	}
 	
-	// Login Page
+	@RequestMapping(value="/password", method=RequestMethod.GET)
+	public String password(HttpServletRequest req){
+		req.setAttribute("updatePassword", new UserDTO());
+		return "password";
+	}
+	
+	// Profile Page
 	@RequestMapping(value="/profile", method=RequestMethod.GET)
 	public String profile(HttpServletRequest req){
 		
 		User myUser = (User) req.getSession().getAttribute("user");
 		
+		
 		if(myUser.isNewUser()){
 			
-			req.setAttribute("updatePassword", new UserDTO());
-			
+	
 			return "password";
 			
 		} else {
 			
 			req.setAttribute("updateUser", new User());
-			req.setAttribute("updatePassword", new UserDTO());
 			
 			return "profile";
 		}
