@@ -149,12 +149,17 @@ public class PostController {
 	
 	// Uploads a Blog Picture
 	@RequestMapping(value="/upload-picture", method=RequestMethod.POST)
-	public void uploadPictureHandler(@RequestParam("file") MultipartFile file, HttpServletResponse resp)
+	public void uploadPictureHandler(@RequestParam("file") MultipartFile file,
+			HttpServletRequest req,
+			HttpServletResponse resp)
 	{
 		String url = businessDelegate.uploadEvidence(file.getOriginalFilename(), file);
 		try {
 			PrintWriter writer = resp.getWriter();
-			writer.append("<html><body><h3>Copy Link</h3><br><body></html>" + url);
+			writer.append("<html><body><textarea id=\"picLink\" autofocus " +
+					"rows=\"5\" cols=\"35\" readonly>" + url +
+					"</textarea></body><script>window.onload=function(){" +
+					"document.getElementById(\"picLink\").select();};</script></html>");
 		} catch (IOException e) {
 			logging.info(e);
 		}

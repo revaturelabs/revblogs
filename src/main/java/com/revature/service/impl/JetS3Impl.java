@@ -27,8 +27,17 @@ public class JetS3Impl implements JetS3{
 //	private Logging logging;
 	private static Logger log = Logger.getRootLogger();
 	private static final String BUCKET = "blogs.pjw6193.tech";
-	
 	private BusinessDelegate businessDelegate;
+	
+	public JetS3Impl() {
+		super();
+	}
+	
+	public JetS3Impl(BusinessDelegate businessDelegate) {
+		super();
+		this.businessDelegate = businessDelegate;
+	}
+	
 //	public void setLogging(Logging logging) {
 //		this.logging = logging;
 //	}
@@ -98,7 +107,7 @@ public class JetS3Impl implements JetS3{
 			s3Obj.setContentLength(file.getSize());
 			s3Obj.setAcl(acl);
 			s3.putObject(bucket, s3Obj);
-				
+
 			return 
 				"http://" + BUCKET+ "/" + folderPath + fileName;
 			
