@@ -40,10 +40,21 @@ public class AjaxController {
 	
 	@RequestMapping(value="/bindUser", method=RequestMethod.GET)
 	@ResponseBody
-	public void bindUser (@RequestParam(value="u") String email, HttpServletRequest request) {
+	public String bindUser (@RequestParam(value="u") String email, HttpServletRequest request) {
 		
 		User curUser = businessDelegate.requestUsers(email);
 		
-		CryptImpl.user = curUser;
+		System.err.println("User " + curUser.getEmail());
+		
+		if(curUser != null){
+			System.err.println("User " + curUser.getEmail() + " made it here");
+			CryptImpl.user = curUser;
+			return "success";
+		}
+		else
+		{	System.err.println("User " + curUser.getEmail() + " made it here");
+			return null;
+		}
+		
 	}
 }

@@ -4,14 +4,14 @@
   window.onload= function() {
 window.tinymce.init({ 
 	selector: 'textarea',
-	plugins: ['codesample','emoticons',
-	          'print image',
+	plugins: ['codesample code','emoticons',
+	          'print image media',
 	          'textcolor colorpicker textpattern',
 	          'insertdatetime nonbreaking save table contextmenu directionality'],
-	toolbar: 'insertfile undo redo | styleselect forecolor backcolor | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | codesample | image emoticons |  print',
+	toolbar: 'insertfile undo redo | styleselect forecolor backcolor | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | codesample | image media |  print',
 	menubar: ["default","tools"],
 	setup: function(editor){
-		editor.addMenuItem('s3', {
+		editor.addMenuItem('pic', {
 			 text: 'Upload Picture',
 		      context: 'tools',
 		      onclick: function(){
@@ -36,6 +36,18 @@ window.tinymce.init({
 	          return false;
 	        }
 	    });
+		editor.addMenuItem('vid', {
+			 text: 'Upload Video',
+		      context: 'tools',
+		      onclick: function(){
+		    	  editor.windowManager.open({
+		    		  title: 'Upload Picture',
+		    		  url: 'add-picture',
+		    		  width: 200,
+		    		  height: 130
+		    		})
+		      }
+		});
 		},
 	imagetools_cors_hosts: ['tinymce.com', 'codepen.io'],
 	  content_css: [
