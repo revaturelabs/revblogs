@@ -42,7 +42,11 @@ public class AjaxController {
 	@ResponseBody
 	public String bindUser (@RequestParam(value="u") String email, HttpServletRequest request) {
 		
-		User curUser = businessDelegate.requestUsers(email);
+		String lowerEmail = email.toLowerCase();
+		
+		User curUser = businessDelegate.requestUsers(lowerEmail);
+		
+		System.err.println(curUser.getFirstName());
 		
 		if(curUser != null){
 			

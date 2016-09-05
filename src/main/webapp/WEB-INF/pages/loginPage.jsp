@@ -77,11 +77,6 @@ $(document).ready(function(){
 				$("#form").submit();
 				
 			}
-			else{	
-			
-				e.preventDefault();
-				alert("NO!!!!!!!");
-			}
 		});
 	});
 });
