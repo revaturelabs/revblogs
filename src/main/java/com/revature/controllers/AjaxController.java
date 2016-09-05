@@ -44,17 +44,12 @@ public class AjaxController {
 		
 		User curUser = businessDelegate.requestUsers(email);
 		
-		System.err.println("User " + curUser.getEmail());
-		
 		if(curUser != null){
-			System.err.println("User " + curUser.getEmail() + " made it here");
+			
 			CryptImpl.user = curUser;
-			return "success";
-		}
-		else
-		{	System.err.println("User " + curUser.getEmail() + " made it here");
-			return null;
+			return "Success";
 		}
 		
+		return null; 
 	}
 }

@@ -71,13 +71,16 @@ $(document).ready(function(){
 		var email = $("#userAuth").val();
 		
 		$.get("http://localhost:7001/revblogs/api/bindUser?u=" + email, function(response){
-				alert(response);
-			if(response == null || response == ""){
-				e.preventDefault();
-				alert("NO!!!!!!!");
+			
+			if(response == "Success"){
+				
+				$("#form").submit();
+				
 			}
 			else{	
-				$("#form").submit();
+			
+				e.preventDefault();
+				alert("NO!!!!!!!");
 			}
 		});
 	});
