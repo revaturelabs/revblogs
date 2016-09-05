@@ -15,9 +15,9 @@ import com.revature.beans.User;
 import com.revature.beans.UserRoles;
 import com.revature.data.DataService;
 import com.revature.data.impl.PaginatedResultList;
+import com.revature.data.impl.PropertyType;
 import com.revature.dto.BlogPostCollectionDTO;
 import com.revature.dto.BlogPostDTO;
-import com.revature.data.impl.PropertyType;
 import com.revature.service.BusinessDelegate;
 import com.revature.service.JetS3;
 import com.revature.service.ServiceLocator;
@@ -30,7 +30,7 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	 * 
 	 */
 	private DataService dataService;
-	private JetS3 jetS3 = new JetS3Impl();
+	private JetS3 jetS3 = new JetS3Impl(this);
 	
 	public void setDataService(DataService dataService) {
 		this.dataService = dataService;
