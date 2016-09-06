@@ -57,6 +57,19 @@ public class HtmlWriter {
 				blogWriter.write(author.getFirstName()+" "+author.getLastName());
 			if (line.contains("author-desc"))
 				blogWriter.write(author.getDescription());
+			if (line.contains("comments-facebook"))
+				blogWriter.write("<div>"+
+				"<div class='fb-comments' data-href='http://blogs.pjw6193.tech/content/pages/"+fileName+"' data-numposts='3'></div>"+
+				"</div>");
+			if (line.contains("url-link")){
+				blogWriter.write("<meta property='og:url' content='http://blogs.pjw6193.tech/content/pages/"+fileName+"' />");
+			}
+			if (line.contains("url-title")){
+				blogWriter.write("<meta property='og:title' content="+blog.getBlogTitle()+" />");
+			}
+			if(line.contains("url-description")){
+				blogWriter.write("<meta property='og:description' content="+blog.getBlogSubtitle()+" />");
+			}
 		}
 		blogWriter.close();
 		tempReader.close();
