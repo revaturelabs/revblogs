@@ -1,4 +1,3 @@
-
 /**
  * 
  */
@@ -21,12 +20,12 @@
 	   }(document, 'script', 'facebook-jssdk'));
 	  
 	document.getElementById('shareBtn').onclick = function() {
-		var urlEnd = document.getElementById('invisibleurl').value;
+		var urlEnd = $("#invisibleurl").val();
+		alert(urlEnd);
 	  FB.ui({
 	    method: 'share',
 	    display: 'popup',
 	    href: 'http://blogs.pjw6193.tech/content/pages/'+urlEnd,
 	  }, function(response){});
 	}
-
 }

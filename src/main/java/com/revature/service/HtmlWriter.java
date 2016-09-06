@@ -88,7 +88,7 @@ public class HtmlWriter {
 				}
 			}
 			if(line.contains("invisible-url")){
-				blogWriter.write("<div id='invisibleurl' value='"+fileName+"'></div>");
+				blogWriter.write("<input type='text' id='invisibleurl' value='"+fileName+"'/>");
 			}
 		}
 		blogWriter.close();
