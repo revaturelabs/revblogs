@@ -14,6 +14,7 @@ public class CryptImpl implements PasswordEncoder{
 	 *  Attributes && Getters/Setters
 	 */
 	
+
 	public static final User user = new User();
 	
 	private BusinessDelegate businessDelegate;
@@ -25,6 +26,7 @@ public class CryptImpl implements PasswordEncoder{
 	public void setBusinessDelegate(BusinessDelegate businessDelegate) {
 		this.businessDelegate = businessDelegate;
 	}
+
 	public GetController getController() {
 		return getController;
 	}
@@ -36,7 +38,6 @@ public class CryptImpl implements PasswordEncoder{
 	 * Password Encoder implementation for Custom Encryption
 	 * @see org.springframework.security.crypto.password.PasswordEncoder#encode(java.lang.CharSequence)
 	 */
-	
 	public String encrypt(CharSequence passwordInput){
 		return Crypt.encrypt((String)passwordInput, user.getEmail(), user.getFullname());
 	}

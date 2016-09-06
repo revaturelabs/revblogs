@@ -35,11 +35,11 @@ public class Blog {
 	private int blogId;
 	
 	@Column(name="BLOG_TITLE", unique=true, nullable=false)
-	@Field
+	@Field(name="title")
 	private String blogTitle;
 	
 	@Column(name="BLOG_SUBTITLE")
-	@Field
+	@Field(name="subtitle")
 	private String blogSubtitle;
 	
 	@Column(name="BLOG_CONTENT", nullable=false)

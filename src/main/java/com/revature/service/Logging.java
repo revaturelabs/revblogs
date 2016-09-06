@@ -14,7 +14,41 @@ import org.aspectj.lang.annotation.Pointcut;
 public class Logging {
 	
 	private static Logger log = Logger.getRootLogger(); 
-
+/**
+ * Temporarily moved to non-smell
+//	@Around("logPerformance()")
+//	public Object intercept(ProceedingJoinPoint pjp){
+//		//Object to eventually be sent temporarily null
+//		Object result = null;
+//		
+//		try {
+//			//Send to the logger a debug message that the method is being executed
+//			log.debug("Executed Method (" + pjp.getSignature()+ ")!" );
+//			
+//			//Execute the intercepted method
+//			result = pjp.proceed(); 
+//			
+//			//Send to the logger an info message that the method succeeded
+//			log.info("Returned: " + result);
+//		} catch (Throwable e) {
+//			//Send to the logger an error message that the method failed
+//			log.error(e);
+//		}
+//		//Send null or the actual result back to the chain
+//		return result;
+//	}
+	*/
+	//Temporary Logging functions for Bugs on SonarQube
+	//Remove if necessary
+	public static void info(Throwable t){log.info(t);}
+	
+	 //------------------POINTCUTS------------------//
+	//Whenever any method is executed
+	@Pointcut("execution(* *(..))")
+	public void logPerformance(){
+		//Empty for readability of above code
+	}
+		
 	@Around("pointcutHook()")
 	public Object intercept(ProceedingJoinPoint pjp){
 		
