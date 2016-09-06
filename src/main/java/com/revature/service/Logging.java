@@ -14,7 +14,8 @@ import org.aspectj.lang.annotation.Pointcut;
 public class Logging {
 	
 	private static Logger log = Logger.getRootLogger(); 
-	
+/**
+ * Temporarily moved to non-smell
 //	@Around("logPerformance()")
 //	public Object intercept(ProceedingJoinPoint pjp){
 //		//Object to eventually be sent temporarily null
@@ -36,7 +37,7 @@ public class Logging {
 //		//Send null or the actual result back to the chain
 //		return result;
 //	}
-	
+	*/
 	//Temporary Logging functions for Bugs on SonarQube
 	//Remove if necessary
 	public static void info(Throwable t){log.info(t);}

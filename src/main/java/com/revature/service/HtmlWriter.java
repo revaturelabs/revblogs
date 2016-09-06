@@ -20,7 +20,8 @@ public class HtmlWriter {
 	private BufferedWriter blogWriter;
 	private Blog blog;
 	private User author;
-	private String tempPath;
+//	Check if both are necessary
+//	private String tempPath;
 	private InputStream templateStream;
 	
 	public HtmlWriter(Blog blog, User author, InputStream templateStream) throws FileNotFoundException {
