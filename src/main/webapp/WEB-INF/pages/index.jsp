@@ -130,7 +130,7 @@
 	        	<span class="glyphicon glyphicon-link"></span><a target="_blank" href="http://revature.com">&nbsp;revature.com</a>
 	        </div>
 	        <div class="col-sm-4">
-	        	<a href="${pageContext.servletContext.contextPath}/profile">Contributors</a><br>
+	        	<a href="${pageContext.servletContext.contextPath}/profile">Contributors - Log In</a><br>
 	        	<a href="#">Site map</a>
 	        </div>
 	      </div>
