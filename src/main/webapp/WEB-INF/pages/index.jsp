@@ -32,8 +32,7 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul id="navs" class="nav navbar-nav">
-          <li id="navhome" class="active"><a href="/">Home</a></li>
-          <li id="navhome"><a href="/">Get Bent</a></li>
+          <li id="navhome" class="active"><a href="${pageContext.servletContext.contextPath}/">Home</a></li>
         </ul>
         <ul id="rightnavs" class="nav navbar-nav navbar-right">
 	        <li id="navsearch">
