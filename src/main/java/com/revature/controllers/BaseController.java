@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -139,6 +138,15 @@ public class BaseController {
 	//------------------------------------------------
 	// SPRING SECURITY
 	
+	//Delegation - Reduces Duplicate Code
+	private static ModelAndView modelCreation(String jobTitle,String name){
+		ModelAndView model = new ModelAndView();
+		model.setViewName(HOME);
+		model.addObject(TITLE, LOGGED + jobTitle);
+		model.addObject(MESSAGE, WELCOME + name);
+		return model;
+	}
+	
 	// Admin Page
 	@RequestMapping(value="/admin**")
 	public ModelAndView viewAdmin(HttpServletRequest request, HttpServletRequest response, Principal principal){
@@ -176,14 +184,5 @@ public class BaseController {
 		User user = (User) session.getAttribute("user");
 		
 		return modelCreation(user.getJobTitle(), user.getFirstName());
-	}
-	
-	// Delegations
-	private static ModelAndView modelCreation(String jobTitle,String name){
-		ModelAndView model = new ModelAndView();
-		model.setViewName(HOME);
-		model.addObject(TITLE, LOGGED + jobTitle);
-		model.addObject(MESSAGE, WELCOME + name);
-		return model;
 	}
 }

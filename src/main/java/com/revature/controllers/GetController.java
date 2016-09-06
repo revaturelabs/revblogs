@@ -1,6 +1,5 @@
 package com.revature.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.revature.beans.User;
 import com.revature.beans.UserRoles;
 import com.revature.service.BusinessDelegate;
 import com.revature.service.Logging;

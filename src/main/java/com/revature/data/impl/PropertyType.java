@@ -16,12 +16,12 @@ public enum PropertyType {
 	
 	private int value;
 	
-	public int getValue() {
-		return value;
-	}
-	
 	PropertyType(int value){
 		
 		this.value = value;
+	}
+	
+	public int getValue() {
+		return value;
 	}
 }
