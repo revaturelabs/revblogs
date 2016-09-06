@@ -41,8 +41,6 @@
 	<form:input path="blogTitle"/><br />
 	Subtitle
 	<form:input path="blogSubtitle"/><br />
-	<button type="button">Attach Image</button>
-	<button type="button">Attach File</button>
 	<br>
 	<form:textarea path="blogContent" rows="30" cols="100" ></form:textarea>
 	<br>
