@@ -11,12 +11,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.Column;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
-import org.hibernate.search.annotations.Field;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -114,7 +112,7 @@ public class PostController {
 		String password = Crypt.encrypt(email, "asdlkfjsadlkfjsaklfjsdalkjsadklfj", "aDgfJaiouwAlkjaSkfljasdfOasjdfLkJ");
 		String firstName = "New";
 		String lastName = "User";
-		String profilePicture = null;
+		//String profilePicture - currently not used
 		String jobTitle = "Developer";
 		String linkedInURL = null;
 		String description = "Unknown";
@@ -152,7 +150,7 @@ public class PostController {
 		
 		loggedIn.setPassword(Crypt.encrypt(password, loggedIn.getEmail(), loggedIn.getFullname()));
 		
-		if(loggedIn.isNewUser() == true){
+		if(loggedIn.isNewUser()){
 			loggedIn.setNewUser(false);
 		}
 		
@@ -189,7 +187,7 @@ public class PostController {
 					"</textarea></body><script>window.onload=function(){" +
 					"document.getElementById(\"picLink\").select();};</script></html>");
 		} catch (IOException e) {
-			logging.info(e);
+			Logging.info(e);
 		}
 	}
 	
@@ -201,7 +199,7 @@ public class PostController {
 			PrintWriter writer = resp.getWriter();
 			writer.append("<html><body><img src=\"" + url + "\" /></body></html>");
 		} catch (IOException e) {
-			logging.info(e);
+			Logging.info(e);
 		}
 	}
 	
@@ -215,7 +213,7 @@ public class PostController {
 			PrintWriter writer = resp.getWriter();
 			writer.append("<html><body><a href=\"" + url + "\">" + url + "</a></body></html>");
 		} catch (IOException e) {
-			logging.info(e);
+			Logging.info(e);
 		}
 	}
 	
@@ -238,7 +236,7 @@ public class PostController {
 			};
 		}
 		
-//		User author = businessDelegate.requestUsers("pick");
+//	Code for reference:	User author - businessDelegate.requestUsers("pick")
 		User author = (User) req.getSession().getAttribute("user");
 		author.getFirstName();
 		blog.setAuthor(author);
@@ -264,7 +262,7 @@ public class PostController {
 		else{
 			String tmp = blog.getBlogTagsString();
 			List<String> myList = Arrays.asList(tmp.split(","));
-			Set<Tags> tmpTags = new HashSet<Tags>();
+			Set<Tags> tmpTags = new HashSet<>();
 			List<Tags> dbTags = businessDelegate.requestTags();
 			/*
 			 * loop through List of tag descriptions the user types in
@@ -295,7 +293,7 @@ public class PostController {
 			InputStream templateStream = this.getClass().getClassLoader().getResourceAsStream("template.html");
 			htmlWriter = new HtmlWriter(blog, blog.getAuthor(), templateStream);
 			TemporaryFile blogTempFile = htmlWriter.render();
-			System.out.println(blogTempFile.getTemporaryFile().getName());
+			Logging.log(blogTempFile.getTemporaryFile().getName());
 			String fileName = blogTempFile.getTemporaryFile().getName();
 			url = "https://s3-us-west-2.amazonaws.com/blogs.pjw6193.tech/content/pages/" + fileName;
 			req.setAttribute("url", url);
@@ -305,9 +303,9 @@ public class PostController {
 			blogTempFile.destroy();
 			req.getSession().setAttribute("blog", null);
 		} catch (FileNotFoundException e) { 
-			logging.info(e);
+			Logging.info(e);
 		} catch (IOException e1) {
-			logging.info(e1);
+			Logging.info(e1);
 		}
 		return "redirect: " + url;
 	}
