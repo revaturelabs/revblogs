@@ -226,6 +226,22 @@ public class PostController {
 			BindingResult bindingResult,
 			HttpServletRequest req,
 			HttpServletResponse resp) {
+		
+//		User author = businessDelegate.requestUsers("pick");
+		User author = (User) req.getSession().getAttribute("user");
+		author.getFirstName();
+		blog.setAuthor(author);
+		blog.setPublishDate(new Date());
+		req.getSession().setAttribute("blog", blog);
+		return "preview-blog";
+	}
+	
+	@RequestMapping(value="publish.do", method=RequestMethod.POST)
+	public String publishBlog(HttpServletRequest req, HttpServletResponse resp) {
+		Blog blog = (Blog) req.getSession().getAttribute("blog");
+		HtmlWriter htmlWriter;
+		String url = "";
+		
 		/*
 		 * Blog Bean will be generated with proper tags and fields
 		 */
@@ -263,20 +279,6 @@ public class PostController {
 			}
 			blog.setTags(tmpTags);
 		}
-//		User author = businessDelegate.requestUsers("pick");
-		User author = (User) req.getSession().getAttribute("user");
-		author.getFirstName();
-		blog.setAuthor(author);
-		blog.setPublishDate(new Date());
-		req.getSession().setAttribute("blog", blog);
-		return "preview-blog";
-	}
-	
-	@RequestMapping(value="publish.do", method=RequestMethod.POST)
-	public String publishBlog(HttpServletRequest req, HttpServletResponse resp) {
-		Blog blog = (Blog) req.getSession().getAttribute("blog");
-		HtmlWriter htmlWriter;
-		String url = "";
 		try {
 			InputStream templateStream = this.getClass().getClassLoader().getResourceAsStream("template.html");
 			htmlWriter = new HtmlWriter(blog, blog.getAuthor(), templateStream);
