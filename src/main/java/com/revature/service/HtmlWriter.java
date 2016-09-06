@@ -70,6 +70,9 @@ public class HtmlWriter {
 			if(line.contains("url-description")){
 				blogWriter.write("<meta property='og:description' content="+blog.getBlogSubtitle()+" />");
 			}
+			if(line.contains("invisible-url")){
+				blogWriter.write("<div id='invisibleurl' value='"+fileName+"'></div>");
+			}
 		}
 		blogWriter.close();
 		tempReader.close();
