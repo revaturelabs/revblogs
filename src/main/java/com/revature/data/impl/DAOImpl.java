@@ -208,10 +208,21 @@ public class DAOImpl implements DAO{
 				
 			default:
 				
-				Logging.log("Attempt to access non-existant property");
 		}
 		
 		return null;
+	}
+	
+	//Pull a Single Role
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public UserRoles getRoles(String role) {
+		
+		Session ses = sessionFactory.getCurrentSession();
+		setSession(ses);
+		
+		Criteria criteria = session.createCriteria(UserRoles.class);
+		criteria.add(Restrictions.eq("role", role));
+		return (UserRoles) criteria.uniqueResult();
 	}
 	
 	// All Users
@@ -223,18 +234,6 @@ public class DAOImpl implements DAO{
 		
 		Criteria criteria = session.createCriteria(User.class);
 		return (List<User>)criteria.list();
-	}
-	
-	//Pull a single Role
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public UserRoles getRoles(int roleId) {
-		
-		Session ses = sessionFactory.getCurrentSession();
-		setSession(ses);
-		
-		Criteria criteria = session.createCriteria(UserRoles.class);
-		criteria.add(Restrictions.eq("userRoleId", roleId));
-		return (UserRoles) criteria.uniqueResult();
 	}
 	
 	// All Blogs
@@ -317,7 +316,6 @@ public class DAOImpl implements DAO{
 		
 		criteria = session.createCriteria(Blog.class);
 		criteria.addOrder(Order.desc("publishDate"));
-		Logging.log(""+start);
 		criteria.setFirstResult(start);
 		criteria.setMaxResults(max);
 		List<Blog> postList = criteria.list();
