@@ -3,7 +3,6 @@ package com.revature.service.impl;
 import java.io.File;
 import java.io.FileInputStream;
 
-import org.apache.commons.logging.impl.Log4JLogger;
 import org.apache.log4j.Logger;
 import org.jets3t.service.S3Service;
 import org.jets3t.service.acl.AccessControlList;
@@ -18,16 +17,15 @@ import org.springframework.web.multipart.MultipartFile;
 import com.revature.data.impl.PropertyType;
 import com.revature.service.BusinessDelegate;
 import com.revature.service.JetS3;
-import com.revature.service.Logging;
 
 public class JetS3Impl implements JetS3{
 	
 	private static AWSCredentials credentials;
 	private static S3Service s3;
-//	private Logging logging;
 	private static Logger log = Logger.getRootLogger();
 	private static final String BUCKET = "blogs.pjw6193.tech";
 	private BusinessDelegate businessDelegate;
+	private String credBucket;
 	
 	public JetS3Impl() {
 		super();
@@ -38,19 +36,14 @@ public class JetS3Impl implements JetS3{
 		this.businessDelegate = businessDelegate;
 	}
 	
-//	public void setLogging(Logging logging) {
-//		this.logging = logging;
-//	}
-	private String credBucket;
 	public void setBusinessDelegate(BusinessDelegate businessDelegate) {
 		this.businessDelegate = businessDelegate;
 		JetS3Impl.syncBusinessDelegate(this.businessDelegate);
 		credBucket = this.businessDelegate.requestProperty(PropertyType.S3BUCKET);
 		log.fatal(credBucket);
-
 	}
 
-	public synchronized static void syncBusinessDelegate(BusinessDelegate businessDelegate){
+	public static synchronized void syncBusinessDelegate(BusinessDelegate businessDelegate){
 		  
 	
 	   	credentials = new AWSCredentials(businessDelegate.requestProperty(PropertyType.K),businessDelegate.requestProperty(PropertyType.V));
