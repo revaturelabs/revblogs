@@ -389,6 +389,11 @@ public class DAOImpl implements DAO {
 		PaginatedResultList<Blog> blogPosts = new PaginatedResultList<>();
 		
 		Criteria criteria = session.createCriteria(Blog.class);
+		criteria.add(Restrictions.eq("author", author));
+		criteria.setProjection(Projections.rowCount());
+		blogPosts.setTotalItems((long)criteria.uniqueResult());
+		
+		criteria = session.createCriteria(Blog.class);
 		criteria.addOrder(Order.desc("publishDate"));
 		criteria.add(Restrictions.eq("author", author));
 		criteria.setFirstResult(start);
@@ -411,7 +416,11 @@ public class DAOImpl implements DAO {
 		PaginatedResultList<Blog> blogPosts = new PaginatedResultList<>();
 		
 		String hql = "from Tags where tagId eq :tagId left join Blog order by publishDate";
-		Query query = session.createQuery(hql).setInteger("tagId", category.getTagId());
+		
+		Query query = session.createQuery("select count(*) " + hql).setInteger("tagId", category.getTagId());
+		blogPosts.setTotalItems((long)query.uniqueResult());
+		
+		query = session.createQuery(hql).setInteger("tagId", category.getTagId());
 		query.setFirstResult(start);
 		query.setMaxResults(max);
 		
