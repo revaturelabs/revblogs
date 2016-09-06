@@ -63,6 +63,8 @@
           <div class="post-body">
           	<c:out value="${blog.blogContent}" escapeXml="false"></c:out>
           </div>
+          <div class="post-tags">
+          </div>
           <form:form action="edit.do">
           	<button type="submit">Edit</button>
           </form:form>
