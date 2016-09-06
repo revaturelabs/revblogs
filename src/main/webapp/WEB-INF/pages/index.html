@@ -1,5 +1,3 @@
-<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%><%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
 <!doctype html>
 <html>
 <head>
@@ -17,6 +15,7 @@
 </head>
 
 <body ng-app="app" ng-controller="BlogIndexController">
+  
   <nav class="page-navigation navbar navbar-default navbar-fixed-top">
     <div class="container">
       <div class="navbar-header">
@@ -126,7 +125,7 @@
 	        	<span class="glyphicon glyphicon-link"></span><a target="_blank" href="http://revature.com">&nbsp;revature.com</a>
 	        </div>
 	        <div class="col-sm-4">
-	        	<a href="${pageContext.servletContext.contextPath}/profile">Contributors</a><br>
+	        	<a href="/profile">Contributors</a><br>
 	        	<a href="#">Site map</a>
 	        </div>
 	      </div>
