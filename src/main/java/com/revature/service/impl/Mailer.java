@@ -12,12 +12,17 @@ import javax.mail.internet.MimeMessage;
 
 import org.apache.log4j.Logger;
 
+import com.revature.service.Logging;
+
 public class Mailer {
+	private Mailer(){
+		throw new IllegalAccessError("Utility Class");
+	}
 	public static void sendMail(String newEmail, String newPassword) {
 		Logger log = Logger.getRootLogger();
 		
-		System.out.println(newEmail);
-		System.out.println(newPassword);
+		Logging.log(newEmail);
+		Logging.log(newPassword);
     	Properties props = new Properties();
     	props.put("mail.smtp.auth", "true");
     	props.put("mail.smtp.starttls.enable", "true");
@@ -44,7 +49,7 @@ public class Mailer {
 
 			Transport.send(message);
 
-			System.out.println("Done");
+			Logging.log("Done");
 
 		} catch (MessagingException e) {
 			log.error(e);
