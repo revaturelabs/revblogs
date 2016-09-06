@@ -73,7 +73,7 @@
 			</td>
 			<td>
 				<input type="hidden" value="${user.description}" id="userDescription" />
-				<form:textarea path="description" class="form-control" id="descriptionTextArea"/>
+				<form:textarea path="description" class="form-control" id="descriptionTextArea" cols="10"/>
 			</td>
 		</tr>
 		<tr>
@@ -100,15 +100,17 @@
 	<hr>
 	<div>
 		<h3>Upload Profile Picture</h3>
-			<img src="${user.profilePicture}" />
+			<img id="profilePic" src="${user.profilePicture}" width="128px" height=auto/>
 			<input type="file" name="profilePicture" id="fileChooser" /><br />
-			<input class="btn btn-primary form-control" id="fileUploadButton" type="submit" name="upload" value="Upload" />
+			<input id="fileUploadButton" type="submit" value="Upload" class="btn btn-primary form-control"/>
 	</div>
 </div>
 <jsp:include page="footer.jsp"></jsp:include>
 </body>
 <script type="text/javascript">
 $(document).ready(function(){
+	var newSrc="";
+	
 	$("#fileUploadButton").click(function(e){
 		var data = new FormData($("#fileChooser")[0].files);
 		
@@ -122,11 +124,16 @@ $(document).ready(function(){
 			cache: false,
 			success: function(response){
 				console.log(response);
+				newSrc=response;
 				alert("Profile Picture Updated!");
 			}		
 		});
 		
 		e.preventDefault();
+		
+		console.log(newSrc);
+		
+		$("#profilePic").attr("src", newSrc);
 	});
 
 });
