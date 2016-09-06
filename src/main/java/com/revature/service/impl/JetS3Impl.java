@@ -3,7 +3,6 @@ package com.revature.service.impl;
 import java.io.File;
 import java.io.FileInputStream;
 
-import org.apache.commons.logging.impl.Log4JLogger;
 import org.apache.log4j.Logger;
 import org.jets3t.service.S3Service;
 import org.jets3t.service.acl.AccessControlList;
@@ -18,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.revature.data.impl.PropertyType;
 import com.revature.service.BusinessDelegate;
 import com.revature.service.JetS3;
-import com.revature.service.Logging;
 
 public class JetS3Impl implements JetS3{
 	
