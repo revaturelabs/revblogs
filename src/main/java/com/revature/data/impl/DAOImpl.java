@@ -214,6 +214,18 @@ public class DAOImpl implements DAO{
 		return null;
 	}
 	
+	//Pull a Single Role
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public UserRoles getRoles(String role) {
+		
+		Session ses = sessionFactory.getCurrentSession();
+		setSession(ses);
+		
+		Criteria criteria = session.createCriteria(UserRoles.class);
+		criteria.add(Restrictions.eq("role", role));
+		return (UserRoles) criteria.uniqueResult();
+	}
+	
 	// All Users
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public List<User> getUsers(){
@@ -223,18 +235,6 @@ public class DAOImpl implements DAO{
 		
 		Criteria criteria = session.createCriteria(User.class);
 		return (List<User>)criteria.list();
-	}
-	
-	//Pull a single Role
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public UserRoles getRoles(int roleId) {
-		
-		Session ses = sessionFactory.getCurrentSession();
-		setSession(ses);
-		
-		Criteria criteria = session.createCriteria(UserRoles.class);
-		criteria.add(Restrictions.eq("userRoleId", roleId));
-		return (UserRoles) criteria.uniqueResult();
 	}
 	
 	// All Blogs

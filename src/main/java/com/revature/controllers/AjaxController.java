@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.revature.beans.User;
 import com.revature.dto.BlogPostCollectionDTO;
 import com.revature.service.BusinessDelegate;
-import com.revature.service.Logging;
 import com.revature.service.impl.CryptImpl;
 
 @Controller
@@ -43,18 +42,16 @@ public class AjaxController {
 	@ResponseBody
 	public String bindUser (@RequestParam(value="u") String email, HttpServletRequest request) {
 		
-		String lowerEmail = email.toLowerCase();
+		String value = null;
 		
-		User curUser = businessDelegate.requestUsers(lowerEmail);
-		
-		Logging.log(curUser.getFirstName());
-		
+		User curUser = businessDelegate.requestUsers(email.toLowerCase());
+
 		if(curUser != null){
 			
 			CryptImpl.user = curUser;
-			return "Success";
+			value = "Success";
 		}
 		
-		return null; 
+		return value; 
 	}
 }

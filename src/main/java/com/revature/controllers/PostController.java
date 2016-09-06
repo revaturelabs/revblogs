@@ -48,19 +48,12 @@ public class PostController {
 	 * 
 	 */
 	private BusinessDelegate businessDelegate;
-	private Logging logging;
 
 	public void setBusinessDelegate(BusinessDelegate businessDelegate){
 		this.businessDelegate = businessDelegate;
 	}
 	public BusinessDelegate getBusinessDelegate() {
 		return businessDelegate;
-	}
-	public Logging getLogging() {
-		return logging;
-	}
-	public void setLogging(Logging logging) {
-		this.logging = logging;
 	}
 	
 	/*
@@ -108,31 +101,36 @@ public class PostController {
 	 */
 	@RequestMapping(value="createAccount.do", method=RequestMethod.POST)
 	public ModelAndView createAccount(HttpServletRequest req, HttpServletResponse resp){
+		
+		// User Supplied
 		String email = req.getParameter("email");
-		String password = Crypt.encrypt(email, "asdlkfjsadlkfjsaklfjsdalkjsadklfj", "aDgfJaiouwAlkjaSkfljasdfOasjdfLkJ");
-		String firstName = "New";
-		String lastName = "User";
-		//String profilePicture - currently not used
-		String jobTitle = "Developer";
-		String linkedInURL = null;
-		String description = "Unknown";
-		int role = Integer.parseInt(req.getParameter("role"));
-		UserRoles userRole = businessDelegate.requestRoles(role);
-		User newUser = new User(email, password, firstName, lastName, jobTitle,
-				linkedInURL, description, userRole);
-		businessDelegate.putRecord(newUser);
+		String role = req.getParameter("role");
+		
+		// Generate a Temporary Password
+		String password = Crypt.encrypt("Pa$$WoRD1?!", email, role);
+		
+		// Role Obj from Database
+		UserRoles myRole = businessDelegate.requestRoles(role);
+		
+		// Dummy User
+		User dummy = new User(email, password, "_", "_", "_", "_", "_", myRole);
+		
+		// Encrypt the Temp Password in the Database
+		dummy.setPassword(Crypt.encrypt(dummy.getPassword(), dummy.getEmail(), dummy.getFullname()));
+		
+		// Save in Database
+		businessDelegate.putRecord(dummy);
+		
+		// Send Email to Account
 		Mailer.sendMail(email, password);
 		
+		// Redirect
 		ModelAndView model = new ModelAndView();
 		model.setViewName("/home");
 		return model;
 	}
-	// Update a Users Password
-	/*
-	 * @RequestParam("newPassword")
-	 */
 	
-	
+	// Update a Users Password	
 	@RequestMapping(value="updatePassword.do", method=RequestMethod.POST)
 	public ModelAndView updatePassword(@ModelAttribute("updatePassword") @Valid UserDTO passwordDTO, BindingResult bindingResult,
 							   HttpServletRequest req, HttpServletResponse resp){
@@ -187,7 +185,8 @@ public class PostController {
 					"</textarea></body><script>window.onload=function(){" +
 					"document.getElementById(\"picLink\").select();};</script></html>");
 		} catch (IOException e) {
-			Logging.info(e);
+
+			// Should be logged auto-magic-lly with AOP
 		}
 	}
 	
@@ -199,7 +198,8 @@ public class PostController {
 			PrintWriter writer = resp.getWriter();
 			writer.append("<html><body><img src=\"" + url + "\" /></body></html>");
 		} catch (IOException e) {
-			Logging.info(e);
+
+			// Should be logged auto-magic-lly with AOP
 		}
 	}
 	
@@ -213,7 +213,8 @@ public class PostController {
 			PrintWriter writer = resp.getWriter();
 			writer.append("<html><body><a href=\"" + url + "\">" + url + "</a></body></html>");
 		} catch (IOException e) {
-			Logging.info(e);
+
+			// Should be logged auto-magic-lly with AOP
 		}
 	}
 	
@@ -241,14 +242,13 @@ public class PostController {
 		author.getFirstName();
 		blog.setAuthor(author);
 		blog.setPublishDate(new Date());
-		// TODO set back to session variable if this doesn't work
 		req.getSession().setAttribute("blog", blog);
 		return "preview-blog";
 	}
 	
 	@RequestMapping(value="publish.do", method=RequestMethod.POST)
 	public String publishBlog(HttpServletRequest req, HttpServletResponse resp) {
-		// TODO get from session variable if this doesn't work
+		
 		Blog blog = (Blog) req.getSession().getAttribute("blog");
 		HtmlWriter htmlWriter;
 		String url = "";
@@ -289,24 +289,12 @@ public class PostController {
 			}
 			blog.setTags(tmpTags);
 		}
-		try {
-			InputStream templateStream = this.getClass().getClassLoader().getResourceAsStream("template.html");
-			htmlWriter = new HtmlWriter(blog, blog.getAuthor(), templateStream);
-			TemporaryFile blogTempFile = htmlWriter.render();
-			Logging.log(blogTempFile.getTemporaryFile().getName());
-			String fileName = blogTempFile.getTemporaryFile().getName();
-			url = "https://s3-us-west-2.amazonaws.com/blogs.pjw6193.tech/content/pages/" + fileName;
-			req.setAttribute("url", url);
-			JetS3 jetS3 = new JetS3Impl();
-			businessDelegate.putRecord(blog);
-			jetS3.uploadPage(blogTempFile.getTemporaryFile());
-			blogTempFile.destroy();
-			req.getSession().setAttribute("blog", null);
-		} catch (FileNotFoundException e) { 
-			Logging.info(e);
-		} catch (IOException e1) {
-			Logging.info(e1);
-		}
-		return "redirect: " + url;
+
+		User author = (User) req.getSession().getAttribute("user");
+		author.getFirstName();
+		blog.setAuthor(author);
+		blog.setPublishDate(new Date());
+		req.getSession().setAttribute("blog", blog);
+		return "preview-blog";
 	}
 }
