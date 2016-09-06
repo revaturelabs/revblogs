@@ -40,7 +40,6 @@ public class JetS3Impl implements JetS3{
 		this.businessDelegate = businessDelegate;
 		JetS3Impl.syncBusinessDelegate(this.businessDelegate);
 		credBucket = this.businessDelegate.requestProperty(PropertyType.S3BUCKET);
-		log.fatal(credBucket);
 	}
 
 	public static synchronized void syncBusinessDelegate(BusinessDelegate businessDelegate){

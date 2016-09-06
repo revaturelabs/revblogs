@@ -2,7 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>
+<head ng-app="directive.loading">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Upload Picture</title>
 </head>
@@ -13,5 +13,8 @@
 		<input type="submit" name="upload" value="Upload" />
 	</form>
 </div>
+<div class="loading-spiner-holder" data-loading ><div class="loading-spiner"><img src="http://blogs.pjw6193.tech/content/resources/img/rev.gif" /></div></div>
 </body>
+<script src="${pageContext.servletContext.contextPath}/resources/js/spinner.js"></script>
+<script src="${pageContext.servletContext.contextPath}/resources/js/angular.min.js"></script>
 </html>

@@ -48,12 +48,19 @@ public class PostController {
 	 * 
 	 */
 	private BusinessDelegate businessDelegate;
+	private Logging logging;
 
 	public void setBusinessDelegate(BusinessDelegate businessDelegate){
 		this.businessDelegate = businessDelegate;
 	}
 	public BusinessDelegate getBusinessDelegate() {
 		return businessDelegate;
+	}
+	public Logging getLogging() {
+		return logging;
+	}
+	public void setLogging(Logging logging) {
+		this.logging = logging;
 	}
 	
 	/*
@@ -124,13 +131,14 @@ public class PostController {
 		// Send Email to Account
 		Mailer.sendMail(email, password);
 		
-		// Redirect
 		ModelAndView model = new ModelAndView();
 		model.setViewName("/home");
 		return model;
 	}
 	
-	// Update a Users Password	
+	/*
+	 * @RequestParam("newPassword")
+	 */
 	@RequestMapping(value="updatePassword.do", method=RequestMethod.POST)
 	public ModelAndView updatePassword(@ModelAttribute("updatePassword") @Valid UserDTO passwordDTO, BindingResult bindingResult,
 							   HttpServletRequest req, HttpServletResponse resp){
@@ -185,8 +193,7 @@ public class PostController {
 					"</textarea></body><script>window.onload=function(){" +
 					"document.getElementById(\"picLink\").select();};</script></html>");
 		} catch (IOException e) {
-
-			// Should be logged auto-magic-lly with AOP
+			Logging.info(e);
 		}
 	}
 	
@@ -198,8 +205,7 @@ public class PostController {
 			PrintWriter writer = resp.getWriter();
 			writer.append("<html><body><img src=\"" + url + "\" /></body></html>");
 		} catch (IOException e) {
-
-			// Should be logged auto-magic-lly with AOP
+			Logging.info(e);
 		}
 	}
 	
@@ -213,8 +219,7 @@ public class PostController {
 			PrintWriter writer = resp.getWriter();
 			writer.append("<html><body><a href=\"" + url + "\">" + url + "</a></body></html>");
 		} catch (IOException e) {
-
-			// Should be logged auto-magic-lly with AOP
+			Logging.info(e);
 		}
 	}
 	
@@ -248,7 +253,6 @@ public class PostController {
 	
 	@RequestMapping(value="publish.do", method=RequestMethod.POST)
 	public String publishBlog(HttpServletRequest req, HttpServletResponse resp) {
-		
 		Blog blog = (Blog) req.getSession().getAttribute("blog");
 		HtmlWriter htmlWriter;
 		String url = "";
@@ -289,12 +293,24 @@ public class PostController {
 			}
 			blog.setTags(tmpTags);
 		}
-
-		User author = (User) req.getSession().getAttribute("user");
-		author.getFirstName();
-		blog.setAuthor(author);
-		blog.setPublishDate(new Date());
-		req.getSession().setAttribute("blog", blog);
-		return "preview-blog";
+		try {
+			InputStream templateStream = this.getClass().getClassLoader().getResourceAsStream("template.html");
+			htmlWriter = new HtmlWriter(blog, blog.getAuthor(), templateStream);
+			TemporaryFile blogTempFile = htmlWriter.render();
+			//Logging.log(blogTempFile.getTemporaryFile().getName());
+			String fileName = blogTempFile.getTemporaryFile().getName();
+			url = "http://blogs.pjw6193.tech/content/pages/" + fileName;
+			req.setAttribute("url", url);
+			JetS3 jetS3 = new JetS3Impl();
+			businessDelegate.putRecord(blog);
+			jetS3.uploadPage(blogTempFile.getTemporaryFile());
+			blogTempFile.destroy();
+			req.getSession().setAttribute("blog", null);
+		} catch (FileNotFoundException e) { 
+			Logging.info(e);
+		} catch (IOException e1) {
+			Logging.info(e1);
+		}
+		return "redirect: " + url;
 	}
 }
