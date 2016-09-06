@@ -72,7 +72,7 @@
 	</tr>
 	<tr>
 		<td>
-			<a href="${pageContext.servletContext.contextPath}/">span class="glyphicon glyphicon-book"></span>&nbsp;View Blogs</a>
+			<a href="${pageContext.servletContext.contextPath}/"><span class="glyphicon glyphicon-book"></span>&nbsp;View Blogs</a>
 		</td>
 	</tr>
 	<tr>

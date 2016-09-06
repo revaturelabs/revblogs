@@ -19,7 +19,7 @@ import org.hibernate.search.annotations.Field;
 @Table(name="PP_USER")
 public class User {
 	
-	/**
+	/*
 	 *  User Attributes
 	 */
 	@Id
@@ -60,7 +60,7 @@ public class User {
 	@Column(name="USER_NEW", nullable=false)
 	private boolean newUser;
 	
-	/**
+	/*
 	 *  Relationship Mapping
 	 */
 	@ManyToOne
@@ -71,58 +71,33 @@ public class User {
 	@JoinColumn(name="USER_BLOGS")
 	private Set<Blog> blogs;
 		
-	/**
+	/*
 	 * 	Constructors
 	 */
 	public User() {
 		super();
-	}
-	
-	/**
-	 * 	Constructor for updating User password
-	 */
-	public User(String password){
-		super();
-		this.password = password;
 		
-		// User always starts active
+		// User always starts active && new
 		this.active = true;
+		this.newUser = true;
 	}
 	
-	/**
-	 * 	Constructor for Admin to create new Contributor
-	 */
-	public User(String email, String password){
-		super();
-		this.email = email;
-		this.password = password;
-		
-		// User always starts active
-		this.active = true;
-	}
-	
-	/**
-	 *  	Constructor without password, user role and profile picture
-	 */ 
+	// Missing Password, Role, and Picture
 	public User(String email, String firstName, String lastName, String jobTitle, String linkedInURL, String description){
-		super();
-		this.email = email;
+		this();
+		this.email = email.toLowerCase();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.jobTitle = jobTitle;
 		this.linkedInURL = linkedInURL;
-		this.description = description;		
-
-		// User always starts active && new
-		this.active = true;
-		this.newUser = true;
-		
+		this.description = description;
 	}
 	
+	// All Attributes
 	public User(String email, String password, String firstName, String lastName, String jobTitle, 
 				String linkedInURL, String description, UserRoles userRole) {
-		super();
-		this.email = email;
+		this();
+		this.email = email.toLowerCase();
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -130,13 +105,9 @@ public class User {
 		this.linkedInURL = linkedInURL;
 		this.description = description;
 		this.userRole = userRole;
-		
-		// User always starts active && new
-		this.active = true;
-		this.newUser = true;
 	}		
 		
-	/**
+	/*
 	 * 	Getters & Setters
 	 */
 	public int getUserId() {

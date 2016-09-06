@@ -16,7 +16,7 @@ import com.revature.data.DataService;
 @Service
 public class DataServiceImpl implements DataService{
 
-	/**
+	/*
 	 * 	Attributes && Getters/Setters
 	 * 
 	 */
@@ -29,7 +29,7 @@ public class DataServiceImpl implements DataService{
 		return dao.getSession();
 	}
 	
-	/**
+	/*
 	 *  Database Altering Methods
 	 */
 	
@@ -40,15 +40,15 @@ public class DataServiceImpl implements DataService{
 		dao.editRecord(obj);
 	}
 	
-	/**
+	/*
 	 *  Database Query Methods
 	 */
 	
 	public User grabUsers(String email){
 		return dao.getUsers(email);
 	}
-	public UserRoles grabRoles(int roleId) {
-		return dao.getRoles(roleId);
+	public UserRoles grabRoles(String role) {
+		return dao.getRoles(role);
 	}
 	public String grabProperty(PropertyType type){
 		return dao.getProperty(type);

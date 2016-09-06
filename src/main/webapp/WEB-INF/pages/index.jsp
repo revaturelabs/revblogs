@@ -69,7 +69,7 @@
   			<h2>Latest Posts</h2>
   		</div>
   	</div>
-    <div class="row">
+    <div id="postsDiv" class="row">
       <div class="col-sm-8">
       	<div ng-repeat="post in posts.posts" ng-include src="'resources/js/templates/post-preview.html'"></div>
       </div>
@@ -91,9 +91,14 @@
   <!-- Customize posts to view -->
   <div id="postsPerPage">
   <label>Number of posts to show: </label>
-  	<a ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 10]" href="#here" ng-click="getPage(curPage)">10</a>
+  	<select>
+  		<option ng-model="postsPerPage" ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 10]" href="#here" ng-click="getPage(curPage)">10</option>
+  		<option ng-model="postsPerPage"  ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 25]" href="#here" ng-click="getPage(curPage)">25</option>
+  		<option ng-model="postsPerPage"  ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 50]" href="#here" ng-click="getPage(curPage)">50</option>
+  	</select>
+  	<!-- <a ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 10]" href="#here" ng-click="getPage(curPage)">10</a>
   	<a ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 25]" href="#here" ng-click="getPage(curPage)">25</a>
-  	<a ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 50]" href="#here" ng-click="getPage(curPage)">50</a>
+  	<a ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 50]" href="#here" ng-click="getPage(curPage)">50</a> -->
   </div>
   
   
@@ -102,8 +107,8 @@
   	<div ng-controller="BlogIndexController">
   	<ul id="pageNums" class="pagination">
    	  <li ng:class="{true:'disabled', false:'enabled'}[curPage == 1]"><a ng-click="changeView(0)" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
-      <li ng:class="{true:'active', false:''}[number == curPage]"><a ng-click="getPage(1)">1 <span class="sr-only">(current)</span></a></li>
- 		<li ng-repeat="number in numOfPages" ng-if="number !== 1"> <a ng-click="getPage(number)">{{number}}</a> </li>    
+      <!-- <li ng:class="{true:'active', false:''}[number == curPage]"><a ng-click="getPage(1)">1 <span class="sr-only">(current)</span></a></li> -->
+ 		<li ng:class="{true:'active', false:''}[number == curPage]" ng-repeat="number in numOfPages"> <a ng-click="getPage(number)">{{number}}</a> </li>    
     	<!-- <li><a ng-click="getPage('{{$index}}')">{{$index}}</a></li> -->
    	  <li ng:class="{true:'disabled', false:'enabled'}[curPage == numOfPages]"><a ng-click="changeView(1)" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
   	</ul>
@@ -134,6 +139,9 @@
 	</div>
   
   <input type="hidden" ng-model="blogsPerPage">
+  <input type="hidden" ng-model="curPage">
+  <input type="hidden" ng-model="nextPagePosts">
+  <input type="hidden" ng-model="prevPagePosts">
   
 </body>
 
