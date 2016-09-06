@@ -9,9 +9,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Map;
+import java.util.Set;
 
 import com.revature.app.TemporaryFile;
 import com.revature.beans.Blog;
+import com.revature.beans.Tags;
 import com.revature.beans.User;
 
 public class HtmlWriter {
@@ -58,6 +60,33 @@ public class HtmlWriter {
 				blogWriter.write(author.getFirstName()+" "+author.getLastName());
 			if (line.contains("author-desc"))
 				blogWriter.write(author.getDescription());
+
+			if (line.contains("comments-facebook"))
+				blogWriter.write("<div>"+
+				"<div class='fb-comments' data-href='http://blogs.pjw6193.tech/content/pages/"+fileName+"' data-numposts='3'></div>"+
+				"</div>");
+			if (line.contains("url-link")){
+				blogWriter.write("<meta property='og:url' content='http://blogs.pjw6193.tech/content/pages/"+fileName+"' />");
+			}
+			if (line.contains("url-title")){
+				blogWriter.write("<meta property='og:title' content="+blog.getBlogTitle()+" />");
+			}
+			if(line.contains("url-description")){
+				blogWriter.write("<meta property='og:description' content="+blog.getBlogSubtitle()+" />");
+			}
+			if(line.contains("author-image"))
+				blogWriter.write("<img src=" + blog.getAuthor().getProfilePicture() + " />");
+			if(line.contains("post-tags")){
+				Set<Tags> tags = blog.getTags();
+				for(Tags tag: tags){
+					blogWriter.write("<a href='#'>" + tag.getDescription() + "</a> ");
+				}
+			}
+			if(line.contains("invisible-url")){
+				blogWriter.write("<div id='invisibleurl' value='"+fileName+"'></div>");
+				
+
+			}
 			if (line.contains("post-references-body")) {
 				Map<Integer, String> references = blog.getReferences();
 				for ( Integer key : references.keySet() ) {
@@ -65,7 +94,7 @@ public class HtmlWriter {
 							+ "[" + key.toString() + "] - "
 							+ references.get(key) + "</div>");
 				}
-			}
+		}
 		}
 		blogWriter.close();
 		tempReader.close();

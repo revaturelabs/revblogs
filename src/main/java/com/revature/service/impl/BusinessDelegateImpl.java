@@ -16,6 +16,7 @@ import com.revature.beans.UserRoles;
 import com.revature.data.DataService;
 import com.revature.data.impl.PaginatedResultList;
 import com.revature.data.impl.PropertyType;
+import com.revature.dto.AuthorDTO;
 import com.revature.dto.BlogPostCollectionDTO;
 import com.revature.dto.BlogPostDTO;
 import com.revature.service.BusinessDelegate;
@@ -25,7 +26,7 @@ import com.revature.service.ServiceLocator;
 @Service
 public class BusinessDelegateImpl implements BusinessDelegate{
 
-	/**
+	/*
 	 * 	Attributes && Getters/Setters
 	 * 
 	 */
@@ -70,7 +71,7 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 		return jetS3.uploadEvidence(fileName, file);
 	}
 	
-	/**
+	/*
 	 *  Database Altering Methods
 	 */
 	
@@ -81,7 +82,7 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 		dataService.changeRecord(obj);
 	}
 	
-	/**
+	/*
 	 *  Database Query Methods
 	 */
 	
@@ -90,6 +91,9 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	}
 	public UserRoles requestRoles(int roleId) {
 		return dataService.grabRoles(roleId);
+	}
+	public UserRoles requestRoles(String role) {
+		return dataService.grabRoles(role);
 	}
 	public String requestProperty(PropertyType type){
 		return dataService.grabProperty(type);
@@ -110,6 +114,12 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	public List<Evidence> requestEvidence(){
 		return dataService.grabEvidence();
 	}
+	public User requestUser(int id) {
+		return dataService.grabUser(id);
+	}
+	public Tags requestTag(int id) {
+		return dataService.grabTag(id);
+	}
 	
 	
 	//-------------------------------------------------------------------------------------------------
@@ -128,6 +138,95 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 		int maxResults = perPage;
 		
 		PaginatedResultList<Blog> results = dataService.grabBlogs(start, maxResults);
+		List<BlogPostDTO> postList = new ArrayList<>();
+		for (Blog p: results.getItems()) {
+			postList.add(new BlogPostDTO(p));
+		}
+		long totalItems = results.getTotalItems();
+		int totalPages = (int)Math.ceil((double)totalItems/perPage);
+		
+		postCollection.setPosts(postList);
+		postCollection.setPage(page);
+		postCollection.setTotalPosts(totalItems);
+		postCollection.setTotalPages(totalPages);
+		postCollection.setPerPage(perPage);
+		
+		return postCollection;
+	}
+	
+	public BlogPostCollectionDTO requestBlogPosts(User author, int page, int perPage) throws IllegalArgumentException {
+		
+		if (page < 1 || perPage < 1) {
+			throw new IllegalArgumentException("page and perPage must be positive integers");
+		}
+		
+		// Instantiate post collection DTO
+		BlogPostCollectionDTO postCollection = new BlogPostCollectionDTO();
+		
+		int start = (page-1)*perPage;
+		int maxResults = perPage;
+		
+		PaginatedResultList<Blog> results = dataService.grabBlogs(author, start, maxResults);
+		List<BlogPostDTO> postList = new ArrayList<>();
+		for (Blog p: results.getItems()) {
+			postList.add(new BlogPostDTO(p));
+		}
+		long totalItems = results.getTotalItems();
+		int totalPages = (int)Math.ceil((double)totalItems/perPage);
+		
+		postCollection.setPosts(postList);
+		postCollection.setPage(page);
+		postCollection.setTotalPosts(totalItems);
+		postCollection.setTotalPages(totalPages);
+		postCollection.setPerPage(perPage);
+		postCollection.setAuthor(new AuthorDTO(author));
+		
+		return postCollection;
+	}
+
+	public BlogPostCollectionDTO requestBlogPosts(Tags category, int page, int perPage) throws IllegalArgumentException {
+		
+		if (page < 1 || perPage < 1) {
+			throw new IllegalArgumentException("page and perPage must be positive integers");
+		}
+		
+		// Instantiate post collection DTO
+		BlogPostCollectionDTO postCollection = new BlogPostCollectionDTO();
+		
+		int start = (page-1)*perPage;
+		int maxResults = perPage;
+		
+		PaginatedResultList<Blog> results = dataService.grabBlogs(category, start, maxResults);
+		List<BlogPostDTO> postList = new ArrayList<>();
+		for (Blog p: results.getItems()) {
+			postList.add(new BlogPostDTO(p));
+		}
+		long totalItems = results.getTotalItems();
+		int totalPages = (int)Math.ceil((double)totalItems/perPage);
+		
+		postCollection.setPosts(postList);
+		postCollection.setPage(page);
+		postCollection.setTotalPosts(totalItems);
+		postCollection.setTotalPages(totalPages);
+		postCollection.setPerPage(perPage);
+		postCollection.setCategory(category.getDescription());
+		
+		return postCollection;
+	}
+	
+	public BlogPostCollectionDTO searchBlogPosts(String query, int page, int perPage) throws IllegalArgumentException {
+		
+		if (page < 1 || perPage < 1) {
+			throw new IllegalArgumentException("page and perPage must be positive integers");
+		}
+		
+		// Instantiate post collection DTO
+		BlogPostCollectionDTO postCollection = new BlogPostCollectionDTO();
+		
+		int start = (page-1)*perPage;
+		int maxResults = perPage;
+		
+		PaginatedResultList<Blog> results = dataService.grabBlogs(query, start, maxResults);
 		List<BlogPostDTO> postList = new ArrayList<>();
 		for (Blog p: results.getItems()) {
 			postList.add(new BlogPostDTO(p));

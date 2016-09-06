@@ -36,11 +36,11 @@ public class Blog {
 	private int blogId;
 	
 	@Column(name="BLOG_TITLE", unique=true, nullable=false)
-	@Field
+	@Field(name="title")
 	private String blogTitle;
 	
 	@Column(name="BLOG_SUBTITLE")
-	@Field
+	@Field(name="subtitle")
 	private String blogSubtitle;
 	
 	@Column(name="BLOG_CONTENT", nullable=false)
@@ -54,7 +54,7 @@ public class Blog {
 	private Date publishDate;
 	
 	@Column(name="BLOG_ACTIVE", nullable=false)
-	private boolean blogActive;
+	private boolean active;
 	
 	@Column(name="BLOG_HTML")
 	@Lob
@@ -99,7 +99,7 @@ public class Blog {
 		this.publishDate = new Date();
 		
 		// Blogs always start active
-		this.blogActive = true;
+		this.active = true;
 	}
 
 	/**
@@ -141,11 +141,11 @@ public class Blog {
 	public void setPublishDate(Date publishDate) {
 		this.publishDate = publishDate;
 	}
-	public boolean isBlogActive() {
-		return blogActive;
+	public boolean isActive() {
+		return active;
 	}
-	public void setBlogActive(boolean blogActive) {
-		this.blogActive = blogActive;
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 	public Set<Evidence> getEvidences() {
 		return evidences;

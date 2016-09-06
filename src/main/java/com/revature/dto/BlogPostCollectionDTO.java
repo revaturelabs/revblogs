@@ -21,6 +21,10 @@ public class BlogPostCollectionDTO {
 	String prev = null;
 	String next = null;
 	List<BlogPostDTO> posts = new ArrayList<>();
+	
+	AuthorDTO author = null;
+	String category = null;
+	
 	public BlogPostCollectionDTO() {
 		super();
 	}
@@ -66,4 +70,17 @@ public class BlogPostCollectionDTO {
 	public void setPerPage(int perPage) {
 		this.perPage = perPage;
 	}
+	public AuthorDTO getAuthor() {
+		return author;
+	}
+	public void setAuthor(AuthorDTO author) {
+		this.author = author;
+	}
+	public String getCategory() {
+		return category;
+	}
+	public void setCategory(String category) {
+		this.category = category;
+	}
+	
 }

@@ -10,9 +10,11 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.search.FullTextQuery;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
 import org.hibernate.search.query.dsl.QueryBuilder;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,7 +31,7 @@ import com.revature.service.impl.Crypt;
 
 @Repository
 @Transactional
-public class DAOImpl implements DAO{
+public class DAOImpl implements DAO {
 
 	/*
 	 * 	Attributes && Getters/Setters
@@ -46,9 +48,6 @@ public class DAOImpl implements DAO{
 	public DAOImpl(SessionFactory factory) throws InterruptedException {
 		this();
 		setSessionFactory(factory);
-		
-		FullTextSession fullTextSession = Search.getFullTextSession(session);
-		fullTextSession.createIndexer().startAndWait();
 	}
 	
 	public void setSessionFactory(SessionFactory sessionFactory) {
@@ -105,6 +104,26 @@ public class DAOImpl implements DAO{
 		
 		Criteria criteria = session.createCriteria(User.class).add(Restrictions.eq("email", email));
 		return (User)criteria.uniqueResult();
+	}
+	
+	// User by Id
+	@Transactional(propagation = Propagation.NOT_SUPPORTED)
+	public User getUser(int id){
+		
+		Session ses = sessionFactory.getCurrentSession();
+		setSession(ses);
+		
+		return (User) ses.get(User.class, id);
+	}
+	
+	// Tag by Id
+	@Transactional(propagation = Propagation.NOT_SUPPORTED)
+	public Tags getTag(int id){
+		
+		Session ses = sessionFactory.getCurrentSession();
+		setSession(ses);
+		
+		return (Tags) ses.get(Tags.class, id);
 	}
 	
 	// Property by Type (Enum)
@@ -208,10 +227,22 @@ public class DAOImpl implements DAO{
 				
 			default:
 				
-				Logging.log("Attempt to access non-existant property");
+				//Logging.log("Attempt to access non-existant property");
 		}
 		
 		return null;
+	}
+	
+	//Pull a Single Role
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public UserRoles getRoles(String role) {
+		
+		Session ses = sessionFactory.getCurrentSession();
+		setSession(ses);
+		
+		Criteria criteria = session.createCriteria(UserRoles.class);
+		criteria.add(Restrictions.eq("role", role));
+		return (UserRoles) criteria.uniqueResult();
 	}
 	
 	// All Users
@@ -285,9 +316,21 @@ public class DAOImpl implements DAO{
 	// Pagination
 	
 	@Transactional(propagation = Propagation.NOT_SUPPORTED)
-	public List<Blog> getBlogs(String search, int start, int max) {
+	public PaginatedResultList<Blog> getBlogs(String search, int start, int max) {
 		Session session = sessionFactory.getCurrentSession();
 		setSession(session);
+		
+		// TODO: Remove in production
+		/*
+		try {
+			rebuildIndex();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		*/
+		
+		PaginatedResultList<Blog> blogPosts = new PaginatedResultList<>();
 		
 		FullTextSession fts = Search.getFullTextSession(session);
 		QueryBuilder qb = fts.getSearchFactory().buildQueryBuilder().forEntity(Blog.class).get();
@@ -297,10 +340,19 @@ public class DAOImpl implements DAO{
 				  .matching(search)
 				  .createQuery();
 		
-		Query query = fts.createFullTextQuery(searchQuery, Blog.class);
+		FullTextQuery query = fts.createFullTextQuery(searchQuery, Blog.class);
 		query.setFirstResult(start);
 		query.setMaxResults(max);
-		return (List<Blog>)query.list();
+		
+		blogPosts.setTotalItems(query.getResultSize());
+		
+		List<Blog> postList = query.list();
+		for (Blog post: postList) {
+			Hibernate.initialize(post.getTags());
+		}
+		blogPosts.setItems(postList);
+		
+		return blogPosts;
 				
 	}
 	
@@ -317,7 +369,7 @@ public class DAOImpl implements DAO{
 		
 		criteria = session.createCriteria(Blog.class);
 		criteria.addOrder(Order.desc("publishDate"));
-		Logging.log(""+start);
+		//Logging.log(""+start);
 		criteria.setFirstResult(start);
 		criteria.setMaxResults(max);
 		List<Blog> postList = criteria.list();
@@ -330,27 +382,64 @@ public class DAOImpl implements DAO{
 	}
 	
 	@Transactional(propagation = Propagation.NOT_SUPPORTED)
-	public List<Blog> getBlogs(User author, int start, int max) {
+	public PaginatedResultList<Blog> getBlogs(User author, int start, int max) {
 		Session session = sessionFactory.getCurrentSession();
 		setSession(session);
 		
+		PaginatedResultList<Blog> blogPosts = new PaginatedResultList<>();
+		
 		Criteria criteria = session.createCriteria(Blog.class);
+		criteria.add(Restrictions.eq("author", author));
+		criteria.setProjection(Projections.rowCount());
+		blogPosts.setTotalItems((long)criteria.uniqueResult());
+		
+		criteria = session.createCriteria(Blog.class);
 		criteria.addOrder(Order.desc("publishDate"));
 		criteria.add(Restrictions.eq("author", author));
 		criteria.setFirstResult(start);
 		criteria.setMaxResults(max);
-		return (List<Blog>)criteria.list();
+
+		List<Blog> postList = criteria.list();
+		for (Blog post: postList) {
+			Hibernate.initialize(post.getTags());
+		}
+		blogPosts.setItems(postList);
+		
+		return blogPosts;
 	}
 	
 	@Transactional(propagation = Propagation.NOT_SUPPORTED)
-	public List<Blog> getBlogs(Tags category, int start, int max) {
+	public PaginatedResultList<Blog> getBlogs(Tags category, int start, int max) {
 		Session session = sessionFactory.getCurrentSession();
 		setSession(session);
 		
+		PaginatedResultList<Blog> blogPosts = new PaginatedResultList<>();
+		
 		String hql = "from Tags where tagId eq :tagId left join Blog order by publishDate";
-		Query query = session.createQuery(hql).setInteger("tagId", category.getTagId());
+		
+		Query query = session.createQuery("select count(*) " + hql).setInteger("tagId", category.getTagId());
+		blogPosts.setTotalItems((long)query.uniqueResult());
+		
+		query = session.createQuery(hql).setInteger("tagId", category.getTagId());
 		query.setFirstResult(start);
 		query.setMaxResults(max);
-		return (List<Blog>)query.list();
+		
+		List<Blog> postList = query.list();
+		for (Blog post: postList) {
+			Hibernate.initialize(post.getTags());
+		}
+		blogPosts.setItems(postList);
+		
+		return blogPosts;
+	}
+	
+	private boolean indexBuilt = false;
+	
+	public void rebuildIndex() throws InterruptedException {
+		if (!indexBuilt) {
+			FullTextSession fullTextSession = Search.getFullTextSession(session);
+			fullTextSession.createIndexer().startAndWait();
+			indexBuilt = true;
+		}
 	}
 }

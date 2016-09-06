@@ -284,14 +284,12 @@ public class PostController {
 		author.getFirstName();
 		blog.setAuthor(author);
 		blog.setPublishDate(new Date());
-		// TODO set back to session variable if this doesn't work
 		req.getSession().setAttribute("blog", blog);
 		return "preview-blog";
 	}
 	
 	@RequestMapping(value="publish.do", method=RequestMethod.POST)
 	public String publishBlog(HttpServletRequest req, HttpServletResponse resp) {
-		// TODO get from session variable if this doesn't work
 		Blog blog = (Blog) req.getSession().getAttribute("blog");
 		HtmlWriter htmlWriter;
 		String url = "";
@@ -336,9 +334,9 @@ public class PostController {
 			InputStream templateStream = this.getClass().getClassLoader().getResourceAsStream("template.html");
 			htmlWriter = new HtmlWriter(blog, blog.getAuthor(), templateStream);
 			TemporaryFile blogTempFile = htmlWriter.render();
-			Logging.log(blogTempFile.getTemporaryFile().getName());
+			//Logging.log(blogTempFile.getTemporaryFile().getName());
 			String fileName = blogTempFile.getTemporaryFile().getName();
-			url = "https://s3-us-west-2.amazonaws.com/blogs.pjw6193.tech/content/pages/" + fileName;
+			url = "http://blogs.pjw6193.tech/content/pages/" + fileName;
 			req.setAttribute("url", url);
 			JetS3 jetS3 = new JetS3Impl();
 			businessDelegate.putRecord(blog);

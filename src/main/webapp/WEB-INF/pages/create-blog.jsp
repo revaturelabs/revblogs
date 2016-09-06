@@ -35,13 +35,15 @@
 <div class="container page-content">
 <h2>Create new blog post</h2>
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
 <form:form action="add-blog.do" method="post" commandName="blog">
 	Title
 	<form:input path="blogTitle" /><br />
 	Subtitle
 	<form:input path="blogSubtitle"/><br />
-	<button type="button">Attach Image</button>
-	<button type="button">Attach File</button>
 	<br>
 	<form:textarea path="blogContent" rows="30" cols="100" ></form:textarea>
 	<br>
