@@ -241,6 +241,8 @@ public class PostController {
 				return "create-blog";
 			};
 		}
+		
+//	Code for reference:	User author - businessDelegate.requestUsers("pick")
 		User author = (User) req.getSession().getAttribute("user");
 		author.getFirstName();
 		blog.setAuthor(author);
