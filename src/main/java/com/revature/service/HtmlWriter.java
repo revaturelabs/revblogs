@@ -80,6 +80,9 @@ public class HtmlWriter {
 					blogWriter.write("<a href='#'>" + tag.getDescription() + "</a> ");
 				}
 			}
+			if(line.contains("invisible-url")){
+				blogWriter.write("<div id='invisibleurl' value='"+fileName+"'></div>");
+			}
 		}
 		blogWriter.close();
 		tempReader.close();
