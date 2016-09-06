@@ -16,6 +16,8 @@
 		<security:intercept-url pattern="/contributor**" access="hasRole('CONTRIBUTOR')"/>
 		<security:intercept-url pattern="/preview-blog**" access="hasAnyRole('CONTRIBUTOR','ADMIN')" />
 		<security:intercept-url pattern="/profile/**" access="hasAnyRole('ADMIN','CONTRIBUTOR')"/>
+		<security:intercept-url pattern="/password/**" access="hasAnyRole('ADMIN','CONTRIBUTOR')"/>
+		<security:intercept-url pattern="/success/**" access="hasAnyRole('ADMIN','CONTRIBUTOR')"/>
 		<security:intercept-url pattern="/resources/**" access="permitAll" />
 
 <!-- FORM-LOGIN SECURITY FOR THE LOGIN PAGE -->		
