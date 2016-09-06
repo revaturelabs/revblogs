@@ -243,12 +243,14 @@ public class PostController {
 		author.getFirstName();
 		blog.setAuthor(author);
 		blog.setPublishDate(new Date());
+		// TODO set back to session variable if this doesn't work
 		req.getSession().setAttribute("blog", blog);
 		return "preview-blog";
 	}
 	
 	@RequestMapping(value="publish.do", method=RequestMethod.POST)
 	public String publishBlog(HttpServletRequest req, HttpServletResponse resp) {
+		// TODO get from session variable if this doesn't work
 		Blog blog = (Blog) req.getSession().getAttribute("blog");
 		HtmlWriter htmlWriter;
 		String url = "";
@@ -301,6 +303,7 @@ public class PostController {
 			businessDelegate.putRecord(blog);
 			jetS3.uploadPage(blogTempFile.getTemporaryFile());
 			blogTempFile.destroy();
+			req.getSession().setAttribute("blog", null);
 		} catch (FileNotFoundException e) { 
 			logging.info(e);
 		} catch (IOException e1) {
