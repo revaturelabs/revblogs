@@ -7,6 +7,17 @@ public class UserDTO {
 	private String confirmPassword;
 	private boolean newUser;
 	
+	public UserDTO(){
+		super();
+	}
+	public UserDTO(String oldPassword, String newPassword, String confirmPassword, boolean newUser) {
+		super();
+		this.oldPassword = oldPassword;
+		this.newPassword = newPassword;
+		this.confirmPassword = confirmPassword;
+		this.newUser = newUser;
+	}
+	
 	public String getOldPassword() {
 		return oldPassword;
 	}
@@ -29,17 +40,6 @@ public class UserDTO {
 		return newUser;
 	}
 	public void setNewUser(boolean newUser) {
-		this.newUser = newUser;
-	}
-	
-	public UserDTO(){
-		super();
-	}
-	public UserDTO(String oldPassword, String newPassword, String confirmPassword, boolean newUser) {
-		super();
-		this.oldPassword = oldPassword;
-		this.newPassword = newPassword;
-		this.confirmPassword = confirmPassword;
 		this.newUser = newUser;
 	}
 }

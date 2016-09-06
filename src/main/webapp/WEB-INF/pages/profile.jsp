@@ -72,7 +72,8 @@
 				Description:&nbsp;&nbsp;&nbsp; 
 			</td>
 			<td>
-				<form:textarea path="description" class="form-control" value="${user.description}"/>
+				<input type="hidden" value="${user.description}" id="userDescription" />
+				<form:textarea path="description" class="form-control" id="descriptionTextArea"/>
 			</td>
 		</tr>
 		<tr>
@@ -99,17 +100,16 @@
 	<hr>
 	<div>
 		<h3>Upload Profile Picture</h3>
-<%-- 		<form method="POST" action="uploadProfilePicture" enctype="multipart/form-data"> --%>
+			<img src="${user.profilePicture}" />
 			<input type="file" name="profilePicture" id="fileChooser" /><br />
-			<input class="fileUploadButton" type="submit" name="upload" value="Upload" />
-<%-- 		</form> --%>
+			<input class="btn btn-primary form-control" id="fileUploadButton" type="submit" name="upload" value="Upload" />
 	</div>
 </div>
 <jsp:include page="footer.jsp"></jsp:include>
 </body>
 <script type="text/javascript">
 $(document).ready(function(){
-	$(".fileUploadButton").click(function(e){
+	$("#fileUploadButton").click(function(e){
 		var data = new FormData($("#fileChooser")[0].files);
 		
 		data.append("profilePicture",$("#fileChooser")[0].files[0]);
@@ -122,6 +122,7 @@ $(document).ready(function(){
 			cache: false,
 			success: function(response){
 				console.log(response);
+				alert("Profile Picture Updated!");
 			}		
 		});
 		
@@ -131,29 +132,10 @@ $(document).ready(function(){
 });
 
 $(document).ready(function(){
-	$("#confirmPassword").keyup(function(){
-		var newPass = $("#newPassword").val();
-		var conPass = $("#confirmPassword").val();
-		
-		if(newPass !== conPass){
-			
-			$("#confirmMessage").text("Passwords do not match.");
-			$("#confirmMessage").css("color", "red");
-		}
-		
-		else{
-			
-			$("#confirmMessage").text("");
-			$("#confirmMessage").css("color", "black");
-			
-		}
-		
-			
-	});
-
-})
-
-
+	var description = $("#userDescription").val();
+	
+	$("#descriptionTextArea").val(description);
+});
 
 </script>
 </html>

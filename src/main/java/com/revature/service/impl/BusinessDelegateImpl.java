@@ -88,6 +88,9 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	public User requestUsers(String username){
 		return dataService.grabUsers(username);
 	}
+	public UserRoles requestRoles(int roleId) {
+		return dataService.grabRoles(roleId);
+	}
 	public String requestProperty(PropertyType type){
 		return dataService.grabProperty(type);
 	}

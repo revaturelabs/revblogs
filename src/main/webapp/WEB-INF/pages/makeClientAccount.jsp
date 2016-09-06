@@ -12,16 +12,19 @@
 <meta http-equiv="Cache-Control" content="no-cache">
 <meta http-equiv="Expires" content="Sat, 01 Dec 2001 00:00:00 GMT">
 <title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 </head>
 <body>
 	<div>
-		<form:form commandName="user">
-			<form:input id="email" path="email" /><br />
-			<form:password id="pass" path="password" /><br />
-			<form:select id="role" path="userRole" items="${roleDropDown}" />
-			<input type="button" value="Add User"/>
-		</form:form>
+		<form action="createAccount.do" method="post">
+			<input name="email" type="text"/><br />
+			<select name="role">
+				<c:forEach var="t" items="${roleDropDown}">
+			 		<option  value="${t.userRoleId}" label="${t.role}"/>
+			 	</c:forEach>
+			 </select>
+			<button type="submit">Add User</button>
+		</form>
 	</div>
-
 </body>
 </html>

@@ -8,7 +8,6 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.search.FullTextSession;
@@ -25,13 +24,14 @@ import com.revature.beans.Tags;
 import com.revature.beans.User;
 import com.revature.beans.UserRoles;
 import com.revature.data.DAO;
+import com.revature.service.Logging;
 import com.revature.service.impl.Crypt;
 
 @Repository
 @Transactional
 public class DAOImpl implements DAO{
 
-	/**
+	/*
 	 * 	Attributes && Getters/Setters
 	 * 
 	 */
@@ -68,7 +68,7 @@ public class DAOImpl implements DAO{
 		return session;
 	}
 	
-	/**
+	/*
 	 *  Database Altering Methods
 	 */
 	
@@ -92,7 +92,7 @@ public class DAOImpl implements DAO{
 		session.update(obj);
 	}
 
-	/**
+	/*
 	 *  Database Query Methods
 	 */
 	
@@ -205,9 +205,13 @@ public class DAOImpl implements DAO{
 				value = props.getBucketURL();
 				value = Crypt.decrypt(value, keys[10][0], keys[10][1]);
 				return value;	
+				
+			default:
+				
+				Logging.log("Attempt to access non-existant property");
 		}
 		
-		return "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
+		return null;
 	}
 	
 	// All Users
@@ -219,6 +223,18 @@ public class DAOImpl implements DAO{
 		
 		Criteria criteria = session.createCriteria(User.class);
 		return (List<User>)criteria.list();
+	}
+	
+	//Pull a single Role
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public UserRoles getRoles(int roleId) {
+		
+		Session ses = sessionFactory.getCurrentSession();
+		setSession(ses);
+		
+		Criteria criteria = session.createCriteria(UserRoles.class);
+		criteria.add(Restrictions.eq("userRoleId", roleId));
+		return (UserRoles) criteria.uniqueResult();
 	}
 	
 	// All Blogs
@@ -301,7 +317,7 @@ public class DAOImpl implements DAO{
 		
 		criteria = session.createCriteria(Blog.class);
 		criteria.addOrder(Order.desc("publishDate"));
-		System.err.println(start);
+		Logging.log(""+start);
 		criteria.setFirstResult(start);
 		criteria.setMaxResults(max);
 		List<Blog> postList = criteria.list();

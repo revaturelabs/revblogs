@@ -22,10 +22,10 @@ public class JetS3Impl implements JetS3{
 	
 	private static AWSCredentials credentials;
 	private static S3Service s3;
-//	private Logging logging;
 	private static Logger log = Logger.getRootLogger();
 	private static final String BUCKET = "blogs.pjw6193.tech";
 	private BusinessDelegate businessDelegate;
+	private String credBucket;
 	
 	public JetS3Impl() {
 		super();
@@ -36,19 +36,14 @@ public class JetS3Impl implements JetS3{
 		this.businessDelegate = businessDelegate;
 	}
 	
-//	public void setLogging(Logging logging) {
-//		this.logging = logging;
-//	}
-	private String credBucket;
 	public void setBusinessDelegate(BusinessDelegate businessDelegate) {
 		this.businessDelegate = businessDelegate;
 		JetS3Impl.syncBusinessDelegate(this.businessDelegate);
 		credBucket = this.businessDelegate.requestProperty(PropertyType.S3BUCKET);
 		log.fatal(credBucket);
-
 	}
 
-	public synchronized static void syncBusinessDelegate(BusinessDelegate businessDelegate){
+	public static synchronized void syncBusinessDelegate(BusinessDelegate businessDelegate){
 		  
 	
 	   	credentials = new AWSCredentials(businessDelegate.requestProperty(PropertyType.K),businessDelegate.requestProperty(PropertyType.V));
