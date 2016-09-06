@@ -3,6 +3,8 @@ package com.revature.service.impl;
 import java.io.File;
 import java.io.FileInputStream;
 
+import org.apache.commons.logging.impl.Log4JLogger;
+import org.apache.log4j.Logger;
 import org.jets3t.service.S3Service;
 import org.jets3t.service.acl.AccessControlList;
 import org.jets3t.service.acl.GroupGrantee;
@@ -23,21 +25,33 @@ public class JetS3Impl implements JetS3{
 	private static AWSCredentials credentials;
 	private static S3Service s3;
 //	private Logging logging;
+	private static Logger log = Logger.getRootLogger();
 	private static final String BUCKET = "blogs.pjw6193.tech";
-	
 	private BusinessDelegate businessDelegate;
+	
+	public JetS3Impl() {
+		super();
+	}
+	
+	public JetS3Impl(BusinessDelegate businessDelegate) {
+		super();
+		this.businessDelegate = businessDelegate;
+	}
+	
 //	public void setLogging(Logging logging) {
 //		this.logging = logging;
 //	}
-	
+	private String credBucket;
 	public void setBusinessDelegate(BusinessDelegate businessDelegate) {
-		
 		this.businessDelegate = businessDelegate;
-		JetS3Impl.syncBusinessDelegate(businessDelegate);
+		JetS3Impl.syncBusinessDelegate(this.businessDelegate);
+		credBucket = this.businessDelegate.requestProperty(PropertyType.S3BUCKET);
+		log.fatal(credBucket);
+
 	}
 
 	public synchronized static void syncBusinessDelegate(BusinessDelegate businessDelegate){
-		   
+		  
 	
 	   	credentials = new AWSCredentials(businessDelegate.requestProperty(PropertyType.K),businessDelegate.requestProperty(PropertyType.V));
 	   	s3 = new RestS3Service(credentials);
@@ -81,7 +95,6 @@ public class JetS3Impl implements JetS3{
 	 * @return the URL where the file was uploaded if successful, null otherwise
 	 */
 	protected String uploadFile(String folderPath, String fileName, MultipartFile file) {
-
 		try {
 			
 			S3Bucket bucket = s3.getBucket(BUCKET);
@@ -94,16 +107,13 @@ public class JetS3Impl implements JetS3{
 			s3Obj.setContentLength(file.getSize());
 			s3Obj.setAcl(acl);
 			s3.putObject(bucket, s3Obj);
-			System.out.println("**************************before*******************************");
-			System.out.println(businessDelegate.requestProperty(PropertyType.S3BUCKET));
-			System.out.println("**************************after*******************************");
-			
+
 			return 
-				businessDelegate.requestProperty(PropertyType.S3BUCKET) + folderPath + fileName;
+				"http://" + BUCKET+ "/" + folderPath + fileName;
 			
 		} catch (Exception e) {
 			
-			//logging.info(e);
+			log.info(e);
 		}
 		return null; // Resource could not be uploaded
 	}
@@ -131,10 +141,10 @@ public class JetS3Impl implements JetS3{
 			s3.putObject(bucket, s3Obj);
 			
 			return 
-				businessDelegate.requestProperty(PropertyType.S3BUCKET) + folderPath + file.getName();
+					"http://" + BUCKET+ "/" + folderPath + file.getName();
 			
 		} catch (Exception e) {
-			//logging.info(e);
+			log.info(e);
 		}
 		return null; // Resource could not be uploaded
 	}
@@ -154,7 +164,7 @@ public class JetS3Impl implements JetS3{
 			s3.putObject(bucket, file);
 			}catch(Exception e)
 			{
-				//logging.info(e);
+				log.info(e);
 				return false;
 			}	
 			return true;
@@ -171,7 +181,7 @@ public class JetS3Impl implements JetS3{
 		s3.putObject(bucket, file);
 		}catch(Exception e)
 		{
-			//logging.info(e);
+			log.info(e);
 			return false;
 		}	
 		return true;
@@ -183,7 +193,7 @@ public class JetS3Impl implements JetS3{
 			s3.deleteObject(bucket, filename);
 		}catch(Exception e)
 		{
-			//logging.info(e);
+			log.info(e);
 			return false;
 		}	
 		return true;

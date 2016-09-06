@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,7 +28,12 @@ public class BaseController {
 	private Logging logging;
 	private BusinessDelegate businessDelegate;
 	private Population population;
-	private static Logger log = Logger.getRootLogger();
+	private static final String HOME = "/home";
+	private static final String TITLE = "title";
+	private static final String LOGGED = "Logged in as ";
+	private static final String MESSAGE = "message";
+	private static final String WELCOME = "Welcome ";
+	
 	
 	public void setBusinessDelegate(BusinessDelegate businessDelegate){
 		this.businessDelegate = businessDelegate;
@@ -128,11 +132,20 @@ public class BaseController {
 	// Database Population (Empty = Database Populated) - No Redirection
 	@RequestMapping(value="/populate", method=RequestMethod.GET)
 	public void populate(){
-			
+			//Empty due to database already Populated
 	}
 	
 	//------------------------------------------------
 	// SPRING SECURITY
+	
+	//Delegation - Reduces Duplicate Code
+	private static ModelAndView modelCreation(String jobTitle,String name){
+		ModelAndView model = new ModelAndView();
+		model.setViewName(HOME);
+		model.addObject(TITLE, LOGGED + jobTitle);
+		model.addObject(MESSAGE, WELCOME + name);
+		return model;
+	}
 	
 	// Admin Page
 	@RequestMapping(value="/admin**")
@@ -142,13 +155,7 @@ public class BaseController {
 		HttpSession session = request.getSession();
 		session.setAttribute("user", user);
 		
-		ModelAndView model = new ModelAndView();
-		
-		model.setViewName("/home");
-		model.addObject("title", "Logged in as " + user.getJobTitle());
-		model.addObject("message", "Welcome " + user.getFirstName());
-		
-		return model;
+		return modelCreation(user.getJobTitle(), user.getFirstName());
 	}
 	
 	// Contributor Page
@@ -160,12 +167,7 @@ public class BaseController {
 		HttpSession session = request.getSession();
 		session.setAttribute("user", user);
 		
-		ModelAndView model = new ModelAndView();
-		model.setViewName("/home");
-		model.addObject("title", "Logged in as " + user.getJobTitle());
-		model.addObject("message", "Welcome " + user.getFirstName());
-		
-		return model;
+		return modelCreation(user.getJobTitle(), user.getFirstName());
 	}
 	
 	@RequestMapping(value="/go-admin")
@@ -173,13 +175,7 @@ public class BaseController {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		
-		ModelAndView model = new ModelAndView();
-		model.setViewName("/home");
-		model.addObject("title", "Logged in as " + user.getJobTitle());
-		model.addObject("message", "Welcome " + user.getFirstName());
-		
-		return model;
-		
+		return modelCreation(user.getJobTitle(), user.getFirstName());
 	}
 	
 	@RequestMapping(value="/go-contributor")
@@ -187,12 +183,6 @@ public class BaseController {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		
-		ModelAndView model = new ModelAndView();
-		model.setViewName("/home");
-		model.addObject("title", "Logged in as " + user.getJobTitle());
-		model.addObject("message", "Welcome " + user.getFirstName());
-		
-		return model;
-		
+		return modelCreation(user.getJobTitle(), user.getFirstName());
 	}
 }

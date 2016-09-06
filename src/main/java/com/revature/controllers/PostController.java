@@ -30,6 +30,7 @@ import com.revature.app.TemporaryFile;
 import com.revature.beans.Blog;
 import com.revature.beans.Tags;
 import com.revature.beans.User;
+import com.revature.beans.UserRoles;
 import com.revature.dto.UserDTO;
 import com.revature.service.BusinessDelegate;
 import com.revature.service.HtmlWriter;
@@ -37,6 +38,7 @@ import com.revature.service.JetS3;
 import com.revature.service.Logging;
 import com.revature.service.impl.Crypt;
 import com.revature.service.impl.JetS3Impl;
+import com.revature.service.impl.Mailer;
 
 @Controller
 public class PostController {
@@ -100,7 +102,31 @@ public class PostController {
 		req.setAttribute("updateUser", new User());
 		return model;
 	}
-	
+	//Create a new User
+	/*
+	 * @RequestParam("newUser")
+	 */
+	@RequestMapping(value="createAccount.do", method=RequestMethod.POST)
+	public ModelAndView createAccount(HttpServletRequest req, HttpServletResponse resp){
+		String email = req.getParameter("email");
+		String password = Crypt.encrypt(email, "asdlkfjsadlkfjsaklfjsdalkjsadklfj", "aDgfJaiouwAlkjaSkfljasdfOasjdfLkJ");
+		String firstName = "New";
+		String lastName = "User";
+		//String profilePicture - currently not used
+		String jobTitle = "Developer";
+		String linkedInURL = null;
+		String description = "Unknown";
+		int role = Integer.parseInt(req.getParameter("role"));
+		UserRoles userRole = businessDelegate.requestRoles(role);
+		User newUser = new User(email, password, firstName, lastName, jobTitle,
+				linkedInURL, description, userRole);
+		businessDelegate.putRecord(newUser);
+		Mailer.sendMail(email, password);
+		
+		ModelAndView model = new ModelAndView();
+		model.setViewName("/home");
+		return model;
+	}
 	// Update a Users Password
 	/*
 	 * @RequestParam("newPassword")
@@ -124,7 +150,7 @@ public class PostController {
 		
 		loggedIn.setPassword(Crypt.encrypt(password, loggedIn.getEmail(), loggedIn.getFullname()));
 		
-		if(loggedIn.isNewUser() == true){
+		if(loggedIn.isNewUser()){
 			loggedIn.setNewUser(false);
 		}
 		
@@ -149,14 +175,19 @@ public class PostController {
 	
 	// Uploads a Blog Picture
 	@RequestMapping(value="/upload-picture", method=RequestMethod.POST)
-	public void uploadPictureHandler(@RequestParam("file") MultipartFile file, HttpServletResponse resp)
+	public void uploadPictureHandler(@RequestParam("file") MultipartFile file,
+			HttpServletRequest req,
+			HttpServletResponse resp)
 	{
 		String url = businessDelegate.uploadEvidence(file.getOriginalFilename(), file);
 		try {
 			PrintWriter writer = resp.getWriter();
-			writer.append("<html><body><h3>Copy Link</h3><br><body></html>" + url);
+			writer.append("<html><body><textarea id=\"picLink\" autofocus " +
+					"rows=\"5\" cols=\"35\" readonly>" + url +
+					"</textarea></body><script>window.onload=function(){" +
+					"document.getElementById(\"picLink\").select();};</script></html>");
 		} catch (IOException e) {
-			logging.info(e);
+			Logging.info(e);
 		}
 	}
 	
@@ -168,7 +199,7 @@ public class PostController {
 			PrintWriter writer = resp.getWriter();
 			writer.append("<html><body><img src=\"" + url + "\" /></body></html>");
 		} catch (IOException e) {
-			logging.info(e);
+			Logging.info(e);
 		}
 	}
 	
@@ -182,7 +213,7 @@ public class PostController {
 			PrintWriter writer = resp.getWriter();
 			writer.append("<html><body><a href=\"" + url + "\">" + url + "</a></body></html>");
 		} catch (IOException e) {
-			logging.info(e);
+			Logging.info(e);
 		}
 	}
 	
@@ -193,17 +224,43 @@ public class PostController {
 			BindingResult bindingResult,
 			HttpServletRequest req,
 			HttpServletResponse resp) {
+		
+		/*
+		 * Check to see if the current blog's title already exists. 
+		 * If exists, redirect to current page, if new, go to preview blog page.
+		 */
+		List<Blog> myBlogs = businessDelegate.requestBlogs();
+		for(Blog curBlog : myBlogs){
+			if(curBlog.getBlogTitle().equals(blog.getBlogTitle())){
+				return "create-blog";
+			};
+		}
+		
+//	Code for reference:	User author - businessDelegate.requestUsers("pick")
+		User author = (User) req.getSession().getAttribute("user");
+		author.getFirstName();
+		blog.setAuthor(author);
+		blog.setPublishDate(new Date());
+		req.getSession().setAttribute("blog", blog);
+		return "preview-blog";
+	}
+	
+	@RequestMapping(value="publish.do", method=RequestMethod.POST)
+	public String publishBlog(HttpServletRequest req, HttpServletResponse resp) {
+		Blog blog = (Blog) req.getSession().getAttribute("blog");
+		HtmlWriter htmlWriter;
+		String url = "";
+		
 		/*
 		 * Blog Bean will be generated with proper tags and fields
 		 */
-		
 		if(blog.getBlogTagsString().isEmpty()){
 			blog.setTags(new HashSet<Tags>());
 		}
 		else{
 			String tmp = blog.getBlogTagsString();
 			List<String> myList = Arrays.asList(tmp.split(","));
-			Set<Tags> tmpTags = new HashSet<Tags>();
+			Set<Tags> tmpTags = new HashSet<>();
 			List<Tags> dbTags = businessDelegate.requestTags();
 			/*
 			 * loop through List of tag descriptions the user types in
@@ -230,25 +287,11 @@ public class PostController {
 			}
 			blog.setTags(tmpTags);
 		}
-//		User author = businessDelegate.requestUsers("pick");
-		User author = (User) req.getSession().getAttribute("user");
-		author.getFirstName();
-		blog.setAuthor(author);
-		blog.setPublishDate(new Date());
-		req.getSession().setAttribute("blog", blog);
-		return "preview-blog";
-	}
-	
-	@RequestMapping(value="publish.do", method=RequestMethod.POST)
-	public String publishBlog(HttpServletRequest req, HttpServletResponse resp) {
-		Blog blog = (Blog) req.getSession().getAttribute("blog");
-		HtmlWriter htmlWriter;
-		String url = "";
 		try {
 			InputStream templateStream = this.getClass().getClassLoader().getResourceAsStream("template.html");
 			htmlWriter = new HtmlWriter(blog, blog.getAuthor(), templateStream);
 			TemporaryFile blogTempFile = htmlWriter.render();
-			System.out.println(blogTempFile.getTemporaryFile().getName());
+			Logging.log(blogTempFile.getTemporaryFile().getName());
 			String fileName = blogTempFile.getTemporaryFile().getName();
 			url = "https://s3-us-west-2.amazonaws.com/blogs.pjw6193.tech/content/pages/" + fileName;
 			req.setAttribute("url", url);
@@ -257,9 +300,9 @@ public class PostController {
 			jetS3.uploadPage(blogTempFile.getTemporaryFile());
 			blogTempFile.destroy();
 		} catch (FileNotFoundException e) { 
-			logging.info(e);
+			Logging.info(e);
 		} catch (IOException e1) {
-			logging.info(e1);
+			Logging.info(e1);
 		}
 		return "redirect: " + url;
 	}
