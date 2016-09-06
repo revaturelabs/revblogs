@@ -35,10 +35,6 @@
 <div class="container page-content">
 <h2>Create new blog post</h2>
 
-<<<<<<< HEAD
-=======
-
->>>>>>> master
 <form:form action="add-blog.do" method="post" commandName="blog">
 	Title
 	<form:input path="blogTitle" /><br />
