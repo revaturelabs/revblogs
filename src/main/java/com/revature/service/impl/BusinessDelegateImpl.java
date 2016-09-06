@@ -16,6 +16,7 @@ import com.revature.beans.UserRoles;
 import com.revature.data.DataService;
 import com.revature.data.impl.PaginatedResultList;
 import com.revature.data.impl.PropertyType;
+import com.revature.dto.AuthorDTO;
 import com.revature.dto.BlogPostCollectionDTO;
 import com.revature.dto.BlogPostDTO;
 import com.revature.service.BusinessDelegate;
@@ -178,6 +179,7 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 		postCollection.setTotalPosts(totalItems);
 		postCollection.setTotalPages(totalPages);
 		postCollection.setPerPage(perPage);
+		postCollection.setAuthor(new AuthorDTO(author));
 		
 		return postCollection;
 	}
@@ -207,6 +209,7 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 		postCollection.setTotalPosts(totalItems);
 		postCollection.setTotalPages(totalPages);
 		postCollection.setPerPage(perPage);
+		postCollection.setCategory(category.getDescription());
 		
 		return postCollection;
 	}
