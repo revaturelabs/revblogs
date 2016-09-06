@@ -69,13 +69,16 @@ $(document).ready(function(){
 	$("#send").click(function(){
 		
 		var email = $("#userAuth").val();
-		
-		$.get("http://localhost:7001/revblogs/api/bindUser?u=" + email, function(response){
+
+		$.get("http://localhost:7001/revblogs/bindUser?u=" + email, function(response){
 			
-			if(response == "Success"){
+			if(response === "Success"){
 				
 				$("#form").submit();
 				
+			} else {
+				
+				e.preventDefault();
 			}
 		});
 	});
@@ -85,9 +88,7 @@ $(document).ready(function(){
 function validateForm(){
 	
 	var element = document.querySelector("loginForm");
-	
-	
-	
+
 	var username = document.forms["loginForm"]["username"].value;
 	var password = document.forms["loginForm"]["password"].value;
 	var userError = document.getElementById("userMsg");

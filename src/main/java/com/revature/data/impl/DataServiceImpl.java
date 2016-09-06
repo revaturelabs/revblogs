@@ -16,7 +16,7 @@ import com.revature.data.DataService;
 @Service
 public class DataServiceImpl implements DataService{
 
-	/**
+	/*
 	 * 	Attributes && Getters/Setters
 	 * 
 	 */
@@ -29,7 +29,7 @@ public class DataServiceImpl implements DataService{
 		return dao.getSession();
 	}
 	
-	/**
+	/*
 	 *  Database Altering Methods
 	 */
 	
@@ -40,7 +40,7 @@ public class DataServiceImpl implements DataService{
 		dao.editRecord(obj);
 	}
 	
-	/**
+	/*
 	 *  Database Query Methods
 	 */
 	
@@ -49,6 +49,9 @@ public class DataServiceImpl implements DataService{
 	}
 	public UserRoles grabRoles(int roleId) {
 		return dao.getRoles(roleId);
+	}
+	public UserRoles grabRoles(String role) {
+		return dao.getRoles(role);
 	}
 	public String grabProperty(PropertyType type){
 		return dao.getProperty(type);
@@ -69,6 +72,12 @@ public class DataServiceImpl implements DataService{
 	public List<Evidence> grabEvidence(){
 		return dao.getEvidence();
 	}
+	public User grabUser(int id) {
+		return dao.getUser(id);
+	}
+	public Tags grabTag(int id) {
+		return dao.getTag(id);
+	}
 	
 	//-------------------------------------------------------------------------------------------------
 	// Pagination
@@ -76,13 +85,13 @@ public class DataServiceImpl implements DataService{
 	public PaginatedResultList<Blog> grabBlogs(int start, int max){
 		return dao.getBlogs(start, max);
 	}
-	public List<Blog> grabBlogs(User author, int start, int max){
+	public PaginatedResultList<Blog> grabBlogs(User author, int start, int max){
 		return dao.getBlogs(author, start, max);
 	}
-	public List<Blog> grabBlogs(Tags category, int start, int max){
+	public PaginatedResultList<Blog> grabBlogs(Tags category, int start, int max){
 		return dao.getBlogs(category, start, max);
 	}
-	public List<Blog> grabBlogs(String search, int start, int max){
+	public PaginatedResultList<Blog> grabBlogs(String search, int start, int max){
 		return dao.getBlogs(search, start, max);
 	}
 }

@@ -4,7 +4,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.revature.beans.User;
-import com.revature.controllers.AjaxController;
+import com.revature.controllers.GetController;
 import com.revature.service.BusinessDelegate;
 
 @Service
@@ -14,10 +14,11 @@ public class CryptImpl implements PasswordEncoder{
 	 *  Attributes && Getters/Setters
 	 */
 	
-	public static User user = new User();
+
+	public static final User user = new User();
 	
 	private BusinessDelegate businessDelegate;
-	private AjaxController ajax;
+	private GetController getController;
 	
 	public BusinessDelegate getBusinessDelegate() {		
 		return businessDelegate;
@@ -25,19 +26,18 @@ public class CryptImpl implements PasswordEncoder{
 	public void setBusinessDelegate(BusinessDelegate businessDelegate) {
 		this.businessDelegate = businessDelegate;
 	}
-	public AjaxController getAjax() {
-		return ajax;
+
+	public GetController getController() {
+		return getController;
 	}
-	public void setAjax(AjaxController ajax) {
-		this.ajax = ajax;
+	public void setGetController(GetController getController) {
+		this.getController = getController;
 	}
 	
 	/*
 	 * Password Encoder implementation for Custom Encryption
 	 * @see org.springframework.security.crypto.password.PasswordEncoder#encode(java.lang.CharSequence)
 	 */
-	
-	
 	public String encrypt(CharSequence passwordInput){
 		return Crypt.encrypt((String)passwordInput, user.getEmail(), user.getFullname());
 	}

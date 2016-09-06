@@ -51,56 +51,51 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 	
 	$scope.getPage = function(page, postsPP)
 	{
-		$http.get("/revblogs/api/posts?page=" + page).success(
+		$http.get("/revblogs/api/posts?page=" + page + "&per_page=" + $scope.postsPerPage).success(
 		    function(resp)
 			{
 				console.log("getPage");
-				var postsPerPage = 10;
-				var curPage = page;  //current page
-				
-				var prevPage = curPage;
-				var nextPage = curPage;
-				
-				if(curPage > 1)
-				{
-					prevPage = curPage - 1;
-				}
-				
-				if(curPage < tPages)
-				{
-					nextPage = curPage + 1;
-				}
 				
 				$scope.posts = resp;
 				
+				console.log($scope.posts.total_pages);
+				var postsPerPage = 10;
+				
+				$scope.curPage = page;  //current page
+				
+				var prevPage = $scope.curPage;
+				var nextPage = $scope.curPage;
+				
+				if($scope.curPage > 1)
+				{
+					prevPage = $scope.curPage - 1;
+				}
+				
+				if($scope.curPage < $scope.posts.total_pages)
+				{
+					nextPage = $scope.curPage + 1;
+				}
+				
 				$scope.numOfPages = [];
 				
-				for (var i = 0; i < $scope.posts.total_pages; i++)
+				for (var i = 1; i < $scope.posts.total_pages; i++)
 				{
 					$scope.numOfPages[i] = i;
 				}
 				
-				/*$scope.postPage = 
-				{									 10 posts per page is default; can be changed by using ?perPage=25 
-						page: page,					 current page 
-						totalPages: tPages,	 total number of pages 
-						totalPosts: tPages,	 total number of posts 
-						prev: prevPage,				 link to previous set of posts 
-						next: nextPage,				 link to next set of posts 
-						posts: resp.postsList
-				};*/
-				
-				if(curPage < tPages)
+				if($scope.curPage < $scope.posts.total_pages)
 				{
-					preloadPage(nextPage);
+					preloadPage(nextPage, $scope.postsPerPage);
 					console.log("Next page preloaded!");
 				}
 				
-				if(curPage > 1)
+				if($scope.curPage > 1)
 				{
-					preloadPage(prevPage);
+					preloadPage(prevPage, $scope.postsPerPage);
 					console.log("Prev page preloaded!");
 				}
+				
+				$('#postsDiv').load();
 			}
 		);
 	}
@@ -110,15 +105,17 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 		if(direction == 1)
 		{
 			$scope.posts = $scope.nextPagePosts;
-			$scope.curPage++;
+			$scope.curPage = $scope.curPage + 1;
 			preloadPage($scope.curPage, $scope.postsPerPage);
+			$('#postsDiv').load();
 		}
 		
 		else
 		{
 			$scope.posts = $scope.prevPagePosts;
-			$scope.curPage--;
+			$scope.curPage = $scope.curpage - 1;
 			preloadPage($scope.curPage, $scope.postsPerPage);
+			$('#postsDiv').load();
 		}
 	}
 	
@@ -128,29 +125,28 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 		    function(resp)
 			{
 				console.log("getPage");
-				//var postsPerPage = postsPP;  //postsPerPage, if implemented will be tacked onto url
-				var postsPerPage = 10;
-				var postsToDisplay = resp.posts;
-				var tPages = resp.tPages;  //totalPages
-				var tPosts = resp.tPosts;  //totalPosts
-				var curPage = page;
 				
-				var prevPage = curPage;
+				var prevPage = $scope.curPage;
 				console.log(prevPage);
-				var nextPage = curPage;
+				var nextPage = $scope.curPage;
 				
 				if($scope.curPage > page)
 				{
 					$scope.prevPagePosts = resp;
 				}
 				
-				if(curPage < page)
+				if($scope.curPage < page)
 				{
 					$scope.nextPagePosts = resp;
 				}
 			}
 		);
 	}	
+
+	$scope.curPage = 1;
+	$scope.postsPerPage = 10;
+	$scope.getPage($scope.curPage, $scope.postsPerPage);
+	//
 }]);
 
 

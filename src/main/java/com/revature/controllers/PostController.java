@@ -293,7 +293,7 @@ public class PostController {
 			InputStream templateStream = this.getClass().getClassLoader().getResourceAsStream("template.html");
 			htmlWriter = new HtmlWriter(blog, blog.getAuthor(), templateStream);
 			TemporaryFile blogTempFile = htmlWriter.render();
-			Logging.log(blogTempFile.getTemporaryFile().getName());
+			//Logging.log(blogTempFile.getTemporaryFile().getName());
 			String fileName = blogTempFile.getTemporaryFile().getName();
 			url = "https://s3-us-west-2.amazonaws.com/blogs.pjw6193.tech/content/pages/" + fileName;
 			req.setAttribute("url", url);

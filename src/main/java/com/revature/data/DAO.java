@@ -25,7 +25,10 @@ public interface DAO {
 	// Pull 1
 	public User getUsers(String email);
 	public UserRoles getRoles(int roleId);
+	public UserRoles getRoles(String role);
 	public String getProperty(PropertyType type);
+	public User getUser(int id);
+	public Tags getTag(int id);
 	
 	// Pull All
 	public List<User> getUsers();
@@ -36,7 +39,7 @@ public interface DAO {
 	
 	// Pagination
 	public PaginatedResultList<Blog> getBlogs(int start, int max);
-	public List<Blog> getBlogs(String search, int start, int max);
-	public List<Blog> getBlogs(User author, int start, int max);
-	public List<Blog> getBlogs(Tags category, int start, int max);
+	public PaginatedResultList<Blog> getBlogs(String search, int start, int max);
+	public PaginatedResultList<Blog> getBlogs(User author, int start, int max);
+	public PaginatedResultList<Blog> getBlogs(Tags category, int start, int max);
 }
