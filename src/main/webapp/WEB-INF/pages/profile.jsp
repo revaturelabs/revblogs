@@ -73,7 +73,7 @@
 			</td>
 			<td>
 				<input type="hidden" value="${user.description}" id="userDescription" />
-				<form:textarea path="description" class="form-control" id="descriptionTextArea"/>
+				<form:textarea path="description" class="form-control" id="descriptionTextArea" rows="10"/>
 			</td>
 		</tr>
 		<tr>
@@ -100,33 +100,78 @@
 	<hr>
 	<div>
 		<h3>Upload Profile Picture</h3>
-			<img src="${user.profilePicture}" />
-			<input type="file" name="profilePicture" id="fileChooser" /><br />
-			<input class="btn btn-primary form-control" id="fileUploadButton" type="submit" name="upload" value="Upload" />
+			<a href="#profilePicModal" role="button" data-toggle="modal">
+				<img id="profilePic" src="${user.profilePicture}" width="128px" height=auto/>
+			</a>
+	</div>
+	
+	<div id="profilePicModal" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  		<div class="modal-dialog modal-sm">
+  			<div class="modal-content">
+  				<div class="modal-header">
+	        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	         		<span aria-hidden="true">&times;</span>
+	       			</button>
+	       			<h4 class="modal-title" id="myModalLabel">Upload Profile Picture</h4>
+     			</div>
+   				<div class="modal-body">
+   					<img id="newProfilePic" src="${user.profilePicture}" width="128px" height=auto/>
+   					<br />
+     				<input type="file" name="profilePicture" id="fileChooser" /><br />
+				</div>
+    		
+    			<div class="modal-footer">
+    				<input type="submit" value="Upload" class="btn btn-primary form-control" style="width:auto;" id="fileUploadButton"/>
+        			<button id="closeProfilePic" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>        			
+      			</div>
+      		</div>
+  		</div>
 	</div>
 </div>
 <jsp:include page="footer.jsp"></jsp:include>
 </body>
 <script type="text/javascript">
 $(document).ready(function(){
-	$("#fileUploadButton").click(function(e){
-		var data = new FormData($("#fileChooser")[0].files);
+	var currentPicture = '${user.profilePicture}';
+	console.log(currentPicture);
+
+	$("#fileChooser").change(function(event){
+		newPicture = URL.createObjectURL(event.target.files[0]);
+		$("#newProfilePic").attr("src", newPicture);
 		
-		data.append("profilePicture",$("#fileChooser")[0].files[0]);
-		$.ajax({
-			url: "uploadProfilePicture",
-			data: data,
-			contentType: false,
-			processData: false,
-			type: "POST",
-			cache: false,
-			success: function(response){
-				console.log(response);
-				alert("Profile Picture Updated!");
-			}		
+		$("#fileUploadButton").click(function(e){
+			var data = new FormData($("#fileChooser")[0].files);
+			
+			data.append("profilePicture",$("#fileChooser")[0].files[0]);
+			$.ajax({
+				url: "uploadProfilePicture",
+				data: data,
+				contentType: false,
+				processData: false,
+				type: "POST",
+				cache: false,
+				success: function(response){
+					console.log(response);
+					$("#profilePic").attr("src", response);
+					$("#newProfilePic").attr("src", response);
+					currentPicture = newPicture;
+ 					$("#newProfilePic").attr("src", currentPicture);
+					alert("Profile Picture Updated!");
+				}		
+			});
+			
+			e.preventDefault();
+			
 		});
 		
-		e.preventDefault();
+		$("#closeProfilePic").click(function(event){
+			$("#fileChooser").val("");	
+		});
+	});
+	
+	$("#closeProfilePic").click(function(event){
+ 		$("#newProfilePic").attr("src", currentPicture);
+		$("#fileChooser").val("");	
 	});
 
 });

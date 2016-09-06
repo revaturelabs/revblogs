@@ -8,9 +8,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Set;
 
 import com.revature.app.TemporaryFile;
 import com.revature.beans.Blog;
+import com.revature.beans.Tags;
 import com.revature.beans.User;
 
 public class HtmlWriter {
@@ -69,6 +71,14 @@ public class HtmlWriter {
 			}
 			if(line.contains("url-description")){
 				blogWriter.write("<meta property='og:description' content="+blog.getBlogSubtitle()+" />");
+			}
+			if(line.contains("author-image"))
+				blogWriter.write("<img src=" + blog.getAuthor().getProfilePicture() + " />");
+			if(line.contains("post-tags")){
+				Set<Tags> tags = blog.getTags();
+				for(Tags tag: tags){
+					blogWriter.write("<a href='#'>" + tag.getDescription() + "</a> ");
+				}
 			}
 		}
 		blogWriter.close();
