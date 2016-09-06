@@ -203,7 +203,7 @@ public class Population {
 		
 		for(int i = 0; i < blogTitle.length; i++){
 			
-			Set<Tags> tagsSet = new HashSet<Tags>();
+			Set<Tags> tagsSet = new HashSet<>();
 			
 			// Attach the set of Product Categories that correspond to THIS particular product.
 			for(int j = 0; j < tagIndexes.length; j++){
@@ -411,6 +411,9 @@ public class Population {
 					props[i] = Crypt.encrypt(	props[i], 
 												"boosNkoVgLkjnWJUMEeHAGbUmwWhVlBOPZKZjUduUXunxwbsZmnNxKdAWePg ", 
 												"peobuefdvxjbtoajefspkfuccfngbf"); 
+					break;
+				default:
+					Logging.log("Unhandled Property");
 					break;
 			}
 			

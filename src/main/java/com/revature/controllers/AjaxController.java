@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.jcabi.aspects.Loggable;
 import com.revature.beans.User;
 import com.revature.dto.BlogPostCollectionDTO;
 import com.revature.service.BusinessDelegate;
@@ -46,7 +45,7 @@ public class AjaxController {
 		String value = null;
 		
 		User curUser = businessDelegate.requestUsers(email.toLowerCase());
-		
+
 		if(curUser != null){
 			
 			CryptImpl.user = curUser;

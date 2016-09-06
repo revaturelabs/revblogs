@@ -24,6 +24,7 @@ import com.revature.beans.Tags;
 import com.revature.beans.User;
 import com.revature.beans.UserRoles;
 import com.revature.data.DAO;
+import com.revature.service.Logging;
 import com.revature.service.impl.Crypt;
 
 @Repository
@@ -204,6 +205,10 @@ public class DAOImpl implements DAO{
 				value = props.getBucketURL();
 				value = Crypt.decrypt(value, keys[10][0], keys[10][1]);
 				return value;	
+				
+			default:
+				
+				Logging.log("Attempt to access non-existant property");
 		}
 		
 		return null;
@@ -312,7 +317,7 @@ public class DAOImpl implements DAO{
 		
 		criteria = session.createCriteria(Blog.class);
 		criteria.addOrder(Order.desc("publishDate"));
-		System.err.println(start);
+		Logging.log(""+start);
 		criteria.setFirstResult(start);
 		criteria.setMaxResults(max);
 		List<Blog> postList = criteria.list();

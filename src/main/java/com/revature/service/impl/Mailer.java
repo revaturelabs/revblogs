@@ -14,6 +14,10 @@ import org.apache.log4j.Logger;
 
 public class Mailer {
 	
+	private Mailer(){
+		throw new IllegalAccessError("Utility Class");
+	}
+	
 	public static void sendMail(String newEmail, String newPassword) {
 		
 		Logger log = Logger.getRootLogger();

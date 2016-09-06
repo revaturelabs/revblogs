@@ -14,7 +14,7 @@ import org.aspectj.lang.annotation.Pointcut;
 public class Logging {
 	
 	private static Logger log = Logger.getRootLogger(); 
-	
+
 	@Around("pointcutHook()")
 	public Object intercept(ProceedingJoinPoint pjp){
 		
