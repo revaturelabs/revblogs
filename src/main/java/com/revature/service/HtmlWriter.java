@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 import java.util.Set;
 
 import com.revature.app.TemporaryFile;
@@ -36,7 +37,13 @@ public class HtmlWriter {
 	
 	public TemporaryFile render() throws IOException {
 		String line;
-		String title = ""+blog.getBlogTitle().hashCode()+blog.getPublishDate().hashCode();
+		String title = "";
+		StringTokenizer st = new StringTokenizer(blog.getBlogTitle().replaceAll("[^A-Za-z0-9 ]", "").toLowerCase());
+		while (st.hasMoreTokens()) {
+			title +=st.nextToken();
+			if (st.hasMoreTokens())
+				title += "-";
+		}
 		String fileName = title+".html";
 
 		TemporaryFile tempFile = TemporaryFile.make(fileName);
