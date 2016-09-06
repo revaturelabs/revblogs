@@ -8,11 +8,11 @@
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
 <link href="https://s3-us-west-2.amazonaws.com/dan-pickles-jar/content/resources/css/main.css" rel="stylesheet">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<meta property="og:url" content="http://dev.pjw6193:7001/pages/create-blog.jsp" />
+<meta property="og:url" content="http://http://blogs.pjw6193.tech/" />
 <meta property="og:type"content="article" />
 <meta property="og:title"content="Different" />
-<meta property="og:description"content="this is only a testkhjkgkjhgkj" />
-<meta property="og:image"content="http://weknowyourdreams.com/images/cheese/cheese-03.jpg" />
+<meta property="og:description"content="this is only a test" />
+<meta property="og:image"content="https://s3-us-west-2.amazonaws.com/dan-pickles-jar/content/resources/img/rev-brand.png" />
 <meta property="og:image:width" content="450" />
 <meta property="og:image:height" content="298" />
 <meta property="fb:app_id" content="1070815552954243"/>
@@ -122,7 +122,16 @@
             </div>
           </div>
         </div>
-
+				<div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title">Modify Blog</h3>
+          </div>
+          <div class="panel-body">
+                   <div>Modification Options:</div>
+                   <a class="btn" id="edit">Edit</a>
+                   <a class="btn" id="delete">Delete</a>
+          </div>
+        </div>
         <div class="panel panel-primary">
           <div class="panel-heading">
             <h3 class="panel-title">Share this post</h3>
@@ -177,7 +186,6 @@
       });
       $(document).mousemove(function(e) {
         mouseY = e.clientY;
-        console.log(mouseY);
       });
       setInterval(function () {
         if (mouseY <= 70) {

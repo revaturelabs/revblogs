@@ -11,6 +11,7 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Cache-Control" content="no-cache">
 <meta http-equiv="Expires" content="Sat, 01 Dec 2001 00:00:00 GMT">
+<<<<<<< HEAD
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 </head>
@@ -25,6 +26,28 @@
 			 </select>
 			<button type="submit">Add User</button>
 		</form>
+=======
+<title>Create User</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<h3> Create a User </h3>
+		<hr/>
+	</div>
+	<div class="container">
+		<form action="createAccount.do" method="post">
+			Email: <input name="email" type="text" class="form-control"/><br />
+			Role: 
+			<select name="role" class="btn btn-primary form-control">
+				<c:forEach var="t" items="${roleDropDown}">
+			 		<option value="${t.role}" label="${t.role}"/>
+			 	</c:forEach>
+			 </select>
+			<button type="submit" class="btn btn-primary form-control">Add User</button>
+		</form>
+		<hr/>
+>>>>>>> 099f983c9f9a26dd88fb89dac26b82a395cd66bd
 	</div>
 </body>
 </html>

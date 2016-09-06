@@ -28,6 +28,7 @@ public interface DataService {
 	public UserRoles grabRoles(int roleId);
 	public User grabUser(int id);
 	public Tags grabTag(int id);
+	public UserRoles grabRoles(String role);
 	
 	// Pull All
 	public List<User> grabUsers();

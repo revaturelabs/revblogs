@@ -61,23 +61,4 @@ public class AjaxController {
 			return null;
 		}
 	}
-	
-	@RequestMapping(value="/bindUser", method=RequestMethod.GET)
-	@ResponseBody
-	public String bindUser (@RequestParam(value="u") String email, HttpServletRequest request) {
-		
-		String lowerEmail = email.toLowerCase();
-		
-		User curUser = businessDelegate.requestUsers(lowerEmail);
-		
-		Logging.log(curUser.getFirstName());
-		
-		if(curUser != null){
-			
-			CryptImpl.user = curUser;
-			return "Success";
-		}
-		
-		return null; 
-	}
 }

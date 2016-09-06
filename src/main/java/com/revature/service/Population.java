@@ -18,14 +18,17 @@ import com.revature.service.impl.Crypt;
 
 public class Population {
 
-	private Logging logger = new Logging();
 	private BusinessDelegate delegate;
+	private Logging logger;
 	private Session session;
 	
 	public void setDelegate(BusinessDelegate delegate) {
 		this.delegate = delegate;
 	}
-	
+	public void setLogger(Logging logger) {
+		this.logger = logger;
+	}
+
 	//-----------------------------------
 	// Complete Population (Besides Evidence)
 	public void populateDatabase(){
@@ -410,8 +413,7 @@ public class Population {
 												"peobuefdvxjbtoajefspkfuccfngbf"); 
 					break;
 				default:
-					Logging.log("Unhandled Property");
-					break;
+					logger.log("Unhandled Property");
 			}
 			
 			

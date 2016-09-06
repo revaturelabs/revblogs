@@ -70,12 +70,24 @@ $(document).ready(function(){
 		
 		var email = $("#userAuth").val();
 		
+<<<<<<< HEAD
 		$.get("http://localhost:7001/revblogs/api/bindUser?u=" + email, function(response){
 			
 			if(response == "Success"){
 				
 				$("#form").submit();
 				
+=======
+		$.get("http://localhost:7001/revblogs/bindUser?u=" + email, function(response){
+			
+			if(response === "Success"){
+				
+				$("#form").submit();
+				
+			} else {
+				
+				e.preventDefault();
+>>>>>>> 099f983c9f9a26dd88fb89dac26b82a395cd66bd
 			}
 		});
 	});
@@ -85,9 +97,7 @@ $(document).ready(function(){
 function validateForm(){
 	
 	var element = document.querySelector("loginForm");
-	
-	
-	
+
 	var username = document.forms["loginForm"]["username"].value;
 	var password = document.forms["loginForm"]["password"].value;
 	var userError = document.getElementById("userMsg");

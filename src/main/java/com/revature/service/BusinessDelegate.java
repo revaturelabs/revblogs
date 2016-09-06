@@ -49,6 +49,7 @@ public interface BusinessDelegate {
 	// Pull
 	public User requestUsers(String username);
 	public UserRoles requestRoles(int roleId);
+	public UserRoles requestRoles(String role);
 	public String requestProperty(PropertyType type);
 	public User requestUser(int id);
 	public Tags requestTag(int id);

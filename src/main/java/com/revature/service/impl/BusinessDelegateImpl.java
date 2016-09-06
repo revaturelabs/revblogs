@@ -25,7 +25,7 @@ import com.revature.service.ServiceLocator;
 @Service
 public class BusinessDelegateImpl implements BusinessDelegate{
 
-	/**
+	/*
 	 * 	Attributes && Getters/Setters
 	 * 
 	 */
@@ -70,7 +70,7 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 		return jetS3.uploadEvidence(fileName, file);
 	}
 	
-	/**
+	/*
 	 *  Database Altering Methods
 	 */
 	
@@ -81,7 +81,7 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 		dataService.changeRecord(obj);
 	}
 	
-	/**
+	/*
 	 *  Database Query Methods
 	 */
 	
@@ -90,6 +90,9 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	}
 	public UserRoles requestRoles(int roleId) {
 		return dataService.grabRoles(roleId);
+	}
+	public UserRoles requestRoles(String role) {
+		return dataService.grabRoles(role);
 	}
 	public String requestProperty(PropertyType type){
 		return dataService.grabProperty(type);
