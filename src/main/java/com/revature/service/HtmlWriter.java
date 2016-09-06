@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Map;
 
 import com.revature.app.TemporaryFile;
 import com.revature.beans.Blog;
@@ -57,6 +58,15 @@ public class HtmlWriter {
 				blogWriter.write(author.getFirstName()+" "+author.getLastName());
 			if (line.contains("author-desc"))
 				blogWriter.write(author.getDescription());
+			if (line.contains("post-references-body")) {
+				System.out.println("||||||||||||| post-references ||||||||||||");
+				Map<Integer, String> references = blog.getReferences();
+				for ( Integer key : references.keySet() ) {
+					blogWriter.write("<div class=\"post-reference-item\">"
+							+ "[" + key.toString() + "] - "
+							+ references.get(key) + "</div>");
+				}
+			}
 		}
 		blogWriter.close();
 		tempReader.close();
