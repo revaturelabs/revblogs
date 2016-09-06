@@ -13,11 +13,11 @@ import javax.mail.internet.MimeMessage;
 import org.apache.log4j.Logger;
 
 public class Mailer {
+	
 	public static void sendMail(String newEmail, String newPassword) {
-		Logger log = Logger.getRootLogger();
 		
-		System.out.println(newEmail);
-		System.out.println(newPassword);
+		Logger log = Logger.getRootLogger();
+	
     	Properties props = new Properties();
     	props.put("mail.smtp.auth", "true");
     	props.put("mail.smtp.starttls.enable", "true");
@@ -35,19 +35,53 @@ public class Mailer {
 
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress("d.p.pgdr@gmail.com"));
-			message.setRecipients(Message.RecipientType.TO,
-					InternetAddress.parse(newEmail));
-			message.setSubject("(DO NOT REPLY)");
-			message.setText("Your Password is: "+newPassword
-					+"\n Log in with your email."
-					+ "This is currently nonfunctional.");
+			message.setRecipients(Message.RecipientType.TO,InternetAddress.parse(newEmail));
+			message.setSubject("RevBlogs Registration (DO NOT REPLY)");
+			message.setContent(makeHTML(newEmail, newPassword), "text/html");
 
 			Transport.send(message);
 
-			System.out.println("Done");
-
 		} catch (MessagingException e) {
+			
 			log.error(e);
 		}
     }
+	
+	public static String makeHTML(String newEmail, String newPassword){
+		
+		String myHTML = new String(
+				 
+				 "<!DOCTYPE html>" 											 
+			   + "<html>"
+			   + "<body>"  		 											
+			   + "<div>"
+			   + "<h3>"
+			   + 	"RevBlogs Registration!"
+			   + "</h3><br/>"
+			   + "<h5>"
+			   + 	"Welcome, aboard"
+			   + "</h5>"
+			   + "<p>"
+			   + 	"Thank you for registering with RevBlogs! "
+			   + 	"I'm sure you'll blog your heart away; but "
+			   + 	"first, you need to create your account."
+			   + "</p><br/><br/>"
+			   + "<p>"
+			   + 	"Please access our website to get started: "
+			   + 	"<a href=\"http://localhost:7001/revblogs/loginPage\">RevBlogs</a>"
+			   + "</p><br/><br/>"
+			   + "<p>"
+			   + 	"Here are your credentials: <br/>"
+			   + 	"Email: " + newEmail + "<br/>"
+			   +    "Password: " + newPassword + "<br/>"
+			   +    "<strong>Keep these safe and never share them with anyone!</strong>"
+			   + "</p><br/><br/>"
+			   + "<hr/>"
+			   + "</div>"  	 
+			   + "</body>" 		 
+			   + "</html>"
+		);
+		
+		return myHTML;
+	}
 }
