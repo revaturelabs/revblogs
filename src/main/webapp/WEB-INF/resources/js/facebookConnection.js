@@ -23,7 +23,7 @@
 	  FB.ui({
 	    method: 'share',
 	    display: 'popup',
-	    href: 'http://dev.pjw6193:7001/pages/create-blog.jsp',
+	    href: 'http://blogs.pjw6193.tech',
 	  }, function(response){});
 	}
 }
