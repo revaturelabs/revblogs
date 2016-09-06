@@ -39,9 +39,9 @@ public class Logging {
 	
 	//Temporary Logging functions for Bugs on SonarQube
 	//Remove if necessary
-	public void info(Throwable t){log.info(t);}
+	public static void info(Throwable t){log.info(t);}
 	//For Code smells
-	public void log(String str){log.info(str);}
+	public static void log(String str){log.info(str);}
 	
 	 //------------------POINTCUTS------------------//
 	//Whenever any method is executed
