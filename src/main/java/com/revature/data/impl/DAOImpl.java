@@ -208,10 +208,8 @@ public class DAOImpl implements DAO{
 				
 			default:
 				
-				Logging.log("Attempt to access non-existant property");
+				return null;
 		}
-		
-		return null;
 	}
 	
 	//Pull a Single Role
@@ -317,7 +315,6 @@ public class DAOImpl implements DAO{
 		
 		criteria = session.createCriteria(Blog.class);
 		criteria.addOrder(Order.desc("publishDate"));
-		Logging.log(""+start);
 		criteria.setFirstResult(start);
 		criteria.setMaxResults(max);
 		List<Blog> postList = criteria.list();

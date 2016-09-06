@@ -113,7 +113,7 @@ public class PostController {
 		UserRoles myRole = businessDelegate.requestRoles(role);
 		
 		// Dummy User
-		User dummy = new User(email, password, "_", "_", "_", "_", "_", myRole);
+		User dummy = new User(email, password, " ", " ", " ", " ", " ", myRole);
 		
 		// Encrypt the Temp Password in the Database
 		dummy.setPassword(Crypt.encrypt(dummy.getPassword(), dummy.getEmail(), dummy.getFullname()));
