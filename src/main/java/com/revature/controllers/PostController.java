@@ -266,10 +266,6 @@ public class PostController {
 			HttpServletResponse resp) {
 		
 		blog.setReferences(getReferences(req));
-		Map<Integer, String> refs = blog.getReferences();
-		for ( String ref : refs.values() ) {
-			System.out.println("Reference: " + ref);
-		}
 		
 		/*
 		 * Check to see if the current blog's title already exists. 

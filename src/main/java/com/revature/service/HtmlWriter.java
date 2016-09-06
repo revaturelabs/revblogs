@@ -59,7 +59,6 @@ public class HtmlWriter {
 			if (line.contains("author-desc"))
 				blogWriter.write(author.getDescription());
 			if (line.contains("post-references-body")) {
-				System.out.println("||||||||||||| post-references ||||||||||||");
 				Map<Integer, String> references = blog.getReferences();
 				for ( Integer key : references.keySet() ) {
 					blogWriter.write("<div class=\"post-reference-item\">"
