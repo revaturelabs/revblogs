@@ -248,7 +248,6 @@ public class PostController {
 	
 	@RequestMapping(value="publish.do", method=RequestMethod.POST)
 	public String publishBlog(HttpServletRequest req, HttpServletResponse resp) {
-		
 		Blog blog = (Blog) req.getSession().getAttribute("blog");
 		HtmlWriter htmlWriter;
 		String url = "";
@@ -289,12 +288,20 @@ public class PostController {
 			}
 			blog.setTags(tmpTags);
 		}
-
-		User author = (User) req.getSession().getAttribute("user");
-		author.getFirstName();
-		blog.setAuthor(author);
-		blog.setPublishDate(new Date());
-		req.getSession().setAttribute("blog", blog);
-		return "preview-blog";
+		try {
+			InputStream templateStream = this.getClass().getClassLoader().getResourceAsStream("template.html");
+			htmlWriter = new HtmlWriter(blog, blog.getAuthor(), templateStream);
+			TemporaryFile blogTempFile = htmlWriter.render();
+			String fileName = blogTempFile.getTemporaryFile().getName();
+			url = "http://blogs.pjw6193.tech/content/pages/" + fileName;
+			JetS3 jetS3 = new JetS3Impl();
+			businessDelegate.putRecord(blog);
+			jetS3.uploadPage(blogTempFile.getTemporaryFile());
+			blogTempFile.destroy();
+			req.getSession().setAttribute("blog", null);
+		} catch (FileNotFoundException e) {
+		} catch (IOException e1) {
+		}
+		return "redirect:" + url;
 	}
 }
