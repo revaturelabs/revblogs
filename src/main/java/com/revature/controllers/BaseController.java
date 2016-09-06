@@ -185,4 +185,11 @@ public class BaseController {
 		
 		return modelCreation(user.getJobTitle(), user.getFirstName());
 	}
+	
+	@RequestMapping(value="edit.do")
+	public String getEditBlog(HttpServletRequest req) {
+		Blog blog = (Blog) req.getSession().getAttribute("blog");
+		req.setAttribute("blog", blog);
+		return "edit-blog";
+	}
 }

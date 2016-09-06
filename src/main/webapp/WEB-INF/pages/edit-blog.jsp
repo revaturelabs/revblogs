@@ -32,19 +32,17 @@
 <body>
 <jsp:include page="navbar.jsp"></jsp:include>
 <div class="container page-content">
-<h2>Create new blog post</h2>
+<h2>Edit Post</h2>
 
 
 
 <form:form action="add-blog.do" method="post" commandName="blog">
 	Title
-	<form:input path="blogTitle" /><br />
+	<form:input path="blogTitle" value="${blog.blogTitle}" /><br />
 	Subtitle
-	<form:input path="blogSubtitle"/><br />
-	<button type="button">Attach Image</button>
-	<button type="button">Attach File</button>
+	<form:input path="blogSubtitle" value="${blog.blogSubtitle}" /><br />
 	<br>
-	<form:textarea path="blogContent" rows="30" cols="100" ></form:textarea>
+	<form:textarea path="blogContent" rows="30" cols="100" value="${blog.blogContent}" ></form:textarea>
 	<br>
 	<!-- <button type="button">Add Reference</button>
 	<br>
@@ -52,7 +50,7 @@
 	<br>
  	Apply tags (separated by commas):
  	<br>
-	<form:input path="blogTagsString" id="tagList" style="resize: none" style="width: 300px"></form:input>
+	<form:input path="blogTagsString" id="tagList" style="resize: none" style="width: 300px" value="${blog.blogTagsString}"></form:input>
 	<br>
 	
 	<input type="submit" value="Preview" />
