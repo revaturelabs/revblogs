@@ -24,6 +24,7 @@ public interface DAO {
 	
 	// Pull 1
 	public User getUsers(String email);
+	public UserRoles getRoles(int roleId);
 	public String getProperty(PropertyType type);
 	
 	// Pull All

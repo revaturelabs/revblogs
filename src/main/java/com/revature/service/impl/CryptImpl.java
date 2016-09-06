@@ -4,7 +4,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.revature.beans.User;
-import com.revature.beans.UserRoles;
 import com.revature.controllers.AjaxController;
 import com.revature.service.BusinessDelegate;
 
@@ -40,9 +39,7 @@ public class CryptImpl implements PasswordEncoder{
 	
 	
 	public String encrypt(CharSequence passwordInput){
-		
-		String temp = Crypt.encrypt((String)passwordInput, user.getEmail(), user.getFullname());
-		return temp;
+		return Crypt.encrypt((String)passwordInput, user.getEmail(), user.getFullname());
 	}
 	
 	/*
@@ -56,17 +53,12 @@ public class CryptImpl implements PasswordEncoder{
 	
 	public String encode(CharSequence passwordInput) {
 		
-		//String temp = Crypt.encrypt((String)passwordInput, user.getEmail(), user.getFullname());
-		//return temp;
+		//String temp = Crypt.encrypt((String)passwordInput, user.getEmail(), user.getFullname())
+		//return temp
 		
 		return "";
 	}
 	public boolean matches(CharSequence passwordInput, String encodedPassword) {
-
-		if(encodedPassword.equals(encrypt(passwordInput))){
-			return true;
-		} else {
-			return false;
-		}
+		return encodedPassword.equals(encrypt(passwordInput));
 	}
 }

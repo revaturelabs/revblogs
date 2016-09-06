@@ -28,7 +28,13 @@ public class BaseController {
 	private Logging logging;
 	private BusinessDelegate businessDelegate;
 	private Population population;
-
+	private static final String HOME = "/home";
+	private static final String TITLE = "title";
+	private static final String LOGGED = "Logged in as ";
+	private static final String MESSAGE = "message";
+	private static final String WELCOME = "Welcome ";
+	
+	
 	public void setBusinessDelegate(BusinessDelegate businessDelegate){
 		this.businessDelegate = businessDelegate;
 	}
@@ -70,22 +76,27 @@ public class BaseController {
 		return "loginPage";
 	}
 	
-	// Login Page
+	@RequestMapping(value="/password", method=RequestMethod.GET)
+	public String password(HttpServletRequest req){
+		req.setAttribute("updatePassword", new UserDTO());
+		return "password";
+	}
+	
+	// Profile Page
 	@RequestMapping(value="/profile", method=RequestMethod.GET)
 	public String profile(HttpServletRequest req){
 		
 		User myUser = (User) req.getSession().getAttribute("user");
 		
+		
 		if(myUser.isNewUser()){
 			
-			req.setAttribute("updatePassword", new UserDTO());
-			
+	
 			return "password";
 			
 		} else {
 			
 			req.setAttribute("updateUser", new User());
-			req.setAttribute("updatePassword", new UserDTO());
 			
 			return "profile";
 		}
@@ -121,11 +132,20 @@ public class BaseController {
 	// Database Population (Empty = Database Populated) - No Redirection
 	@RequestMapping(value="/populate", method=RequestMethod.GET)
 	public void populate(){
-			
+			//Empty due to database already Populated
 	}
 	
 	//------------------------------------------------
 	// SPRING SECURITY
+	
+	//Delegation - Reduces Duplicate Code
+	private static ModelAndView modelCreation(String jobTitle,String name){
+		ModelAndView model = new ModelAndView();
+		model.setViewName(HOME);
+		model.addObject(TITLE, LOGGED + jobTitle);
+		model.addObject(MESSAGE, WELCOME + name);
+		return model;
+	}
 	
 	// Admin Page
 	@RequestMapping(value="/admin**")
@@ -135,13 +155,7 @@ public class BaseController {
 		HttpSession session = request.getSession();
 		session.setAttribute("user", user);
 		
-		ModelAndView model = new ModelAndView();
-		
-		model.setViewName("/home");
-		model.addObject("title", "Logged in as " + user.getJobTitle());
-		model.addObject("message", "Welcome " + user.getFirstName());
-		
-		return model;
+		return modelCreation(user.getJobTitle(), user.getFirstName());
 	}
 	
 	// Contributor Page
@@ -153,12 +167,7 @@ public class BaseController {
 		HttpSession session = request.getSession();
 		session.setAttribute("user", user);
 		
-		ModelAndView model = new ModelAndView();
-		model.setViewName("/home");
-		model.addObject("title", "Logged in as " + user.getJobTitle());
-		model.addObject("message", "Welcome " + user.getFirstName());
-		
-		return model;
+		return modelCreation(user.getJobTitle(), user.getFirstName());
 	}
 	
 	@RequestMapping(value="/go-admin")
@@ -166,13 +175,7 @@ public class BaseController {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		
-		ModelAndView model = new ModelAndView();
-		model.setViewName("/home");
-		model.addObject("title", "Logged in as " + user.getJobTitle());
-		model.addObject("message", "Welcome " + user.getFirstName());
-		
-		return model;
-		
+		return modelCreation(user.getJobTitle(), user.getFirstName());
 	}
 	
 	@RequestMapping(value="/go-contributor")
@@ -180,12 +183,13 @@ public class BaseController {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		
-		ModelAndView model = new ModelAndView();
-		model.setViewName("/home");
-		model.addObject("title", "Logged in as " + user.getJobTitle());
-		model.addObject("message", "Welcome " + user.getFirstName());
-		
-		return model;
-		
+		return modelCreation(user.getJobTitle(), user.getFirstName());
+	}
+	
+	@RequestMapping(value="edit.do")
+	public String getEditBlog(HttpServletRequest req) {
+		Blog blog = (Blog) req.getSession().getAttribute("blog");
+		req.setAttribute("blog", blog);
+		return "edit-blog";
 	}
 }

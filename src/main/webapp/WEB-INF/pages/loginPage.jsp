@@ -24,12 +24,12 @@
 <div class="container page-content">
 	<c:if test="${'fail' eq param.auth}">
 		<div>
-              <h3>Failed to login. Please try again.</h3>
+              <h3 id="failLogin">Failed to login. Please try again.</h3>
         </div>
 	</c:if>
 	<c:if test="${'logout' eq param.auth}">
 		<div>
-			<h3>You have successfully signed out.</h3>
+			<h3 id="logoutSuccess">You have successfully signed out.</h3>
 		</div>
 	</c:if>
 	<br><br>
@@ -71,8 +71,12 @@ $(document).ready(function(){
 		var email = $("#userAuth").val();
 		
 		$.get("http://localhost:7001/revblogs/api/bindUser?u=" + email, function(response){
+			
+			if(response == "Success"){
 				
-			$("#form").submit();
+				$("#form").submit();
+				
+			}
 		});
 	});
 });

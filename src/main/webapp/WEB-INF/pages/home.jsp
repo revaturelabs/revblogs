@@ -28,7 +28,7 @@
 	to page with reload. -->
 	
 	<c:if test="${user.newUser eq true}">
-		<c:redirect url="/profile"/>
+		<c:redirect url="/password"/>
 	</c:if>
 	
 	<sec:authorize access="hasRole('ADMIN')" >Welcome Admin!</sec:authorize>
@@ -47,11 +47,6 @@
 		<tr>
 			<td>
 				<a href="${pageContext.servletContext.contextPath}/create-blog"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Create a Blog</a>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<a href="${pageContext.servletContext.contextPath}/"><span class="glyphicon glyphicon-book"></span>&nbsp;View Blogs</a>
 			</td>
 		</tr>
 		<tr>
