@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.revature.beans.User;
 import com.revature.dto.BlogPostCollectionDTO;
 import com.revature.service.BusinessDelegate;
+import com.revature.service.Logging;
 import com.revature.service.impl.CryptImpl;
 
 @Controller
@@ -46,7 +47,7 @@ public class AjaxController {
 		
 		User curUser = businessDelegate.requestUsers(lowerEmail);
 		
-		System.err.println(curUser.getFirstName());
+		Logging.log(curUser.getFirstName());
 		
 		if(curUser != null){
 			
