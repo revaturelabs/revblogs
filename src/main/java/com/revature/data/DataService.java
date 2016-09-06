@@ -26,6 +26,8 @@ public interface DataService {
 	public User grabUsers(String email);
 	public String grabProperty(PropertyType type);
 	public UserRoles grabRoles(int roleId);
+	public User grabUser(int id);
+	public Tags grabTag(int id);
 	
 	// Pull All
 	public List<User> grabUsers();
@@ -36,7 +38,7 @@ public interface DataService {
 	
 	// Pagination
 	public PaginatedResultList<Blog> grabBlogs(int start, int max);
-	public List<Blog> grabBlogs(User author, int start, int max);
-	public List<Blog> grabBlogs(Tags category, int start, int max);
-	public List<Blog> grabBlogs(String search, int start, int max);
+	public PaginatedResultList<Blog> grabBlogs(User author, int start, int max);
+	public PaginatedResultList<Blog> grabBlogs(Tags category, int start, int max);
+	public PaginatedResultList<Blog> grabBlogs(String search, int start, int max);
 }

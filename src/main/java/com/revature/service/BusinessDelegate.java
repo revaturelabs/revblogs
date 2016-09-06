@@ -50,6 +50,8 @@ public interface BusinessDelegate {
 	public User requestUsers(String username);
 	public UserRoles requestRoles(int roleId);
 	public String requestProperty(PropertyType type);
+	public User requestUser(int id);
+	public Tags requestTag(int id);
 	
 	public List<User> requestUsers();
 	public List<Blog> requestBlogs();
@@ -57,4 +59,7 @@ public interface BusinessDelegate {
 	public List<UserRoles> requestRoles();
 	public List<Evidence> requestEvidence();
 	public BlogPostCollectionDTO requestBlogPosts(int page, int perPage);
+	public BlogPostCollectionDTO searchBlogPosts(String query, int page, int perPage);
+	public BlogPostCollectionDTO requestBlogPosts(Tags category, int page, int perPage);
+	public BlogPostCollectionDTO requestBlogPosts(User author, int page, int perPage);
 }

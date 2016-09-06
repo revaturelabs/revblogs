@@ -207,9 +207,10 @@
 		</dependency>
 		<dependency>
 		   <groupId>org.hibernate</groupId>
-		   <artifactId>hibernate-search-orm</artifactId>
-		   <version>5.5.4.Final</version>
+		   <artifactId>hibernate-search</artifactId>
+		   <version>3.4.2.Final</version>
 		</dependency>
+		
 		<dependency>
     		<groupId>javax.mail</groupId>
     		<artifactId>mail</artifactId>

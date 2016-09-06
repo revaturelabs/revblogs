@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.revature.beans.Tags;
 import com.revature.beans.User;
 import com.revature.dto.BlogPostCollectionDTO;
 import com.revature.service.BusinessDelegate;
@@ -33,10 +34,32 @@ public class AjaxController {
 			@RequestParam(value="page", required=false, defaultValue="1") int page,
 			@RequestParam(value="per_page", required=false, defaultValue="10") int perPage,
 			@RequestParam(value="author", required=false, defaultValue="0") int authorId,
+			@RequestParam(value="category", required=false, defaultValue="0") int tagId,
 			@RequestParam(value="q", required=false) String searchQuery,
 			HttpServletRequest request) {
-		
-		return businessDelegate.requestBlogPosts(page, perPage);
+		try {
+			System.err.println(authorId);
+			
+			User author = businessDelegate.requestUser(authorId);
+			System.err.println(author);
+			
+			Tags category = businessDelegate.requestTag(tagId);
+			
+			if (author != null) {
+				return businessDelegate.requestBlogPosts(author, page, perPage);
+			}
+			else if (category != null) {
+				return businessDelegate.requestBlogPosts(category, page, perPage);
+			}
+			else if (searchQuery != null) {
+				return businessDelegate.searchBlogPosts(searchQuery, page, perPage);
+			}
+			else {
+				return businessDelegate.requestBlogPosts(page, perPage);
+			}
+		} catch (IllegalArgumentException e) {
+			return null;
+		}
 	}
 	
 	@RequestMapping(value="/bindUser", method=RequestMethod.GET)

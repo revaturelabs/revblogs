@@ -110,6 +110,12 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	public List<Evidence> requestEvidence(){
 		return dataService.grabEvidence();
 	}
+	public User requestUser(int id) {
+		return dataService.grabUser(id);
+	}
+	public Tags requestTag(int id) {
+		return dataService.grabTag(id);
+	}
 	
 	
 	//-------------------------------------------------------------------------------------------------
@@ -128,6 +134,93 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 		int maxResults = perPage;
 		
 		PaginatedResultList<Blog> results = dataService.grabBlogs(start, maxResults);
+		List<BlogPostDTO> postList = new ArrayList<>();
+		for (Blog p: results.getItems()) {
+			postList.add(new BlogPostDTO(p));
+		}
+		long totalItems = results.getTotalItems();
+		int totalPages = (int)Math.ceil((double)totalItems/perPage);
+		
+		postCollection.setPosts(postList);
+		postCollection.setPage(page);
+		postCollection.setTotalPosts(totalItems);
+		postCollection.setTotalPages(totalPages);
+		postCollection.setPerPage(perPage);
+		
+		return postCollection;
+	}
+	
+	public BlogPostCollectionDTO requestBlogPosts(User author, int page, int perPage) throws IllegalArgumentException {
+		
+		if (page < 1 || perPage < 1) {
+			throw new IllegalArgumentException("page and perPage must be positive integers");
+		}
+		
+		// Instantiate post collection DTO
+		BlogPostCollectionDTO postCollection = new BlogPostCollectionDTO();
+		
+		int start = (page-1)*perPage;
+		int maxResults = perPage;
+		
+		PaginatedResultList<Blog> results = dataService.grabBlogs(author, start, maxResults);
+		List<BlogPostDTO> postList = new ArrayList<>();
+		for (Blog p: results.getItems()) {
+			postList.add(new BlogPostDTO(p));
+		}
+		long totalItems = results.getTotalItems();
+		int totalPages = (int)Math.ceil((double)totalItems/perPage);
+		
+		postCollection.setPosts(postList);
+		postCollection.setPage(page);
+		postCollection.setTotalPosts(totalItems);
+		postCollection.setTotalPages(totalPages);
+		postCollection.setPerPage(perPage);
+		
+		return postCollection;
+	}
+
+	public BlogPostCollectionDTO requestBlogPosts(Tags category, int page, int perPage) throws IllegalArgumentException {
+		
+		if (page < 1 || perPage < 1) {
+			throw new IllegalArgumentException("page and perPage must be positive integers");
+		}
+		
+		// Instantiate post collection DTO
+		BlogPostCollectionDTO postCollection = new BlogPostCollectionDTO();
+		
+		int start = (page-1)*perPage;
+		int maxResults = perPage;
+		
+		PaginatedResultList<Blog> results = dataService.grabBlogs(category, start, maxResults);
+		List<BlogPostDTO> postList = new ArrayList<>();
+		for (Blog p: results.getItems()) {
+			postList.add(new BlogPostDTO(p));
+		}
+		long totalItems = results.getTotalItems();
+		int totalPages = (int)Math.ceil((double)totalItems/perPage);
+		
+		postCollection.setPosts(postList);
+		postCollection.setPage(page);
+		postCollection.setTotalPosts(totalItems);
+		postCollection.setTotalPages(totalPages);
+		postCollection.setPerPage(perPage);
+		
+		return postCollection;
+	}
+	
+	public BlogPostCollectionDTO searchBlogPosts(String query, int page, int perPage) throws IllegalArgumentException {
+		
+		if (page < 1 || perPage < 1) {
+			throw new IllegalArgumentException("page and perPage must be positive integers");
+		}
+		
+		// Instantiate post collection DTO
+		BlogPostCollectionDTO postCollection = new BlogPostCollectionDTO();
+		
+		int start = (page-1)*perPage;
+		int maxResults = perPage;
+		
+		PaginatedResultList<Blog> results = dataService.grabBlogs(query, start, maxResults);
 		List<BlogPostDTO> postList = new ArrayList<>();
 		for (Blog p: results.getItems()) {
 			postList.add(new BlogPostDTO(p));
