@@ -2,6 +2,7 @@ package com.revature.dto;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import org.jsoup.Jsoup;
@@ -19,6 +20,7 @@ public class BlogPostDTO {
 	String thumbnail = null;
 	ArrayList<String> tags = new ArrayList<>();
 	AuthorDTO author = new AuthorDTO();
+	String link = null;
 	
 	@JsonProperty("post_date")
 	Date postDate = new Date();
@@ -42,6 +44,7 @@ public class BlogPostDTO {
 		else
 			this.author = new AuthorDTO();
 		this.postDate = post.getPublishDate();
+		this.link = "#"; // TODO: Update this
 	}
 	
 	public int getId() {
@@ -68,7 +71,7 @@ public class BlogPostDTO {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public ArrayList<String> getTags() {
+	public List<String> getTags() {
 		return tags;
 	}
 	public void setTags(ArrayList<String> tags) {
@@ -85,5 +88,17 @@ public class BlogPostDTO {
 	}
 	public void setPostDate(Date postDate) {
 		this.postDate = postDate;
+	}
+	public String getThumbnail() {
+		return thumbnail;
+	}
+	public void setThumbnail(String thumbnail) {
+		this.thumbnail = thumbnail;
+	}
+	public String getLink() {
+		return link;
+	}
+	public void setLink(String link) {
+		this.link = link;
 	}
 }
