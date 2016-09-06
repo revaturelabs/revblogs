@@ -26,7 +26,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="${pageContext.servletContext.contextPath}/"><img src="resources/img/rev-brand.png" /></a>
+        <a class="navbar-brand" href="${pageContext.servletContext.contextPath}/"><img src="https://s3-us-west-2.amazonaws.com/dan-pickles-jar/content/resources/img/rev-brand.png" /></a>
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
@@ -120,7 +120,7 @@
 	    <div class="container">
 	      <div class="row">
 	        <div class="col-sm-4">
-	          <img class="img-responsive" src="resources/img/rev-footer.png" />
+	          <img class="img-responsive" src="https://s3-us-west-2.amazonaws.com/dan-pickles-jar/content/resources/img/rev-footer.png" />
 	        </div>
 	        <div class="col-sm-4">
 	        	<h4>Contact Info</h4>
