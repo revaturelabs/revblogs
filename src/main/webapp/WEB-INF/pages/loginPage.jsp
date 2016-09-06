@@ -69,15 +69,7 @@ $(document).ready(function(){
 	$("#send").click(function(){
 		
 		var email = $("#userAuth").val();
-		
-<<<<<<< HEAD
-		$.get("http://localhost:7001/revblogs/api/bindUser?u=" + email, function(response){
-			
-			if(response == "Success"){
-				
-				$("#form").submit();
-				
-=======
+
 		$.get("http://localhost:7001/revblogs/bindUser?u=" + email, function(response){
 			
 			if(response === "Success"){
@@ -87,7 +79,6 @@ $(document).ready(function(){
 			} else {
 				
 				e.preventDefault();
->>>>>>> 099f983c9f9a26dd88fb89dac26b82a395cd66bd
 			}
 		});
 	});
