@@ -132,10 +132,6 @@
 	    </div>
 	</div>
   
-  <span>{{isLoading}}</span>
-  
-  <jsp:include page="footer.jsp"></jsp:include>
-  
   <input type="hidden" ng-model="blogsPerPage">
   <input type="hidden" ng-model="curPage">
   <input type="hidden" ng-model="nextPagePosts">
