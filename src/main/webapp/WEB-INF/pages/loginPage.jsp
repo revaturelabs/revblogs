@@ -70,7 +70,7 @@ $(document).ready(function(){
 		
 		var email = $("#userAuth").val();
 		
-		$.get("http://localhost:7001/revblogs/api/bindUser?u=" + email, function(response){
+		$.get("http://localhost:7001/revblogs/bindUser?u=" + email, function(response){
 			
 			if(response === "Success"){
 				

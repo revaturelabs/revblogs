@@ -37,21 +37,4 @@ public class AjaxController {
 		
 		return businessDelegate.requestBlogPosts(page, perPage);
 	}
-	
-	@RequestMapping(value="/bindUser", method=RequestMethod.GET)
-	@ResponseBody
-	public String bindUser (@RequestParam(value="u") String email, HttpServletRequest request) {
-		
-		String value = null;
-		
-		User curUser = businessDelegate.requestUsers(email.toLowerCase());
-
-		if(curUser != null){
-			
-			CryptImpl.user = curUser;
-			value = "Success";
-		}
-		
-		return value; 
-	}
 }
