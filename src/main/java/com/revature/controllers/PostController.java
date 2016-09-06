@@ -227,6 +227,17 @@ public class PostController {
 			HttpServletRequest req,
 			HttpServletResponse resp) {
 		
+		/*
+		 * Check to see if the current blog's title already exists. 
+		 * If exists, redirect to current page, if new, go to preview blog page.
+		 */
+		List<Blog> myBlogs = businessDelegate.requestBlogs();
+		for(Blog curBlog : myBlogs){
+			if(curBlog.getBlogTitle().equals(blog.getBlogTitle())){
+				return "create-blog";
+			};
+		}
+		
 //		User author = businessDelegate.requestUsers("pick");
 		User author = (User) req.getSession().getAttribute("user");
 		author.getFirstName();
@@ -245,7 +256,6 @@ public class PostController {
 		/*
 		 * Blog Bean will be generated with proper tags and fields
 		 */
-		
 		if(blog.getBlogTagsString().isEmpty()){
 			blog.setTags(new HashSet<Tags>());
 		}
