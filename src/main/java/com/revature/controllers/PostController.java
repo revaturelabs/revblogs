@@ -112,31 +112,37 @@ public class PostController {
 	 */
 	@RequestMapping(value="createAccount.do", method=RequestMethod.POST)
 	public ModelAndView createAccount(HttpServletRequest req, HttpServletResponse resp){
+		
+		// User Supplied
 		String email = req.getParameter("email");
-		String password = Crypt.encrypt(email, "asdlkfjsadlkfjsaklfjsdalkjsadklfj", "aDgfJaiouwAlkjaSkfljasdfOasjdfLkJ");
-		String firstName = "New";
-		String lastName = "User";
-		//String profilePicture - currently not used
-		String jobTitle = "Developer";
-		String linkedInURL = null;
-		String description = "Unknown";
-		int role = Integer.parseInt(req.getParameter("role"));
-		UserRoles userRole = businessDelegate.requestRoles(role);
-		User newUser = new User(email, password, firstName, lastName, jobTitle,
-				linkedInURL, description, userRole);
-		businessDelegate.putRecord(newUser);
+		String role = req.getParameter("role");
+		
+		// Generate a Temporary Password
+		String password = Crypt.encrypt("Pa$$WoRD1?!", email, role);
+		
+		// Role Obj from Database
+		UserRoles myRole = businessDelegate.requestRoles(role);
+		
+		// Dummy User
+		User dummy = new User(email, password, " ", " ", " ", " ", " ", myRole);
+		
+		// Encrypt the Temp Password in the Database
+		dummy.setPassword(Crypt.encrypt(dummy.getPassword(), dummy.getEmail(), dummy.getFullname()));
+		
+		// Save in Database
+		businessDelegate.putRecord(dummy);
+		
+		// Send Email to Account
 		Mailer.sendMail(email, password);
 		
 		ModelAndView model = new ModelAndView();
 		model.setViewName("/home");
 		return model;
 	}
-	// Update a Users Password
+	
 	/*
 	 * @RequestParam("newPassword")
 	 */
-	
-	
 	@RequestMapping(value="updatePassword.do", method=RequestMethod.POST)
 	public ModelAndView updatePassword(@ModelAttribute("updatePassword") @Valid UserDTO passwordDTO, BindingResult bindingResult,
 							   HttpServletRequest req, HttpServletResponse resp){
