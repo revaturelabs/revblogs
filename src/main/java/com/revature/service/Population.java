@@ -413,7 +413,7 @@ public class Population {
 												"peobuefdvxjbtoajefspkfuccfngbf"); 
 					break;
 				default:
-					Logging.log("Unhandled Property");
+					
 					break;
 			}
 			

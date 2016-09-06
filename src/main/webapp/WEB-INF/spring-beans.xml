@@ -63,7 +63,7 @@
 	</bean>
 	<bean id="cryptImpl" class="com.revature.service.impl.CryptImpl">
 		<property name="businessDelegate" ref="businessDelegate"/>
-		<property name="ajax" ref="ajaxController"/>
+		<property name="getController" ref="getController"/>
 	</bean>
 	
 	<tx:annotation-driven />
