@@ -1,0 +1,55 @@
+package com.revature.appTest;
+
+import static org.junit.Assert.assertNotNull;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import com.revature.service.impl.BusinessDelegateImpl;
+import com.revature.service.impl.Crypt;
+import com.revature.service.impl.CryptImpl;
+import com.revature.service.impl.JetS3Impl;
+import com.revature.service.impl.Mailer;
+import com.revature.service.impl.ServiceLocatorImpl;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes={BusinessDelegateImpl.class, Crypt.class, 
+		CryptImpl.class, JetS3Impl.class, Mailer.class, ServiceLocatorImpl.class})
+public class SerivceImplTest {
+
+	//REQUIRES THE APPLICATION CONTEXT
+	//MUST MAKE -context.xml FILE OR FIND A WAY TO 
+	//HAVE THE SPRING-BEANS.XML TO ATTACH TO IT!!!!!!!!!!!!!
+	
+	@Autowired
+	private BusinessDelegateImpl businessDelegateImpl;
+	
+	@Autowired
+	private Crypt crypt;
+	
+	@Autowired
+	private CryptImpl cryptImpl;
+	
+	@Autowired
+	private JetS3Impl jetS3Impl;
+	
+	@Autowired
+	private Mailer mailer;
+	
+	@Autowired
+	private ServiceLocatorImpl serviceLocatorImpl;
+	
+	@Test
+	public void TestServiceImpl(){
+		assertNotNull(businessDelegateImpl);
+		assertNotNull(crypt);
+		assertNotNull(cryptImpl);
+		assertNotNull(jetS3Impl);
+		assertNotNull(mailer);
+		assertNotNull(serviceLocatorImpl);
+	}
+	
+}

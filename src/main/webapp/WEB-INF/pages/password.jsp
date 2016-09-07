@@ -52,7 +52,7 @@
 				<td> 
 					<form:password path="confirmPassword" name="confirmPassword" 
 					class="form-control" id="confirmPassword" required
-					onkeyup="validatePassword()"/> <span id="confirmMessage" />
+					onkeyup="validatePassword()"/> <span id="confirmMessage"></span>
 				</td>
 			</tr>
 			<tr>
