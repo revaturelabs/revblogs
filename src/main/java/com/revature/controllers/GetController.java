@@ -103,4 +103,10 @@ public class GetController {
 		req.setAttribute("list", str);
 		return "management";
 	}
+	
+	@RequestMapping(value="/manageusers", method=RequestMethod.GET)
+	public String manageUsers(HttpServletRequest req, HttpServletResponse resp){
+		req.setAttribute("userList", businessDelegate.requestUsers());
+		return "manageusers";
+	}
 }
