@@ -17,14 +17,17 @@ import com.revature.service.ServiceLocator;
 import com.revature.service.WriteTester;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes={BusinessDelegate.class, HtmlWriter.class, 
-		JetS3.class, Logging.class, Population.class, ServiceLocator.class,
-		WriteTester.class})
+@ContextConfiguration(classes={ BusinessDelegate.class, HtmlWriter.class, JetS3.class,
+		Logging.class, Population.class, ServiceLocator.class,WriteTester.class})
 public class ServiceTest {
 	
 	//REQUIRES THE APPLICATION CONTEXT
 	//MUST MAKE -context.xml FILE OR FIND A WAY TO 
 	//HAVE THE SPRING-BEANS.XML TO ATTACH TO IT!!!!!!!!!!!!!
+
+	
+	//UPDATE: BUSINESSDELEGATE, HTMLWRITER, JETS3, SERVICELOCATOR, AND WRITETESTER NEED AN
+	//	'APPLICATION CONTEXT' XML FILE TO WORK PROPERLY. 
 	
 	@Autowired
 	private BusinessDelegate businessDelegate;

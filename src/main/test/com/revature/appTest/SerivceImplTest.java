@@ -16,13 +16,20 @@ import com.revature.service.impl.Mailer;
 import com.revature.service.impl.ServiceLocatorImpl;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes={BusinessDelegateImpl.class, Crypt.class, 
-		CryptImpl.class, JetS3Impl.class, Mailer.class, ServiceLocatorImpl.class})
+@ContextConfiguration(classes={ BusinessDelegateImpl.class,
+		CryptImpl.class, Crypt.class, JetS3Impl.class,
+		Mailer.class, ServiceLocatorImpl.class})
 public class SerivceImplTest {
 
 	//REQUIRES THE APPLICATION CONTEXT
 	//MUST MAKE -context.xml FILE OR FIND A WAY TO 
 	//HAVE THE SPRING-BEANS.XML TO ATTACH TO IT!!!!!!!!!!!!!
+	
+	
+	//UPDATE: BUSINESSDELEGATEIMPL, CRYPT, AND MAILER REQUIRE THAT THEY HAVE AN
+	//	'APPLICATION CONTEXT' XML IN ORDER TO WORK.
+	
+
 	
 	@Autowired
 	private BusinessDelegateImpl businessDelegateImpl;
