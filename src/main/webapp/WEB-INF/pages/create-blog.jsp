@@ -49,7 +49,7 @@
 
 
 
-<form:form action="add-blog.do" method="post" commandName="blog">
+<form:form action="add-blog.do" method="post" commandName="blog" onsubmit="filter()" id="blogForm">
 	Title
 	<form:input path="blogTitle"/><br />
 	Subtitle
@@ -57,7 +57,7 @@
 	<button type="button">Attach Image</button>
 	<button type="button">Attach File</button>
 	<br>
-	<form:textarea path="blogContent" rows="30" cols="100" ></form:textarea>
+	<form:textarea path="blogContent" rows="3" cols="100" id="blogBody"></form:textarea>
 	<br>
 	<!-- <button type="button">Add Reference</button>
 	<br>
@@ -67,9 +67,9 @@
  	<br>
 	<form:input path="blogTagsString" id="tagList" style="resize: none" style="width: 300px"></form:input>
 	<br>
-	
-	<input type="submit" value="Preview" />
+	<input type="submit" value="Preview"/>
 </form:form>
+
 
 <!-- Facebook Comments Code, the data-href must point to the website the page will be on -->
 	<div class="fb-comments" data-href="http://dev.pjw6193:7001/pages/create-blog.jsp" data-numposts="5"></div>
@@ -78,4 +78,5 @@
 </body>
 <script src="https://s3-us-west-2.amazonaws.com/dan-pickles-jar/content/resources/js/facebookConnection.js"></script>
 <script src="${pageContext.servletContext.contextPath}/resources/js/tinyMCE.js"></script>
+<script src="${pageContext.servletContext.contextPath}/resources/js/antiCursing.js"></script>
 </html>
