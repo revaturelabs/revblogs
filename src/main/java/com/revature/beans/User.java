@@ -53,7 +53,7 @@ public class User {
 	@Column(name="USER_LINKEDIN", unique=true)
 	private String linkedInURL;
 		
-	@Column(name="USER_DESCRIPTION", nullable=false)
+	@Column(name="USER_DESCRIPTION")
 	private String description;
 	
 	@Column(name="USER_ACTIVE", nullable=false)
@@ -79,7 +79,8 @@ public class User {
 	public User() {
 		super();
 		
-		// User always starts active && new
+		// Set Defaults
+		this.profilePicture = "http://blogs.pjw6193.tech/content/evidence/Stickman.png";
 		this.active = true;
 		this.newUser = true;
 	}
@@ -93,6 +94,17 @@ public class User {
 		this.jobTitle = jobTitle;
 		this.linkedInURL = linkedInURL;
 		this.description = description;
+	}
+	
+	// Required Fields
+	public User(String email, String password, String firstName, String lastName, String jobTitle, UserRoles userRole) {
+		this();
+		this.email = email;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.jobTitle = jobTitle;
+		this.userRole = userRole;
 	}
 	
 	// All Attributes

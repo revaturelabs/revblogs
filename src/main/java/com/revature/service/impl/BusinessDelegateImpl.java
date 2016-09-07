@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.jets3t.service.S3Service;
+import org.jets3t.service.security.AWSCredentials;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,6 +27,9 @@ import com.revature.service.ServiceLocator;
 
 @Service
 public class BusinessDelegateImpl implements BusinessDelegate{
+	
+	private AWSCredentials credentials;
+	private S3Service s3;
 
 	/*
 	 * 	Attributes && Getters/Setters
@@ -32,7 +37,7 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	 */
 	private DataService dataService;
 	private JetS3 jetS3;
-	
+
 	public void setDataService(DataService dataService) {
 		this.dataService = dataService;
 	}
@@ -41,10 +46,9 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	public Session requestSession() {
 		return dataService.grabSession();
 	}
-	
-
 	public void setJetS3(JetS3 jetS3) {
 		this.jetS3 = jetS3;
+		jetS3.syncBusinessDelegate(this);
 	}
 	/**
 	 * Attempts to upload a resource (such as a CSS or JS file) to the S3 server
@@ -80,6 +84,9 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	 */
 	
 	public void putRecord(Object obj){
+		dataService.makeRecord(obj);
+	}
+	public void putRecord(Object[] obj){
 		dataService.makeRecord(obj);
 	}
 	public void updateRecord(Object obj){

@@ -19,35 +19,38 @@ import com.revature.service.BusinessDelegate;
 import com.revature.service.JetS3;
 
 public class JetS3Impl implements JetS3{
-	
+
 	private AWSCredentials credentials;
-	private  S3Service s3;
-	private  Logger log = Logger.getRootLogger();
-	private  final String BUCKET = "blogs.pjw6193.tech";
+	private S3Service s3;
+	private Logger log = Logger.getRootLogger();
+	private final String BUCKET = "blogs.pjw6193.tech";
 	private BusinessDelegate businessDelegate;
-	private String credBucket;
-	
-	public JetS3Impl() {
-		super();
-	}
-	
-	public JetS3Impl(BusinessDelegate businessDelegate) {
-		super();
-		this.businessDelegate = businessDelegate;
-	}
 	
 	public void setBusinessDelegate(BusinessDelegate businessDelegate) {
 		this.businessDelegate = businessDelegate;
+
 		syncBusinessDelegate(this.businessDelegate);
-		credBucket = this.businessDelegate.requestProperty(PropertyType.S3BUCKET);
 	}
 
 	public synchronized void syncBusinessDelegate(BusinessDelegate businessDelegate){
-		  
-	
+		 
 	   	credentials = new AWSCredentials(businessDelegate.requestProperty(PropertyType.K),businessDelegate.requestProperty(PropertyType.V));
 	   	s3 = new RestS3Service(credentials);
-	   	
+	}
+
+	
+	public String[] list(){
+		try {
+			S3Object[] storage = s3.listObjects(BUCKET);
+			String[] str = new String[storage.length];
+			for(int i = 0;i<storage.length;i++){
+				str[i]=storage[i].getName();
+			}
+			return str;
+		} catch (Exception e) {
+			log.info(e);
+			return null;
+		}
 	}
 
 	/**
@@ -189,18 +192,5 @@ public class JetS3Impl implements JetS3{
 			return false;
 		}	
 		return true;
-	}
-	public String[] list(){
-		try {
-			S3Object[] storage = s3.listObjects(BUCKET);
-			String[] str = new String[storage.length];
-			for(int i = 0;i<storage.length;i++){
-				str[i]=storage[i].getName();
-			}
-			return str;
-		} catch (Exception e) {
-			log.info(e);
-			return null;
-		}
 	}
 }
