@@ -1,4 +1,4 @@
-package com.revature.appTest;
+package com.revature.Test;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -8,17 +8,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.revature.secure.AuthSuccessHandler;
+import com.revature.nonsense.NonsenseGenerator;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes={AuthSuccessHandler.class})
-public class AuthSuccessTest {
+@ContextConfiguration(classes={NonsenseGenerator.class})
+public class NonsenseTest {
 
 	@Autowired
-	private AuthSuccessHandler authSuccessHandler;
+	private NonsenseGenerator nonsenseGenerator;
 	
 	@Test
-	public void TestAuthSuccessHandler(){
-		assertNotNull(authSuccessHandler);
+	public void TestNonsenseGenerator(){
+		assertNotNull(nonsenseGenerator);
 	}
 }
