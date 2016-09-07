@@ -47,6 +47,13 @@ public interface BusinessDelegate {
 	 */
 	public String[] getList();
 	
+	/**
+	 * For deleting objects from s3
+	 * @param filename
+	 * @return
+	 */
+	public boolean delete(String filename);
+	
 	// Push
 	public void putRecord(Object obj);
 	public void putRecord(Object[] obj);

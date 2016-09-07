@@ -79,7 +79,7 @@ public class JetS3Impl implements JetS3{
 	 * @return the URL where the file was uploaded if successful, null otherwise
 	 */
 	public String uploadEvidence(String fileName, MultipartFile file) {
-		return uploadFile("content/evidence/", fileName, file);
+		return uploadFile("content/evidence/"+ System.nanoTime() + "/", fileName, file);
 	}
 	
 	/**
