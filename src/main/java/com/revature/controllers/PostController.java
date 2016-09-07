@@ -136,12 +136,12 @@ public class PostController {
 		if(businessDelegate.requestUsers(email) == null){
 			// Generate a Temporary Password
 			String password = Crypt.encrypt("7Pas8WoR", email, role);
-			String firstName = "New";
-			String lastName = "User";
+			String firstName = " ";
+			String lastName = " ";
 			//String profilePicture - currently not used
-			String jobTitle = "Developer";
+			String jobTitle = " ";
 			String linkedInURL = null;
-			String description = "Unknown";
+			String description = " ";
 			// Role Obj from Database
 			UserRoles userRole = businessDelegate.requestRoles(role);
 			User newUser = new User(email, Crypt.encrypt(password, email, lastName+", "+firstName), firstName, lastName, jobTitle,
