@@ -44,6 +44,7 @@ public interface BusinessDelegate {
 	public JetS3 getJetS3();
 	// Push
 	public void putRecord(Object obj);
+	public void putRecord(Object[] obj);
 	public void updateRecord(Object obj);
 	
 	// Pull

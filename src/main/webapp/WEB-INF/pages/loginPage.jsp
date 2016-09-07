@@ -22,6 +22,11 @@
 <body>
 <jsp:include page="navbar.jsp"></jsp:include>
 <div class="container page-content">
+	<c:if test="${populate eq true}">
+		<div>
+			<button id="populateNow" class="btn btn-primary">Populate Database</button>
+		</div>
+	</c:if>
 	<c:if test="${'fail' eq param.auth}">
 		<div>
               <h3 id="failLogin">Failed to login. Please try again.</h3>
@@ -80,6 +85,16 @@ $(document).ready(function(){
 				
 				e.preventDefault();
 			}
+		});
+	});
+	
+	$("#populateNow").click(function(){
+	
+		alert("Populating...");
+	
+		$.get("http://localhost:7001/revblogs/populate.do", function(response){
+			
+			alert(response)
 		});
 	});
 });
