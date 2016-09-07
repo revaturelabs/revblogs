@@ -90,6 +90,10 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 		return jetS3.list();
 	}
 	
+	public boolean delete(String filename){
+		return jetS3.delete(filename);
+	}
+	
 	/*
 	 *  Database Altering Methods
 	 */

@@ -360,7 +360,6 @@ public class PostController {
 			InputStream templateStream = this.getClass().getClassLoader().getResourceAsStream("template.html");
 			htmlWriter = new HtmlWriter(blog, blog.getAuthor(), templateStream);
 			TemporaryFile blogTempFile = htmlWriter.render();
-			//Logging.log(blogTempFile.getTemporaryFile().getName());
 			String fileName = blogTempFile.getTemporaryFile().getName();
 			url = "http://blogs.pjw6193.tech/content/pages/" + fileName;
 			req.setAttribute("url", url);
@@ -379,7 +378,7 @@ public class PostController {
 	
 	@RequestMapping(value="/deleteFile", method=RequestMethod.GET)
 	public ModelAndView delete(Blog blog, HttpServletRequest req, HttpServletResponse resp){
-		//jets3.delete(blog.getBlogTitle());
+		businessDelegate.delete(blog.getBlogTitle());
 		String[] str = businessDelegate.getList();
 		req.setAttribute("blog", new Blog());
 		req.setAttribute("list", str);
