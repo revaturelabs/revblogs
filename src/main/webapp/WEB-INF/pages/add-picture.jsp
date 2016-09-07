@@ -6,6 +6,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Upload Picture</title>
 <script src="${pageContext.servletContext.contextPath}/resources/js/jquery-3.1.0.min.js"></script>
+<style type="text/css">
+#loading{
+visibility: hidden;
+}
+</style>
 </head>
 <body>
 <div class="container page-content">
