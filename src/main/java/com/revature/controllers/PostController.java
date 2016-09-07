@@ -118,7 +118,7 @@ public class PostController {
 		String description = "Unknown";
 		int role = Integer.parseInt(req.getParameter("role"));
 		UserRoles userRole = businessDelegate.requestRoles(role);
-		User newUser = new User(email, Crypt.encrypt(password, "asdlkfjsadlkfjsaklfjsdsdlkjadkljadlkasdflkjasdfalkjsadklfj", "aDgfJaiouwAlkjaSkfljasdfOasjdfLkJasiopajkqwljriojlaskjfioqowjkh");, firstName, lastName, jobTitle,
+		User newUser = new User(email, Crypt.encrypt(password, "asdlkfjsadlkfjsaklfjsdsdlkjadkljadlkasdflkjasdfalkjsadklfj", "aDgfJaiouwAlkjaSkfljasdfOasjdfLkJasiopajkqwljriojlaskjfioqowjkh"), firstName, lastName, jobTitle,
 				linkedInURL, description, userRole);
 		businessDelegate.putRecord(newUser);
 		Mailer.sendMail(email, password);
