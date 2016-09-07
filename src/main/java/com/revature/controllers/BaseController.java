@@ -27,7 +27,6 @@ public class BaseController {
 	 */
 	private Logging logging;
 	private BusinessDelegate businessDelegate;
-	private Population population;
 	private static final String HOME = "/home";
 	private static final String TITLE = "title";
 	private static final String LOGGED = "Logged in as ";
@@ -40,12 +39,6 @@ public class BaseController {
 	}
 	public BusinessDelegate getBusinessDelegate() {
 		return businessDelegate;
-	}
-	public Population getPopulation() {
-		return population;
-	}
-	public void setPopulation(Population population) {
-		this.population = population;
 	}
 	public Logging getLogging() {
 		return logging;
@@ -60,7 +53,7 @@ public class BaseController {
 	 */
 	
 	//------------------------------------------------
-	// Redirections (&& Population)
+	// Redirections
 	
 	// Default Page
 	@RequestMapping(value="/", method=RequestMethod.GET)
@@ -71,7 +64,10 @@ public class BaseController {
 	
 	// Login Page
 	@RequestMapping(value="/loginPage", method=RequestMethod.GET)
-	public String login(){
+	public String login(HttpServletRequest req){
+	
+		// Toggle Population Button (True is On and False is Off
+		req.getSession().setAttribute("populate", false);
 		
 		return "loginPage";
 	}
@@ -85,9 +81,8 @@ public class BaseController {
 	// Profile Page
 	@RequestMapping(value="/profile", method=RequestMethod.GET)
 	public String profile(HttpServletRequest req){
-		
+				
 		User myUser = (User) req.getSession().getAttribute("user");
-		
 		
 		if(myUser.isNewUser()){
 			
@@ -127,12 +122,6 @@ public class BaseController {
 	@RequestMapping(value="/navbar-partial", method=RequestMethod.GET)
 	public String getNavbar() {
 		return "navbar";
-	}
-	
-	// Database Population (Empty = Database Populated) - No Redirection
-	@RequestMapping(value="/populate", method=RequestMethod.GET)
-	public void populate(){
-			//Empty due to database already Populated
 	}
 	
 	//------------------------------------------------
@@ -191,5 +180,10 @@ public class BaseController {
 		Blog blog = (Blog) req.getSession().getAttribute("blog");
 		req.setAttribute("blog", blog);
 		return "edit-blog";
+	}
+	
+	@RequestMapping(value="user-blogs")
+	public String getUserBlogs(){
+		return "user-blogs";
 	}
 }

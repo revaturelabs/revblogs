@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Enumeration;
@@ -40,6 +39,7 @@ import com.revature.service.BusinessDelegate;
 import com.revature.service.HtmlWriter;
 import com.revature.service.JetS3;
 import com.revature.service.Logging;
+import com.revature.service.Population;
 import com.revature.service.impl.Crypt;
 import com.revature.service.impl.JetS3Impl;
 import com.revature.service.impl.Mailer;
@@ -52,6 +52,7 @@ public class PostController {
 	 * 
 	 */
 	private BusinessDelegate businessDelegate;
+	private Population population;
 	private Logging logging;
 
 	public void setBusinessDelegate(BusinessDelegate businessDelegate){
@@ -59,6 +60,12 @@ public class PostController {
 	}
 	public BusinessDelegate getBusinessDelegate() {
 		return businessDelegate;
+	}
+	public Population getPopulation() {
+		return population;
+	}
+	public void setPopulation(Population population) {
+		this.population = population;
 	}
 	public Logging getLogging() {
 		return logging;
@@ -72,6 +79,12 @@ public class PostController {
 	 *  
 	 */
 	
+	// Populate Database (GET used for simplicity. No params are passed)
+	@RequestMapping(value="populate.do", method=RequestMethod.GET)
+	public String buildDatabase(){
+	
+		return null;
+	}
 	
 	// Update a User
 	@RequestMapping(value="updateUser.do", method=RequestMethod.POST)
@@ -112,31 +125,39 @@ public class PostController {
 	 */
 	@RequestMapping(value="createAccount.do", method=RequestMethod.POST)
 	public ModelAndView createAccount(HttpServletRequest req, HttpServletResponse resp){
+
+		ModelAndView model = new ModelAndView();
 		
 		// User Supplied
 		String email = req.getParameter("email");
 		String role = req.getParameter("role");
 		
-		// Generate a Temporary Password
-		String password = Crypt.encrypt("Pa$$WoRD1?!", email, role);
+		// Check if email exists
+		if(businessDelegate.requestUsers(email) == null){
+			
+			// Generate a Temporary Password
+			String password = Crypt.encrypt("7Pas8WoR", email, role);
+			
+			// Role Obj from Database
+			UserRoles myRole = businessDelegate.requestRoles(role);
+			
+			// Dummy User
+			User dummy = new User(email, password, " ", " ", " ", " ", " ", myRole);
+			
+			// Encrypt the Temp Password in the Database
+			dummy.setPassword(Crypt.encrypt(dummy.getPassword(), dummy.getEmail(), dummy.getFullname()));
+			
+			// Save in Database
+			businessDelegate.putRecord(dummy);
+			
+			// Send Email to Account
+			Mailer.sendMail(email, password);
+			
+			model.setViewName("/home");
+		}
 		
-		// Role Obj from Database
-		UserRoles myRole = businessDelegate.requestRoles(role);
+		model.setViewName("/makeClientAccount");
 		
-		// Dummy User
-		User dummy = new User(email, password, " ", " ", " ", " ", " ", myRole);
-		
-		// Encrypt the Temp Password in the Database
-		dummy.setPassword(Crypt.encrypt(dummy.getPassword(), dummy.getEmail(), dummy.getFullname()));
-		
-		// Save in Database
-		businessDelegate.putRecord(dummy);
-		
-		// Send Email to Account
-		Mailer.sendMail(email, password);
-		
-		ModelAndView model = new ModelAndView();
-		model.setViewName("/home");
 		return model;
 	}
 	
@@ -344,9 +365,9 @@ public class PostController {
 			String fileName = blogTempFile.getTemporaryFile().getName();
 			url = "http://blogs.pjw6193.tech/content/pages/" + fileName;
 			req.setAttribute("url", url);
-			JetS3 jetS3 = new JetS3Impl();
+			blog.setLocationURL(url);
 			businessDelegate.putRecord(blog);
-			jetS3.uploadPage(blogTempFile.getTemporaryFile());
+			businessDelegate.uploadPage(blogTempFile.getTemporaryFile());
 			blogTempFile.destroy();
 			req.getSession().setAttribute("blog", null);
 		} catch (FileNotFoundException e) { 
