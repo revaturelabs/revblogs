@@ -49,22 +49,25 @@ public class Mailer {
 
 	         // first part (the html)
 	         BodyPart messageBodyPart = new MimeBodyPart();
-	         String htmlText = ""
-	         				+ "<body style=\"background-color: #F9F9F9;\">"
-	         				+ 		"<div style=\"margin: 5% 16% 5% 16%;\">"
-	         				+ 			"<div style=\"background-color: #FFFFFF;"
-	         				+ 			"padding: auto 15px auto 15px;"
-	         				+ 			"margin: auto auto auto auto;\">"
-	         				+ 				"<h1>Hello</h1>"
-	         				+ 				"<h2>You have been invited to Revature Blogs</h2>"
-	         				+ 				"<img src=\"http://blogs.pjw6193.tech/content/resources/img/rev-brand.png\">"
-	         				+ 				"<p>"
-	         				+ 					"<span style=\"color:gray;\">11730 Plaza America Dr. | Suite 205 | Reston, VA 20190 | </span>"
-	         				+					"<a href=\"https://revature.com/\">http://revature.com</a>"
-	         				+ 				"</p>"
+	         String htmlText = "<!DOCTYPE html>"
+	         				+ "<html>"
+	         				+ 	"<body style=\"background-color: #F9F9F9;\">"
+	         				+ 			"<div style=\"margin: 5% 16% 5% 16%;\">"
+	         				+ 				"<div style=\"background-color: #FFFFFF;"
+	         				+ 				"padding: auto 15px auto 15px;"
+	         				+ 				"margin: auto auto auto auto;\">"
+	         				+ 					"<h1>Hello</h1>"
+	         				+ 					"<h2>You have been invited to Revature Blogs</h2>"
+	         				+ 					"<p>Here is your password: "+newPassword+"</p>"
+	         				+ 					"<img src=\"http://blogs.pjw6193.tech/content/resources/img/rev-brand.png\">"
+	         				+ 					"<p>"
+	         				+ 						"<span style=\"color:gray;\">11730 Plaza America Dr. | Suite 205 | Reston, VA 20190 | </span>"
+	         				+						"<a href=\"https://revature.com/\">http://revature.com</a>"
+	         				+ 					"</p>"
+	         				+ 				"</div>"
 	         				+ 			"</div>"
-	         				+ 		"</div>"
-	         				+ "</body>";
+	         				+ 	"</body>"
+	         				+ "</html>";
 	         messageBodyPart.setContent(htmlText, "text/html");
 	         // add it
 	         multipart.addBodyPart(messageBodyPart);

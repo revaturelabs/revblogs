@@ -86,6 +86,10 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 
 	}
 	
+	public String[] getList(){
+		return jetS3.list();
+	}
+	
 	/*
 	 *  Database Altering Methods
 	 */

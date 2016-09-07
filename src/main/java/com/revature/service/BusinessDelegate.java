@@ -41,7 +41,15 @@ public interface BusinessDelegate {
 	 * @return the URL where the file was uploaded if successful, null otherwise
 	 */
 	public String uploadEvidence(String fileName, MultipartFile file);
+
 	public JetS3 getJetS3();
+
+	
+	/**
+	 * Used to obtained the list of S3 items
+	 */
+	public String[] getList();
+	
 	// Push
 	public void putRecord(Object obj);
 	public void putRecord(Object[] obj);

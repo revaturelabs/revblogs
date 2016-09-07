@@ -71,7 +71,7 @@
   	</div>
     <div id="postsDiv" class="row">
       <div class="col-sm-8">
-      	<div ng-repeat="post in posts.posts" ng-include src="'resources/js/templates/post-preview.html'"></div>
+      	<div ng-repeat="post in posts.posts" ng-include src="'resources/js/templates/user-post-preview.html'"></div>
       </div>
       <div class="col-sm-4 hidden-xs">
         <div class="panel panel-primary">
@@ -80,8 +80,8 @@
           </div>
           <div class="panel-body">
             <ul class="list-unstyled">
-              <li><a href="#">Revature</a></li>
-              <li><a href="#">Life at Revature</a></li>
+              <li><a href="http://revature.com">Revature</a></li>
+              <li><a href="http://lifeatrevature.com">Life at Revature</a></li>
             </ul>
           </div>
         </div>
