@@ -24,24 +24,8 @@
 		<property name="username" value="dan" />
 		<property name="password" value="pickles" />
 	</bean>
-	<bean name="logging" class="com.revature.service.Logging">
-		
-	</bean>
-	<bean name="baseController" class="com.revature.controllers.BaseController">
-		<property name="businessDelegate" ref="businessDelegate" />
-		<property name="population" ref="population" />
-		<property name="logging" ref="logging" />
-	</bean>
-	<bean name="ajaxController" class="com.revature.controllers.AjaxController">
-		<property name="businessDelegate" ref="businessDelegate" />
-	</bean>
-	<bean name="postController" class="com.revature.controllers.PostController">
-		<property name="businessDelegate" ref="businessDelegate" />
-	</bean>
-	<bean name="getController" class="com.revature.controllers.GetController">
-		<property name="businessDelegate" ref="businessDelegate" />
-		<property name="logging" ref="logging" />
-	</bean>
+	<bean name="logging" class="com.revature.service.Logging"/>
+	
 	<bean name="businessDelegate" class="com.revature.service.impl.BusinessDelegateImpl">
 		<property name="dataService" ref="dataService" />
 		<property name="serviceLocator" ref="serviceLocator" />
@@ -58,12 +42,26 @@
 		<property name="delegate" ref="businessDelegate" />
 		<property name="logger" ref="logging" />
 	</bean>
-	<bean name="jetS3" class="com.revature.service.impl.JetS3Impl">
-<!-- 		<property name="businessDelegate" ref="businessDelegate" /> -->
-	</bean>
+	<bean name="jetS3" class="com.revature.service.impl.JetS3Impl"/>
 	<bean id="cryptImpl" class="com.revature.service.impl.CryptImpl">
 		<property name="businessDelegate" ref="businessDelegate"/>
 		<property name="getController" ref="getController"/>
+	</bean>
+	<bean name="baseController" class="com.revature.controllers.BaseController">
+		<property name="businessDelegate" ref="businessDelegate" />
+		<property name="logging" ref="logging" />
+	</bean>
+	<bean name="ajaxController" class="com.revature.controllers.AjaxController">
+		<property name="businessDelegate" ref="businessDelegate" />
+	</bean>
+	<bean name="postController" class="com.revature.controllers.PostController">
+		<property name="businessDelegate" ref="businessDelegate" />
+		<property name="population" ref="population" />
+		<property name="logging" ref="logging" />
+	</bean>
+	<bean name="getController" class="com.revature.controllers.GetController">
+		<property name="businessDelegate" ref="businessDelegate" />
+		<property name="logging" ref="logging" />
 	</bean>
 	
 	<tx:annotation-driven />

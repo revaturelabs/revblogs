@@ -35,11 +35,13 @@ import com.revature.beans.Blog;
 import com.revature.beans.Tags;
 import com.revature.beans.User;
 import com.revature.beans.UserRoles;
+import com.revature.data.impl.PropertyType;
 import com.revature.dto.UserDTO;
 import com.revature.service.BusinessDelegate;
 import com.revature.service.HtmlWriter;
 import com.revature.service.JetS3;
 import com.revature.service.Logging;
+import com.revature.service.Population;
 import com.revature.service.impl.Crypt;
 import com.revature.service.impl.JetS3Impl;
 import com.revature.service.impl.Mailer;
@@ -52,6 +54,7 @@ public class PostController {
 	 * 
 	 */
 	private BusinessDelegate businessDelegate;
+	private Population population;
 	private Logging logging;
 
 	public void setBusinessDelegate(BusinessDelegate businessDelegate){
@@ -59,6 +62,12 @@ public class PostController {
 	}
 	public BusinessDelegate getBusinessDelegate() {
 		return businessDelegate;
+	}
+	public Population getPopulation() {
+		return population;
+	}
+	public void setPopulation(Population population) {
+		this.population = population;
 	}
 	public Logging getLogging() {
 		return logging;
@@ -72,6 +81,12 @@ public class PostController {
 	 *  
 	 */
 	
+	// Populate Database (GET used for simplicity. No params are passed)
+	@RequestMapping(value="populate.do", method=RequestMethod.GET)
+	public String buildDatabase(){
+	
+		return null;
+	}
 	
 	// Update a User
 	@RequestMapping(value="updateUser.do", method=RequestMethod.POST)
@@ -113,30 +128,39 @@ public class PostController {
 	@RequestMapping(value="createAccount.do", method=RequestMethod.POST)
 	public ModelAndView createAccount(HttpServletRequest req, HttpServletResponse resp){
 		
+		ModelAndView model = new ModelAndView();
+		
 		// User Supplied
 		String email = req.getParameter("email");
 		String role = req.getParameter("role");
 		
-		// Generate a Temporary Password
-		String password = Crypt.encrypt("Pa$$WoRD1?!", email, role);
+		// Check if email exists
+		if(businessDelegate.requestUsers(email) == null){
+			
+			// Generate a Temporary Password
+			String password = Crypt.encrypt("7Pas8WoR", email, role);
+			
+			// Role Obj from Database
+			UserRoles myRole = businessDelegate.requestRoles(role);
+			
+			// Dummy User
+			User dummy = new User(email, password, " ", " ", " ", " ", " ", myRole);
+			
+			// Encrypt the Temp Password in the Database
+			dummy.setPassword(Crypt.encrypt(dummy.getPassword(), dummy.getEmail(), dummy.getFullname()));
+			
+			// Save in Database
+			businessDelegate.putRecord(dummy);
+			
+			// Send Email to Account
+			Mailer.sendMail(email, password);
+			
+			model.setViewName("/home");
+			
+		}
 		
-		// Role Obj from Database
-		UserRoles myRole = businessDelegate.requestRoles(role);
+		model.setViewName("/makeClientAccount");
 		
-		// Dummy User
-		User dummy = new User(email, password, " ", " ", " ", " ", " ", myRole);
-		
-		// Encrypt the Temp Password in the Database
-		dummy.setPassword(Crypt.encrypt(dummy.getPassword(), dummy.getEmail(), dummy.getFullname()));
-		
-		// Save in Database
-		businessDelegate.putRecord(dummy);
-		
-		// Send Email to Account
-		Mailer.sendMail(email, password);
-		
-		ModelAndView model = new ModelAndView();
-		model.setViewName("/home");
 		return model;
 	}
 	
