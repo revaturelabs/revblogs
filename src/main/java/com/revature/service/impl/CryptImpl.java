@@ -39,7 +39,13 @@ public class CryptImpl implements PasswordEncoder{
 	 * @see org.springframework.security.crypto.password.PasswordEncoder#encode(java.lang.CharSequence)
 	 */
 	public String encrypt(CharSequence passwordInput){
-		return Crypt.encrypt((String)passwordInput, user.getEmail(), user.getFullname());
+		
+		if(passwordInput != null && user.getEmail() != null && user.getFullname() != null){
+			
+			return Crypt.encrypt((String)passwordInput, user.getEmail(), user.getFullname());
+		}
+		
+		return null;
 	}
 	
 	/*
@@ -59,6 +65,12 @@ public class CryptImpl implements PasswordEncoder{
 		return "";
 	}
 	public boolean matches(CharSequence passwordInput, String encodedPassword) {
-		return encodedPassword.equals(encrypt(passwordInput));
+		
+		if(encodedPassword.equals(encrypt(passwordInput))){
+			
+			return true;
+		}
+		
+		return false;
 	}
 }
