@@ -2,9 +2,9 @@ package com.revature.controllers;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -13,12 +13,11 @@ import com.revature.beans.User;
 import com.revature.dto.BlogPostCollectionDTO;
 import com.revature.service.BusinessDelegate;
 import com.revature.service.Logging;
-import com.revature.service.impl.CryptImpl;
 
 @Controller
 @RequestMapping("/api")
 public class AjaxController {
-	
+	private Logger log = Logger.getRootLogger();
 	private BusinessDelegate businessDelegate;
 	
 	public BusinessDelegate getBusinessDelegate() {
@@ -38,10 +37,10 @@ public class AjaxController {
 			@RequestParam(value="q", required=false) String searchQuery,
 			HttpServletRequest request) {
 		try {
-			System.err.println(authorId);
+			log.error(authorId);
 			
 			User author = businessDelegate.requestUser(authorId);
-			System.err.println(author);
+			log.error(author);
 			
 			Tags category = businessDelegate.requestTag(tagId);
 			
