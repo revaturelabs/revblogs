@@ -192,4 +192,9 @@ public class BaseController {
 		req.setAttribute("blog", blog);
 		return "edit-blog";
 	}
+	
+	@RequestMapping(value="user-blogs")
+	public String getUserBlogs(){
+		return "user-blogs";
+	}
 }

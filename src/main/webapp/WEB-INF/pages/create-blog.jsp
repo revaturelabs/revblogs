@@ -6,10 +6,10 @@
 <html ng-app="createBlog" xmlns="http://www.w3.org/1999/xhtml" xmlns:og="http://ogp.me/ns#" xmlns:fb="http://www.facebook.com/2008/fbml">
 <head>
 <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
-<script src="resources/js/angular.min.js">
+<script src="resources/js/angular.min.js"></script>
 <script src="resources/js/img-mgmt.js"></script>
 <script src="resources/js/create-blog.js"></script>
-  <script src="${pageContext.servletContext.contextPath}/resources/tinymce/js/tinymce/tinymce.min.js"></script>
+<script src="${pageContext.servletContext.contextPath}/resources/tinymce/js/tinymce/tinymce.min.js"></script>
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <!-- HEADERS NEEDED TO PREVENT BACK BUTTON ON LOGOUT. DO NOT REMOVE ME! -->
@@ -45,9 +45,6 @@
 	<br>
 	<form:textarea path="blogContent" rows="30" cols="100" ></form:textarea>
 	<br>
-	<!-- <button type="button">Add Reference</button>
-	<br>
-	<textarea rows="5" cols="100"></textarea> -->
 	<br />
 	<div margin="0" data-ng-repeat="reference in references">
 		<input type="text" ng-model="reference.name" name="{{reference.id}}" placeholder="Reference">
