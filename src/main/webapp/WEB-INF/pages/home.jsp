@@ -51,6 +51,16 @@
 		</tr>
 		<tr>
 			<td>
+				<a href="${pageContext.servletContext.contextPath}/user-blogs">View Your Blogs</a>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<a href="${pageContext.servletContext.contextPath}/manage-S3"><span class="glyphicon glyphicon-remove"></span>&nbsp;Manage Bucket</a>
+			</td>
+		</tr>
+		<tr>
+			<td>
 				<a href="${pageContext.servletContext.contextPath}/go-logout"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Logout</a>
 			</td>
 		</tr>
