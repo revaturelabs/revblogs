@@ -20,10 +20,10 @@ import com.revature.service.JetS3;
 
 public class JetS3Impl implements JetS3{
 	
-	private static AWSCredentials credentials;
-	private static S3Service s3;
-	private static Logger log = Logger.getRootLogger();
-	private static final String BUCKET = "blogs.pjw6193.tech";
+	private AWSCredentials credentials;
+	private  S3Service s3;
+	private  Logger log = Logger.getRootLogger();
+	private  final String BUCKET = "blogs.pjw6193.tech";
 	private BusinessDelegate businessDelegate;
 	private String credBucket;
 	
@@ -38,11 +38,11 @@ public class JetS3Impl implements JetS3{
 	
 	public void setBusinessDelegate(BusinessDelegate businessDelegate) {
 		this.businessDelegate = businessDelegate;
-		JetS3Impl.syncBusinessDelegate(this.businessDelegate);
+		syncBusinessDelegate(this.businessDelegate);
 		credBucket = this.businessDelegate.requestProperty(PropertyType.S3BUCKET);
 	}
 
-	public static synchronized void syncBusinessDelegate(BusinessDelegate businessDelegate){
+	public synchronized void syncBusinessDelegate(BusinessDelegate businessDelegate){
 		  
 	
 	   	credentials = new AWSCredentials(businessDelegate.requestProperty(PropertyType.K),businessDelegate.requestProperty(PropertyType.V));
