@@ -43,7 +43,7 @@ public class Mailer {
 			message.setFrom(new InternetAddress("d.p.pgdr@gmail.com"));
 			message.setRecipients(Message.RecipientType.TO,
 					InternetAddress.parse(newEmail));
-			message.setSubject("(DO NOT REPLY)");
+			message.setSubject("Revature Blog Registration (DO NOT REPLY)");
 			
 			 // This mail has 2 part, the BODY and the embedded image
 	         MimeMultipart multipart = new MimeMultipart("related");
@@ -53,20 +53,29 @@ public class Mailer {
 	         String htmlText = "<!DOCTYPE html>"
 	         				+ "<html>"
 	         				+ 	"<body style=\"background-color: #F9F9F9;\">"
-	         				+ 			"<div style=\"margin: 5% 16% 5% 16%;\">"
-	         				+ 				"<div style=\"background-color: #FFFFFF;"
-	         				+ 				"padding: auto 15px auto 15px;"
-	         				+ 				"margin: auto auto auto auto;\">"
-	         				+ 					"<h1>Hello</h1>"
+	         				+ 		"<table style=\"background-color: #FFFFFF;\" align=\"center\">"
+	         				+ 			"<tr>"
+	         				+ 				"<td width=\"10%\"></td>"
+	         				+ 				"<td width=\"40%\"></td>"
+	         				+ 				"<td width=\"50%\"><img style=\"display: block; margin: auto 0px auto 50%;\" src=\"http://blogs.pjw6193.tech/content/resources/img/rev-brand.png\"></td>"
+	         				+ 			"</tr>"
+	         				+ 			"<tr>"
+	         				+ 				"<td></td>"
+	         				+ 				"<td colspan=\"2\">"
+	         				+ 					"<h1>Welcome New User,</h1>"
 	         				+ 					"<h2>You have been invited to Revature Blogs</h2>"
-	         				+ 					"<p>Here is your password: "+newPassword+"</p>"
+	         				+ 					"<p>Your Username will be: <strong>"+newEmail+"</strong></p>"
+	         				+ 					"<p>Here is your password: <strong>"+newPassword+"</strong></p>"
+	         				+ 					"<p> Please proceed to <a href=\"http://localhost:7001/revblogs/loginPage\">http://logs.pjw6193.tech</a> and login to change your password.</p>"
+	         				+ 					"<br /><br /><br /><br /><br />"
 	         				+ 					"<img src=\"http://blogs.pjw6193.tech/content/resources/img/rev-brand.png\">"
 	         				+ 					"<p>"
 	         				+ 						"<span style=\"color:gray;\">11730 Plaza America Dr. | Suite 205 | Reston, VA 20190 | </span>"
 	         				+						"<a href=\"https://revature.com/\">http://revature.com</a>"
 	         				+ 					"</p>"
-	         				+ 				"</div>"
-	         				+ 			"</div>"
+	         				+ 				"</td>"
+	         				+			"</tr>"
+	         				+ 		"</table>"
 	         				+ 	"</body>"
 	         				+ "</html>";
 	         messageBodyPart.setContent(htmlText, "text/html");
