@@ -143,12 +143,22 @@ html, body {
     min-height: 200px;
     background-color: #474c55;
     padding: 30px 0;
+    color: #bbb;
   }
   a {
     color: #f66d20;
   }
   a:hover {
     color: #bd4705;
+  }
+  .footer a {
+  	color: #fff;
+  }
+  .footer a:hover {
+  	color: #f66d20;
+  }
+  .footer h4 {
+  	color: #fff;
   }
   .btn-primary {
     background-color: #f66d20;

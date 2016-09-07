@@ -31,9 +31,8 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	 * 
 	 */
 	private DataService dataService;
-	
-	//private JetS3 jetS3 = new JetS3Impl(this);
-	
+	private JetS3 jetS3;
+
 	public void setDataService(DataService dataService) {
 		this.dataService = dataService;
 	}
@@ -42,7 +41,9 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	public Session requestSession() {
 		return dataService.grabSession();
 	}
-
+	public void setJetS3(JetS3 jetS3) {
+		this.jetS3 = jetS3;
+	}
 	/**
 	 * Attempts to upload a resource (such as a CSS or JS file) to the S3 server
 	 * @param fileName the destination name of the file, a valid extension should be included
