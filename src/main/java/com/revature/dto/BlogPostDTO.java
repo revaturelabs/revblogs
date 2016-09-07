@@ -44,7 +44,7 @@ public class BlogPostDTO {
 		else
 			this.author = new AuthorDTO();
 		this.postDate = post.getPublishDate();
-		this.link = "#"; // TODO: Update this
+		this.link = post.getLocationURL();
 	}
 	
 	public int getId() {
