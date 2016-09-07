@@ -33,8 +33,9 @@ public class WriteTester {
 		try {
 			testWriter.render();
 		} catch (IOException e) {
-			
 			// Should be logged auto-magic-lly with AOP
+			// but SonarQube says no so...
+			Logging.info(e);
 		}
 	}
 

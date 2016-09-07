@@ -58,6 +58,7 @@ public class AjaxController {
 				return businessDelegate.requestBlogPosts(page, perPage);
 			}
 		} catch (IllegalArgumentException e) {
+			Logging.info(e);
 			return null;
 		}
 	}
