@@ -104,8 +104,7 @@ public class GetController {
 	
 	@RequestMapping(value="/manage-S3", method=RequestMethod.GET)
 	public String manageS3(HttpServletRequest req, HttpServletResponse resp){
-		JetS3 jets3 = new JetS3Impl();
-		String[] str = jets3.list();
+		String[] str = businessDelegate.getList();
 		req.setAttribute("blog", new Blog());
 		req.setAttribute("list", str);
 		return "management";

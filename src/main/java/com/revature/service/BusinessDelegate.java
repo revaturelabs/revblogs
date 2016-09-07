@@ -42,6 +42,11 @@ public interface BusinessDelegate {
 	 */
 	public String uploadEvidence(String fileName, MultipartFile file);
 	
+	/**
+	 * Used to obtained the list of S3 items
+	 */
+	public String[] getList();
+	
 	// Push
 	public void putRecord(Object obj);
 	public void putRecord(Object[] obj);
