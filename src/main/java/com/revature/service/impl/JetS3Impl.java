@@ -199,7 +199,7 @@ public class JetS3Impl implements JetS3{
 			}
 			return str;
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.info(e);
 			return null;
 		}
 	}
