@@ -25,12 +25,15 @@ public class JetS3Impl implements JetS3{
 	private Logger log = Logger.getRootLogger();
 	private final String BUCKET = "blogs.pjw6193.tech";
 	private BusinessDelegate businessDelegate;
+
+
+	
 	
 	public void setBusinessDelegate(BusinessDelegate businessDelegate) {
 		this.businessDelegate = businessDelegate;
-
 		syncBusinessDelegate(this.businessDelegate);
 	}
+
 
 	public synchronized void syncBusinessDelegate(BusinessDelegate businessDelegate){
 		 
@@ -60,7 +63,7 @@ public class JetS3Impl implements JetS3{
 	 * @return the URL where the file was uploaded if successful, null otherwise
 	 */
 	public String uploadResource(String fileName, MultipartFile file) {
-		return uploadFile("content/resources/" + System.nanoTime() + "/", fileName, file);
+		return  uploadFile("content/resources/" + System.nanoTime() + "/", fileName, file);
 	}
 	
 	/**

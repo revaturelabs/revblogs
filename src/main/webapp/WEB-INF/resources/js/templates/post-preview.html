@@ -6,7 +6,7 @@
    			</div>
     	</div>
     	<div class="col-xs-10">
-       <h3 class="post-title"><a href="#">{{post.title}}</a></h3>
+       <h3 class="post-title"><a ng-href={{post.link}}>{{post.title}}</a></h3>
        <p class="preview-text">{{post.subtitle}}</p>
        <span class="post-author">By <a href="#">{{post.author.name}}</a></span>
        <span class="post-date">{{post.post_date | date: "MMM d, y h:mm a"}}</span>
