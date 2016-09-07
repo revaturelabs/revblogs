@@ -39,9 +39,9 @@
 <h2>Create new blog post</h2>
 
 <form:form action="add-blog.do" method="post" commandName="blog">
-	Title
+	<h3>Title</h3>
 	<form:input path="blogTitle" /><br />
-	Subtitle
+	<h4>Subtitle</h4>
 	<form:input path="blogSubtitle"/><br />
 	<br>
 	<form:textarea path="blogContent" rows="30" cols="100" ></form:textarea>

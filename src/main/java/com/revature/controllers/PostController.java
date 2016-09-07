@@ -212,7 +212,7 @@ public class PostController {
 		String url = businessDelegate.uploadEvidence(file.getOriginalFilename(), file);
 		try {
 			PrintWriter writer = resp.getWriter();
-			writer.append("<html><body><textarea id=\"picLink\" autofocus " +
+			writer.append("<html><h3>Copy</h3><body><textarea id=\"picLink\" autofocus " +
 					"rows=\"5\" cols=\"35\" readonly>" + url +
 					"</textarea></body><script>window.onload=function(){" +
 					"document.getElementById(\"picLink\").select();};</script></html>");
