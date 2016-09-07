@@ -47,8 +47,6 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 		return dataService.grabSession();
 	}
 	public void setJetS3(JetS3 jetS3) {
-//	   	credentials = new AWSCredentials(this.requestProperty(PropertyType.K),this.requestProperty(PropertyType.V));
-//	   	s3 = new RestS3Service(credentials);
 		this.jetS3 = jetS3;
 		jetS3.syncBusinessDelegate(this);
 	}
