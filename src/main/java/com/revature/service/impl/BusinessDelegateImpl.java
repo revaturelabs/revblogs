@@ -31,7 +31,8 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	 * 
 	 */
 	private DataService dataService;
-	private JetS3 jetS3 = new JetS3Impl(this);
+	
+	//private JetS3 jetS3 = new JetS3Impl(this);
 	
 	public void setDataService(DataService dataService) {
 		this.dataService = dataService;
@@ -49,7 +50,8 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	 * @return the URL where the file was uploaded if successful, null otherwise
 	 */
 	public String uploadResource(String fileName, MultipartFile file) {
-		return jetS3.uploadResource(fileName, file);
+		//return jetS3.uploadResource(fileName, file);
+		return null;
 	}
 	
 	/**
@@ -58,7 +60,8 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	 * @return the URL where the file was uploaded if successful, null otherwise
 	 */
 	public String uploadPage(File file) {
-		return jetS3.uploadPage(file);
+		//return jetS3.uploadPage(file);
+		return null;
 	}
 	
 	/**
@@ -68,7 +71,8 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	 * @return the URL where the file was uploaded if successful, null otherwise
 	 */
 	public String uploadEvidence(String fileName, MultipartFile file) {
-		return jetS3.uploadEvidence(fileName, file);
+		//return jetS3.uploadEvidence(fileName, file);
+		return null;
 	}
 	
 	/*
@@ -76,6 +80,9 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	 */
 	
 	public void putRecord(Object obj){
+		dataService.makeRecord(obj);
+	}
+	public void putRecord(Object[] obj){
 		dataService.makeRecord(obj);
 	}
 	public void updateRecord(Object obj){

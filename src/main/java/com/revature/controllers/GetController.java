@@ -72,22 +72,29 @@ public class GetController {
 		String value = null;
 		
 		User curUser = businessDelegate.requestUsers(email.toLowerCase());
-
+		
 		if(curUser != null){
 			
-			CryptImpl.user.setUserId(curUser.getUserId());
-			CryptImpl.user.setEmail(curUser.getEmail());
-			CryptImpl.user.setPassword(curUser.getPassword());
-			CryptImpl.user.setFirstName(curUser.getFirstName());
-			CryptImpl.user.setLastName(curUser.getLastName());
-			CryptImpl.user.setProfilePicture(curUser.getProfilePicture());
-			CryptImpl.user.setJobTitle(curUser.getJobTitle());
-			CryptImpl.user.setLinkedInURL(curUser.getLinkedInURL());
-			CryptImpl.user.setDescription(curUser.getDescription());
-			CryptImpl.user.setActive(curUser.isActive());
-			CryptImpl.user.setNewUser(curUser.isNewUser());
+			if(curUser.isActive()){
+				
+				CryptImpl.user.setUserId(curUser.getUserId());
+				CryptImpl.user.setEmail(curUser.getEmail());
+				CryptImpl.user.setPassword(curUser.getPassword());
+				CryptImpl.user.setFirstName(curUser.getFirstName());
+				CryptImpl.user.setLastName(curUser.getLastName());
+				CryptImpl.user.setProfilePicture(curUser.getProfilePicture());
+				CryptImpl.user.setJobTitle(curUser.getJobTitle());
+				CryptImpl.user.setLinkedInURL(curUser.getLinkedInURL());
+				CryptImpl.user.setDescription(curUser.getDescription());
+				CryptImpl.user.setActive(curUser.isActive());
+				CryptImpl.user.setNewUser(curUser.isNewUser());
+				
+				value = "Success";
 			
-			value = "Success";
+			} else {
+				
+				value = "Inactive";
+			}
 		}
 		
 		return value; 

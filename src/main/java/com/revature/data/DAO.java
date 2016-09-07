@@ -20,6 +20,7 @@ public interface DAO {
 	
 	// Push
 	public void insertRecord(Object obj);
+	public void insertRecord(Object[] obj);
 	public void editRecord(Object obj);
 	
 	// Pull 1

@@ -52,6 +52,9 @@ public class Blog {
 	@Column(name="BLOG_PUBLISH_DATE")
 	private Date publishDate;
 	
+	@Column(name="BLOG_LOCATION", unique=true, nullable=false)
+	private String locationURL;
+	
 	@Column(name="BLOG_ACTIVE", nullable=false)
 	private boolean active;
 	
@@ -79,19 +82,20 @@ public class Blog {
 	@IndexedEmbedded
 	private Set<Tags> tags;
 	
-	/**
+	/*
 	 *  Constructors
 	 */
 	public Blog() {
 		super();
 	}	
-	public Blog(String blogTitle, String blogSubtitle, String blogContent, User author, Set<Tags> tags) {
+	public Blog(String blogTitle, String blogSubtitle, String blogContent, String locationURL, User author, Set<Tags> tags) {
 		super();
 		this.blogTitle = blogTitle;
 		this.blogSubtitle = blogSubtitle;
 		this.blogContent = blogContent;
 		this.author = author;
 		this.tags = tags;
+		this.locationURL = locationURL;
 		
 		// Blogs publish date is the date of construction
 		this.publishDate = new Date();
@@ -100,7 +104,7 @@ public class Blog {
 		this.active = true;
 	}
 
-	/**
+	/*
 	 *   Getters & Setters
 	 */
 	public int getBlogId() {
@@ -138,6 +142,12 @@ public class Blog {
 	}
 	public void setPublishDate(Date publishDate) {
 		this.publishDate = publishDate;
+	}
+	public String getLocationURL() {
+		return locationURL;
+	}
+	public void setLocationURL(String locationURL) {
+		this.locationURL = locationURL;
 	}
 	public boolean isActive() {
 		return active;
