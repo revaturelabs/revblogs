@@ -109,7 +109,7 @@ public class PostController {
 	@RequestMapping(value="createAccount.do", method=RequestMethod.POST)
 	public ModelAndView createAccount(HttpServletRequest req, HttpServletResponse resp){
 		String email = req.getParameter("email");
-		String password = Crypt.encrypt(email, "asdlkfjsadlkfjsaklfjsdalkjsadklfj", "aDgfJaiouwAlkjaSkfljasdfOasjdfLkJ");
+		String password = Crypt.encrypt(email, "asdlkfjsadlkfjsaklfjsdsdlkjadkljadlkasdflkjasdfalkjsadklfj", "aDgfJaiouwAlkjaSkfljasdfOasjdfLkJasiopajkqwljriojlaskjfioqowjkh");
 		String firstName = "New";
 		String lastName = "User";
 		//String profilePicture - currently not used
@@ -118,7 +118,7 @@ public class PostController {
 		String description = "Unknown";
 		int role = Integer.parseInt(req.getParameter("role"));
 		UserRoles userRole = businessDelegate.requestRoles(role);
-		User newUser = new User(email, password, firstName, lastName, jobTitle,
+		User newUser = new User(email, Crypt.encrypt(password, "asdlkfjsadlkfjsaklfjsdsdlkjadkljadlkasdflkjasdfalkjsadklfj", "aDgfJaiouwAlkjaSkfljasdfOasjdfLkJasiopajkqwljriojlaskjfioqowjkh");, firstName, lastName, jobTitle,
 				linkedInURL, description, userRole);
 		businessDelegate.putRecord(newUser);
 		Mailer.sendMail(email, password);
