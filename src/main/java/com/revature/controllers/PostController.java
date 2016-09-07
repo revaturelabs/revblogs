@@ -145,7 +145,7 @@ public class PostController {
 			User newUser = new User(email, Crypt.encrypt(password, email, lastName+", "+firstName), firstName, lastName, jobTitle,
 					linkedInURL, description, userRole);
 			// Save in Database
-
+			businessDelegate.putRecord(newUser);
 			// Send Email to Account
 			Mailer.sendMail(email, password);
 			
@@ -271,7 +271,6 @@ public class PostController {
 		for ( int i=highestReferenceNum; i>=0; i-- ) {
 			String ref = references.get(i);
 			if ( ref != null && ref.length() <= 0 ) {
-				ref = null;
 				references.remove(i);
 			} else {
 				break;
