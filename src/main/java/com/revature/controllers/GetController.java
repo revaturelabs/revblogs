@@ -2,7 +2,6 @@ package com.revature.controllers;
 
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,11 +13,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.revature.beans.Blog;
 import com.revature.beans.User;
 import com.revature.beans.UserRoles;
 import com.revature.service.BusinessDelegate;
+import com.revature.service.JetS3;
 import com.revature.service.Logging;
 import com.revature.service.impl.CryptImpl;
+import com.revature.service.impl.JetS3Impl;
 
 @Controller
 @SessionAttributes("roleDropDown")
@@ -91,5 +93,14 @@ public class GetController {
 		}
 		
 		return value; 
+	}
+	
+	@RequestMapping(value="/manage-S3", method=RequestMethod.GET)
+	public String manageS3(HttpServletRequest req, HttpServletResponse resp){
+		JetS3 jets3 = new JetS3Impl();
+		String[] str = jets3.list();
+		req.setAttribute("blog", new Blog());
+		req.setAttribute("list", str);
+		return "management";
 	}
 }
