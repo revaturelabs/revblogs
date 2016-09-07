@@ -8,6 +8,8 @@ import org.hibernate.Session;
 import org.jets3t.service.S3Service;
 import org.jets3t.service.security.AWSCredentials;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.revature.beans.Blog;
@@ -90,8 +92,21 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 		return jetS3.list();
 	}
 	
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public boolean delete(String filename){
-		return jetS3.delete(filename);
+		if(filename.contains("pages")){
+			List<Blog> blogs = dataService.grabBlogs();
+			for(Blog blog:blogs){
+				if(blog.getLocationURL().endsWith(filename)){
+					dataService.deleteRecord(blog);
+					return jetS3.delete(filename);
+				}
+			}
+		}
+		else if(filename.contains("evidence")){
+			return jetS3.delete(filename);
+		}
+		return false;
 	}
 	
 	/*

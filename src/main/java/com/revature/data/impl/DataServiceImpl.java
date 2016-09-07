@@ -42,7 +42,9 @@ public class DataServiceImpl implements DataService{
 	public void changeRecord(Object obj) {
 		dao.editRecord(obj);
 	}
-	
+	public void deleteRecord(Object obj){
+		dao.deleteRecord(obj);
+	}
 	/*
 	 *  Database Query Methods
 	 */

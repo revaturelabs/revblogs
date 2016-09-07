@@ -107,19 +107,21 @@ public class DAOImpl implements DAO {
 	// Delete or Archive
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void deleteRecord(Object obj){
-		
+		System.out.println("About to Falsify");
 		Session ses = sessionFactory.getCurrentSession();
 		setSession(ses);
 		
 		if(obj instanceof Blog){
-			
+			System.out.println("Falsify");
 			// Archive
 			((Blog)obj).setActive(false);
+			editRecord(obj);
 		}
 		else if(obj instanceof User){
 			
 			// Archive
 			((User)obj).setActive(false);
+			editRecord(obj);
 		}
 		else {
 			
