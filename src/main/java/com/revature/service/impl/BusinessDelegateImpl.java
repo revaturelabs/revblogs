@@ -257,4 +257,8 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 		
 		return postCollection;
 	}
+	
+	public Blog requestBlog(int id) {
+		return dataService.grabBlog(id);
+	}
 }
