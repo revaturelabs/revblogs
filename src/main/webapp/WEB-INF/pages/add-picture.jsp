@@ -15,7 +15,7 @@ visibility: hidden;
 <body>
 <div class="container page-content">
 <!-- 	<form method="POST" action="upload-picture" enctype="multipart/form-data"> -->
-		<input type="file" name="file" id="fileChooser" /><br />
+		<input type="file" id="file" name="file" id="fileChooser" /><br />
 		<input type="submit" id= "upload" name="upload" value="Upload" />
 <!-- 	</form> -->
 </div>

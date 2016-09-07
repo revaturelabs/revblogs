@@ -25,21 +25,13 @@ public class JetS3Impl implements JetS3{
 	private  Logger log = Logger.getRootLogger();
 	private  final String BUCKET = "blogs.pjw6193.tech";
 	private BusinessDelegate businessDelegate;
-	private String credBucket;
+
 	
-	public JetS3Impl() {
-		super();
-	}
-	
-	public JetS3Impl(BusinessDelegate businessDelegate) {
-		super();
-		this.businessDelegate = businessDelegate;
-	}
 	
 	public void setBusinessDelegate(BusinessDelegate businessDelegate) {
 		this.businessDelegate = businessDelegate;
 		syncBusinessDelegate(this.businessDelegate);
-		credBucket = this.businessDelegate.requestProperty(PropertyType.S3BUCKET);
+	
 	}
 
 	public synchronized void syncBusinessDelegate(BusinessDelegate businessDelegate){

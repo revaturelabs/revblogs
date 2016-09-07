@@ -10,7 +10,7 @@ $("#upload").click(function () {
         url: "upload-picture",
         enctype: 'multipart/form-data',
         data: {
-            file: file
+            file: ('#file')
         },
         success: function () {
             //call hide function here

@@ -46,6 +46,10 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	public void setJetS3(JetS3 jetS3) {
 		this.jetS3 = jetS3;
 	}
+	
+	public JetS3 getJetS3() {
+		return jetS3;
+	}
 	/**
 	 * Attempts to upload a resource (such as a CSS or JS file) to the S3 server
 	 * @param fileName the destination name of the file, a valid extension should be included
