@@ -58,7 +58,7 @@
 	<br>
  	Apply tags (separated by commas):
  	<br>
-	<form:input path="blogTagsString" id="tagList" style="resize: none" style="width: 300px"></form:input>
+	<form:input path="blogTagsString" id="tagList" style="resize:none;width:300px;"></form:input>
 	<br>
 	
 	<input type="submit" value="Preview" />
