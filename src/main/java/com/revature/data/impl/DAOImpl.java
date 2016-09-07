@@ -58,11 +58,11 @@ public class DAOImpl implements DAO {
 	}
 	public Session getSession(){
 		
-		if(session == null){
+		//if(session == null){
 			
 			Session ses = sessionFactory.openSession();
 			setSession(ses);
-		}
+		//}
 		
 		return session;
 	}
@@ -81,6 +81,19 @@ public class DAOImpl implements DAO {
 		session.save(obj);
 	}
 	
+	// Batch Add
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public void insertRecord(Object[] obj){
+		
+		Session ses = sessionFactory.getCurrentSession();
+		setSession(ses);
+
+		for(Object o : obj){
+			
+			session.save(o);
+		}
+	}
+	
 	// Update a Record
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void editRecord(Object obj){
@@ -89,6 +102,30 @@ public class DAOImpl implements DAO {
 		setSession(ses);
 		
 		session.update(obj);
+	}
+	
+	// Delete or Archive
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public void deleteRecord(Object obj){
+		
+		Session ses = sessionFactory.getCurrentSession();
+		setSession(ses);
+		
+		if(obj instanceof Blog){
+			
+			// Archive
+			((Blog)obj).setActive(false);
+		}
+		else if(obj instanceof User){
+			
+			// Archive
+			((User)obj).setActive(false);
+		}
+		else {
+			
+			// Obliterate
+			session.delete(obj);
+		}
 	}
 
 	/*
