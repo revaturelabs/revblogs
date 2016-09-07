@@ -39,6 +39,12 @@ public interface JetS3 {
 	/**
 	 * Used to delete any file from the bucket as long
 	 * as the name matches in the S3
+	 * @param filename the files name that is designated to be deleted
 	 */
 	public boolean delete(String filename);
+	
+	/**
+	 * Used to grab a list of items from the s3 bucket
+	 */
+	public String[] list();
 }

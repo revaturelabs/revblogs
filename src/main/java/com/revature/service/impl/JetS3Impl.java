@@ -190,4 +190,17 @@ public class JetS3Impl implements JetS3{
 		}	
 		return true;
 	}
+	public String[] list(){
+		try {
+			S3Object[] storage = s3.listObjects(BUCKET);
+			String[] str = new String[storage.length];
+			for(int i = 0;i<storage.length;i++){
+				str[i]=storage[i].getName();
+			}
+			return str;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 }
