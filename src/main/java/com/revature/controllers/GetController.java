@@ -114,6 +114,7 @@ public class GetController {
 	@RequestMapping(value="/manageusers", method=RequestMethod.GET)
 	public String manageUsers(HttpServletRequest req, HttpServletResponse resp){
 		req.setAttribute("userList", businessDelegate.requestUsers());
+		req.setAttribute("updateUserProfile", new User());
 		return "manageusers";
 	}
 }
