@@ -44,4 +44,5 @@
 </div>
 <jsp:include page="footer.jsp"></jsp:include>
 </body>
+<script type="text/javascript" src="resources/js/ui.js"></script>
 </html>

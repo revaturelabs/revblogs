@@ -30,6 +30,7 @@ public interface DAO {
 	public String getProperty(PropertyType type);
 	public User getUser(int id);
 	public Tags getTag(int id);
+	public Blog getBlog(int id);
 	
 	// Pull All
 	public List<User> getUsers();

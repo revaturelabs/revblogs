@@ -50,6 +50,13 @@ public interface BusinessDelegate {
 	 */
 	public String[] getList();
 	
+	/**
+	 * For deleting objects from s3
+	 * @param filename
+	 * @return
+	 */
+	public boolean delete(String filename);
+	
 	// Push
 	public void putRecord(Object obj);
 	public void putRecord(Object[] obj);
@@ -72,4 +79,5 @@ public interface BusinessDelegate {
 	public BlogPostCollectionDTO searchBlogPosts(String query, int page, int perPage);
 	public BlogPostCollectionDTO requestBlogPosts(Tags category, int page, int perPage);
 	public BlogPostCollectionDTO requestBlogPosts(User author, int page, int perPage);
+	public Blog requestBlog(int id);
 }

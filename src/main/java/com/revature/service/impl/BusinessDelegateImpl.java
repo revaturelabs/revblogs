@@ -90,6 +90,10 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 		return jetS3.list();
 	}
 	
+	public boolean delete(String filename){
+		return jetS3.delete(filename);
+	}
+	
 	/*
 	 *  Database Altering Methods
 	 */
@@ -263,5 +267,9 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 		postCollection.setPerPage(perPage);
 		
 		return postCollection;
+	}
+	
+	public Blog requestBlog(int id) {
+		return dataService.grabBlog(id);
 	}
 }
