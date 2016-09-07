@@ -37,11 +37,9 @@ import com.revature.beans.UserRoles;
 import com.revature.dto.UserDTO;
 import com.revature.service.BusinessDelegate;
 import com.revature.service.HtmlWriter;
-import com.revature.service.JetS3;
 import com.revature.service.Logging;
 import com.revature.service.Population;
 import com.revature.service.impl.Crypt;
-import com.revature.service.impl.JetS3Impl;
 import com.revature.service.impl.Mailer;
 
 @Controller
@@ -273,7 +271,6 @@ public class PostController {
 		for ( int i=highestReferenceNum; i>=0; i-- ) {
 			String ref = references.get(i);
 			if ( ref != null && ref.length() <= 0 ) {
-				ref = null;
 				references.remove(i);
 			} else {
 				break;

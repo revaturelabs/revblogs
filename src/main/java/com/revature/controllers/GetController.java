@@ -17,10 +17,8 @@ import com.revature.beans.Blog;
 import com.revature.beans.User;
 import com.revature.beans.UserRoles;
 import com.revature.service.BusinessDelegate;
-import com.revature.service.JetS3;
 import com.revature.service.Logging;
 import com.revature.service.impl.CryptImpl;
-import com.revature.service.impl.JetS3Impl;
 
 @Controller
 @SessionAttributes("roleDropDown")
