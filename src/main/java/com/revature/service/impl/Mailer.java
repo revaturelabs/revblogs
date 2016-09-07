@@ -1,5 +1,6 @@
 package com.revature.service.impl;
 
+
 import java.util.Properties;
 
 import javax.mail.BodyPart;
@@ -14,8 +15,6 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
 import org.apache.log4j.Logger;
-
-import com.revature.service.Logging;
 
 public class Mailer {
 	private Mailer(){
@@ -86,4 +85,5 @@ public class Mailer {
 			log.error(e);
 		}
     }
+
 }
