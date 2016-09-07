@@ -134,26 +134,25 @@ public class PostController {
 		
 		// Check if email exists
 		if(businessDelegate.requestUsers(email) == null){
-			
 			// Generate a Temporary Password
 			String password = Crypt.encrypt("7Pas8WoR", email, role);
-			
+			String firstName = "New";
+			String lastName = "User";
+			//String profilePicture - currently not used
+			String jobTitle = "Developer";
+			String linkedInURL = null;
+			String description = "Unknown";
 			// Role Obj from Database
-			UserRoles myRole = businessDelegate.requestRoles(role);
-			
-			// Dummy User
-			User dummy = new User(email, password, " ", " ", " ", " ", " ", myRole);
-			
-			// Encrypt the Temp Password in the Database
-			dummy.setPassword(Crypt.encrypt(dummy.getPassword(), dummy.getEmail(), dummy.getFullname()));
-			
+			UserRoles userRole = businessDelegate.requestRoles(role);
+			User newUser = new User(email, Crypt.encrypt(password, email, lastName+", "+firstName), firstName, lastName, jobTitle,
+					linkedInURL, description, userRole);
 			// Save in Database
-			businessDelegate.putRecord(dummy);
-			
+			businessDelegate.putRecord(newUser);
 			// Send Email to Account
 			Mailer.sendMail(email, password);
 			
 			model.setViewName("/home");
+			return model;
 		}
 		
 		model.setViewName("/makeClientAccount");
