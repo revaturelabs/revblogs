@@ -48,5 +48,7 @@ public interface JetS3 {
 	 */
 	public String[] list();
 	
+
 	public void syncBusinessDelegate(BusinessDelegate businessDelegate);
+
 }
