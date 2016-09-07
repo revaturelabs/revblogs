@@ -31,6 +31,11 @@ public class Logging {
 	public void logGetException(JoinPoint jp, Exception e){
 		log.error("[REVBLOGS LOGGER]: "+jp.getSignature()+" threw "+e);
 	}
+	
+	public void log(String message){		
+		log.info("[AOP LOGGER]:" + message);		
+	}
+	public static void info(Throwable t){log.info(t);}
 
 //	
 //	 //------------------POINTCUTS------------------//
