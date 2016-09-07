@@ -413,10 +413,8 @@ public class PostController {
 	
 	@RequestMapping(value="/deleteFile", method=RequestMethod.GET)
 	public ModelAndView delete(Blog blog, HttpServletRequest req, HttpServletResponse resp){
-		JetS3 jets3 = new JetS3Impl();
-		System.out.println(blog.getBlogTitle());
-		jets3.delete(blog.getBlogTitle());
-		String[] str = jets3.list();
+		//jets3.delete(blog.getBlogTitle());
+		String[] str = businessDelegate.getList();
 		req.setAttribute("blog", new Blog());
 		req.setAttribute("list", str);
 		ModelAndView model = new ModelAndView();

@@ -4,7 +4,6 @@
 <html>
 <head >
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Upload Picture</title>
 <script src="${pageContext.servletContext.contextPath}/resources/js/jquery-3.1.0.min.js"></script>
 <style type="text/css">
 #loading{
@@ -14,10 +13,10 @@ visibility: hidden;
 </head>
 <body>
 <div class="container page-content">
-<!-- 	<form method="POST" action="upload-picture" enctype="multipart/form-data"> -->
-		<input type="file" name="file" id="fileChooser" /><br />
+	<form method="POST" action="upload-picture" enctype="multipart/form-data">
+		<input type="file" id="file" name="file" id="fileChooser" /><br />
 		<input type="submit" id= "upload" name="upload" value="Upload" />
-<!-- 	</form> -->
+	</form>
 </div>
 <img id="loading" src="http://blogs.pjw6193.tech/content/resources/img/rev.gif" />
 

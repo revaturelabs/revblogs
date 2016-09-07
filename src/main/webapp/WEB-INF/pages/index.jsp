@@ -90,10 +90,11 @@
   <!-- Customize posts to view -->
   <div id="postsPerPage">
   <label>Number of posts to show: </label>
-  	<select>
-  		<option ng-model="postsPerPage" ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 10]" href="#here" ng-click="getPage(curPage)">10</option>
-  		<option ng-model="postsPerPage"  ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 25]" href="#here" ng-click="getPage(curPage)">25</option>
-  		<option ng-model="postsPerPage"  ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 50]" href="#here" ng-click="getPage(curPage)">50</option>
+  	<select  ng-model="postsPerPage" ng-change="getPage(curPage, postsPerPage)">
+  		<option ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 5]">5</option>
+  		<option ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 10]" selected>10</option>
+  		<option ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 25]">25</option>
+  		<option ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 50]">50</option>
   	</select>
   </div>
   

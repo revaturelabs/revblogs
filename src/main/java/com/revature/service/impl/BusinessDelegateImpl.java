@@ -50,6 +50,10 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 		this.jetS3 = jetS3;
 		jetS3.syncBusinessDelegate(this);
 	}
+	
+	public JetS3 getJetS3() {
+		return jetS3;
+	}
 	/**
 	 * Attempts to upload a resource (such as a CSS or JS file) to the S3 server
 	 * @param fileName the destination name of the file, a valid extension should be included
@@ -58,6 +62,7 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	 */
 	public String uploadResource(String fileName, MultipartFile file) {
 		return jetS3.uploadResource(fileName, file);
+
 	}
 	
 	/**
@@ -67,6 +72,7 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	 */
 	public String uploadPage(File file) {
 		return jetS3.uploadPage(file);
+
 	}
 	
 	/**
@@ -77,6 +83,11 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	 */
 	public String uploadEvidence(String fileName, MultipartFile file) {
 		return jetS3.uploadEvidence(fileName, file);
+
+	}
+	
+	public String[] getList(){
+		return jetS3.list();
 	}
 	
 	/*
