@@ -10,6 +10,7 @@
 		<config>src/main/webapp/WEB-INF/dispatcher-servlet.xml</config>
 		<config>src/main/webapp/WEB-INF/spring-security.xml</config>
 		<config>src/test/resources/context1.xml</config>
+		<config>src/test/resources/dao-context.xml</config>
 	</configs>
 	<autoconfigs>
 		<config>src/main/webapp/WEB-INF/spring-beans.xml</config>
