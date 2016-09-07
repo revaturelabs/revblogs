@@ -97,4 +97,8 @@ public class DataServiceImpl implements DataService{
 	public PaginatedResultList<Blog> grabBlogs(String search, int start, int max){
 		return dao.getBlogs(search, start, max);
 	}
+	@Override
+	public Blog grabBlog(int id) {
+		return dao.getBlog(id);
+	}
 }

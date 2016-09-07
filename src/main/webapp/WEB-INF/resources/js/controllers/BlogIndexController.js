@@ -124,7 +124,8 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 					preloadPage($scope.curPage + 1, $scope.postsPerPage);
 
 					//$anchorScroll($('#postsDiv'));
-			        window.scrollTo(0, $('#postsDiv').offsetTop + 100)
+			        //window.scrollTo(0, $('#postsDiv').offsetTop + 100);
+			        $("html, body").animate({ scrollTop: "300px" });
 				}
 			}
 			

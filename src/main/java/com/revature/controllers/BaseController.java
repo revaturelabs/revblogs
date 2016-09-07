@@ -69,6 +69,10 @@ public class BaseController {
 		// Toggle Population Button (True is On and False is Off
 		req.getSession().setAttribute("populate", false);
 		
+		if(req.getSession().getAttribute("user") != null){
+			User user = (User) req.getSession().getAttribute("user");
+		}
+		
 		return "loginPage";
 	}
 	
@@ -177,6 +181,12 @@ public class BaseController {
 	
 	@RequestMapping(value="edit.do")
 	public String getEditBlog(HttpServletRequest req) {
+		if((req.getParameter("blogid")) != null){
+			int id = Integer.parseInt(req.getParameter("blogid"));
+			Blog blog = businessDelegate.requestBlog(id);
+			req.setAttribute("blog", blog);
+			return "edit-blog";
+		}
 		Blog blog = (Blog) req.getSession().getAttribute("blog");
 		req.setAttribute("blog", blog);
 		return "edit-blog";
