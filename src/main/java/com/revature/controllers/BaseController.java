@@ -181,6 +181,12 @@ public class BaseController {
 	
 	@RequestMapping(value="edit.do")
 	public String getEditBlog(HttpServletRequest req) {
+		if((req.getParameter("blogid")) != null){
+			int id = Integer.parseInt(req.getParameter("blogid"));
+			Blog blog = businessDelegate.requestBlog(id);
+			req.setAttribute("blog", blog);
+			return "edit-blog";
+		}
 		Blog blog = (Blog) req.getSession().getAttribute("blog");
 		req.setAttribute("blog", blog);
 		return "edit-blog";

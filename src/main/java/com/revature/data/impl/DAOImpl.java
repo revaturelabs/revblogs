@@ -476,4 +476,11 @@ public class DAOImpl implements DAO {
 			indexBuilt = true;
 		}
 	}
+
+	@Override
+	public Blog getBlog(int id) {
+		Session session = sessionFactory.getCurrentSession();
+		Criteria criteria = session.createCriteria(Blog.class).add(Restrictions.eq("blogId", id));
+		return (Blog) criteria.uniqueResult();
+	}
 }

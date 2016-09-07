@@ -6,7 +6,10 @@
    			</div>
     	</div>
     	<div class="col-xs-10">
-    		<span class="pull-right"><a on="edit.do">Edit</a></span>
+    	<form action="edit.do" method="post" id="edit-form">
+    		<input type="hidden" value={{post.id}} name="blogid"/>
+    		<span class="pull-right"><button class="update-blog-btn" type="submit"><span class="glyphicon glyphicon-pencil"></span></button></span>
+    	</form>
     		<h3 class="post-title"><a href={{post.link}}>{{post.title}}</a></h3>
 	        <p class="preview-text">{{post.subtitle}}</p>
 	        <span class="post-author">By <a href={{post.author.link}}>{{post.author.name}}</a></span>

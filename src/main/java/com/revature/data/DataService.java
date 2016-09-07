@@ -30,6 +30,7 @@ public interface DataService {
 	public User grabUser(int id);
 	public Tags grabTag(int id);
 	public UserRoles grabRoles(String role);
+	public Blog grabBlog(int id);
 	
 	// Pull All
 	public List<User> grabUsers();
