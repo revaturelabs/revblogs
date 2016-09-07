@@ -51,6 +51,11 @@
 		</tr>
 		<tr>
 			<td>
+				<a href="${pageContext.servletContext.contextPath}/user-blogs">View Your Blogs</a>
+			</td>
+		</tr>
+		<tr>
+			<td>
 				<a href="${pageContext.servletContext.contextPath}/manage-S3"><span class="glyphicon glyphicon-remove"></span>&nbsp;Manage Bucket</a>
 			</td>
 		</tr>
@@ -77,7 +82,12 @@
 	</tr>
 	<tr>
 		<td>
-			<a href="${pageContext.servletContext.contextPath}/"><span class="glyphicon glyphicon-book"></span>&nbsp;View Blogs</a>
+			<a href="${pageContext.servletContext.contextPath}/user-blogs">View Your Blogs</a>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<a href="${pageContext.servletContext.contextPath}/"><span class="glyphicon glyphicon-book"></span>&nbsp;View All Blogs</a>
 		</td>
 	</tr>
 	<tr>
