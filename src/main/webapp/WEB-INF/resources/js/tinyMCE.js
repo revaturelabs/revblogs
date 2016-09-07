@@ -41,7 +41,7 @@ window.tinymce.init({
 		      context: 'tools',
 		      onclick: function(){
 		    	  editor.windowManager.open({
-		    		  title: 'Upload Picture',
+		    		  title: 'Upload Video',
 		    		  url: 'add-picture',
 		    		  width: 200,
 		    		  height: 130
