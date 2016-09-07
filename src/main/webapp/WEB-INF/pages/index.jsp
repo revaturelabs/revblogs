@@ -126,6 +126,7 @@
 	        </div>
 	        <div class="col-sm-4">
 	        	<a href="${pageContext.servletContext.contextPath}/profile">Contributors - Log In</a><br>
+	        	<a href="${pageContext.servletContext.contextPath}/go-logout">Log Out</a><br>
 	        	<a href="#">Site map</a>
 	        </div>
 	      </div>

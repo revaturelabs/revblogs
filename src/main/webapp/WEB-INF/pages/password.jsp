@@ -71,6 +71,7 @@
 </div>
 <jsp:include page="footer.jsp"></jsp:include>
 </body>
+<script type="text/javascript" src="resources/js/ui.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
 	$(".fileUploadButton").click(function(e){

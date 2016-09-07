@@ -25,10 +25,11 @@
 <meta property="og:image:height" content="298" />
 <meta property="fb:app_id" content="1070815552954243"/>
 
-<link rel="stylesheet" href="${pageContext.servletContext.contextPath}/resources/css/bootstrap.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <link rel="stylesheet" href="bootstrap-social.css">
 <script src="https://use.fontawesome.com/ebec39e24e.js"></script>
-<link rel="stylesheet" href="${pageContext.servletContext.contextPath}/resources/css/main.css" >
+<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
+<link rel="stylesheet" href="resources/css/main.css" >
 
 <title>Blog Post</title>
 </head>
@@ -68,6 +69,7 @@
 </div>
 <jsp:include page="footer.jsp"></jsp:include>
 </body>
+<script type="text/javascript" src="resources/js/ui.js"></script>
 <script src="https://s3-us-west-2.amazonaws.com/dan-pickles-jar/content/resources/js/facebookConnection.js"></script>
 <script src="${pageContext.servletContext.contextPath}/resources/js/tinyMCE.js"></script>
 </html>
