@@ -1,6 +1,7 @@
 package com.revature.beans;
 
 import java.util.Date;
+import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -35,11 +36,11 @@ public class Blog {
 	private int blogId;
 	
 	@Column(name="BLOG_TITLE", unique=true, nullable=false)
-	@Field
+	@Field(name="title")
 	private String blogTitle;
 	
 	@Column(name="BLOG_SUBTITLE")
-	@Field
+	@Field(name="subtitle")
 	private String blogSubtitle;
 	
 	@Column(name="BLOG_CONTENT", nullable=false)
@@ -52,13 +53,17 @@ public class Blog {
 	@Column(name="BLOG_PUBLISH_DATE")
 	private Date publishDate;
 	
+	@Column(name="BLOG_LOCATION", unique=true, nullable=false)
+	private String locationURL;
+	
 	@Column(name="BLOG_ACTIVE", nullable=false)
-	private boolean blogActive;
+	private boolean active;
 	
 	@Column(name="BLOG_HTML")
 	@Lob
 	private String staticHTML;
 	
+	private transient Map<Integer, String> references;
 	private transient String blogTagsString;
 	
 	//----------------------------------
@@ -79,28 +84,29 @@ public class Blog {
 	@IndexedEmbedded
 	private Set<Tags> tags;
 	
-	/**
+	/*
 	 *  Constructors
 	 */
 	public Blog() {
 		super();
 	}	
-	public Blog(String blogTitle, String blogSubtitle, String blogContent, User author, Set<Tags> tags) {
+	public Blog(String blogTitle, String blogSubtitle, String blogContent, String locationURL, User author, Set<Tags> tags) {
 		super();
 		this.blogTitle = blogTitle;
 		this.blogSubtitle = blogSubtitle;
 		this.blogContent = blogContent;
 		this.author = author;
 		this.tags = tags;
+		this.locationURL = locationURL;
 		
 		// Blogs publish date is the date of construction
 		this.publishDate = new Date();
 		
 		// Blogs always start active
-		this.blogActive = true;
+		this.active = true;
 	}
 
-	/**
+	/*
 	 *   Getters & Setters
 	 */
 	public int getBlogId() {
@@ -139,11 +145,17 @@ public class Blog {
 	public void setPublishDate(Date publishDate) {
 		this.publishDate = publishDate;
 	}
-	public boolean isBlogActive() {
-		return blogActive;
+	public String getLocationURL() {
+		return locationURL;
 	}
-	public void setBlogActive(boolean blogActive) {
-		this.blogActive = blogActive;
+	public void setLocationURL(String locationURL) {
+		this.locationURL = locationURL;
+	}
+	public boolean isActive() {
+		return active;
+	}
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 	public Set<Evidence> getEvidences() {
 		return evidences;
@@ -168,6 +180,12 @@ public class Blog {
 	}
 	public void setAuthor(User author) {
 		this.author = author;
+	}
+	public Map<Integer, String> getReferences() {
+		return references;
+	}
+	public void setReferences(Map<Integer, String> references) {
+		this.references = references;
 	}
 	public String getBlogTagsString() {
 		return blogTagsString;

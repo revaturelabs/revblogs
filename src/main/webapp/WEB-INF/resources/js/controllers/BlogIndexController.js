@@ -51,74 +51,103 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 	
 	$scope.getPage = function(page, postsPP)
 	{
-		$http.get("/revblogs/api/posts?page=" + page).success(
+		$http.get("/revblogs/api/posts?page=" + page + "&per_page=" + $scope.postsPerPage).success(
 		    function(resp)
 			{
-				console.log("getPage");
-				var postsPerPage = 10;
-				var curPage = page;  //current page
-				
-				var prevPage = curPage;
-				var nextPage = curPage;
-				
-				if(curPage > 1)
-				{
-					prevPage = curPage - 1;
-				}
-				
-				if(curPage < tPages)
-				{
-					nextPage = curPage + 1;
-				}
-				
 				$scope.posts = resp;
+				
+				$scope.curPage = page;  //current page
+				
+				var prevPage = $scope.curPage;
+				var nextPage = $scope.curPage;
+				
+				if($scope.curPage > 1)
+				{
+					prevPage = $scope.curPage - 1;
+					console.log("Previous page: " + prevPage);
+				}
+				
+				if($scope.curPage < $scope.posts.total_pages)
+				{
+					console.log("Current page: " + $scope.curPage);
+					nextPage = $scope.curPage + 1;
+					console.log("Next page: " + nextPage);
+				}
 				
 				$scope.numOfPages = [];
 				
-				for (var i = 0; i < $scope.posts.total_pages; i++)
+				for (var i = 1; i < $scope.posts.total_pages; i++)
 				{
 					$scope.numOfPages[i] = i;
 				}
 				
-				/*$scope.postPage = 
-				{									 10 posts per page is default; can be changed by using ?perPage=25 
-						page: page,					 current page 
-						totalPages: tPages,	 total number of pages 
-						totalPosts: tPages,	 total number of posts 
-						prev: prevPage,				 link to previous set of posts 
-						next: nextPage,				 link to next set of posts 
-						posts: resp.postsList
-				};*/
-				
-				if(curPage < tPages)
+				if($scope.curPage < $scope.posts.total_pages)
 				{
-					preloadPage(nextPage);
-					console.log("Next page preloaded!");
+					preloadPage(nextPage, $scope.postsPerPage);
 				}
 				
-				if(curPage > 1)
+				if($scope.curPage > 1)
 				{
-					preloadPage(prevPage);
-					console.log("Prev page preloaded!");
+					preloadPage(prevPage, $scope.postsPerPage);
 				}
+				
+				$('#postsDiv').load();
 			}
 		);
 	}
 	
-	function changeView(direction)
+	$scope.changeView = function(direction)
 	{
-		if(direction == 1)
+		if($scope.isLoading)
 		{
-			$scope.posts = $scope.nextPagePosts;
-			$scope.curPage++;
-			preloadPage($scope.curPage, $scope.postsPerPage);
+			console.log("HEY! I'm loading!");
 		}
 		
 		else
 		{
-			$scope.posts = $scope.prevPagePosts;
-			$scope.curPage--;
-			preloadPage($scope.curPage, $scope.postsPerPage);
+			
+			console.log("ChangeView " + direction);
+			console.log($scope.curPage);
+			if(direction == 1)
+			{
+				$scope.posts = $scope.nextPagePosts;
+				$scope.curPage = $scope.curPage + 1;
+				
+				console.log("Forward direction, curPage = " + $scope.curPage);
+				
+				$scope.isLoading = true;
+				console.log("Loading? " + $scope.isLoading);
+				
+				preloadPage($scope.curPage - 1, $scope.postsPerPage);
+				preloadPage($scope.curPage + 1, $scope.postsPerPage);
+
+				//$anchorScroll($('#postsDiv'));
+		        window.scrollTo(0, $('#postsDiv').offsetTop + 100)
+			}
+			
+			else
+			{
+				if($scope.curPage == 1)
+				{
+					
+				}
+				
+				else
+				{
+					$scope.posts = $scope.prevPagePosts;
+					$scope.curPage = $scope.curPage - 1;
+					
+					console.log("Reverse direction, curPage = " + $scope.curPage);
+
+					$scope.isLoading = true;
+					preloadPage($scope.curPage - 1, $scope.postsPerPage);
+					preloadPage($scope.curPage + 1, $scope.postsPerPage);
+					$scope.isLoading = false;
+					
+					//$anchorScroll($('#postsDiv'));
+			        window.scrollTo(0, $('#postsDiv').offsetTop + 100)
+				}
+			}
 		}
 	}
 	
@@ -127,30 +156,31 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 		$http.get("/revblogs/api/posts?page=" + page).success(
 		    function(resp)
 			{
-				console.log("getPage");
-				//var postsPerPage = postsPP;  //postsPerPage, if implemented will be tacked onto url
-				var postsPerPage = 10;
-				var postsToDisplay = resp.posts;
-				var tPages = resp.tPages;  //totalPages
-				var tPosts = resp.tPosts;  //totalPosts
-				var curPage = page;
-				
-				var prevPage = curPage;
+				var prevPage = $scope.curPage;
 				console.log(prevPage);
-				var nextPage = curPage;
+				var nextPage = $scope.curPage;
 				
 				if($scope.curPage > page)
 				{
+					console.log("Pre-loading prevPage = " + page)
 					$scope.prevPagePosts = resp;
 				}
 				
-				if(curPage < page)
+				if($scope.curPage < page)
 				{
+					console.log("Pre-loading nextPage = " + page)
 					$scope.nextPagePosts = resp;
+					$scope.isLoading = false;
 				}
 			}
 		);
 	}	
+
+	$scope.curPage = 1;
+	$scope.postsPerPage = 10;
+	$scope.isLoading = false;
+	$scope.getPage($scope.curPage, $scope.postsPerPage);
+	//
 }]);
 
 

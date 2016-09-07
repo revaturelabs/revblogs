@@ -10,34 +10,34 @@ public class ApplicationProperties {
 	@Column(name="PROPERTY_COMPANY")
 	private String company;
 	
-	@Column(name="PROPERTY_APP", unique=true, nullable=false)
+	@Column(name="PROPERTY_APP", unique=true)
 	private String app;
 	
-	@Column(name="PROPERTY_S3", unique=true, nullable=false)
+	@Column(name="PROPERTY_S3", unique=true)
 	private String s3;
 	
-	@Column(name="PROPERTY_SERVER", unique=true, nullable=false)
+	@Column(name="PROPERTY_SERVER", unique=true)
 	private String server;
 	
-	@Column(name="PROPERTY_JENKINS", unique=true, nullable=false)
+	@Column(name="PROPERTY_JENKINS", unique=true)
 	private String jenkins;
 	
-	@Column(name="PROPERTY_SONARQUBE", unique=true, nullable=false)
+	@Column(name="PROPERTY_SONARQUBE", unique=true)
 	private String sonarqube;
 	
-	@Column(name="PROPERTY_K", unique=true, nullable=false)
+	@Column(name="PROPERTY_K", unique=true)
 	private String k;
 	
-	@Column(name="PROPERTY_V", unique=true, nullable=false)
+	@Column(name="PROPERTY_V", unique=true)
 	private String v;
 	
-	@Column(name="PROPERTY_FAPP", unique=true, nullable=false)
+	@Column(name="PROPERTY_FAPP", unique=true)
 	private String fapp;
 	
-	@Column(name="PROPERTY_LINKTOKEN", unique=true, nullable=false)
+	@Column(name="PROPERTY_LINKTOKEN", unique=true)
 	private String linkToken;
 	
-	@Column(name="PROPERTY_S3BUCKET", unique=true, nullable=false)
+	@Column(name="PROPERTY_S3BUCKET", unique=true)
 	private String bucketURL;
 	
 	/**

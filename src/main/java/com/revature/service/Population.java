@@ -14,23 +14,29 @@ import com.revature.beans.Blog;
 import com.revature.beans.Tags;
 import com.revature.beans.User;
 import com.revature.beans.UserRoles;
+import com.revature.data.impl.PropertyType;
 import com.revature.service.impl.Crypt;
 
 public class Population {
 
-	private Logging logger = new Logging();
 	private BusinessDelegate delegate;
+	private Logging logger;
 	private Session session;
 	
 	public void setDelegate(BusinessDelegate delegate) {
 		this.delegate = delegate;
 	}
-	
+	public void setLogger(Logging logger) {
+		this.logger = logger;
+	}
+
 	//-----------------------------------
 	// Complete Population (Besides Evidence)
-	public void populateDatabase(){
+	public void populateDatabase(String[] properties){
 		
-		populateProperties();
+		// Props
+		encryptProperty(properties);
+		
 		populateRoles();
 		populateTags();
 		populateUsers();
@@ -50,17 +56,17 @@ public class Population {
 		
 		String[] roles = new String[]{"ADMIN", "CONTRIBUTOR"};
 		
-		//Assigning null indicates it is ready for GC, which can
-		//cause error in this situation, please avoid this practice
-		//Assign either new constructor or leave as is below.
+		List<UserRoles> roleList = new ArrayList<UserRoles>();
 		UserRoles role;
 		
 		for(int i = 0; i < 2; i++){
 			
 			role = new UserRoles(roles[i]);
-		
-			delegate.putRecord(role);
+			roleList.add(role);
 		}
+		
+		Object[] roleArray = roleList.toArray();
+		delegate.putRecord(roleArray);
 		
 		logger.log("-- Done Populating Role Table --");
 	}
@@ -79,23 +85,24 @@ public class Population {
 		
 		String[] tags = new String[]{"Java", "SQL", "Apian", "JSP", "Servlet", "Hibernate", "Spring", "REST", "SOAP"};
 		
-		//Assigning null indicates it is ready for GC, which can
-		//cause error in this situation, please avoid this practice
-		//Assign either new constructor or leave as is below.
+		List<Tags> tagList = new ArrayList<Tags>();
 		Tags tag;
 		
 		for(int i = 0; i < tags.length; i++){
 			
 			tag = new Tags(tags[i]);
-					
-			delegate.putRecord(tag);
+			tagList.add(tag);
 		}
+		
+		Object[] tagArray = tagList.toArray();
+		delegate.putRecord(tagArray);
 		
 		logger.log("-- Done Populating Tags Table --");
 	}
 	
 	//-----------------------------------
 	// Blogs
+	@SuppressWarnings("unchecked")
 	public void populateBlogs(){
 		
 		/**
@@ -162,6 +169,11 @@ public class Population {
 			+ "Aliquam leo nisl, feugiat in porta et, laoreet non purus."
 		};
 		
+		String[] blogLocation = new String[]{
+		
+			"url1", "url2", "url3"	
+		};
+		
 		// Tag Population Nonsense
 		int[][] tagIndexes = new int[][]{
 			
@@ -193,9 +205,7 @@ public class Population {
 		
 		List<User> users = delegate.requestUsers();
 		
-		//Assigning null indicates it is ready for GC, which can
-		//cause error in this situation, please avoid this practice
-		//Assign either new constructor or leave as is below.
+		List<Blog> blogList = new ArrayList<Blog>();
 		Blog blog;
 		
 		for(int i = 0; i < blogTitle.length; i++){
@@ -211,9 +221,12 @@ public class Population {
 				}
 			}
 			
-			blog = new Blog(blogTitle[i], blogSubtitle[i], blogContent[i], users.get(i), tagsSet);
-			delegate.putRecord(blog);
+			blog = new Blog(blogTitle[i], blogSubtitle[i], blogContent[i], blogLocation[i], users.get(i), tagsSet);
+			blogList.add(blog);
 		}
+		
+		Object[] blogArray = blogList.toArray();
+		delegate.putRecord(blogArray);
 
 		logger.log("-- Done Populating Blogs Table --");
 	}
@@ -223,52 +236,6 @@ public class Population {
 	public void populateUsers(){
 		
 		session = delegate.requestSession();
-			
-		String[] email = new String[]{
-				
-				"pickles@yahoo.com",
-				"dots@yahoo.com",
-				"admin@test.com"
-		};
-		
-		String[] password = new String[]{
-				
-				"password1",
-				"password1",
-				"password1"
-		};
-		
-		String[] firstName = new String[]{
-				
-				"Dan",
-				"John",
-				"Tally"
-		};
-		String[] lastName = new String[]{
-				
-				"Pickles",
-				"Doe",
-				"Marx"
-		};
-		String[] jobTitle = new String[]{
-				
-				"Java Developer",
-				"Java Engineer",
-				"Hibernate Wizard"
-		};
-		String[] linkedInURL = new String[]{
-				
-				"Fake@linkedin.com",
-				"Other@linkedin.com",
-				"Almost@linkedin.com"
-		};
-		String[] description = new String[]{
-				
-				"I am a software developer who focuses on applications that revolve around pickles.",
-				"I am a Java developer with a lot of experience in web services.",
-				"I excel at Hibernate and hate SQL."
-		};
- 		boolean[] isAdmin = new boolean[]{true,false,true};
 		
 		Criteria criteria1 = session.createCriteria(UserRoles.class).add(Restrictions.eq("role", "ADMIN"));
 		Criteria criteria2 = session.createCriteria(UserRoles.class).add(Restrictions.eq("role", "CONTRIBUTOR"));
@@ -276,161 +243,204 @@ public class Population {
 		UserRoles admin = (UserRoles) criteria1.uniqueResult();
 		UserRoles contributor = (UserRoles) criteria2.uniqueResult();
 		
-		UserRoles myRole;
+				
+		/*
+		 * 	String[]   = User #
+		 * 	String[][] = Property Type:
+		 * 
+		 * 					Email
+		 * 					Password
+		 * 					First Name
+		 * 					Last Name
+		 * 					Title
+		 * 					Linked In
+		 * 					Description
+		 * 					isAdmin
+		 * 
+		 * 					In that order...
+		 */
 		
-		for(int i = 0; i < email.length; i++){
-			
-			// Find Role
-			if(isAdmin[i]){
-				
-				myRole = admin;
-				
-			} else {
-				
-				myRole = contributor;
+		String[][] users = new String[100][7];
+		
+		for(int i = 0; i < users.length; i++){
+			for(int j = 0; j < 7; j++){
+				switch(j){
+					
+					// Email
+					case 0:
+						users[i][j] = "pickles" + i + "@yahoo.com";
+						break;
+						
+					// Password
+					case 1:
+						users[i][j] = "password" + i;
+						break;
+						
+					// First
+					case 2:					
+						users[i][j] = "Dan";
+						break;
+						
+					// Last
+					case 3:					
+						users[i][j] = "Pickles";
+						break;
+						
+					// Title
+					case 4:					
+						users[i][j] = "Java Developer #" + i;
+						break;
+						
+					// Linked In
+					case 5:					
+						users[i][j] = "https://www.linkedin.com/" + i + "/";
+						break;
+						
+					// Description
+					case 6:				
+						users[i][j] = "I am a software developer who focuses on applications that revolve around pickles.";
+						break;
+				}	
 			}
+		}
+		
+		List<User> userList = new ArrayList<User>();
+		UserRoles myRole = new UserRoles();
+
+		for(int k = 0; k < users.length; k++){
 			
-			User user = new User(email[i], password[i], firstName[i], lastName[i], jobTitle[i], linkedInURL[i], 
-								 description[i], myRole);
+			User user = new User();
+			
+			for(int q = 0; q < users[k].length; q++){
+				
+				// Find Role
+				if(k < 50){
+					
+					myRole = admin;
+					
+				} else {
+					
+					myRole = contributor;
+				}
+				
+				switch(q){
+	
+					// Email
+					case 0:
+						
+						user.setEmail(users[k][q]);
+						break;
+						
+					// Password
+					case 1:
+						
+						user.setPassword(users[k][q]);
+						break;
+						
+					// First
+					case 2:					
+						
+						user.setFirstName(users[k][q]);
+						break;
+						
+					// Last
+					case 3:					
+						
+						user.setLastName(users[k][q]);
+						break;
+						
+					// Title
+					case 4:					
+						
+						user.setJobTitle(users[k][q]);
+						break;
+						
+					// Linked In
+					case 5:					
+						
+						user.setLinkedInURL(users[k][q]);
+						break;
+						
+					// Description
+					case 6:				
+						
+						user.setDescription(users[k][q]);
+						break;
+				}
+			}
 			
 			// Encrypt Password
 			user.setPassword(Crypt.encrypt(user.getPassword(), user.getEmail(), user.getFullname()));
 			
-			delegate.putRecord(user);
+			user.setUserRole(myRole);
+			userList.add(user);
 		}
+		
+		Object[] userArray = userList.toArray();
+		delegate.putRecord(userArray);
 		
 		logger.log("-- Done Populating Users Table --");
 	}
 	
 	//-----------------------------------
 	// Properties
-	public void populateProperties(){
+	public void encryptProperty(String[] property){
 		
-		/**
-		 *  Insantiate 1 entry with all the encrypted properties.
-		 *  Save that entry in the database.
-		 */
-		
-		String[] props = new String[]{
+		if(property.length == 11){
 			
-			/*
-			 * Company
-			 * App
-			 * S3
-			 * Server
-			 * Jenkins
-			 * Sonarqube
-			 * K
-			 * V
-			 * Facebook Auth
-			 * LinkedIn Token
-			 * S3 Bucket
-			 * 
-			 */
-		
-			/*
-			 * Properties removed to keep credentials secure once pushed to GitHub.
-			 * Additionally, properties already instantiated in database. This field
-			 * was kept so that populating different properties would be as easy as
-			 * plugging them in here and re-running this method (you may need to drop old
-			 * properties to avoid unique contraint though).
-			 * 
-			 */
-		};
-		
-		for(int i = 0; i < props.length; i++){
-			
-			switch(i){
-			
-				/*
-				 * Crypt.encrypt was developed to encrypt passwords. Which is why the fields are labeled as:
-				 * password, username, and email. However, these declarations are perfectly valid! The first
-				 * parameter is the String that you want encrypted (your juicy data). The second parameter is
-				 * a keyword; I utilized a custom Vigenere Cipher to shift the keys in the first parameter with
-				 * the corresponding values in the keyword. Data wrapping is programmed too, meaning that you 
-				 * can have a keyword that is shorter than the value you want encrypted, it will automatically
-				 * wrap back to the beginning of the word when it hits the end. Finally, the third parameter 
-				 * takes the length of the argument and runs the cipher to encrypt the first parameter the number
-				 * of times equal to the length. 
-				 */
-			
-				case 0: 
-					props[i] = Crypt.encrypt(	props[i], 
-												"CZmTgoznKnJocTkGuFFURvZjUDuVvBhoETorfnzPOfqymleBbOOHfqPCSSty", 
-												"pneumonoultramicroscopicsilicovolcanoconiosis"); 
-					break;
-				case 1: 
-					props[i] = Crypt.encrypt(	props[i], 
-												"GSXWzGGiiDBvlYxTNddabeUOsSPLHoYnibqBEAtRrSDnZPrACvUjBMGxcoBZ", 
-												"Pseudopseudohypoparathyroidism"); 
-					break;
-				case 2: 
-					props[i] = Crypt.encrypt(	props[i], 
-												"cCpQZBETFySMWXeMTQDQomszbDhIgTCWNfjzrBQjwyzcMIrNeFGZggWpzSdQ", 
-												"Floccinaucinihilipilification"); 
-					break;
-				case 3: 
-					props[i] = Crypt.encrypt(	props[i], 
-												"UjVheJqfrHXEuciEaIEibjRYjaxGEJFPrLcZNuugxZQmpHdeoBJRVLFeEDfc", 
-												"Antidisestablishmentarianism"); 
-					break;
-				case 4: 
-					props[i] = Crypt.encrypt(	props[i], 
-												"BhXCFkEevSCHlJMCJyvqhyOiNnKDaoxwcdWrNGxUZySIJspidexHSROVXDAh", 
-												"supercalifragilisticexpialidocious"); 
-					break;
-				case 5: 
-					props[i] = Crypt.encrypt(	props[i], 
-												"RnhHIlwovrapdVzySrOIfmMZPOPOEACAsVScsBIflnsIphgireiIRKkmINdr", 
-												"Incomprehensibilities"); 
-					break;
-				case 6: 
-					props[i] = Crypt.encrypt(	props[i], 
-												"momGKfMimvxYGNKmZCzdXNSBGpvQngTbtvxETwjePoZWyirhkyAWMhkFzxQI", 
-												"honorificabilitudinitatibus"); 
-					break;
-				case 7: 
-					props[i] = Crypt.encrypt(	props[i], 
-												"TuJgzrAAFblqmFUfDvRyNHOtKQjVpxESLwrXecnGMSrSEJyhfkgPGvTccbPJ", 
-												"sesquipedalianism"); 
-					break;
-				case 8: 
-					props[i] = Crypt.encrypt(	props[i], 
-												"JplYSkoJXvxUEIaEZtLMzYugcPINpzArbIoGHjwHwFzdoUtfNfMOetPvvsHn", 
-												"METHIONYLTHREONYLTHREONYGLUTAMINYLARGINY"); 
-					break;
-				case 9: 
-					props[i] = Crypt.encrypt(	props[i], 
-												"iqGJkjoSepUYggqxsZCdxXzCSyjxADhQtsiMPhyNRMxJbGowMrGmlIQETFzC", 
-												"Aequeosalinocalcalinoceraceoaluminosocupreovitriolic"); 
-					break;
-				case 10: 
-					props[i] = Crypt.encrypt(	props[i], 
-												"boosNkoVgLkjnWJUMEeHAGbUmwWhVlBOPZKZjUduUXunxwbsZmnNxKdAWePg ", 
-												"peobuefdvxjbtoajefspkfuccfngbf"); 
-					break;
-				default:
-					Logging.log("Unhandled Property");
-					break;
-			}
-			
-			
-		}
 
-		ApplicationProperties propObj = new ApplicationProperties(	props[0], 
-																	props[1], 
-																	props[2],
-																	props[3],
-																	props[4], 
-																	props[5], 
-																	props[6], 
-																	props[7],
-																	props[8],
-																	props[9],
-																	props[10]);
-			
-		delegate.putRecord(propObj);
+			property[0] = Crypt.encrypt(property[0], 
+										"CZmTgoznKnJocTkGuFFURvZjUDuVvBhoETorfnzPOfqymleBbOOHfqPCSSty", 
+										"pneumonoultramicroscopicsilicovolcanoconiosis"); 
 		
-		logger.log("-- Done Populating Properties Table --");
+			property[1] = Crypt.encrypt(property[1], 
+										"GSXWzGGiiDBvlYxTNddabeUOsSPLHoYnibqBEAtRrSDnZPrACvUjBMGxcoBZ", 
+										"Pseudopseudohypoparathyroidism"); 
+					
+			property[2] = Crypt.encrypt(property[2], 
+										"cCpQZBETFySMWXeMTQDQomszbDhIgTCWNfjzrBQjwyzcMIrNeFGZggWpzSdQ", 
+										"Floccinaucinihilipilification"); 
+			
+			property[3] = Crypt.encrypt(property[3], 
+										"UjVheJqfrHXEuciEaIEibjRYjaxGEJFPrLcZNuugxZQmpHdeoBJRVLFeEDfc", 
+										"Antidisestablishmentarianism"); 
+			
+			property[4] = Crypt.encrypt(property[4], 
+										"BhXCFkEevSCHlJMCJyvqhyOiNnKDaoxwcdWrNGxUZySIJspidexHSROVXDAh", 
+										"supercalifragilisticexpialidocious"); 
+			
+			property[5] = Crypt.encrypt(property[5], 
+										"RnhHIlwovrapdVzySrOIfmMZPOPOEACAsVScsBIflnsIphgireiIRKkmINdr", 
+										"Incomprehensibilities"); 
+			
+			property[6] = Crypt.encrypt(property[6], 
+										"momGKfMimvxYGNKmZCzdXNSBGpvQngTbtvxETwjePoZWyirhkyAWMhkFzxQI", 
+										"honorificabilitudinitatibus"); 
+			
+			property[7] = Crypt.encrypt(property[7], 
+										"TuJgzrAAFblqmFUfDvRyNHOtKQjVpxESLwrXecnGMSrSEJyhfkgPGvTccbPJ", 
+										"sesquipedalianism"); 
+			
+			property[8] = Crypt.encrypt(property[8], 
+										"JplYSkoJXvxUEIaEZtLMzYugcPINpzArbIoGHjwHwFzdoUtfNfMOetPvvsHn", 
+										"METHIONYLTHREONYLTHREONYGLUTAMINYLARGINY"); 
+		
+			property[9] = Crypt.encrypt(property[9], 
+										"iqGJkjoSepUYggqxsZCdxXzCSyjxADhQtsiMPhyNRMxJbGowMrGmlIQETFzC", 
+										"Aequeosalinocalcalinoceraceoaluminosocupreovitriolic"); 
+			
+			property[10] = Crypt.encrypt(property[10], 
+										"boosNkoVgLkjnWJUMEeHAGbUmwWhVlBOPZKZjUduUXunxwbsZmnNxKdAWePg", 
+										"peobuefdvxjbtoajefspkfuccfngbf"); 
+	
+			
+	
+			ApplicationProperties propObj = new ApplicationProperties(	property[0], property[1], property[2], property[3],
+																		property[4], property[5], property[6], property[7],
+																		property[8], property[9], property[10]);
+			delegate.putRecord(propObj);
+			
+			logger.log("-- Done Populating Properties Table --");
+		}
 	}
 }

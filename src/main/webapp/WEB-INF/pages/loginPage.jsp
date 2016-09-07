@@ -22,6 +22,11 @@
 <body>
 <jsp:include page="navbar.jsp"></jsp:include>
 <div class="container page-content">
+	<c:if test="${populate eq true}">
+		<div>
+			<button id="populateNow" class="btn btn-primary">Populate Database</button>
+		</div>
+	</c:if>
 	<c:if test="${'fail' eq param.auth}">
 		<div>
               <h3 id="failLogin">Failed to login. Please try again.</h3>
@@ -69,14 +74,27 @@ $(document).ready(function(){
 	$("#send").click(function(){
 		
 		var email = $("#userAuth").val();
-		
-		$.get("http://localhost:7001/revblogs/api/bindUser?u=" + email, function(response){
+
+		$.get("http://localhost:7001/revblogs/bindUser?u=" + email, function(response){
 			
-			if(response == "Success"){
+			if(response === "Success"){
 				
 				$("#form").submit();
 				
+			} else {
+				
+				e.preventDefault();
 			}
+		});
+	});
+	
+	$("#populateNow").click(function(){
+	
+		alert("Populating...");
+	
+		$.get("http://localhost:7001/revblogs/populate.do", function(response){
+			
+			alert(response)
 		});
 	});
 });
@@ -85,9 +103,7 @@ $(document).ready(function(){
 function validateForm(){
 	
 	var element = document.querySelector("loginForm");
-	
-	
-	
+
 	var username = document.forms["loginForm"]["username"].value;
 	var password = document.forms["loginForm"]["password"].value;
 	var userError = document.getElementById("userMsg");

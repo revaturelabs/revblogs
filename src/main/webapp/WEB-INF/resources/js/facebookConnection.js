@@ -20,10 +20,12 @@
 	   }(document, 'script', 'facebook-jssdk'));
 	  
 	document.getElementById('shareBtn').onclick = function() {
+		var urlEnd = $("#invisibleurl").val();
+		alert(urlEnd);
 	  FB.ui({
 	    method: 'share',
 	    display: 'popup',
-	    href: 'http://dev.pjw6193:7001/pages/create-blog.jsp',
+	    href: 'http://blogs.pjw6193.tech/content/pages/'+urlEnd,
 	  }, function(response){});
 	}
 }

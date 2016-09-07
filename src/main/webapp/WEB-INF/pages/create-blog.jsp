@@ -1,11 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:og="http://ogp.me/ns#" xmlns:fb="http://www.facebook.com/2008/fbml">
+<html ng-app="createBlog" xmlns="http://www.w3.org/1999/xhtml" xmlns:og="http://ogp.me/ns#" xmlns:fb="http://www.facebook.com/2008/fbml">
 <head>
 <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+<script src="resources/js/angular.min.js">
 <script src="resources/js/img-mgmt.js"></script>
+<script src="resources/js/create-blog.js"></script>
   <script src="${pageContext.servletContext.contextPath}/resources/tinymce/js/tinymce/tinymce.min.js"></script>
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -22,37 +25,40 @@
 <meta property="og:image:height" content="298" />
 <meta property="fb:app_id" content="1070815552954243"/>
 
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="${pageContext.servletContext.contextPath}/resources/css/bootstrap.css">
 <link rel="stylesheet" href="bootstrap-social.css">
 <script src="https://use.fontawesome.com/ebec39e24e.js"></script>
-<link href="resources/css/main.css" rel="stylesheet">
+<link rel="stylesheet" href="${pageContext.servletContext.contextPath}/resources/css/main.css" >
 
 <title>Blog Post</title>
 </head>
-<body>
+<body ng-controller='createBlogCtrl'>
 <jsp:include page="navbar.jsp"></jsp:include>
 <div class="container page-content">
 <h2>Create new blog post</h2>
-
-
 
 <form:form action="add-blog.do" method="post" commandName="blog">
 	Title
 	<form:input path="blogTitle" /><br />
 	Subtitle
 	<form:input path="blogSubtitle"/><br />
-	<button type="button">Attach Image</button>
-	<button type="button">Attach File</button>
 	<br>
 	<form:textarea path="blogContent" rows="30" cols="100" ></form:textarea>
 	<br>
 	<!-- <button type="button">Add Reference</button>
 	<br>
 	<textarea rows="5" cols="100"></textarea> -->
+	<br />
+	<div margin="0" data-ng-repeat="reference in references">
+		<input type="text" ng-model="reference.name" name="{{reference.id}}" placeholder="Reference">
+		<span ng-hide="maxedReference">
+			<button type="button" ng-show="showAddChoice(reference)" ng-click="addNewChoice()">Add another reference</button>
+		</span>
+	</div>
 	<br>
  	Apply tags (separated by commas):
  	<br>
-	<form:input path="blogTagsString" id="tagList" style="resize: none" style="width: 300px"></form:input>
+	<form:input path="blogTagsString" id="tagList" style="resize:none;width:300px;"></form:input>
 	<br>
 	
 	<input type="submit" value="Preview" />
