@@ -55,8 +55,8 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	 * @return the URL where the file was uploaded if successful, null otherwise
 	 */
 	public String uploadResource(String fileName, MultipartFile file) {
-		//return jetS3.uploadResource(fileName, file);
-		return null;
+		return jetS3.uploadResource(fileName, file);
+		
 	}
 	
 	/**
@@ -65,8 +65,8 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	 * @return the URL where the file was uploaded if successful, null otherwise
 	 */
 	public String uploadPage(File file) {
-		//return jetS3.uploadPage(file);
-		return null;
+		return jetS3.uploadPage(file);
+		
 	}
 	
 	/**
@@ -76,8 +76,8 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	 * @return the URL where the file was uploaded if successful, null otherwise
 	 */
 	public String uploadEvidence(String fileName, MultipartFile file) {
-		//return jetS3.uploadEvidence(fileName, file);
-		return null;
+		return jetS3.uploadEvidence(fileName, file);
+		
 	}
 	
 	/*
