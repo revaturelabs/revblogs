@@ -37,11 +37,9 @@ import com.revature.beans.UserRoles;
 import com.revature.dto.UserDTO;
 import com.revature.service.BusinessDelegate;
 import com.revature.service.HtmlWriter;
-import com.revature.service.JetS3;
 import com.revature.service.Logging;
 import com.revature.service.Population;
 import com.revature.service.impl.Crypt;
-import com.revature.service.impl.JetS3Impl;
 import com.revature.service.impl.Mailer;
 
 @Controller
@@ -147,7 +145,7 @@ public class PostController {
 			User newUser = new User(email, Crypt.encrypt(password, email, lastName+", "+firstName), firstName, lastName, jobTitle,
 					linkedInURL, description, userRole);
 			// Save in Database
-			//businessDelegate.putRecord(newUser);
+
 			// Send Email to Account
 			Mailer.sendMail(email, password);
 			
