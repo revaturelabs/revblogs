@@ -5,11 +5,15 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -108,31 +112,37 @@ public class PostController {
 	 */
 	@RequestMapping(value="createAccount.do", method=RequestMethod.POST)
 	public ModelAndView createAccount(HttpServletRequest req, HttpServletResponse resp){
+		
+		// User Supplied
 		String email = req.getParameter("email");
-		String password = Crypt.encrypt(email, "asdlkfjsadlkfjsaklfjsdalkjsadklfj", "aDgfJaiouwAlkjaSkfljasdfOasjdfLkJ");
-		String firstName = "New";
-		String lastName = "User";
-		//String profilePicture - currently not used
-		String jobTitle = "Developer";
-		String linkedInURL = null;
-		String description = "Unknown";
-		int role = Integer.parseInt(req.getParameter("role"));
-		UserRoles userRole = businessDelegate.requestRoles(role);
-		User newUser = new User(email, password, firstName, lastName, jobTitle,
-				linkedInURL, description, userRole);
-		businessDelegate.putRecord(newUser);
+		String role = req.getParameter("role");
+		
+		// Generate a Temporary Password
+		String password = Crypt.encrypt("Pa$$WoRD1?!", email, role);
+		
+		// Role Obj from Database
+		UserRoles myRole = businessDelegate.requestRoles(role);
+		
+		// Dummy User
+		User dummy = new User(email, password, " ", " ", " ", " ", " ", myRole);
+		
+		// Encrypt the Temp Password in the Database
+		dummy.setPassword(Crypt.encrypt(dummy.getPassword(), dummy.getEmail(), dummy.getFullname()));
+		
+		// Save in Database
+		businessDelegate.putRecord(dummy);
+		
+		// Send Email to Account
 		Mailer.sendMail(email, password);
 		
 		ModelAndView model = new ModelAndView();
 		model.setViewName("/home");
 		return model;
 	}
-	// Update a Users Password
+	
 	/*
 	 * @RequestParam("newPassword")
 	 */
-	
-	
 	@RequestMapping(value="updatePassword.do", method=RequestMethod.POST)
 	public ModelAndView updatePassword(@ModelAttribute("updatePassword") @Valid UserDTO passwordDTO, BindingResult bindingResult,
 							   HttpServletRequest req, HttpServletResponse resp){
@@ -217,6 +227,42 @@ public class PostController {
 		}
 	}
 	
+	public Map<Integer, String> getReferences(HttpServletRequest req) {
+		
+		int highestReferenceNum = -1;
+		TreeMap<Integer, String> references = new TreeMap<Integer, String>();
+		for ( Enumeration<String> params = req.getParameterNames();
+				params.hasMoreElements(); )
+		{
+			String paramName = params.nextElement();
+			String paramValue = req.getParameter(paramName);
+			if ( paramName.startsWith("reference") && paramValue.length() > 0 ) {
+				int numberStart = paramName.lastIndexOf('e')+1;
+				String referenceNumStr = paramName.substring(numberStart);
+				try {
+					int referenceNum = Integer.parseInt(referenceNumStr);
+					references.put(referenceNum, paramValue);
+					highestReferenceNum = Math.max(highestReferenceNum, referenceNum);
+				} catch ( NumberFormatException e ) {
+					Logging.info(e);
+				}
+			}
+		}
+		
+		// Remove trailing empty references
+		for ( int i=highestReferenceNum; i>=0; i-- ) {
+			String ref = references.get(i);
+			if ( ref != null && ref.length() <= 0 ) {
+				ref = null;
+				references.remove(i);
+			} else {
+				break;
+			}
+		}
+		
+		return references;
+	}
+	
 	@RequestMapping(value="add-blog.do", method=RequestMethod.POST)
 	public String addBlog(
 			
@@ -224,6 +270,8 @@ public class PostController {
 			BindingResult bindingResult,
 			HttpServletRequest req,
 			HttpServletResponse resp) {
+		
+		blog.setReferences(getReferences(req));
 		
 		/*
 		 * Check to see if the current blog's title already exists. 
@@ -235,6 +283,7 @@ public class PostController {
 				return "create-blog";
 			};
 		}
+		
 		
 //	Code for reference:	User author - businessDelegate.requestUsers("pick")
 		User author = (User) req.getSession().getAttribute("user");
@@ -306,5 +355,18 @@ public class PostController {
 			Logging.info(e1);
 		}
 		return "redirect: " + url;
+	}
+	
+	@RequestMapping(value="/deleteFile", method=RequestMethod.GET)
+	public ModelAndView delete(Blog blog, HttpServletRequest req, HttpServletResponse resp){
+		JetS3 jets3 = new JetS3Impl();
+		System.out.println(blog.getBlogTitle());
+		jets3.delete(blog.getBlogTitle());
+		String[] str = jets3.list();
+		req.setAttribute("blog", new Blog());
+		req.setAttribute("list", str);
+		ModelAndView model = new ModelAndView();
+		model.setViewName("/management");
+		return model;
 	}
 }

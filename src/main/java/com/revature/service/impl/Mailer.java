@@ -59,6 +59,7 @@ public class Mailer {
 			   + "<html>"
 			   + "<body>"  		 											
 			   + "<div>"
+			   + "<img src=\"Blogs.pjw6193.tech/content/resources/img/rev-brand.png\">"
 			   + "<h3>"
 			   + 	"RevBlogs Registration!"
 			   + "</h3><br/>"
