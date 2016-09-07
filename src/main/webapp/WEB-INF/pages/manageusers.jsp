@@ -150,4 +150,5 @@ function edit(userId){
 	$("#selectedUserDesc").val($("#description" + userId).html());
 }
 </script>
+<script type="text/javascript" src="resources/js/ui.js"></script>
 </html>

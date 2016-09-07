@@ -144,5 +144,6 @@
     </div>
   </div>
 </body>
+<script type="text/javascript" src="resources/js/ui.js"></script>
 <script src="${pageContext.servletContext.contextPath }/resources/js/facebookConnection.js"></script>
 </html>
