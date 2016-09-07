@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.jets3t.service.S3Service;
+import org.jets3t.service.security.AWSCredentials;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,6 +27,9 @@ import com.revature.service.ServiceLocator;
 
 @Service
 public class BusinessDelegateImpl implements BusinessDelegate{
+	
+	private AWSCredentials credentials;
+	private S3Service s3;
 
 	/*
 	 * 	Attributes && Getters/Setters
@@ -43,6 +48,7 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	}
 	public void setJetS3(JetS3 jetS3) {
 		this.jetS3 = jetS3;
+		jetS3.syncBusinessDelegate(this);
 	}
 	
 	public JetS3 getJetS3() {
@@ -56,7 +62,7 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	 */
 	public String uploadResource(String fileName, MultipartFile file) {
 		return jetS3.uploadResource(fileName, file);
-		
+
 	}
 	
 	/**
@@ -66,7 +72,7 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	 */
 	public String uploadPage(File file) {
 		return jetS3.uploadPage(file);
-		
+
 	}
 	
 	/**
@@ -77,7 +83,7 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	 */
 	public String uploadEvidence(String fileName, MultipartFile file) {
 		return jetS3.uploadEvidence(fileName, file);
-		
+
 	}
 	
 	/*

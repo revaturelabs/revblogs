@@ -365,9 +365,9 @@ public class PostController {
 			String fileName = blogTempFile.getTemporaryFile().getName();
 			url = "http://blogs.pjw6193.tech/content/pages/" + fileName;
 			req.setAttribute("url", url);
-			JetS3 jetS3 = new JetS3Impl();
+			blog.setLocationURL(url);
 			businessDelegate.putRecord(blog);
-			jetS3.uploadPage(blogTempFile.getTemporaryFile());
+			businessDelegate.uploadPage(blogTempFile.getTemporaryFile());
 			blogTempFile.destroy();
 			req.getSession().setAttribute("blog", null);
 		} catch (FileNotFoundException e) { 
