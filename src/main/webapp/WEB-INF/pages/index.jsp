@@ -45,7 +45,7 @@
 		          </div>
 		        </form>
 	        </li>
-		    <li id="navlogin"><a href="${pageContext.servletContext.contextPath}/profile"><span class="glyphicon glyphicon-user"></span>&nbsp;Contributor</a></li>
+		    <li id="navlogin"><a href="${pageContext.servletContext.contextPath}/loginPage"><span class="glyphicon glyphicon-user"></span>&nbsp;Contributor</a></li>
         </ul>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
@@ -90,10 +90,11 @@
   <!-- Customize posts to view -->
   <div id="postsPerPage">
   <label>Number of posts to show: </label>
-  	<select>
-  		<option ng-model="postsPerPage" ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 10]" href="#here" ng-click="getPage(curPage)">10</option>
-  		<option ng-model="postsPerPage"  ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 25]" href="#here" ng-click="getPage(curPage)">25</option>
-  		<option ng-model="postsPerPage"  ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 50]" href="#here" ng-click="getPage(curPage)">50</option>
+  	<select  ng-model="postsPerPage" ng-change="getPage(curPage, postsPerPage)">
+  		<option ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 5]">5</option>
+  		<option ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 10]" selected>10</option>
+  		<option ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 25]">25</option>
+  		<option ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 50]">50</option>
   	</select>
   </div>
   
@@ -125,7 +126,7 @@
 	        	<span class="glyphicon glyphicon-link"></span><a target="_blank" href="http://revature.com">&nbsp;revature.com</a>
 	        </div>
 	        <div class="col-sm-4">
-	        	<a href="${pageContext.servletContext.contextPath}/profile">Contributors - Log In</a><br>
+	        	<a href="${pageContext.servletContext.contextPath}/loginPage">Contributors - Log In</a><br>
 	        	<a href="#">Site map</a>
 	        </div>
 	      </div>

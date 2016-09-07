@@ -22,6 +22,14 @@
 <body>
 <jsp:include page="navbar.jsp"></jsp:include>
 <div class="container page-content">
+
+	<c:if test="${user.userRole.role eq 'ADMIN'}">
+		<c:redirect url="/admin"/>
+	</c:if>
+	<c:if test="${user.userRole.role eq 'CONTRIBUTOR'}">
+		<c:redirect url="/contributor"/>
+	</c:if>
+
 	<c:if test="${populate eq true}">
 		<div>
 			<button id="populateNow" class="btn btn-primary">Populate Database</button>

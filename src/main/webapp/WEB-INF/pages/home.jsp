@@ -79,6 +79,7 @@
 		<td>
 			<a href="${pageContext.servletContext.contextPath}/create-blog"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Create a Blog</a>
 		</td>
+
 	</tr>
 	<tr>
 		<td>
@@ -89,7 +90,9 @@
 		<td>
 			<a href="${pageContext.servletContext.contextPath}/"><span class="glyphicon glyphicon-book"></span>&nbsp;View All Blogs</a>
 		</td>
+
 	</tr>
+
 	<tr>
 		<td>
 			<a href="${pageContext.servletContext.contextPath}/go-logout"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Logout</a>
@@ -100,4 +103,5 @@
 </div>
 <jsp:include page="footer.jsp"></jsp:include>
 </body>
+<script type="text/javascript" src="resources/js/ui.js"></script>
 </html>
