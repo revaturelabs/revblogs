@@ -194,4 +194,12 @@ html, body {
 	  color: red;
   }
   
+  .update-blog-btn {
+     background:none!important;
+     border:none; 
+     padding:0!important;
+     font: inherit;
+     cursor: pointer;
+  }
+  
   

@@ -79,4 +79,5 @@ public interface BusinessDelegate {
 	public BlogPostCollectionDTO searchBlogPosts(String query, int page, int perPage);
 	public BlogPostCollectionDTO requestBlogPosts(Tags category, int page, int perPage);
 	public BlogPostCollectionDTO requestBlogPosts(User author, int page, int perPage);
+	public Blog requestBlog(int id);
 }

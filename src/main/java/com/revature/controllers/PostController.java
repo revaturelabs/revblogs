@@ -37,11 +37,9 @@ import com.revature.beans.UserRoles;
 import com.revature.dto.UserDTO;
 import com.revature.service.BusinessDelegate;
 import com.revature.service.HtmlWriter;
-import com.revature.service.JetS3;
 import com.revature.service.Logging;
 import com.revature.service.Population;
 import com.revature.service.impl.Crypt;
-import com.revature.service.impl.JetS3Impl;
 import com.revature.service.impl.Mailer;
 
 @Controller
@@ -246,7 +244,7 @@ public class PostController {
 		String url = businessDelegate.uploadEvidence(file.getOriginalFilename(), file);
 		try {
 			PrintWriter writer = resp.getWriter();
-			writer.append("<html><body><textarea id=\"picLink\" autofocus " +
+			writer.append("<html><h3>Copy</h3><body><textarea id=\"picLink\" autofocus " +
 					"rows=\"5\" cols=\"35\" readonly>" + url +
 					"</textarea></body><script>window.onload=function(){" +
 					"document.getElementById(\"picLink\").select();};</script></html>");
@@ -307,7 +305,6 @@ public class PostController {
 		for ( int i=highestReferenceNum; i>=0; i-- ) {
 			String ref = references.get(i);
 			if ( ref != null && ref.length() <= 0 ) {
-				ref = null;
 				references.remove(i);
 			} else {
 				break;
