@@ -45,6 +45,7 @@
 	<bean name="businessDelegate" class="com.revature.service.impl.BusinessDelegateImpl">
 		<property name="dataService" ref="dataService" />
 		<property name="serviceLocator" ref="serviceLocator" />
+		<property name="jetS3" ref="jetS3"></property>
 	</bean>
 	<bean name="serviceLocator" class="com.revature.service.impl.ServiceLocatorImpl"></bean>
 	<bean name="dao" class="com.revature.data.impl.DAOImpl">
@@ -58,8 +59,7 @@
 		<property name="logger" ref="logging" />
 	</bean>
 	<bean name="jetS3" class="com.revature.service.impl.JetS3Impl">
-		<property name="businessDelegate" ref="businessDelegate" />
-<!-- 		<property name="logging" ref="logging" /> -->
+<!-- 		<property name="businessDelegate" ref="businessDelegate" /> -->
 	</bean>
 	<bean id="cryptImpl" class="com.revature.service.impl.CryptImpl">
 		<property name="businessDelegate" ref="businessDelegate"/>
