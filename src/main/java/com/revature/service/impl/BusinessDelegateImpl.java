@@ -79,6 +79,10 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 		return jetS3.uploadEvidence(fileName, file);
 	}
 	
+	public String[] getList(){
+		return jetS3.list();
+	}
+	
 	/*
 	 *  Database Altering Methods
 	 */
