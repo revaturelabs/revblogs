@@ -19,6 +19,7 @@ public class DataTest {
 	//MUST MAKE -context.xml FILE OR FIND A WAY TO 
 	//HAVE THE SPRING-BEANS.XML TO ATTACH TO IT!!!!!!!!!!!!!
 	
+	//UPDATE: BOTH REQUIRE THE 'APPLICATION CONTEXT' FILE.
 	@Autowired
 	private DAO dao;
 	
