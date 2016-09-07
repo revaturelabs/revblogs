@@ -45,7 +45,7 @@
 		          </div>
 		        </form>
 	        </li>
-		    <li id="navlogin"><a href="${pageContext.servletContext.contextPath}/profile"><span class="glyphicon glyphicon-user"></span>&nbsp;Contributor</a></li>
+		    <li id="navlogin"><a href="${pageContext.servletContext.contextPath}/loginPage"><span class="glyphicon glyphicon-user"></span>&nbsp;Contributor</a></li>
         </ul>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
@@ -126,7 +126,7 @@
 	        	<span class="glyphicon glyphicon-link"></span><a target="_blank" href="http://revature.com">&nbsp;revature.com</a>
 	        </div>
 	        <div class="col-sm-4">
-	        	<a href="${pageContext.servletContext.contextPath}/profile">Contributors - Log In</a><br>
+	        	<a href="${pageContext.servletContext.contextPath}/loginPage">Contributors - Log In</a><br>
 	        	<a href="#">Site map</a>
 	        </div>
 	      </div>
