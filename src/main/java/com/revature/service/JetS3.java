@@ -47,4 +47,6 @@ public interface JetS3 {
 	 * Used to grab a list of items from the s3 bucket
 	 */
 	public String[] list();
+	
+	public void syncBusinessDelegate(BusinessDelegate businessDelegate);
 }
