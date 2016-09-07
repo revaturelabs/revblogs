@@ -14,7 +14,6 @@ import org.hibernate.search.FullTextQuery;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
 import org.hibernate.search.query.dsl.QueryBuilder;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +25,6 @@ import com.revature.beans.Tags;
 import com.revature.beans.User;
 import com.revature.beans.UserRoles;
 import com.revature.data.DAO;
-import com.revature.service.Logging;
 import com.revature.service.impl.Crypt;
 
 @Repository
@@ -58,11 +56,11 @@ public class DAOImpl implements DAO {
 	}
 	public Session getSession(){
 		
-		//if(session == null){
+		
 			
 			Session ses = sessionFactory.openSession();
 			setSession(ses);
-		//}
+		
 		
 		return session;
 	}
@@ -356,7 +354,7 @@ public class DAOImpl implements DAO {
 		setSession(session);
 		
 		// TODO: Remove in production
-		/*
+		/**
 		try {
 			rebuildIndex();
 		} catch (InterruptedException e) {

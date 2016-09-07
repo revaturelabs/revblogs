@@ -18,8 +18,8 @@ window.tinymce.init({
 		    	  editor.windowManager.open({
 		    		  title: 'Upload Picture',
 		    		  url: 'add-picture',
-		    		  width: 200,
-		    		  height: 130
+		    		  width: 270,
+		    		  height: 180
 		    		})
 		      }
 		});
@@ -43,8 +43,8 @@ window.tinymce.init({
 		    	  editor.windowManager.open({
 		    		  title: 'Upload Video',
 		    		  url: 'add-picture',
-		    		  width: 200,
-		    		  height: 130
+		    		  width: 270,
+		    		  height: 180
 		    		})
 		      }
 		});
