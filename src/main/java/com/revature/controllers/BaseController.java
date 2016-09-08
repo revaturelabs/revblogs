@@ -1,22 +1,24 @@
 package com.revature.controllers;
 
 import java.security.Principal;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.revature.beans.Blog;
+import com.revature.beans.Tags;
 import com.revature.beans.User;
 import com.revature.dto.UserDTO;
 import com.revature.service.BusinessDelegate;
 import com.revature.service.Logging;
-import com.revature.service.Population;
 
 @Controller
 public class BaseController {
@@ -179,7 +181,19 @@ public class BaseController {
 	public String getEditBlog(HttpServletRequest req) {
 		if((req.getParameter("blogid")) != null){
 			int id = Integer.parseInt(req.getParameter("blogid"));
+			req.getSession().setAttribute("editingBlogInDatabase", true);
+			req.getSession().setAttribute("blogToEditId", id);
 			Blog blog = businessDelegate.requestBlog(id);
+			Set<Tags> tags = blog.getTags();
+			if(!tags.isEmpty()) {
+				Tags[] tagsArray = {new Tags()};
+				tagsArray = tags.toArray(tagsArray);
+				String tagsString = StringUtils.arrayToCommaDelimitedString(tagsArray);
+				blog.setBlogTagsString(tagsString);
+			} else {
+				blog.setBlogTagsString("");
+			}
+
 			req.setAttribute("blog", blog);
 			return "edit-blog";
 		}
