@@ -107,6 +107,20 @@ public class User {
 		this.userRole = userRole;
 	}
 	
+	// Required Fields for Admin to Update Profile
+	public User(int userId, String email, String password, String firstName, String lastName, String jobTitle, 
+			String linkedInURL, String description) {
+		this();
+		this.userId = userId;
+		this.email = email;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.jobTitle = jobTitle;
+		this.linkedInURL = linkedInURL;
+		this.description = description;		
+	}
+	
 	// All Attributes
 	public User(String email, String password, String firstName, String lastName, String jobTitle, 
 				String linkedInURL, String description, UserRoles userRole) {

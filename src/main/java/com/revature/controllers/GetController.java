@@ -1,6 +1,5 @@
 package com.revature.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.revature.beans.Blog;
 import com.revature.beans.User;
 import com.revature.beans.UserRoles;
+import com.revature.dto.UserDTO;
 import com.revature.service.BusinessDelegate;
 import com.revature.service.Logging;
 import com.revature.service.impl.CryptImpl;
@@ -112,13 +112,7 @@ public class GetController {
 	@RequestMapping(value="/manageusers", method=RequestMethod.GET)
 	public String manageUsers(HttpServletRequest req, HttpServletResponse resp){
 		req.setAttribute("userList", businessDelegate.requestUsers());
-		req.setAttribute("updateUserProfile", new User());
-//		List<UserRoles> roleList = businessDelegate.requestRoles();
-//		List<String> roleString = new ArrayList<String>();
-//		for(UserRoles ur: roleList){
-//			roleString.add(ur.getRole());
-//		}
-//		req.setAttribute("roleList", roleString);
+		req.setAttribute("updateUserProfile", new UserDTO());
 		req.setAttribute("roleList", businessDelegate.requestRoles());
 		return "manageusers";
 	}
