@@ -21,7 +21,6 @@
 	  
 	document.getElementById('shareBtn').onclick = function() {
 		var urlEnd = $("#invisibleurl").val();
-		alert(urlEnd);
 	  FB.ui({
 	    method: 'share',
 	    display: 'popup',
