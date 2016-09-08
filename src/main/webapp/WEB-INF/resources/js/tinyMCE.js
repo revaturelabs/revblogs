@@ -24,7 +24,7 @@ window.tinymce.init({
 		      }
 		});
 		editor.on('keydown', function(event) {
-	        if (event.keyCode == 9) { // tab pressed
+	        if (event.keyCode === 9) { // tab pressed
 	          if (event.shiftKey) {
 	            editor.execCommand('Outdent');
 	          }

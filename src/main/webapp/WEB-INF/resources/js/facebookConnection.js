@@ -21,6 +21,7 @@
 	  
 	document.getElementById('shareBtn').onclick = function() {
 		var urlEnd = $("#facebookurl").val();
+
 	  FB.ui({
 	    method: 'share',
 	    display: 'popup',
