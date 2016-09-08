@@ -128,11 +128,9 @@ public class PostController {
 		if(bindingResult.hasErrors()){
 			return model;
 		}
-<<<<<<< HEAD
 		
 		User updateUser = businessDelegate.requestUser(updateUserProfile.getUserId());
-=======
->>>>>>> 6be49b5be9f72484af80e127af9bae1da5cf984d
+
 				
 		//password needed to be decrypted first
 		//updateUser.setPassword(Crypt.decrypt(updateUserProfile.getPassword(), updateUserProfile.getEmail(),

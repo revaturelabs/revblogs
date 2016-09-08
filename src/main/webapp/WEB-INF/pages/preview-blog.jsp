@@ -114,11 +114,14 @@
           </div>
           <div class="panel-body">
                    <div>Share:</div>
-			<a class="btn btn-social-icon btn-linkedin" target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url=http://dev.pjw6193.tech/pages/create-blog.jsp">
+			<a class="btn btn-social-icon btn-linkedin" target="_blank"">
 				<span class="fa fa-linkedin"></span>	
 			</a>
-			<a class="btn btn-social-icon btn-facebook" target="_blank" id="shareBtn">
+			<a class="btn btn-social-icon btn-facebook" target="_blank">
 				<span class="fa fa-facebook"></span>
+			</a>
+			<a class="btn btn-social-icon btn-twitter" target="_blank">
+				<span class="fa fa-twitter"></span>				
 			</a>
           </div>
         </div>
@@ -148,6 +151,5 @@
   </div>
 </body>
 <script type="text/javascript" src="resources/js/ui.js"></script>
-<script src="${pageContext.servletContext.contextPath }/resources/js/facebookConnection.js"></script>
 <script src="${pageContext.servletContext.contextPath}/resources/js/antiCursing.js"></script>
 </html>
