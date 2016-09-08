@@ -2,8 +2,6 @@ package com.revature.data.impl;
 
 import java.util.List;
 
-import org.apache.lucene.queries.BooleanFilter;
-import org.apache.lucene.search.Filter;
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
@@ -60,8 +58,8 @@ public class DAOImpl implements DAO {
 		
 		
 			
-			Session ses = sessionFactory.openSession();
-			setSession(ses);
+			Session session = sessionFactory.openSession();
+			setSession(session);
 		
 		
 		return session;
@@ -78,7 +76,7 @@ public class DAOImpl implements DAO {
 		Session ses = sessionFactory.getCurrentSession();
 		setSession(ses);
 
-		session.save(obj);
+		ses.save(obj);
 	}
 	
 	// Batch Add
@@ -90,7 +88,7 @@ public class DAOImpl implements DAO {
 
 		for(Object o : obj){
 			
-			session.save(o);
+			ses.save(o);
 		}
 	}
 	
@@ -101,7 +99,7 @@ public class DAOImpl implements DAO {
 		Session ses = sessionFactory.getCurrentSession();
 		setSession(ses);
 		
-		session.update(obj);
+		ses.update(obj);
 	}
 	
 	// Delete or Archive
@@ -124,7 +122,7 @@ public class DAOImpl implements DAO {
 		else {
 			
 			// Obliterate
-			session.delete(obj);
+			ses.delete(obj);
 		}
 	}
 
@@ -139,7 +137,7 @@ public class DAOImpl implements DAO {
 		Session ses = sessionFactory.getCurrentSession();
 		setSession(ses);
 		
-		Criteria criteria = session.createCriteria(User.class).add(Restrictions.eq("email", email));
+		Criteria criteria = ses.createCriteria(User.class).add(Restrictions.eq("email", email));
 		return (User)criteria.uniqueResult();
 	}
 	
@@ -170,7 +168,7 @@ public class DAOImpl implements DAO {
 		Session ses = sessionFactory.getCurrentSession();
 		setSession(ses);
 		
-		Criteria criteria = session.createCriteria(ApplicationProperties.class);
+		Criteria criteria = ses.createCriteria(ApplicationProperties.class);
 		ApplicationProperties props = (ApplicationProperties) criteria.uniqueResult();
 
 		String[][] keys = new String[][]{
@@ -275,7 +273,7 @@ public class DAOImpl implements DAO {
 		Session ses = sessionFactory.getCurrentSession();
 		setSession(ses);
 		
-		Criteria criteria = session.createCriteria(UserRoles.class);
+		Criteria criteria = ses.createCriteria(UserRoles.class);
 		criteria.add(Restrictions.eq("role", role));
 		return (UserRoles) criteria.uniqueResult();
 	}
@@ -287,7 +285,7 @@ public class DAOImpl implements DAO {
 		Session ses = sessionFactory.getCurrentSession();
 		setSession(ses);
 		
-		Criteria criteria = session.createCriteria(User.class);
+		Criteria criteria = ses.createCriteria(User.class);
 		return (List<User>)criteria.list();
 	}
 	
@@ -298,7 +296,7 @@ public class DAOImpl implements DAO {
 		Session ses = sessionFactory.getCurrentSession();
 		setSession(ses);
 		
-		Criteria criteria = session.createCriteria(UserRoles.class);
+		Criteria criteria = ses.createCriteria(UserRoles.class);
 		criteria.add(Restrictions.eq("userRoleId", roleId));
 		return (UserRoles) criteria.uniqueResult();
 	}
@@ -310,7 +308,7 @@ public class DAOImpl implements DAO {
 		Session ses = sessionFactory.getCurrentSession();
 		setSession(ses);
 		
-		Criteria criteria = session.createCriteria(Blog.class);
+		Criteria criteria = ses.createCriteria(Blog.class);
 		return (List<Blog>)criteria.list();
 	}
 	
@@ -321,7 +319,7 @@ public class DAOImpl implements DAO {
 		Session ses = sessionFactory.getCurrentSession();
 		setSession(ses);
 		
-		Criteria criteria = session.createCriteria(Tags.class);
+		Criteria criteria = ses.createCriteria(Tags.class);
 		return (List<Tags>)criteria.list();
 	}
 	
@@ -332,7 +330,7 @@ public class DAOImpl implements DAO {
 		Session ses = sessionFactory.getCurrentSession();
 		setSession(ses);
 		
-		Criteria criteria = session.createCriteria(UserRoles.class);
+		Criteria criteria = ses.createCriteria(UserRoles.class);
 		return (List<UserRoles>)criteria.list();
 	}
 	
@@ -343,7 +341,7 @@ public class DAOImpl implements DAO {
 		Session ses = sessionFactory.getCurrentSession();
 		setSession(ses);
 		
-		Criteria criteria = session.createCriteria(Evidence.class);
+		Criteria criteria = ses.createCriteria(Evidence.class);
 		return (List<Evidence>)criteria.list();
 	}
 	
@@ -352,22 +350,13 @@ public class DAOImpl implements DAO {
 	
 	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	public PaginatedResultList<Blog> getBlogs(String search, int start, int max) {
-		Session session = sessionFactory.getCurrentSession();
-		setSession(session);
-		
-		// TODO: Remove in production
-		/**
-		try {
-			rebuildIndex();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		*/
+		Session ses = sessionFactory.getCurrentSession();
+		setSession(ses);
+	
 		
 		PaginatedResultList<Blog> blogPosts = new PaginatedResultList<>();
 		
-		FullTextSession fts = Search.getFullTextSession(session);
+		FullTextSession fts = Search.getFullTextSession(ses);
 		QueryBuilder qb = fts.getSearchFactory().buildQueryBuilder().forEntity(Blog.class).get();
 		org.apache.lucene.search.Query searchQuery = 
 				qb.bool()
@@ -402,17 +391,17 @@ public class DAOImpl implements DAO {
 	
 	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	public PaginatedResultList<Blog> getBlogs(int start, int max) {
-		Session session = sessionFactory.getCurrentSession();
-		setSession(session);
+		Session ses = sessionFactory.getCurrentSession();
+		setSession(ses);
 		
 		PaginatedResultList<Blog> blogPosts = new PaginatedResultList<>();
 		
-		Criteria criteria = session.createCriteria(Blog.class);
+		Criteria criteria = ses.createCriteria(Blog.class);
 		criteria.add(Restrictions.eq("active", true));
 		criteria.setProjection(Projections.rowCount());
 		blogPosts.setTotalItems((long)criteria.uniqueResult());
 		
-		criteria = session.createCriteria(Blog.class);
+		criteria = ses.createCriteria(Blog.class);
 		criteria.add(Restrictions.eq("active", true));
 		criteria.addOrder(Order.desc("publishDate"));
 		criteria.setFirstResult(start);
@@ -428,18 +417,18 @@ public class DAOImpl implements DAO {
 	
 	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	public PaginatedResultList<Blog> getBlogs(User author, int start, int max) {
-		Session session = sessionFactory.getCurrentSession();
-		setSession(session);
+		Session ses = sessionFactory.getCurrentSession();
+		setSession(ses);
 		
 		PaginatedResultList<Blog> blogPosts = new PaginatedResultList<>();
 		
-		Criteria criteria = session.createCriteria(Blog.class);
+		Criteria criteria = ses.createCriteria(Blog.class);
 		criteria.add(Restrictions.eq("author", author));
 		criteria.add(Restrictions.eq("active", true));
 		criteria.setProjection(Projections.rowCount());
 		blogPosts.setTotalItems((long)criteria.uniqueResult());
 		
-		criteria = session.createCriteria(Blog.class);
+		criteria = ses.createCriteria(Blog.class);
 		criteria.addOrder(Order.desc("publishDate"));
 		criteria.add(Restrictions.eq("author", author));
 		criteria.add(Restrictions.eq("active", true));
@@ -457,17 +446,17 @@ public class DAOImpl implements DAO {
 	
 	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	public PaginatedResultList<Blog> getBlogs(Tags category, int start, int max) {
-		Session session = sessionFactory.getCurrentSession();
-		setSession(session);
+		Session ses = sessionFactory.getCurrentSession();
+		setSession(ses);
 		
 		PaginatedResultList<Blog> blogPosts = new PaginatedResultList<>();
 		
 		String hql = "from Tags where active and tagId eq :tagId left join Blog order by publishDate";
 		
-		Query query = session.createQuery("select count(*) " + hql).setInteger("tagId", category.getTagId());
+		Query query = ses.createQuery("select count(*) " + hql).setInteger("tagId", category.getTagId());
 		blogPosts.setTotalItems((long)query.uniqueResult());
 		
-		query = session.createQuery(hql).setInteger("tagId", category.getTagId());
+		query = ses.createQuery(hql).setInteger("tagId", category.getTagId());
 		query.setFirstResult(start);
 		query.setMaxResults(max);
 		
@@ -492,8 +481,8 @@ public class DAOImpl implements DAO {
 
 	@Override
 	public Blog getBlog(int id) {
-		Session session = sessionFactory.getCurrentSession();
-		Criteria criteria = session.createCriteria(Blog.class).add(Restrictions.eq("blogId", id));
+		Session ses = sessionFactory.getCurrentSession();
+		Criteria criteria = ses.createCriteria(Blog.class).add(Restrictions.eq("blogId", id));
 		Blog blog = (Blog) criteria.uniqueResult();
 		Hibernate.initialize(blog.getTags());
 		return blog;
