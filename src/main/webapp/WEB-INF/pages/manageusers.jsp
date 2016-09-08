@@ -58,7 +58,7 @@
 						</td>
 						<td><input id="${user.userId}" onclick=resetPicture(this.id) type="submit" class="btn btn-primary form-control" value="Reset Picture" /></td>
 						<td><c:choose>
-								<c:when test="${user.active}">
+								<c:when id="activeTest" test="${user.active}">
 									<input id="${user.userId}" onclick=deactivateUser(this.id) type="submit" class="btn btn-primary form-control" value="Deactivate" />
 								</c:when>
 								<c:otherwise>
@@ -142,13 +142,20 @@ function deactivateUser(userId){
 			method: "POST",
 			data : { 'userId'  : userId},
 			success: function(success){
-				location.reload();
+				
 			}
 	});
 }
 
 function activateUser(userId){
-	
+	$.ajax({
+			url: "activateUser.do",
+			method: "POST",
+			data : { 'userId'  : userId},
+			success: function(success){
+				
+			}
+	});
 }
 	
 </script>

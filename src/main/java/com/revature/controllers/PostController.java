@@ -215,8 +215,8 @@ public class PostController {
 	@RequestMapping(value="activateUser.do", method=RequestMethod.POST)
 	public void activateUser(int userId){
 		User activateUser = businessDelegate.requestUser(userId);
-		
-		
+		activateUser.setActive(true);
+		businessDelegate.updateRecord(activateUser);		
 	}
 	
 	
