@@ -394,7 +394,6 @@ public class PostController {
 			TemporaryFile blogTempFile = htmlWriter.render();
 			String fileName = blogTempFile.getTemporaryFile().getName();
 			url = "http://blogs.pjw6193.tech/content/pages/" + fileName;
-			req.setAttribute("url", url);
 			blog.setLocationURL(url);
 			if((Boolean)req.getSession().getAttribute("editingBlogInDatabase")) {
 				int id = (int) req.getSession().getAttribute("blogToEditId");
@@ -425,5 +424,14 @@ public class PostController {
 		ModelAndView model = new ModelAndView();
 		model.setViewName("/management");
 		return model;
+	}
+	
+	@RequestMapping(value="delete.do", method=RequestMethod.POST)
+	public String deleteUserBlog(HttpServletRequest req, HttpServletResponse resp) {
+		String blogLink = req.getParameter("blog-link");
+		String cutBlogLink = blogLink.replace("http://blogs.pjw6193.tech/", "");
+		System.out.println(cutBlogLink);
+		businessDelegate.delete(cutBlogLink);
+		return "user-blogs";
 	}
 }

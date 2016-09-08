@@ -6,6 +6,10 @@
    			</div>
     	</div>
     	<div class="col-xs-10">
+    	<form id="delete-blog" method="post" action="delete.do" onsubmit="return deleteConfirm()">
+    			<span class="pull-right"><button class="update-blog-btn" ><span class="glyphicon glyphicon-trash"></span></button></span>
+    			<input type="hidden" name="blog-link" value={{post.link}}></input>
+    		</form>
     	<form action="edit.do" method="post" id="edit-form">
     		<input type="hidden" value={{post.id}} name="blogid"/>
     		<span class="pull-right"><button class="update-blog-btn" type="submit"><span class="glyphicon glyphicon-pencil"></span></button></span>
@@ -17,3 +21,14 @@
       </div>
      </div>
 </div>
+
+<script>
+function deleteConfirm() {
+    var x;
+    if (confirm("Delete Blog Post?") == true) {
+        return true;
+    } else {
+        return false;
+    }
+}
+</script>
