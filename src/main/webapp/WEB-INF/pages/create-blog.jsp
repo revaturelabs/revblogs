@@ -43,7 +43,7 @@
 	<h4>Subtitle</h4>
 	<form:input path="blogSubtitle"/><br />
 	<br>
-	<form:textarea path="blogContent" rows="3" cols="100"></form:textarea>
+	<form:textarea path="blogContent" rows="30" cols="100"></form:textarea>
 	<br>
 	<br />
 	<div margin="0" data-ng-repeat="reference in references">
