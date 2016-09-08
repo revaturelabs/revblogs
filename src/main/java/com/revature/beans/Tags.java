@@ -66,5 +66,9 @@ public class Tags {
 	public void setBlogs(Set<Blog> blogs) {
 		this.blogs = blogs;
 	}
+	@Override
+	public String toString() {
+		return description;
+	}
 	
 }

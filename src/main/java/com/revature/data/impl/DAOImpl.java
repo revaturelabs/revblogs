@@ -479,6 +479,8 @@ public class DAOImpl implements DAO {
 	public Blog getBlog(int id) {
 		Session session = sessionFactory.getCurrentSession();
 		Criteria criteria = session.createCriteria(Blog.class).add(Restrictions.eq("blogId", id));
-		return (Blog) criteria.uniqueResult();
+		Blog blog = (Blog) criteria.uniqueResult();
+		Hibernate.initialize(blog.getTags());
+		return blog;
 	}
 }
