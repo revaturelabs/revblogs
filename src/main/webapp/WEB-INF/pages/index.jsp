@@ -18,39 +18,7 @@
 
 <body ng-app="app" ng-controller="BlogIndexController">
   
-  <nav class="page-navigation navbar navbar-default navbar-fixed-top">
-    <div class="container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="${pageContext.servletContext.contextPath}/"><img src="https://s3-us-west-2.amazonaws.com/dan-pickles-jar/content/resources/img/rev-brand.png" /></a>
-      </div>
-
-      <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul id="navs" class="nav navbar-nav">
-          <li id="navhome" class="active"><a href="${pageContext.servletContext.contextPath}/">Home</a></li>
-        </ul>
-        <ul id="rightnavs" class="nav navbar-nav navbar-right">
-	        <li id="navsearch">
-		        <form class="navbar-form navbar-right .hidden-xs">
-		          <div class="form-group input-group post-search">
-		            <input type="text" class="form-control" placeholder="Search">
-		            <span class="input-group-btn">
-		              <button class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
-		            </span>
-		          </div>
-		        </form>
-	        </li>
-		    <li id="navlogin"><a href="${pageContext.servletContext.contextPath}/loginPage"><span class="glyphicon glyphicon-user"></span>&nbsp;Contributor</a></li>
-        </ul>
-      </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-  </nav>
+  <jsp:include page="navbar.jsp"></jsp:include>
   
   <div class="container visible-xs-block" style="margin-top: 80px">
   	<form>
@@ -113,26 +81,7 @@
   <!-- PAGINATION -->
   </div>
   <!-- FOOTER -->
-  <div class="footer">
-	    <div class="container">
-	      <div class="row">
-	        <div class="col-sm-4">
-	          <img class="img-responsive" src="https://s3-us-west-2.amazonaws.com/dan-pickles-jar/content/resources/img/rev-footer.png" />
-	        </div>
-	        <div class="col-sm-4">
-	        	<h4>Contact Info</h4>
-	        	<span class="glyphicon glyphicon-home"></span><span>&nbsp;11730 Plaza America Drive<br>Reston, VA 20190</span><br>
-	        	<span class="glyphicon glyphicon-earphone"></span><a href="tel:(703) 570-8282">&nbsp;(703) 570-8282</a><br>
-	        	<span class="glyphicon glyphicon-envelope"></span><a href="mailto:info@revature.com">&nbsp;info@revature.com</a><br>
-	        	<span class="glyphicon glyphicon-link"></span><a target="_blank" href="http://revature.com">&nbsp;revature.com</a>
-	        </div>
-	        <div class="col-sm-4">
-	        	<a href="${pageContext.servletContext.contextPath}/loginPage">Contributors - Log In</a><br>
-	        	<a href="#">Site map</a>
-	        </div>
-	      </div>
-	    </div>
-	</div>
+  <jsp:include page="footer.jsp"></jsp:include>
   
   <input type="hidden" ng-model="blogsPerPage">
   <input type="hidden" ng-model="curPage">
