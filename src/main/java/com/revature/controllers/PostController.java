@@ -196,6 +196,32 @@ public class PostController {
 		return model;
 	}
 	
+	// Admin Reset Profile Picture
+	@RequestMapping(value="resetProfile.do", method=RequestMethod.POST)
+	public void resetProfilePicture(int userId){
+		User resetUserPic = businessDelegate.requestUser(userId);
+		
+		
+	}
+	
+	// Admin Deactivate User
+	@RequestMapping(value="deactivateUser.do", method=RequestMethod.POST)
+	public void deactivateUser(int userId){
+		User deactivateUser = businessDelegate.requestUser(userId);
+		deactivateUser.setActive(false);
+		businessDelegate.updateRecord(deactivateUser);		
+	}
+	
+	// Admin Activate User
+	@RequestMapping(value="activateUser.do", method=RequestMethod.POST)
+	public void activateUser(int userId){
+		User activateUser = businessDelegate.requestUser(userId);
+		
+		
+	}
+	
+	
+	
 	// Update Password Page
 	@RequestMapping(value="updatePassword.do", method=RequestMethod.POST)
 	public ModelAndView updatePassword(@ModelAttribute("updatePassword") @Valid UserDTO passwordDTO, BindingResult bindingResult,
