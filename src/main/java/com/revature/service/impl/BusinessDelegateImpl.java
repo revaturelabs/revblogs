@@ -99,6 +99,10 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 		return jetS3.uploadProfileItem(loginName, fileName, file);
 	}
 	
+	public String uploadProfileItem(String loginName, File file){
+		return jetS3.uploadProfileItem(loginName, file);
+	}
+	
 	public String[] getList(){
 		return jetS3.list();
 	}
