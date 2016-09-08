@@ -86,6 +86,18 @@ public class JetS3Impl implements JetS3{
 	}
 	
 	/**
+	 * Attempts to upload a profile picture to the S3 server
+	 * @param fileName the destination name of the file, a valid extension should be included
+	 * @param loginName the name (or email) the user logs in with
+	 * @param file a file that is to be uploaded to the S3 server
+	 * @return the URL where the file was uploaded if successful, null otherwise
+	 */
+	public String uploadProfileItem(String loginName, String fileName, MultipartFile file) {
+		return uploadFile("content/profiles/" + loginName + "/", fileName, file);
+	}
+	
+	
+	/**
 	 * Attempts to upload a file to the S3 server
 	 * @param folderPath the path to the folder this file will be stored at starting at the S3 root
 	 * @param fileName the destination name of the file, a valid extension should be included
