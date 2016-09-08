@@ -128,8 +128,11 @@ public class PostController {
 		if(bindingResult.hasErrors()){
 			return model;
 		}
+<<<<<<< HEAD
 		
 		User updateUser = businessDelegate.requestUser(updateUserProfile.getUserId());
+=======
+>>>>>>> 6be49b5be9f72484af80e127af9bae1da5cf984d
 				
 		//password needed to be decrypted first
 		//updateUser.setPassword(Crypt.decrypt(updateUserProfile.getPassword(), updateUserProfile.getEmail(),
@@ -314,14 +317,13 @@ public class PostController {
 			BindingResult bindingResult,
 			HttpServletRequest req,
 			HttpServletResponse resp) {
-		
-		blog.setReferences(getReferences(req));
-		
+			
 		/*
 		 * Check to see if the current blog's title already exists. 
 		 * If exists, redirect to current page, if new, go to preview blog page.
 		 */
-		if(!(Boolean)req.getSession().getAttribute("editingBlogInDatabase")) {
+		Boolean editingBlogInDatabase = (Boolean)req.getSession().getAttribute("editingBlogInDatabase");
+		if(editingBlogInDatabase != null && !editingBlogInDatabase) {
 			List<Blog> myBlogs = businessDelegate.requestBlogs();
 			for(Blog curBlog : myBlogs){
 				if(curBlog.getBlogTitle().equals(blog.getBlogTitle())){
@@ -330,7 +332,7 @@ public class PostController {
 			}
 		}
 		
-		
+		blog.setReferences(getReferences(req));
 		User author = (User) req.getSession().getAttribute("user");
 		author.getFirstName();
 		blog.setAuthor(author);
@@ -388,7 +390,8 @@ public class PostController {
 			String fileName = blogTempFile.getTemporaryFile().getName();
 			url = "http://blogs.pjw6193.tech/content/pages/" + fileName;
 			blog.setLocationURL(url);
-			if((Boolean)req.getSession().getAttribute("editingBlogInDatabase")) {
+			Boolean editingBlogInDatabase = (Boolean)req.getSession().getAttribute("editingBlogInDatabase");
+			if(editingBlogInDatabase != null && editingBlogInDatabase) {
 				int id = (int) req.getSession().getAttribute("blogToEditId");
 				blog.setBlogId(id);
 				businessDelegate.updateRecord(blog);

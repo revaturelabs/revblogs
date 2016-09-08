@@ -181,9 +181,9 @@ public class BaseController {
 	public String getEditBlog(HttpServletRequest req) {
 		if((req.getParameter("blogid")) != null){
 			int id = Integer.parseInt(req.getParameter("blogid"));
+			Blog blog = businessDelegate.requestBlog(id);
 			req.getSession().setAttribute("editingBlogInDatabase", true);
 			req.getSession().setAttribute("blogToEditId", id);
-			Blog blog = businessDelegate.requestBlog(id);
 			Set<Tags> tags = blog.getTags();
 			if(!tags.isEmpty()) {
 				Tags[] tagsArray = {new Tags()};
