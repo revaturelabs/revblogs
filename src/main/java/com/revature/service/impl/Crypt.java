@@ -2,22 +2,34 @@ package com.revature.service.impl;
 
 public class Crypt {
 
-	// Encryption 
-	public  static String encrypt(String _password, String _username, String _email){
+	private Crypt(){
+		throw new IllegalAccessError("Utility class");
+	}
+	
+	/**
+	 * 
+	 *  This method encrypts the target with the keys.
+	 *  
+	 * @param target = The string you want encrypted.
+	 * @param key1   = The keyword you want the target to cipher against. (Don't pass in the target again!)
+	 * @param key2   = The keyword used to vary the output when similiar targets and keywords are utilized.
+	 * @return       = Returns the encryped target.
+	 */
+	public static String encrypt(String target, String key1, String key2){
 		
-		String temp = _password;
+		String temp = target;
 		
-		for(int i = 0; i < _email.length(); i++){
+		for(int i = 0; i < key2.length(); i++){
 			
-			temp = encrypt(temp, _username);
+			temp = encrypt(temp, key1);
 		}
 		
 		return temp;
 	}
-	private static String encrypt(String _password, String _username){
+	private static String encrypt(String target, String keyword){
 		
-		char[] tempPassword = _password.toCharArray();
-		char[] tempUsername = _username.toCharArray();
+		char[] tempPassword = target.toCharArray();
+		char[] tempUsername = keyword.toCharArray();
 		char[] tempResult = new char[tempPassword.length];
 		
 		 //Alphabets
@@ -26,7 +38,9 @@ public class Crypt {
 		
         int keyBase = tempUsername.length;
         int keyCeil = tempUsername.length;
-        int keyIndex = 0;
+        //Use a new constructor or use as is below
+        //Setting to 0 then reassigning is a waste of resources
+        int keyIndex;
         
 		for(int i = 0; i < tempPassword.length; i++){
 			
@@ -69,21 +83,19 @@ public class Crypt {
 			}
 		}
 		
-		String result = new String(tempResult);
-		
-		return result;
+		return new String(tempResult);
 	}
-	private static char cipherLetter(char[] _alpha1, char[] _alpha2, char _letter, int _keyIndex, char[] _keyword){
+	private static char cipherLetter(char[] alpha1, char[] alpha2, char letter, int keyIndex, char[] keyword){
 		
-		char temp;
-		
-		int cipherLetter = 0;
+		//Use a new constructor or use as is below
+		//Setting to 0 then reassigning is a waste of resources
+		int cipherLetter;
 		int indexLetter = 0;
 		int indexKey = 0;
 		
 		for(int i = 0; i < 26; i++){
 			
-			if(_letter == _alpha1[i]){
+			if(letter == alpha1[i]){
 				indexLetter = i;
 				break;
 			}
@@ -91,7 +103,7 @@ public class Crypt {
 		
 		for(int j = 0; j < 26; j++){
 			
-			if(_keyword[_keyIndex] == _alpha2[j]){
+			if(keyword[keyIndex] == alpha2[j]){
 				
 				indexKey = j;
 				break;
@@ -105,14 +117,11 @@ public class Crypt {
 			cipherLetter -= 26;
 		}
 		
-		 
-		temp = _alpha1[cipherLetter];
-		
-		return temp;
+		return alpha1[cipherLetter];
 	}
-	private static char cipherNumber(char _number){
+	private static char cipherNumber(char number){
 		
-		int trueNumber = Character.getNumericValue(_number);
+		int trueNumber = Character.getNumericValue(number);
 		
 		switch(trueNumber){
 		
@@ -140,9 +149,9 @@ public class Crypt {
 				return 48;
 		}
 	}
-	private static char cipherOther(char _other){
+	private static char cipherOther(char other){
 		
-		switch(_other){
+		switch(other){
 		
 			case 32:  return 45;
 			case 33:  return 42;
@@ -182,21 +191,21 @@ public class Crypt {
 	}
 	
 	// Decryption
-	public  static String decrypt(String _password, String _username, String _email){
+	public  static String decrypt(String target, String key1, String key2){
 		
-		String temp = _password;
+		String temp = target;
 		
-		for(int i = 0; i < _email.length(); i++){
+		for(int i = 0; i < key2.length(); i++){
 		
-			temp = decrypt(temp, _username);
+			temp = decrypt(temp, key1);
 		}
 		
 		return temp;
 	}
-	private static String decrypt(String _password, String _username){
+	private static String decrypt(String target, String keyword){
 		
-		char[] tempPassword = _password.toCharArray();
-		char[] tempUsername = _username.toCharArray();
+		char[] tempPassword = target.toCharArray();
+		char[] tempUsername = keyword.toCharArray();
 		char[] tempResult = new char[tempPassword.length];
 		
 		 //Alphabets
@@ -206,7 +215,9 @@ public class Crypt {
         
         int keyBase = tempUsername.length;
         int keyCeil = tempUsername.length;
-        int keyIndex = 0;
+        //Use a new constructor or use as is below
+        //Setting to 0 then reassigning is a waste of resources
+        int keyIndex;
         
 		for(int i = 0; i < tempPassword.length; i++){
 			
@@ -249,21 +260,19 @@ public class Crypt {
 			}
 		}
 		
-		String result = new String(tempResult);
-		
-		return result;
+		return new String(tempResult);
 	}
-	private static char decipherLetter(char[] _alpha1, char[] _alpha2, char _letter, int _keyIndex, char[] _keyword){
+	private static char decipherLetter(char[] alpha1, char[] alpha2, char letter, int keyIndex, char[] keyword){
 		
-		char temp;
-		
+		//Use a new constructor or use as is below
+    //Setting to 0 then reassigning is a waste of resources
 		int cipherLetter = 0;
 		int indexLetter = 0;
 		int indexKey = 0;
 		
 		for(int i = 0; i < 26; i++){
 			
-			if(_letter == _alpha1[i]){
+			if(letter == alpha1[i]){
 				indexLetter = i;
 				break;
 			}
@@ -271,7 +280,7 @@ public class Crypt {
 		
 		for(int j = 0; j < 26; j++){
 			
-			if(_keyword[_keyIndex] == _alpha2[j]){
+			if(keyword[keyIndex] == alpha2[j]){
 				
 				indexKey = j;
 				break;
@@ -285,14 +294,12 @@ public class Crypt {
 			cipherLetter += 26;
 		}
 		
-		temp = _alpha1[cipherLetter];
-		
-		return temp;
+		return alpha1[cipherLetter];
 	}
-	private static char decipherNumber(char _number){
+	private static char decipherNumber(char number){
 		
-		int trueNumber = Character.getNumericValue(_number);
-		
+		int trueNumber = Character.getNumericValue(number);
+
 		switch(trueNumber){
 		
 			case 0:
@@ -319,9 +326,9 @@ public class Crypt {
 				return 48;
 		}
 	}
-	private static char decipherOther(char _other){
+	private static char decipherOther(char other){
 		
-		switch(_other){
+		switch(other){
 		
 		case 32: return 37;
 		case 33: return 35;

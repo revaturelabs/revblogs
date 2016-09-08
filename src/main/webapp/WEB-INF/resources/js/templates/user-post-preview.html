@@ -1,0 +1,34 @@
+<div class="panel panel-default post-preview">
+   	<div class="row">
+    	<div class="col-xs-2">
+    		<div class="post-thumbnail">
+    			<img class="img-responsive center-block" src="http://www.softwareag.com/us/images/PlazaAmerica_tcm89-22312.jpg" />
+   			</div>
+    	</div>
+    	<div class="col-xs-10">
+    	<form id="delete-blog" method="post" action="delete.do" onsubmit="return deleteConfirm()">
+    			<span class="pull-right"><button class="update-blog-btn" ><span class="glyphicon glyphicon-trash"></span></button></span>
+    			<input type="hidden" name="blog-link" value={{post.link}}></input>
+    		</form>
+    	<form action="edit.do" method="post" id="edit-form">
+    		<input type="hidden" value={{post.id}} name="blogid"/>
+    		<span class="pull-right"><button class="update-blog-btn" type="submit"><span class="glyphicon glyphicon-pencil"></span></button></span>
+    	</form>
+    		<h3 class="post-title"><a href={{post.link}}>{{post.title}}</a></h3>
+	        <p class="preview-text">{{post.subtitle}}</p>
+	        <span class="post-author">By <a href={{post.author.link}}>{{post.author.name}}</a></span>
+	  		<span class="post-date">{{post.post_date | date: "MMM d, y h:mm a"}}</span>
+      </div>
+     </div>
+</div>
+
+<script>
+function deleteConfirm() {
+    var x;
+    if (confirm("Delete Blog Post?") == true) {
+        return true;
+    } else {
+        return false;
+    }
+}
+</script>

@@ -2,68 +2,126 @@ package com.revature.beans;
 
 import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+import org.hibernate.search.annotations.Field;
+import org.springframework.context.annotation.Configuration;
+
 
 @Entity
-@Table(name="REV_BLOG_USER")
+@Table(name="PP_USER")
 public class User {
 	
-		@Id
-		@Column(name="REV_BLOG_USER_ID")
+	/*
+	 *  User Attributes
+	 */
+	@Id
+	@Column(name="USER_ID")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="userSequence")
+	@SequenceGenerator(name="userSequence",sequenceName="USER_SEQUENCE",initialValue=1,allocationSize=1)
 	private int userId;
-		@Column(name="REV_BLOG_USERNAME", unique=true, nullable=false)
-	private String username;
-		@Column(name="REV_BLOG_PASSWORD", nullable=false)
-	private String password;
-		@Column(name="REV_BLOG_EMAIL", unique=true, nullable=false)
+		
+	@Column(name="USER_EMAIL", unique=true, nullable=false)
 	private String email;
-		@Column(name="REV_BLOG_FIRST_NAME", nullable=false)
+	
+	@Column(name="USER_PASSWORD", nullable=false)
+	private String password;
+		
+	@Column(name="USER_FIRST", nullable=false)
+	@Field
 	private String firstName;
-		@Column(name="REV_BLOG_LAST_NAME", nullable=false)
+		
+	@Column(name="USER_LAST", nullable=false)
+	@Field
 	private String lastName;
-		@Column(name="REV_BLOG_PROFILE_PICTURE", unique=true)
+		
+	@Column(name="USER_PICTURE")
 	private String profilePicture;
-		@Column(name="REV_BLOG_JOB_TITLE", nullable=false)
+		
+	@Column(name="USER_TITLE", nullable=false)
 	private String jobTitle;
-		@Column(name="REV_BLOG_LINKEDIN_ADDRESS", unique=true)
-	private String linkedInAddress;
-		@Column(name="REV_BLOG_DESCRIPTION", nullable=false)
+		
+	@Column(name="USER_LINKEDIN", unique=true)
+	private String linkedInURL;
+		
+	@Column(name="USER_DESCRIPTION")
 	private String description;
-		@ManyToOne
-		@JoinColumn(name="REV_BLOG_USER_ROLE_ID", nullable=false)
-	private UserRoles userRole;
-		@Column(name="REV_BLOG_ACTIVE", nullable=false)
+	
+	@Column(name="USER_ACTIVE", nullable=false)
 	private boolean active;
-		@OneToMany
-		@JoinColumn(name="REV_BLOG_BLOGS")
+	
+	@Column(name="USER_NEW", nullable=false)
+	private boolean newUser;
+	
+	/*
+	 *  Relationship Mapping
+	 */
+	@ManyToOne
+	@JoinColumn(name="USER_ROLE", nullable=false)
+	private UserRoles userRole;
+		
+	@OneToMany
+	@JoinColumn(name="USER_BLOGS")
 	private Set<Blog> blogs;
 		
-	/**
+	/*
 	 * 	Constructors
 	 */
 	public User() {
 		super();
-	}
-	public User(int userId, String username, String password, String email, String firstName, String lastName,
-			String profilePicture, String jobTitle, String linkedInAddress, String description, UserRoles userRole,
-			boolean active, Set<Blog> blogs) {
-		super();
-		this.userId = userId;
-		this.username = username;
-		this.password = password;
-		this.email = email;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.profilePicture = profilePicture;
-		this.jobTitle = jobTitle;
-		this.linkedInAddress = linkedInAddress;
-		this.description = description;
-		this.userRole = userRole;
-		this.active = active;
-		this.blogs = blogs;
+		
+		// Set Defaults
+		this.profilePicture = "http://blogs.pjw6193.tech/content/evidence/Stickman.png";
+		this.active = true;
+		this.newUser = true;
 	}
 	
-	/**
+	// Missing Password, Role, and Picture
+	public User(String email, String firstName, String lastName, String jobTitle, String linkedInURL, String description){
+		this();
+		this.email = email.toLowerCase();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.jobTitle = jobTitle;
+		this.linkedInURL = linkedInURL;
+		this.description = description;
+	}
+	
+	// Required Fields
+	public User(String email, String password, String firstName, String lastName, String jobTitle, UserRoles userRole) {
+		this();
+		this.email = email;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.jobTitle = jobTitle;
+		this.userRole = userRole;
+	}
+	
+	// All Attributes
+	public User(String email, String password, String firstName, String lastName, String jobTitle, 
+				String linkedInURL, String description, UserRoles userRole) {
+		this();
+		this.email = email.toLowerCase();
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.jobTitle = jobTitle;
+		this.linkedInURL = linkedInURL;
+		this.description = description;
+		this.userRole = userRole;
+	}		
+		
+	/*
 	 * 	Getters & Setters
 	 */
 	public int getUserId() {
@@ -71,12 +129,6 @@ public class User {
 	}
 	public void setUserId(int userId) {
 		this.userId = userId;
-	}
-	public String getUsername() {
-		return username;
-	}
-	public void setUsername(String username) {
-		this.username = username;
 	}
 	public String getPassword() {
 		return password;
@@ -114,11 +166,11 @@ public class User {
 	public void setJobTitle(String jobTitle) {
 		this.jobTitle = jobTitle;
 	}
-	public String getLinkedInAddress() {
-		return linkedInAddress;
+	public String getLinkedInURL() {
+		return linkedInURL;
 	}
-	public void setLinkedInAddress(String linkedInAddress) {
-		this.linkedInAddress = linkedInAddress;
+	public void setLinkedInURL(String linkedInURL) {
+		this.linkedInURL = linkedInURL;
 	}
 	public String getDescription() {
 		return description;
@@ -143,6 +195,14 @@ public class User {
 	}
 	public void setBlogs(Set<Blog> blogs) {
 		this.blogs = blogs;
-	}		
-	
+	}
+	public boolean isNewUser() {
+		return newUser;
+	}
+	public void setNewUser(boolean newUser) {
+		this.newUser = newUser;
+	}
+	public String getFullname(){
+		return this.lastName + ", " + this.firstName;
+	}
 }

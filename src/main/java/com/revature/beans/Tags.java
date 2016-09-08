@@ -2,18 +2,36 @@ package com.revature.beans;
 
 import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+import org.hibernate.search.annotations.Field;
 
 @Entity
-@Table(name="REV_BLOG_TAGS")
+@Table(name="PP_TAGS")
 public class Tags {
 	
-		@Id
-		@Column(name="REV_BLOG_TAG_ID")
+	//----------------------------------
+	// Attributes
+	@Id
+	@Column(name="TAG_ID")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="tagSequence")
+	@SequenceGenerator(name="tagSequence",sequenceName="TAG_SEQUENCE",initialValue=1,allocationSize=1)
 	private int tagId;
-		@Column(name="REV_BLOG_DESCRIPTION", nullable=false)
+	
+	@Column(name="TAG_DESCRIPTION", unique=true, nullable=false)
+	@Field
 	private String description;
-		@ManyToMany(mappedBy="tags")
+	
+	//----------------------------------
+	// Realationship Mapping
+	@ManyToMany(mappedBy="tags")
 	private Set<Blog> blogs;
 	
 	/**
@@ -22,11 +40,9 @@ public class Tags {
 	public Tags() {
 		super();
 	}
-	public Tags(int tagId, String description, Set<Blog> blogs) {
+	public Tags(String description) {
 		super();
-		this.tagId = tagId;
 		this.description = description;
-		this.blogs = blogs;
 	}
 	
 	/**
@@ -49,6 +65,10 @@ public class Tags {
 	}
 	public void setBlogs(Set<Blog> blogs) {
 		this.blogs = blogs;
+	}
+	@Override
+	public String toString() {
+		return description;
 	}
 	
 }
