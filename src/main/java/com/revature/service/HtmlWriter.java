@@ -89,8 +89,13 @@ public class HtmlWriter {
 					blogWriter.write("<a href='#'>" + tag.getDescription() + "</a> ");
 				}
 			}
-			if(line.contains("invisible-url")){
-				blogWriter.write("<input type='text' id='invisibleurl' value='"+fileName+"'/>");
+			if(line.contains("facebook-url")){
+				blogWriter.write("<input type='text' id='facebookurl' value='"+fileName+"'/>");
+			}
+			if(line.contains("linkedin-url")){
+				blogWriter.write("<a class='btn btn-social-icon btn-linkedin' target='_blank' href='https://www.linkedin.com/shareArticle?mini=true&url=" + fileName + "'>"														
+				+ "<span class='fa fa-linkedin'></span>"	
+				+ "</a>");
 			}
 			if (line.contains("post-references-body")) {
 				Map<Integer, String> references = blog.getReferences();

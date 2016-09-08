@@ -117,6 +117,40 @@ public class PostController {
 		req.setAttribute("updateUser", new User());
 		return model;
 	}
+	
+	// Update a User
+	@RequestMapping(value="updateUserProfile.do", method=RequestMethod.POST)
+	public ModelAndView updateUserProfile(@ModelAttribute("updateUserProfile") @Valid User updateUserProfile, 
+							 BindingResult bindingResult, HttpServletRequest req, HttpServletResponse resp){
+		
+		ModelAndView model = new ModelAndView();
+		model.setViewName("/manageusers");
+		if(bindingResult.hasErrors()){
+			return model;
+		}
+		
+//		User loggedIn = (User) req.getSession().getAttribute("user");
+//		
+//		//password needed to be decrypted first
+//		loggedIn.setPassword(Crypt.decrypt(loggedIn.getPassword(), loggedIn.getEmail(), loggedIn.getFullname()));
+//		//end decryption
+//		
+//		loggedIn.setEmail(updateUser.getEmail());
+//		loggedIn.setFirstName(updateUser.getFirstName());
+//		loggedIn.setLastName(updateUser.getLastName());
+//		loggedIn.setJobTitle(updateUser.getJobTitle());
+//		loggedIn.setLinkedInURL(updateUser.getLinkedInURL());
+//		loggedIn.setDescription(updateUser.getDescription());
+//		
+//		//re-encrypt password
+//		loggedIn.setPassword(Crypt.encrypt(loggedIn.getPassword(), loggedIn.getEmail(), loggedIn.getFullname()));
+//		//end re-encryption
+//		
+//		req.getSession().setAttribute("user", loggedIn);
+//		businessDelegate.updateRecord(loggedIn);
+		req.setAttribute("updateUserProfile", new User());
+		return model;
+	}
 	//Create a new User
 	/*
 	 * @RequestParam("newUser")
@@ -382,5 +416,14 @@ public class PostController {
 		ModelAndView model = new ModelAndView();
 		model.setViewName("/management");
 		return model;
+	}
+	
+	@RequestMapping(value="delete.do", method=RequestMethod.POST)
+	public String deleteUserBlog(HttpServletRequest req, HttpServletResponse resp) {
+		String blogLink = req.getParameter("blog-link");
+		String cutBlogLink = blogLink.replace("http://blogs.pjw6193.tech/", "");
+		System.out.println(cutBlogLink);
+		businessDelegate.delete(cutBlogLink);
+		return "user-blogs";
 	}
 }

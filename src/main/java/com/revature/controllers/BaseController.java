@@ -69,10 +69,6 @@ public class BaseController {
 		// Toggle Population Button (True is On and False is Off
 		req.getSession().setAttribute("populate", false);
 		
-		if(req.getSession().getAttribute("user") != null){
-			User user = (User) req.getSession().getAttribute("user");
-		}
-		
 		return "loginPage";
 	}
 	
@@ -132,7 +128,7 @@ public class BaseController {
 	// SPRING SECURITY
 	
 	//Delegation - Reduces Duplicate Code
-	private static ModelAndView modelCreation(String jobTitle,String name){
+	private ModelAndView modelCreation(String jobTitle,String name){
 		ModelAndView model = new ModelAndView();
 		model.setViewName(HOME);
 		model.addObject(TITLE, LOGGED + jobTitle);
