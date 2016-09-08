@@ -179,3 +179,7 @@ html, body {
   	position: absolute;
   	height: 100%;
   }
+  
+  .highlight {
+  	background-color: tomato;
+  }

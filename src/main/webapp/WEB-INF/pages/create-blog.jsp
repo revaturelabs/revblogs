@@ -26,7 +26,6 @@
     api_key:   77nvk5bz7r4mwj
 </script>
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet" href="bootstrap-social.css">
 <script src="https://use.fontawesome.com/ebec39e24e.js"></script>
 <link href="resources/css/main.css" rel="stylesheet">
 <!-- Javascript SDK for FB Comments -->
@@ -49,7 +48,7 @@
 
 
 
-<form:form action="add-blog.do" method="post" commandName="blog" onsubmit="filter()" id="blogForm">
+<form:form action="add-blog.do" method="post" commandName="blog">
 	Title
 	<form:input path="blogTitle"/><br />
 	Subtitle
@@ -57,7 +56,7 @@
 	<button type="button">Attach Image</button>
 	<button type="button">Attach File</button>
 	<br>
-	<form:textarea path="blogContent" rows="3" cols="100" id="blogBody"></form:textarea>
+	<form:textarea path="blogContent" rows="3" cols="100"></form:textarea>
 	<br>
 	<!-- <button type="button">Add Reference</button>
 	<br>
@@ -78,5 +77,4 @@
 </body>
 <script src="https://s3-us-west-2.amazonaws.com/dan-pickles-jar/content/resources/js/facebookConnection.js"></script>
 <script src="${pageContext.servletContext.contextPath}/resources/js/tinyMCE.js"></script>
-<script src="${pageContext.servletContext.contextPath}/resources/js/antiCursing.js"></script>
 </html>
