@@ -36,6 +36,7 @@
 					<th>Edit Profile</th>
 					<th>Edit Picture</th>
 					<th>Set Active</th>
+					<th>Reset Password</th>
 					<th hidden></th>
 					<th hidden></th>
 					<th hidden></th>
@@ -69,6 +70,7 @@
 								</c:otherwise>
 							</c:choose>
 						</td>
+						<td><input type="submit" class="btn btn-primary form-control" value="Reset Password" /></td>
 						<td id="userId${user.userId}" hidden><c:out value="${user.userId}" /></td>
 						<td id="password${user.userId}" hidden><c:out value="${user.password}" /></td>
 						<td id="description${user.userId}" hidden><c:out value="${user.description}" /></td>
