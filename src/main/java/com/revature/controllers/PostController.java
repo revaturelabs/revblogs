@@ -328,15 +328,16 @@ public class PostController {
 		 * Check to see if the current blog's title already exists. 
 		 * If exists, redirect to current page, if new, go to preview blog page.
 		 */
-		List<Blog> myBlogs = businessDelegate.requestBlogs();
-		for(Blog curBlog : myBlogs){
-			if(curBlog.getBlogTitle().equals(blog.getBlogTitle())){
-				return "create-blog";
-			};
+		if(!(Boolean)req.getSession().getAttribute("editingBlogInDatabase")) {
+			List<Blog> myBlogs = businessDelegate.requestBlogs();
+			for(Blog curBlog : myBlogs){
+				if(curBlog.getBlogTitle().equals(blog.getBlogTitle())){
+					return "create-blog";
+				};
+			}
 		}
 		
 		
-//	Code for reference:	User author - businessDelegate.requestUsers("pick")
 		User author = (User) req.getSession().getAttribute("user");
 		author.getFirstName();
 		blog.setAuthor(author);
@@ -395,10 +396,18 @@ public class PostController {
 			url = "http://blogs.pjw6193.tech/content/pages/" + fileName;
 			req.setAttribute("url", url);
 			blog.setLocationURL(url);
-			businessDelegate.putRecord(blog);
+			if((Boolean)req.getSession().getAttribute("editingBlogInDatabase")) {
+				int id = (int) req.getSession().getAttribute("blogToEditId");
+				blog.setBlogId(id);
+				businessDelegate.updateRecord(blog);
+			} else {
+				businessDelegate.putRecord(blog);
+			}
 			businessDelegate.uploadPage(blogTempFile.getTemporaryFile());
 			blogTempFile.destroy();
 			req.getSession().setAttribute("blog", null);
+			req.getSession().setAttribute("editingBlogInDatabase", false);
+			req.getSession().setAttribute("blogToEditId", 0);
 		} catch (FileNotFoundException e) { 
 			Logging.info(e);
 		} catch (IOException e1) {
