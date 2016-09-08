@@ -28,7 +28,7 @@
     api_key:   77nvk5bz7r4mwj;
 </script>
 <script src="https://use.fontawesome.com/ebec39e24e.js"></script>
-<link href="resources/css/bootstrap-social.css" rel="stylesheet">
+<link rel="stylesheet" href="resources/css/bootstrap-social.css">
 </head>
 
 <body>
@@ -42,7 +42,7 @@
           </div>
         </div>
 		
-        <div class="post-content" style="padding-top: 60px;">
+        <div class="post-content" id="postContent" style="padding-top: 60px;">
           <div class="post-heading">
             <div class="post-meta">
               <span class="post-date">
@@ -60,7 +60,7 @@
             	<c:out value="${blog.blogSubtitle}"></c:out>
             </h3>
           </div>
-          <div class="post-body">
+          <div class="post-body" id="previewBlogBody">
           	<c:out value="${blog.blogContent}" escapeXml="false"></c:out>
           </div>
           <div class="post-references-heading">
@@ -77,9 +77,11 @@
           <form:form action="edit.do">
           	<button type="submit">Edit</button>
           </form:form>
-          <form action="publish.do" method="post">
-          	<button type="submit">Publish</button>
+          <form action="publish.do" method="post" onsubmit="return filter(this)">
           </form>
+          
+          	<button type="submit">Publish</button>
+         
         </div>
       </div>
       <div class="col-sm-4">
@@ -146,4 +148,5 @@
 </body>
 <script type="text/javascript" src="resources/js/ui.js"></script>
 <script src="${pageContext.servletContext.contextPath }/resources/js/facebookConnection.js"></script>
+<script src="${pageContext.servletContext.contextPath}/resources/js/antiCursing.js"></script>
 </html>
