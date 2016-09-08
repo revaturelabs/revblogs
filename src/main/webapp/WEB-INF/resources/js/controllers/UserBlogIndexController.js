@@ -4,7 +4,7 @@ app.controller("UserBlogIndexController", ["$scope", "$http", function($scope, $
 		$http.get("/revblogs/api/posts?author=" + $scope.userid + "&page=" + page + "&per_page=" + $scope.postsPerPage).success(
 		    function(resp) {
 				$scope.posts = resp;
-				
+				console.log($scope.posts);
 				$scope.curPage = page;  //current page
 				
 				var prevPage = $scope.curPage;
