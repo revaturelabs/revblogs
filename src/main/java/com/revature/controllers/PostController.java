@@ -129,7 +129,7 @@ public class PostController {
 			return model;
 		}
 		
-		User updateUser = 
+		//User updateUser = 
 				
 		//password needed to be decrypted first
 		//updateUser.setPassword(Crypt.decrypt(updateUserProfile.getPassword(), updateUserProfile.getEmail(),
