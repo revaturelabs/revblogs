@@ -96,6 +96,9 @@ public class JetS3Impl implements JetS3{
 		return uploadFile("content/profiles/" + loginName + "/", fileName, file);
 	}
 	
+	public String uploadProfileItem(String loginName, File file){
+		return uploadFile("content/profiles/" + loginName + "/", file);
+	}
 	
 	/**
 	 * Attempts to upload a file to the S3 server

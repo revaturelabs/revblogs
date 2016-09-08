@@ -51,6 +51,8 @@ public interface BusinessDelegate {
 	 */
 	public String uploadProfileItem(String loginName, String fileName, MultipartFile file);
 	
+	public String uploadProfileItem(String loginName, File file);
+	
 	public JetS3 getJetS3();
 
 	
