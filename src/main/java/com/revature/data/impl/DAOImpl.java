@@ -2,6 +2,8 @@ package com.revature.data.impl;
 
 import java.util.List;
 
+import org.apache.lucene.queries.BooleanFilter;
+import org.apache.lucene.search.Filter;
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
@@ -354,24 +356,33 @@ public class DAOImpl implements DAO {
 		setSession(session);
 		
 		// TODO: Remove in production
-		/**
+		
 		try {
 			rebuildIndex();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		*/
+		
 		
 		PaginatedResultList<Blog> blogPosts = new PaginatedResultList<>();
 		
 		FullTextSession fts = Search.getFullTextSession(session);
 		QueryBuilder qb = fts.getSearchFactory().buildQueryBuilder().forEntity(Blog.class).get();
 		org.apache.lucene.search.Query searchQuery = 
-				qb.keyword()
-				  .onFields("title", "subtitle", "author.firstName", "author.lastName", "tags.description")
-				  .matching(search)
-				  .createQuery();
+				qb.bool()
+				  .must(
+						qb.keyword()
+						  .onFields("title", "subtitle", "author.firstName", "author.lastName", "tags.description")
+				          .matching(search)
+				          .createQuery()
+				  ).must(
+						qb.keyword()
+						  .onField("active")
+						  .matching("true")
+						  .createQuery()
+				  )
+				.createQuery();
 		
 		FullTextQuery query = fts.createFullTextQuery(searchQuery, Blog.class);
 		query.setFirstResult(start);
@@ -397,10 +408,12 @@ public class DAOImpl implements DAO {
 		PaginatedResultList<Blog> blogPosts = new PaginatedResultList<>();
 		
 		Criteria criteria = session.createCriteria(Blog.class);
+		criteria.add(Restrictions.eq("active", true));
 		criteria.setProjection(Projections.rowCount());
 		blogPosts.setTotalItems((long)criteria.uniqueResult());
 		
 		criteria = session.createCriteria(Blog.class);
+		criteria.add(Restrictions.eq("active", true));
 		criteria.addOrder(Order.desc("publishDate"));
 		criteria.setFirstResult(start);
 		criteria.setMaxResults(max);
@@ -422,12 +435,14 @@ public class DAOImpl implements DAO {
 		
 		Criteria criteria = session.createCriteria(Blog.class);
 		criteria.add(Restrictions.eq("author", author));
+		criteria.add(Restrictions.eq("active", true));
 		criteria.setProjection(Projections.rowCount());
 		blogPosts.setTotalItems((long)criteria.uniqueResult());
 		
 		criteria = session.createCriteria(Blog.class);
 		criteria.addOrder(Order.desc("publishDate"));
 		criteria.add(Restrictions.eq("author", author));
+		criteria.add(Restrictions.eq("active", true));
 		criteria.setFirstResult(start);
 		criteria.setMaxResults(max);
 
@@ -447,7 +462,7 @@ public class DAOImpl implements DAO {
 		
 		PaginatedResultList<Blog> blogPosts = new PaginatedResultList<>();
 		
-		String hql = "from Tags where tagId eq :tagId left join Blog order by publishDate";
+		String hql = "from Tags where active and tagId eq :tagId left join Blog order by publishDate";
 		
 		Query query = session.createQuery("select count(*) " + hql).setInteger("tagId", category.getTagId());
 		blogPosts.setTotalItems((long)query.uniqueResult());
