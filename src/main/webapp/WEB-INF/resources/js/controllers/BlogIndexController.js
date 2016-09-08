@@ -1,54 +1,6 @@
 app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http) 
 {
 	$scope.appUrl = "http://localhost:7001/revblogs";
-	// Domain DTO mockup
-	$scope.posts = {				/* 10 posts per page is default; can be changed by using ?perPage=25 */
-		page: 1,					/* current page */
-		totalPages: 7,				/* total number of pages */
-		totalPosts: 65,				/* total number of posts */
-		prev: null,					/* link to previous set of posts */
-		next: "/api/posts?page=2",	/* link to next set of posts */
-		posts: [					/* array of post objects */
-					{
-/* post id */			id: 1,
-/* post link */			link: "/post/yearMonthDayOfCreation/blogTitle.html",
-/* post title */		title: "The Joy of Coding",
-/* post subtitle */		subtitle: "40 ways to enhance your productivity whilst coding",
-/* post content, plain 
-   text (use JS to 
-   clamp length) */		content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-/* post tag array */	tags: ["Java", ".NET", "General Programming", "Productivity"],
-/* post author
-   object */			author: {
-   							id: 1,
-							name: "Trey McDeane",
-/* link to user posts */	link: "/author/1/posts"
-						},
-/* post date as ms */	postDate: 1472588905064
-					},
-					{
-						id: 2,
-						title: "Blah Man Blah",
-						subtitle: "This is a thing",
-						content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-						tags: ["Java", ".NET", "General Programming", "Productivity"],
-						author: {
-   							id: 1,
-							name: "Trey McDeane",
-							link: "/author/1/posts"
-						},
-						postDate: 1472588905064
-					},
-			]
-		}
-	
-/*	$scope.numOfPages = [];
-	var totalPages = 10;
-	
-	for (var i = 0; i < totalPages; i++) 
-	{
-		$scope.numOfPages[i] = i+1		
-	}*/
 	
 	$scope.getPage = function(page, postsPP)
 	{
@@ -65,14 +17,11 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 				if($scope.curPage > 1)
 				{
 					prevPage = $scope.curPage - 1;
-					console.log("Previous page: " + prevPage);
 				}
 				
 				if($scope.curPage < $scope.posts.total_pages)
 				{
-					console.log("Current page: " + $scope.curPage);
 					nextPage = $scope.curPage + 1;
-					console.log("Next page: " + nextPage);
 				}
 				
 				$scope.numOfPages = [];
@@ -100,53 +49,39 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 	
 	$scope.changeView = function(direction)
 	{
-		if($scope.isLoading)	{console.log("HEY! I'm loading!");}
-		
-		else
+		if(!$scope.isLoading)	
 		{
-			
 			console.log("ChangeView " + direction);
 			console.log($scope.curPage);
-			if(direction == 1)
+			
+			if(direction === 1)
 			{
-				if($scope.curPage == $scope.posts.total_pages)		{}
-				
-				else
+				if($scope.curPage < $scope.posts.total_pages)		
 				{
 					$scope.posts = $scope.nextPagePosts;
 					$scope.curPage = $scope.curPage + 1;
 					
-					console.log("Forward direction, curPage = " + $scope.curPage);
-					
 					$scope.isLoading = true;
-					console.log("Loading? " + $scope.isLoading);
 					
 					preloadPage($scope.curPage - 1, $scope.postsPerPage);
 					preloadPage($scope.curPage + 1, $scope.postsPerPage);
 
-					//$anchorScroll($('#postsDiv'));
-			        //window.scrollTo(0, $('#postsDiv').offsetTop + 100);
-			        $("html, body").animate({ scrollTop: "300px" });
+			        window.scrollTo(0, $('#postsDiv').offsetTop + 100);
 				}
 			}
 			
 			else
 			{
-				if($scope.curPage == 1)	{}
-				
-				else
+				if($scope.curPage > 1)
 				{
 					$scope.posts = $scope.prevPagePosts;
 					$scope.curPage = $scope.curPage - 1;
-					
-					console.log("Reverse direction, curPage = " + $scope.curPage);
 
 					$scope.isLoading = true;
 					preloadPage($scope.curPage - 1, $scope.postsPerPage);
 					preloadPage($scope.curPage + 1, $scope.postsPerPage);
 					$scope.isLoading = false;
 					
-					//$anchorScroll($('#postsDiv'));
 			        window.scrollTo(0, $('#postsDiv').offsetTop + 100)
 				}
 			}
@@ -155,6 +90,7 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 	
 	function preloadPage(page, postsPP)
 	{
+		console.log("Pre-loading");
 		$http.get($scope.appUrl+"/api/posts?page=" + page).success(
 		    function(resp)
 			{
@@ -164,13 +100,11 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 				
 				if($scope.curPage > page)
 				{
-					console.log("Pre-loading prevPage = " + page)
 					$scope.prevPagePosts = resp;
 				}
 				
 				if($scope.curPage < page)
 				{
-					console.log("Pre-loading nextPage = " + page)
 					$scope.nextPagePosts = resp;
 					$scope.isLoading = false;
 				}
@@ -182,24 +116,4 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 	$scope.postsPerPage = 10;
 	$scope.isLoading = false;
 	$scope.getPage($scope.curPage, $scope.postsPerPage);
-	//
 }]);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
