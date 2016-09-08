@@ -27,7 +27,7 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 				$scope.numOfPages = [];
 				$scope.numOfPages[0] = 1;
 				
-				for (var i = 1; i < $scope.posts.total_pages; i++)
+				for (var i = 1; i < $scope.posts.total_pages+1; i++)
 				{
 					$scope.numOfPages[i - 1] = i;
 				}
