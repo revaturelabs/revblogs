@@ -41,7 +41,6 @@
 					<th hidden></th>
 					<th hidden></th>
 					<th hidden></th>
-					<th hidden></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -75,7 +74,6 @@
 						<td id="description${user.userId}" hidden><c:out value="${user.description}" /></td>
 						<td id="firstName${user.userId}" hidden><c:out value="${user.firstName}" /></td>
 						<td id="lastName${user.userId}" hidden><c:out value="${user.lastName}" /></td>
-						<td id="role${user.userId}" hidden><c:out value="${user.userRole.userRoleId}" /></td>
 					</tr>
 				</c:forEach>
 			</tbody>
@@ -96,16 +94,13 @@
 					</div>
 					<form:form action="updateUserProfile.do" method="post" commandName="updateUserProfile">
 						<div class="modal-body">
-							
+							<form:hidden path="password" id="selectedUserPassword" class="form-control" />
 							<form:input path="userId" id="selectedUserId" class="form-control" disabled="true" />
 							<form:input path="email" id="selectedUserEmail" class="form-control" />
 							<form:input path="firstName" id="selectedUserFirst" class="form-control" />
 							<form:input path="lastName" id="selectedUserLast" class="form-control" />
 							<form:input path="jobTitle" id="selectedUserJob" class="form-control" />
-							<form:textarea path="description" id="selectedUserDesc" class="form-control" />
-							<c:forEach var="roles" items="${roleList}">
-								<form:radiobutton path="userRole" id="selectedUserRole" label="${roles.role}" />
-							</c:forEach>					
+							<form:textarea path="description" id="selectedUserDesc" class="form-control" />				
 						</div>
 					<div class="modal-footer">
 						<input id="editUserButton" type="submit" onclick=edit(this.userId) value="Submit Changes" class="btn btn-primary form-control" style="width: auto;" />
@@ -148,9 +143,7 @@ function edit(userId){
 	$("#selectedUserLast").val($("#lastName" + userId).html());
 	$("#selectedUserJob").val($("#job" + userId).html());
 	$("#selectedUserDesc").val($("#description" + userId).html());
-	
-	
-	$("#selectedUserRole").val($("#role" + userId).html());
+	$("#selectedUserPassword").val($("#password" + userId).html());
 }
 	
 </script>
