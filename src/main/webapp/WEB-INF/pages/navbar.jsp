@@ -10,13 +10,13 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="${pageContext.servletContext.contextPath}/"><img src="resources/img/rev-brand.png" /></a>
+        <a class="navbar-brand" href="http://blogs.pjw6193.tech"><img src="resources/img/rev-brand.png" /></a>
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul id="navs" class="nav navbar-nav">
-          <li id="navhome"><a href="${pageContext.servletContext.contextPath}/">Home</a></li>
+          <li id="navhome"><a href="http://blogs.pjw6193.tech">Home</a></li>
         </ul>
         <ul id="rightnavs" class="nav navbar-nav navbar-right">
 	        <li id="navsearch">
