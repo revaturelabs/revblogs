@@ -136,31 +136,20 @@ public class PostController {
 				updateUser.getFullname()));
 		//end decryption
 		
+		// Set attributes
 		updateUser.setEmail(updateUserProfile.getEmail());
-		updateUser.setEmail(updateUserProfile.getEmail());
-		updateUser.setEmail(updateUserProfile.getEmail());
-		updateUser.setEmail(updateUserProfile.getEmail());
-		updateUser.setEmail(updateUserProfile.getEmail());
-		updateUser.setEmail(updateUserProfile.getEmail());
-		
-		
-		
-//		<form:hidden path="password" id="selectedUserPassword" class="form-control" />
-//		<form:input path="userId" id="selectedUserId" class="form-control" readOnly="true" />
-//		<form:input path="email" id="selectedUserEmail" class="form-control" />
-//		<form:input path="firstName" id="selectedUserFirst" class="form-control" />
-//		<form:input path="lastName" id="selectedUserLast" class="form-control" />
-//		<form:input path="jobTitle" id="selectedUserJob" class="form-control" />
-//		<form:input path="linkedInURL" id="selectedLinkedInURL" class="form-control" />
-//		<form:textarea path="description" id="selectedUserDesc" class="form-control" />	
-				
+		updateUser.setFirstName(updateUserProfile.getFirstName());
+		updateUser.setLastName(updateUserProfile.getLastName());
+		updateUser.setJobTitle(updateUserProfile.getJobTitle());
+		updateUser.setLinkedInURL(updateUserProfile.getLinkedInURL());
+		updateUser.setDescription(updateUserProfile.getDescription());		
 		
 		//re-encrypt password
-		updateUser.setPassword(Crypt.encrypt(updateUser.getPassword(), updateUserProfile.getEmail(), 
-				updateUserProfile.getFullname()));
+		updateUser.setPassword(Crypt.encrypt(updateUser.getPassword(), updateUser.getEmail(), 
+				updateUser.getFullname()));
 		//end re-encryption
 		
-		//businessDelegate.updateRecord(updateUser);
+		businessDelegate.updateRecord(updateUser);
 		req.setAttribute("userList", businessDelegate.requestUsers());
 		req.setAttribute("updateUserProfile", new UserDTO());
 		return model;
