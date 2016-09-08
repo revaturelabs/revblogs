@@ -127,11 +127,9 @@ public class PostController {
 		model.setViewName("/manageusers");
 		if(bindingResult.hasErrors()){
 			return model;
-
 		}
-
-
-		User updateUser = businessDelegate.requestUser(updateUserProfile.getUserId());	
+		
+		User updateUser = businessDelegate.requestUser(updateUserProfile.getUserId());
 
 
 				
