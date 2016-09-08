@@ -202,4 +202,6 @@ html, body {
      cursor: pointer;
   }
   
-  
+  .highlight {
+  	background-color: tomato;
+  }
