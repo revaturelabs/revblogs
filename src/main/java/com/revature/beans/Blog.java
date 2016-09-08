@@ -57,6 +57,7 @@ public class Blog {
 	private String locationURL;
 	
 	@Column(name="BLOG_ACTIVE", nullable=false)
+	@Field(name="active")
 	private boolean active;
 	
 	@Column(name="BLOG_HTML")
