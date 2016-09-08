@@ -131,20 +131,27 @@ public class PostController {
 		
 		User updateUser = businessDelegate.requestUser(updateUserProfile.getUserId());
 
+
 				
 		//password needed to be decrypted first
-		//updateUser.setPassword(Crypt.decrypt(updateUserProfile.getPassword(), updateUserProfile.getEmail(),
-		//		updateUserProfile.getFullname()));
+		updateUser.setPassword(Crypt.decrypt(updateUser.getPassword(), updateUser.getEmail(),
+				updateUser.getFullname()));
 		//end decryption
 		
-				
+		// Set attributes
+		updateUser.setEmail(updateUserProfile.getEmail());
+		updateUser.setFirstName(updateUserProfile.getFirstName());
+		updateUser.setLastName(updateUserProfile.getLastName());
+		updateUser.setJobTitle(updateUserProfile.getJobTitle());
+		updateUser.setLinkedInURL(updateUserProfile.getLinkedInURL());
+		updateUser.setDescription(updateUserProfile.getDescription());		
 		
 		//re-encrypt password
-		//updateUser.setPassword(Crypt.encrypt(updateUserProfile.getPassword(), updateUserProfile.getEmail(), 
-		//		updateUserProfile.getFullname()));
+		updateUser.setPassword(Crypt.encrypt(updateUser.getPassword(), updateUser.getEmail(), 
+				updateUser.getFullname()));
 		//end re-encryption
 		
-		//businessDelegate.updateRecord(updateUser);
+		businessDelegate.updateRecord(updateUser);
 		req.setAttribute("userList", businessDelegate.requestUsers());
 		req.setAttribute("updateUserProfile", new UserDTO());
 		return model;

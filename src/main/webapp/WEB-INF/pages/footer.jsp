@@ -4,7 +4,7 @@
 	    <div class="container">
 	      <div class="row">
 	        <div class="col-sm-4">
-	          <img class="img-responsive" src="resources/img/rev-footer.png" />
+	          <img class="img-responsive" src="http://blogs.pjw6193.tech/content/resources/img/rev-footer.png" />
 	        </div>
 	        <div class="col-sm-4">
 	        	<h4>Contact Info</h4>
@@ -14,8 +14,8 @@
 	        	<span class="glyphicon glyphicon-link"></span><a target="_blank" href="http://revature.com">&nbsp;revature.com</a>
 	        </div>
 	        <div class="col-sm-4">
+	        	<a href="http://blogs.pjw6193.tech">Home</a><br>
 	        	<a href="${pageContext.servletContext.contextPath}/profile">Contributors - Log In</a><br>
-	        	<a href="${pageContext.servletContext.contextPath}/go-logout">Log Out</a><br>
 	        	<a href="#">Site map</a>
 	        </div>
 	      </div>

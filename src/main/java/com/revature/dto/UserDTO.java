@@ -119,6 +119,10 @@ public class UserDTO {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
+	public String getFullname(){
+		return this.lastName + ", " + this.firstName;
+	}
+	
 	
 	/**
 	 *  Getters and Setters for Update Password
