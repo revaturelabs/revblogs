@@ -30,6 +30,15 @@ public interface JetS3 {
 	public String uploadEvidence(String fileName, MultipartFile file);
 	
 	/**
+	 * Attempts to upload a profile picture to the S3 server
+	 * @param fileName the destination name of the file, a valid extension should be included
+	 * @param loginName the name (or email) the user logs in with
+	 * @param file a file that is to be uploaded to the S3 server
+	 * @return the URL where the file was uploaded if successful, null otherwise
+	 */
+	public String uploadProfileItem(String loginName, String fileName, MultipartFile file);
+	
+	/**
 	 * Used as a base for uploading data to S3, should not be used 
 	 * @param fileName the destination name of the file, a valid extension should be included
 	 * @param filedata the string to be stored in the
