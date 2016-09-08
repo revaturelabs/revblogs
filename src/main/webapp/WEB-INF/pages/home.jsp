@@ -51,7 +51,7 @@
 		</tr>
 		<tr>
 			<td>
-				<a href="${pageContext.servletContext.contextPath}/user-blogs">View Your Blogs</a>
+				<a href="${pageContext.servletContext.contextPath}/user-blogs"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;View Your Blogs</a>
 			</td>
 		</tr>
 		<tr>
@@ -83,7 +83,7 @@
 	</tr>
 	<tr>
 		<td>
-			<a href="${pageContext.servletContext.contextPath}/user-blogs">View Your Blogs</a>
+			<a href="${pageContext.servletContext.contextPath}/user-blogs"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;View Your Blogs</a>
 		</td>
 	</tr>
 	<tr>
