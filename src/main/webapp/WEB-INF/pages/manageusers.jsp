@@ -93,11 +93,12 @@
 					<form:form action="updateUserProfile.do" method="post" commandName="updateUserProfile">
 						<div class="modal-body">
 							<form:hidden path="password" id="selectedUserPassword" class="form-control" />
-							<form:input path="userId" id="selectedUserId" class="form-control" disabled="true" />
+							<form:input path="userId" id="selectedUserId" class="form-control" readOnly="true" />
 							<form:input path="email" id="selectedUserEmail" class="form-control" />
 							<form:input path="firstName" id="selectedUserFirst" class="form-control" />
 							<form:input path="lastName" id="selectedUserLast" class="form-control" />
 							<form:input path="jobTitle" id="selectedUserJob" class="form-control" />
+							<form:input path="linkedInURL" id="selectedLinkedInURL" class="form-control" />
 							<form:textarea path="description" id="selectedUserDesc" class="form-control" />				
 						</div>
 					<div class="modal-footer">
@@ -142,6 +143,8 @@ function edit(userId){
 	$("#selectedUserJob").val($("#job" + userId).html());
 	$("#selectedUserDesc").val($("#description" + userId).html());
 	$("#selectedUserPassword").val($("#password" + userId).html());
+	$("#selectedLinkedInURL").val($("#link" + userId).html());
+	
 }
 	
 </script>

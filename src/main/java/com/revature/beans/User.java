@@ -108,7 +108,8 @@ public class User {
 	}
 	
 	// Required Fields for Admin to Update Profile
-	public User(int userId, String email, String password, String firstName, String lastName, String jobTitle, UserRoles userRole) {
+	public User(int userId, String email, String password, String firstName, String lastName, String jobTitle, 
+			String linkedInURL, String description) {
 		this();
 		this.userId = userId;
 		this.email = email;
@@ -116,7 +117,8 @@ public class User {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.jobTitle = jobTitle;
-		this.userRole = userRole;
+		this.linkedInURL = linkedInURL;
+		this.description = description;		
 	}
 	
 	// All Attributes

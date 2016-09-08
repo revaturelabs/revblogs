@@ -120,7 +120,7 @@ public class PostController {
 	
 	// Admin update a User
 	@RequestMapping(value="updateUserProfile.do", method=RequestMethod.POST)
-	public ModelAndView updateUserProfile(@ModelAttribute("updateUserProfile") @Valid User updateUserProfile, 
+	public ModelAndView updateUserProfile(@ModelAttribute("updateUserProfile") @Valid UserDTO updateUserProfile, 
 							 BindingResult bindingResult, HttpServletRequest req, HttpServletResponse resp){
 		
 		ModelAndView model = new ModelAndView();
@@ -129,16 +129,14 @@ public class PostController {
 			return model;
 		}
 		
-		User updateUser = businessDelegate.requestUsers(updateUserProfile.getEmail());
-//		User updateUser = businessDelegate.requestUsers(updateUserProfile.getEmail());
+		User updateUser = 
 				
 		//password needed to be decrypted first
 		//updateUser.setPassword(Crypt.decrypt(updateUserProfile.getPassword(), updateUserProfile.getEmail(),
 		//		updateUserProfile.getFullname()));
 		//end decryption
 		
-		
-		System.err.println(updateUser.getUserId());
+				
 		
 		//re-encrypt password
 		//updateUser.setPassword(Crypt.encrypt(updateUserProfile.getPassword(), updateUserProfile.getEmail(), 
@@ -146,7 +144,8 @@ public class PostController {
 		//end re-encryption
 		
 		//businessDelegate.updateRecord(updateUser);
-		req.setAttribute("updateUserProfile", new User());
+		req.setAttribute("userList", businessDelegate.requestUsers());
+		req.setAttribute("updateUserProfile", new UserDTO());
 		return model;
 	}
 	
@@ -223,7 +222,7 @@ public class PostController {
 			HttpServletRequest req, HttpServletResponse resp)
 	{
 		User loggedIn = (User) req.getSession().getAttribute("user");
-		String url = businessDelegate.uploadEvidence(""+loggedIn.getUserId(), profilePicture);		
+		String url = businessDelegate.uploadProfileItem(""+loggedIn.getUserId(),""+loggedIn.getUserId(), profilePicture);		
 		loggedIn.setProfilePicture(url);
 		businessDelegate.updateRecord(loggedIn);
 		return loggedIn.getProfilePicture();
