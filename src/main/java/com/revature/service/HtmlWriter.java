@@ -46,7 +46,7 @@ public class HtmlWriter {
 				title += "-";
 		}
 		String fileName = title+".html";
-
+		String url = "http://blogs.pjw6193.tech/content/pages/" + fileName;
 		TemporaryFile tempFile = TemporaryFile.make(fileName);
 		File file = tempFile.getTemporaryFile();
 		FileWriter fw = new FileWriter(file);
@@ -93,7 +93,7 @@ public class HtmlWriter {
 				blogWriter.write("<input type='text' id='facebookurl' value='"+fileName+"'/>");
 			}
 			if(line.contains("linkedin-url")){
-				blogWriter.write("<a class='btn btn-social-icon btn-linkedin' target='_blank' href='https://www.linkedin.com/shareArticle?mini=true&url=" + fileName + "'>"														
+				blogWriter.write("<a class='btn btn-social-icon btn-linkedin' target='_blank' href='https://www.linkedin.com/shareArticle?mini=true&url=" + url + "'>"														
 				+ "<span class='fa fa-linkedin'></span>"	
 				+ "</a>");
 			}
