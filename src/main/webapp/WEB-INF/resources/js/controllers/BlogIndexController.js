@@ -1,5 +1,6 @@
 app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http) 
 {
+	$scope.appUrl = "http://localhost:7001/revblogs";
 	// Domain DTO mockup
 	$scope.posts = {				/* 10 posts per page is default; can be changed by using ?perPage=25 */
 		page: 1,					/* current page */
@@ -51,7 +52,7 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 	
 	$scope.getPage = function(page, postsPP)
 	{
-		$http.get("/revblogs/api/posts?page=" + page + "&per_page=" + $scope.postsPerPage).success(
+		$http.get($scope.appUrl+"/api/posts?page=" + page + "&per_page=" + $scope.postsPerPage).success(
 		    function(resp)
 			{
 				$scope.posts = resp;
@@ -154,7 +155,7 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 	
 	function preloadPage(page, postsPP)
 	{
-		$http.get("/revblogs/api/posts?page=" + page).success(
+		$http.get($scope.appUrl+"/api/posts?page=" + page).success(
 		    function(resp)
 			{
 				var prevPage = $scope.curPage;
