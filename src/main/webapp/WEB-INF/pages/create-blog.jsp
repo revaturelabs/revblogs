@@ -24,7 +24,6 @@
 <meta property="og:image:width" content="450" />
 <meta property="og:image:height" content="298" />
 <meta property="fb:app_id" content="1070815552954243"/>
-
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <link rel="stylesheet" href="bootstrap-social.css">
 <script src="https://use.fontawesome.com/ebec39e24e.js"></script>
@@ -44,7 +43,7 @@
 	<h4>Subtitle</h4>
 	<form:input path="blogSubtitle"/><br />
 	<br>
-	<form:textarea path="blogContent" rows="30" cols="100" ></form:textarea>
+	<form:textarea path="blogContent" rows="30" cols="100"></form:textarea>
 	<br>
 	<br />
 	<div margin="0" data-ng-repeat="reference in references">
@@ -58,7 +57,6 @@
  	<br>
 	<form:input path="blogTagsString" id="tagList" style="resize:none;width:300px;"></form:input>
 	<br>
-	
 	<input type="submit" value="Preview" />
 	<br/>
 </form:form>
