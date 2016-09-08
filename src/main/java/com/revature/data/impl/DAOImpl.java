@@ -356,14 +356,14 @@ public class DAOImpl implements DAO {
 		setSession(session);
 		
 		// TODO: Remove in production
-		
+		/**
 		try {
 			rebuildIndex();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		*/
 		
 		PaginatedResultList<Blog> blogPosts = new PaginatedResultList<>();
 		
