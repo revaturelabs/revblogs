@@ -128,8 +128,6 @@ public class PostController {
 		if(bindingResult.hasErrors()){
 			return model;
 		}
-		
-		User updateUser = 
 				
 		//password needed to be decrypted first
 		//updateUser.setPassword(Crypt.decrypt(updateUserProfile.getPassword(), updateUserProfile.getEmail(),
