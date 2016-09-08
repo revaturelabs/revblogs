@@ -57,22 +57,10 @@
  	<br>
 	<form:input path="blogTagsString" id="tagList" style="resize:none;width:300px;"></form:input>
 	<br>
-<<<<<<< HEAD
-	
 	<input type="submit" value="Preview" />
 	<br/>
-=======
-	<input type="submit" value="Preview"/>
->>>>>>> refs/heads/nickb942016
 </form:form>
-<<<<<<< HEAD
 <br/>
-=======
-
-
-<!-- Facebook Comments Code, the data-href must point to the website the page will be on -->
-	<div class="fb-comments" data-href="http://dev.pjw6193:7001/pages/create-blog.jsp" data-numposts="5"></div>
->>>>>>> refs/heads/nickb942016
 </div>
 <jsp:include page="footer.jsp"></jsp:include>
 </body>

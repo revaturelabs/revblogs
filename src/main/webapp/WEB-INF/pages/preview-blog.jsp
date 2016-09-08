@@ -15,7 +15,7 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Cache-Control" content="no-cache">
 <meta http-equiv="Expires" content="Sat, 01 Dec 2001 00:00:00 GMT">
-<meta property="og:url" content="http://dev.pjw6193:7001/pages/create-blog.jsp" />
+<meta property="og:url" content="http://dev.pjw6193:7001/pages/preview-blog.jsp" />
 <meta property="og:type"content="article" />
 <meta property="og:title"content="Different" />
 <meta property="og:description"content="this is only a testkhjkgkjhgkj" />
@@ -78,9 +78,10 @@
           	<button type="submit">Edit</button>
           </form:form>
           <form action="publish.do" method="post" onsubmit="return filter(this)">
+         	<button type="submit">Publish</button>
           </form>
           
-          	<button type="submit">Publish</button>
+          	
          
         </div>
       </div>
