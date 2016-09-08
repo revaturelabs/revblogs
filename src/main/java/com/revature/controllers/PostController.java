@@ -127,11 +127,12 @@ public class PostController {
 		model.setViewName("/manageusers");
 		if(bindingResult.hasErrors()){
 			return model;
+
 		}
 
-		//User updateUser = 
 
 		User updateUser = businessDelegate.requestUser(updateUserProfile.getUserId());	
+
 
 				
 		//password needed to be decrypted first
