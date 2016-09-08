@@ -113,12 +113,6 @@ public class GetController {
 	public String manageUsers(HttpServletRequest req, HttpServletResponse resp){
 		req.setAttribute("userList", businessDelegate.requestUsers());
 		req.setAttribute("updateUserProfile", new User());
-//		List<UserRoles> roleList = businessDelegate.requestRoles();
-//		List<String> roleString = new ArrayList<String>();
-//		for(UserRoles ur: roleList){
-//			roleString.add(ur.getRole());
-//		}
-//		req.setAttribute("roleList", roleString);
 		req.setAttribute("roleList", businessDelegate.requestRoles());
 		return "manageusers";
 	}

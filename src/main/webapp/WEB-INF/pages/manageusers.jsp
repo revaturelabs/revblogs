@@ -82,9 +82,7 @@
 
 
 		<!-- Edit User Profile Modal -->
-		<div id="editUserProfile" class="modal fade bd-example-modal-sm"
-			tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
-			aria-hidden="true">
+		<div id="editUserProfile" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
 			<div class="modal-dialog">
 				<!-- Modal content-->
 				<div class="modal-content">
@@ -103,7 +101,7 @@
 							<form:textarea path="description" id="selectedUserDesc" class="form-control" />				
 						</div>
 					<div class="modal-footer">
-						<input id="editUserButton" type="submit" onclick=edit(this.userId) value="Submit Changes" class="btn btn-primary form-control" style="width: auto;" />
+						<input id="editUserButton" type="submit" value="Submit Changes" class="btn btn-primary form-control" style="width: auto;" />
 						<button id="closeEditUser" type="button" class="btn btn-secondary" data-dismiss="modal">
 							Close
 						</button>					

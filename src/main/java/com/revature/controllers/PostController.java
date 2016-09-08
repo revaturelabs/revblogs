@@ -118,7 +118,7 @@ public class PostController {
 		return model;
 	}
 	
-	// Update a User
+	// Admin update a User
 	@RequestMapping(value="updateUserProfile.do", method=RequestMethod.POST)
 	public ModelAndView updateUserProfile(@ModelAttribute("updateUserProfile") @Valid User updateUserProfile, 
 							 BindingResult bindingResult, HttpServletRequest req, HttpServletResponse resp){
@@ -128,26 +128,29 @@ public class PostController {
 		if(bindingResult.hasErrors()){
 			return model;
 		}
+		
+		User updateUser = businessDelegate.requestUsers(updateUserProfile.getEmail());
+//		User updateUser = businessDelegate.requestUsers(updateUserProfile.getEmail());
 				
 		//password needed to be decrypted first
-		updateUserProfile.setPassword(Crypt.decrypt(updateUserProfile.getPassword(), updateUserProfile.getEmail(),
-				updateUserProfile.getFullname()));
+		//updateUser.setPassword(Crypt.decrypt(updateUserProfile.getPassword(), updateUserProfile.getEmail(),
+		//		updateUserProfile.getFullname()));
 		//end decryption
 		
 		
+		System.err.println(updateUser.getUserId());
+		
 		//re-encrypt password
-		updateUserProfile.setPassword(Crypt.encrypt(updateUserProfile.getPassword(), updateUserProfile.getEmail(), 
-				updateUserProfile.getFullname()));
+		//updateUser.setPassword(Crypt.encrypt(updateUserProfile.getPassword(), updateUserProfile.getEmail(), 
+		//		updateUserProfile.getFullname()));
 		//end re-encryption
 		
-		businessDelegate.updateRecord(updateUserProfile);
+		//businessDelegate.updateRecord(updateUser);
 		req.setAttribute("updateUserProfile", new User());
 		return model;
 	}
+	
 	//Create a new User
-	/*
-	 * @RequestParam("newUser")
-	 */
 	@RequestMapping(value="createAccount.do", method=RequestMethod.POST)
 	public ModelAndView createAccount(HttpServletRequest req, HttpServletResponse resp){
 
@@ -185,9 +188,7 @@ public class PostController {
 		return model;
 	}
 	
-	/*
-	 * @RequestParam("newPassword")
-	 */
+	// Update Password Page
 	@RequestMapping(value="updatePassword.do", method=RequestMethod.POST)
 	public ModelAndView updatePassword(@ModelAttribute("updatePassword") @Valid UserDTO passwordDTO, BindingResult bindingResult,
 							   HttpServletRequest req, HttpServletResponse resp){
