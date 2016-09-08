@@ -203,7 +203,7 @@ public class PostController {
 				
 				String user = "" + getNewUser.getUserId();
 				
-				String profilePicture = businessDelegate.uploadProfileItem(user, file);
+				String profilePicture = businessDelegate.uploadProfileItem(user, user, file);
 				
 				getNewUser.setProfilePicture(profilePicture);
 				

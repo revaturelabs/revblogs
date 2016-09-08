@@ -38,6 +38,7 @@ public interface JetS3 {
 	 */
 	public String uploadProfileItem(String loginName, String fileName, MultipartFile file);
 	
+	public String uploadProfileItem(String folderPath, String fileName, File file);
 	
 	public String uploadProfileItem(String loginName, File file);
 	/**
