@@ -47,7 +47,7 @@
 	</c:if>
 	<br><br>
 	<div id="login">
-	<form id="form" name="loginForm" action="${pageContext.request.contextPath}/login" onsubmit="return validateForm()" method="post">
+	<form id="form" name="loginForm" action="${pageContext.request.contextPath}/login" method="post">
 	<table>	
 		<tr>
 			<td>
@@ -80,6 +80,8 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#send").click(function(){
+	
+		validateForm();
 		
 		var email = $("#userAuth").val();
 
@@ -106,8 +108,6 @@ $(document).ready(function(){
 		});
 	});
 });
-</script>
-<script type="text/javascript">
 function validateForm(){
 	
 	var element = document.querySelector("loginForm");
