@@ -128,22 +128,36 @@ public class PostController {
 		if(bindingResult.hasErrors()){
 			return model;
 		}
-<<<<<<< HEAD
 		
-		User updateUser = businessDelegate.requestUser(updateUserProfile.getUserId());
-=======
->>>>>>> 6be49b5be9f72484af80e127af9bae1da5cf984d
+		User updateUser = businessDelegate.requestUser(updateUserProfile.getUserId());	
 				
 		//password needed to be decrypted first
-		//updateUser.setPassword(Crypt.decrypt(updateUserProfile.getPassword(), updateUserProfile.getEmail(),
-		//		updateUserProfile.getFullname()));
+		updateUser.setPassword(Crypt.decrypt(updateUser.getPassword(), updateUser.getEmail(),
+				updateUser.getFullname()));
 		//end decryption
 		
+		updateUser.setEmail(updateUserProfile.getEmail());
+		updateUser.setEmail(updateUserProfile.getEmail());
+		updateUser.setEmail(updateUserProfile.getEmail());
+		updateUser.setEmail(updateUserProfile.getEmail());
+		updateUser.setEmail(updateUserProfile.getEmail());
+		updateUser.setEmail(updateUserProfile.getEmail());
+		
+		
+		
+//		<form:hidden path="password" id="selectedUserPassword" class="form-control" />
+//		<form:input path="userId" id="selectedUserId" class="form-control" readOnly="true" />
+//		<form:input path="email" id="selectedUserEmail" class="form-control" />
+//		<form:input path="firstName" id="selectedUserFirst" class="form-control" />
+//		<form:input path="lastName" id="selectedUserLast" class="form-control" />
+//		<form:input path="jobTitle" id="selectedUserJob" class="form-control" />
+//		<form:input path="linkedInURL" id="selectedLinkedInURL" class="form-control" />
+//		<form:textarea path="description" id="selectedUserDesc" class="form-control" />	
 				
 		
 		//re-encrypt password
-		//updateUser.setPassword(Crypt.encrypt(updateUserProfile.getPassword(), updateUserProfile.getEmail(), 
-		//		updateUserProfile.getFullname()));
+		updateUser.setPassword(Crypt.encrypt(updateUser.getPassword(), updateUserProfile.getEmail(), 
+				updateUserProfile.getFullname()));
 		//end re-encryption
 		
 		//businessDelegate.updateRecord(updateUser);
