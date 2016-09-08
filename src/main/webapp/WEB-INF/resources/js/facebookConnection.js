@@ -20,7 +20,8 @@
 	   }(document, 'script', 'facebook-jssdk'));
 	  
 	document.getElementById('shareBtn').onclick = function() {
-		var urlEnd = $("#invisibleurl").val();
+		var urlEnd = $("#facebookurl").val();
+
 	  FB.ui({
 	    method: 'share',
 	    display: 'popup',
