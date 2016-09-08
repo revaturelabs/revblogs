@@ -417,4 +417,13 @@ public class PostController {
 		model.setViewName("/management");
 		return model;
 	}
+	
+	@RequestMapping(value="delete.do", method=RequestMethod.POST)
+	public String deleteUserBlog(HttpServletRequest req, HttpServletResponse resp) {
+		String blogLink = req.getParameter("blog-link");
+		String cutBlogLink = blogLink.replace("http://blogs.pjw6193.tech/", "");
+		System.out.println(cutBlogLink);
+		businessDelegate.delete(cutBlogLink);
+		return "user-blogs";
+	}
 }
