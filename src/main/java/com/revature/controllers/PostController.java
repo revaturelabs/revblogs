@@ -343,7 +343,6 @@ public class PostController {
 		User author = (User) req.getSession().getAttribute("user");
 		author.getFirstName();
 		blog.setAuthor(author);
-		blog.setPublishDate(new Date());
 		req.getSession().setAttribute("blog", blog);
 		return "preview-blog";
 	}
