@@ -27,7 +27,8 @@
 </head>
 <body>
 <jsp:include page="navbar.jsp"></jsp:include>
-<div class="container page-content scroll">
+<div class="overall-container">
+<div class="container page-content scroll content-padding">
 	<table align="center">
 		<tr>
 			<th>File</th>
@@ -43,7 +44,10 @@
 		</c:forEach>
 	</table>
 </div>
+<div class="footer2">
 <jsp:include page="footer.jsp"></jsp:include>
+</div>
+</div>
 </body>
 <script type="text/javascript" src="resources/js/ui.js"></script>
 </html>
