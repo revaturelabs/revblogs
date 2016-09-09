@@ -38,31 +38,27 @@ app.controller("UserBlogIndexController", ["$scope", "$http", function($scope, $
 	}
 	
 	$scope.changeView = function(direction){
-		if($scope.isLoading) {
+		if(direction === 1) {
+			$scope.posts = $scope.nextPagePosts;
+			$scope.curPage = $scope.curPage + 1;
 			
-		} else {
-			if(direction === 1) {
-				$scope.posts = $scope.nextPagePosts;
-				$scope.curPage = $scope.curPage + 1;
-				
-				
-				$scope.isLoading = true;
-				
-				preloadPage($scope.curPage - 1);
-				preloadPage($scope.curPage + 1);
+			
+			$scope.isLoading = true;
+			
+			preloadPage($scope.curPage - 1);
+			preloadPage($scope.curPage + 1);
 
-		        window.scrollTo(0, $('#postsDiv').offsetTop + 100)
-			} else {
-				$scope.posts = $scope.prevPagePosts;
-				$scope.curPage = $scope.curPage - 1;
-				
-				$scope.isLoading = true;
-				preloadPage($scope.curPage - 1);
-				preloadPage($scope.curPage + 1);
-				$scope.isLoading = false;
-				
-		        window.scrollTo(0, $('#postsDiv').offsetTop + 100)
-			}
+	        window.scrollTo(0, $('#postsDiv').offsetTop + 100)
+		} else {
+			$scope.posts = $scope.prevPagePosts;
+			$scope.curPage = $scope.curPage - 1;
+			
+			$scope.isLoading = true;
+			preloadPage($scope.curPage - 1);
+			preloadPage($scope.curPage + 1);
+			$scope.isLoading = false;
+			
+	        window.scrollTo(0, $('#postsDiv').offsetTop + 100)
 		}
 	}
 	

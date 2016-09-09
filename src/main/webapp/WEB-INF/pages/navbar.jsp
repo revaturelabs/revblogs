@@ -16,7 +16,12 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul id="navs" class="nav navbar-nav">
-          <li id="navhome"><a href="http://blogs.pjw6193.tech">Home</a></li>
+        <c:if test="${user.userRole.role eq 'CONTRIBUTOR'}">
+        	<li id="navhome"><a href="contributor">Dashboard</a></li>
+        </c:if>
+        <c:if test="${user.userRole.role eq 'ADMIN'}">
+        	<li id="navhome"><a href="admin">Dashboard</a></li>
+        </c:if>
         </ul>
         <ul id="rightnavs" class="nav navbar-nav navbar-right">
 	        <li id="navsearch">

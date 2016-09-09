@@ -20,7 +20,7 @@
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
 <link href="resources/css/main.css" rel="stylesheet">
 <title>Manage Users</title>
-<link rel="shortcut icon" href="blogs.pjw6193.tech/content/resources/img/favicon.png"/>
+<link rel="shortcut icon" type="image/png" href="blogs.pjw6193.tech/content/resources/img/favicon.png"/>
 </head>
 <body>
 	<jsp:include page="navbar.jsp"></jsp:include>
@@ -134,12 +134,19 @@
 					<form:form action="updateUserProfile.do" method="post" commandName="updateUserProfile">
 						<div class="modal-body">
 							<form:hidden path="password" id="selectedUserPassword" class="form-control" />
+							<h4>Id</h4>
 							<form:input path="userId" id="selectedUserId" class="form-control" readOnly="true" />
+							<h4>Email</h4>
 							<form:input path="email" id="selectedUserEmail" class="form-control" />
+							<h4>First Name</h4>
 							<form:input path="firstName" id="selectedUserFirst" class="form-control" />
+							<h4>Last Name</h4>
 							<form:input path="lastName" id="selectedUserLast" class="form-control" />
+							<h4>Title</h4>
 							<form:input path="jobTitle" id="selectedUserJob" class="form-control" />
+							<h4>LinkedIn</h4>
 							<form:input path="linkedInURL" id="selectedLinkedInURL" class="form-control" />
+							<h4>Description</h4>
 							<form:textarea path="description" id="selectedUserDesc" class="form-control" />				
 						</div>
 					<div class="modal-footer">

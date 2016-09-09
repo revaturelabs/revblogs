@@ -29,7 +29,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
 <link rel="stylesheet" href="resources/css/main.css" >
-<link rel="shortcut icon" href="blogs.pjw6193.tech/content/resources/img/favicon.png"/>
+<link rel="icon" type="image/png" href="blogs.pjw6193.tech/content/resources/img/favicon.png"/>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
 <title>Blog Post</title>
