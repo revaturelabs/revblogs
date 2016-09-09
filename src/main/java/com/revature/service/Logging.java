@@ -40,7 +40,7 @@ public class Logging {
 //	
 //	 //------------------POINTCUTS------------------//
 //	//Whenever any method is executed
-	@Pointcut("within(com.revature.*.*)")
+	@Pointcut("within(com.revature..*..*)")
 	public void logPerformance(){
 		//Empty for readability of above code
 	}
