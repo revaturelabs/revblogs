@@ -285,7 +285,7 @@ public class PostController {
 	}
 	
 	
-	// Admin Reset Password
+	// Admin Can Reset Password
 	@RequestMapping(value="resetUserPassword.do", method=RequestMethod.POST)
 	public ModelAndView resetUserPassword(@RequestParam(value="resetPass") int userId, HttpServletRequest req){
 		ModelAndView model = new ModelAndView();
