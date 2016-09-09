@@ -12,10 +12,9 @@ public class AutoDeployer implements InitializingBean {
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		JetS3 deployer = new JetS3Impl();
-		deployer.uploadPage(new File("index.html"));
-		deployer.uploadPage(new File("error.html"));
-		deployer.uploadPage(new File("search.html"));
-		System.out.println("auto deployer");
+		deployer.uploadInitial(new File("resources/index.html"));
+		deployer.uploadInitial(new File("resources/error.html"));
+		deployer.uploadInitial(new File("resources/search.html"));
 	}
 
 }
