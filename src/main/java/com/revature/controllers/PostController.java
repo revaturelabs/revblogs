@@ -18,7 +18,6 @@ import java.util.TreeMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -459,9 +458,9 @@ public class PostController {
 		if(!editingBlogInDatabase) {
 			List<Blog> myBlogs = businessDelegate.requestBlogs();
 			for(Blog curBlog : myBlogs){
-				if(curBlog.getBlogTitle().equals(blog.getBlogTitle())){
+				if(curBlog.getBlogTitle().equalsIgnoreCase(blog.getBlogTitle())){
 					return "create-blog";
-				};
+				}
 			}
 			author = (User) req.getSession().getAttribute("user");
 		} else {
