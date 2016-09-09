@@ -16,6 +16,7 @@ public class AuthorDTO {
 	}
 	public AuthorDTO(User author) {
 		this();
+		this.profilePhoto = author.getProfilePicture();
 		this.id = author.getUserId();
 		this.name = author.getFirstName() + " " + author.getLastName();
 		this.link = "/api/posts?author=" + id;

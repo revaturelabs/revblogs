@@ -14,23 +14,13 @@
 <script src="resources/js/angular.min.js"></script>
 <script src="resources/js/app.js"></script>
 <script src="resources/js/controllers/BlogIndexController.js"></script>
-<link rel="blogs.pjw6193.tech/content/resources/img/favicon.png" href="blogs.pjw6193.tech/content/resources/img/favicon.png"/>
+<link rel="shortcut icon" href="http://blogs.pjw6193.tech/content/resources/img/favicon.png"/>
 </head>
 
 <body ng-app="app" ng-controller="BlogIndexController">
   
   <jsp:include page="navbar.jsp"></jsp:include>
   
-  <div class="container visible-xs-block" style="margin-top: 80px">
-  	<form>
-       <div class="form-group input-group post-search">
-         <input type="text" class="form-control" placeholder="Search">
-         <span class="input-group-btn">
-           <button class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
-         </span>
-       </div>
-     </form>
-  </div>
  <div class="overall-container">
   <div class="container page-content content-padding">
   	<div class="row">
@@ -40,12 +30,9 @@
   	</div>
     <div id="postsDiv" class="row">
       <div class="col-sm-8">
-      	<c:if test="${user.userRole.userRoleId eq 1}">
-      		<div ng-repeat="post in posts.posts" ng-include src="'resources/js/templates/editable-post-preview.html'"></div>
-      	</c:if>
-      	<c:if test="${user.userRole.userRoleId eq 2}">
+      	
       		<div ng-repeat="post in posts.posts" ng-include src="'resources/js/templates/post-preview.html'"></div>
-      	</c:if>
+      	
       </div>
       <div class="col-sm-4 hidden-xs">
         <div class="panel panel-primary">
