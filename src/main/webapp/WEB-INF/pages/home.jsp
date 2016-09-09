@@ -36,32 +36,38 @@
 		<table>
 		<tr>
 			<td>
-				<a href="${pageContext.servletContext.contextPath}/profile"><span class="glyphicon glyphicon-wrench"></span>&nbsp;Update profile</a>
+				<h4><a href="${pageContext.servletContext.contextPath}/profile"><span class="glyphicon glyphicon-wrench"></span>&nbsp;Update profile</a></h4>
 			</td>
 		</tr>
 		<tr>
 			<td>
-				<a href="${pageContext.servletContext.contextPath}/makeClientAccount"><span class="glyphicon glyphicon-user"></span>&nbsp;Add a Client</a>
+				<h4><a href="${pageContext.servletContext.contextPath}/makeClientAccount"><span class="glyphicon glyphicon-user"></span>&nbsp;Add a Client</a></h4>
 			</td>
 		</tr>
 		<tr>
 			<td>
-				<a href="${pageContext.servletContext.contextPath}/create-blog"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Create a Blog</a>
+				<h4><a href="${pageContext.servletContext.contextPath}/create-blog"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Create a Blog</a></h4>
 			</td>
 		</tr>
 		<tr>
 			<td>
-				<a href="${pageContext.servletContext.contextPath}/user-blogs"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;View Your Blogs</a>
+				<h4><a href="${pageContext.servletContext.contextPath}/user-blogs"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;View Your Blogs</a></h4>
 			</td>
 		</tr>
 		<tr>
 			<td>
-				<a href="${pageContext.servletContext.contextPath}/manage-S3"><span class="glyphicon glyphicon-remove"></span>&nbsp;Manage Bucket</a>
+				<h4><a href="${pageContext.servletContext.contextPath}/"><span class="glyphicon glyphicon-book"></span>&nbsp;View All Blogs</a></h4>
+			</td>
+
+		</tr>
+		<tr>
+			<td>
+				<h4><a href="${pageContext.servletContext.contextPath}/manage-S3"><span class="glyphicon glyphicon-remove"></span>&nbsp;Manage Bucket</a></h4>
 			</td>
 		</tr>
 		<tr>
 			<td>
-				<a href="${pageContext.servletContext.contextPath}/go-logout"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Logout</a>
+				<h4><a href="${pageContext.servletContext.contextPath}/go-logout"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Logout</a></h4>
 			</td>
 		</tr>
 		</table>
@@ -72,30 +78,30 @@
 	<table>
 	<tr>
 		<td>
-			<a href="${pageContext.servletContext.contextPath}/profile"><span class="glyphicon glyphicon-wrench"></span>&nbsp;Profile</a>
+			<h4><a href="${pageContext.servletContext.contextPath}/profile"><span class="glyphicon glyphicon-wrench"></span>&nbsp;Profile</a></h4>
 		</td>
 	</tr>
 	<tr>
 		<td>
-			<a href="${pageContext.servletContext.contextPath}/create-blog"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Create a Blog</a>
-		</td>
-
-	</tr>
-	<tr>
-		<td>
-			<a href="${pageContext.servletContext.contextPath}/user-blogs"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;View Your Blogs</a>
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<a href="${pageContext.servletContext.contextPath}/"><span class="glyphicon glyphicon-book"></span>&nbsp;View All Blogs</a>
+			<h4><a href="${pageContext.servletContext.contextPath}/create-blog"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Create a Blog</a></h4>
 		</td>
 
 	</tr>
+	<tr>
+		<td>
+			<h4><a href="${pageContext.servletContext.contextPath}/user-blogs"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;View Your Blogs</a></h4>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<h4><a href="${pageContext.servletContext.contextPath}/"><span class="glyphicon glyphicon-book"></span>&nbsp;View All Blogs</a></h4>
+		</td>
+
+	</tr>
 
 	<tr>
 		<td>
-			<a href="${pageContext.servletContext.contextPath}/go-logout"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Logout</a>
+			<h4><a href="${pageContext.servletContext.contextPath}/go-logout"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Logout</a></h4>
 		</td>
 	</tr>
 	</table>
