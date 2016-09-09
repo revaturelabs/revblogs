@@ -96,6 +96,13 @@ public class JetS3Impl implements JetS3{
 		return uploadFile("content/profiles/" + loginName + "/", fileName, file);
 	}
 	
+	public String uploadProfileItem(String loginName, String fileName, File file){
+		return uploadFile("content/profiles/" + loginName + "/", fileName, file);
+	}
+	
+	public String uploadProfileItem(String loginName, File file){
+		return uploadFile("content/profiles/" + loginName + "/", file);
+	}
 	
 	/**
 	 * Attempts to upload a file to the S3 server
@@ -123,6 +130,37 @@ public class JetS3Impl implements JetS3{
 			
 		} catch (Exception e) {
 			
+			log.info(e);
+		}
+		return null; // Resource could not be uploaded
+	}
+	
+	/**
+	 * Attempts to upload a file to the S3 server
+	 * @param folderPath the path to the folder this file will be stored at starting at the S3 root
+	 * @param fileName the destination name of the file, a valid extension should be included
+	 * @param file a File that is to be uploaded to the database
+	 * @return the URL where the file was uploaded if successful, null otherwise
+	 */
+	
+	protected String uploadFile(String folderPath, String fileName, File file) {
+		try {
+			S3Bucket bucket = s3.getBucket(BUCKET);
+			S3Object s3Obj = new S3Object(folderPath + fileName);
+			AccessControlList acl = new AccessControlList();
+			acl.setOwner(bucket.getOwner());
+			acl.grantPermission(GroupGrantee.ALL_USERS, Permission.PERMISSION_READ);
+			FileInputStream fis = new FileInputStream(file);
+			s3Obj.setDataInputStream(fis);
+			s3Obj.setContentLength(file.length());
+			s3Obj.setAcl(acl);
+			s3Obj.setContentType("text/html");
+			s3.putObject(bucket, s3Obj);
+			
+			return 
+					"http://" + BUCKET+ "/" + folderPath + fileName;
+			
+		} catch (Exception e) {
 			log.info(e);
 		}
 		return null; // Resource could not be uploaded
@@ -208,4 +246,5 @@ public class JetS3Impl implements JetS3{
 		}	
 		return true;
 	}
+
 }

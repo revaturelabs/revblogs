@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Enumeration;
@@ -18,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.bouncycastle.math.raw.Mod;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -127,11 +130,9 @@ public class PostController {
 		model.setViewName("/manageusers");
 		if(bindingResult.hasErrors()){
 			return model;
-
 		}
-
-
-		User updateUser = businessDelegate.requestUser(updateUserProfile.getUserId());	
+		
+		User updateUser = businessDelegate.requestUser(updateUserProfile.getUserId());
 
 
 				
@@ -171,20 +172,49 @@ public class PostController {
 		
 		// Check if email exists
 		if(businessDelegate.requestUsers(email) == null){
+			
 			// Generate a Temporary Password
 			String password = Crypt.encrypt("7Pas8WoR", email, role);
 			String firstName = " ";
 			String lastName = " ";
+			
 			//String profilePicture - currently not used
+			
 			String jobTitle = " ";
 			String linkedInURL = null;
 			String description = " ";
+			
 			// Role Obj from Database
 			UserRoles userRole = businessDelegate.requestRoles(role);
 			User newUser = new User(email, Crypt.encrypt(password, email, lastName+", "+firstName), firstName, lastName, jobTitle,
 					linkedInURL, description, userRole);
+			
 			// Save in Database
 			businessDelegate.putRecord(newUser);
+			
+			
+			//Get default picture
+			URL fileURL = PostController.class.getClassLoader().getResource("default.png");
+			File file;
+			try {
+				file = new File(fileURL.toURI());
+				logging.log("File length: " + file.length());
+				
+				User getNewUser = businessDelegate.requestUsers(email);
+				
+				String user = "" + getNewUser.getUserId();
+				
+				String profilePicture = businessDelegate.uploadProfileItem(user, user, file);
+				
+				getNewUser.setProfilePicture(profilePicture);
+				
+				businessDelegate.updateRecord(getNewUser);
+				
+			} catch (URISyntaxException e) {
+				// TODO Auto-generated catch block
+				logging.log(e.toString());
+			}
+			
 			// Send Email to Account
 			Mailer.sendMail(email, password);
 			
@@ -196,6 +226,64 @@ public class PostController {
 		
 		return model;
 	}
+	
+	// Admin Reset Profile Picture
+	@RequestMapping(value="resetProfile.do", method=RequestMethod.POST)
+	public ModelAndView resetProfilePicture(@RequestParam(value="resetProfile") int userId, HttpServletRequest req){
+		ModelAndView model = new ModelAndView();
+		model.setViewName("/manageusers");
+		
+		User resetUserPic = businessDelegate.requestUser(userId);
+		
+		req.setAttribute("userList", businessDelegate.requestUsers());
+		req.setAttribute("updateUserProfile", new UserDTO());
+		return model;		
+	}
+	
+	// Admin Deactivate User
+	@RequestMapping(value="deactivateUser.do", method=RequestMethod.POST)
+	public ModelAndView deactivateUser(@RequestParam(value="deactivate") int userId, HttpServletRequest req){
+		ModelAndView model = new ModelAndView();
+		model.setViewName("/manageusers");
+		
+		User deactivateUser = businessDelegate.requestUser(userId);
+		deactivateUser.setActive(false);
+		businessDelegate.updateRecord(deactivateUser);	
+		
+		req.setAttribute("userList", businessDelegate.requestUsers());
+		req.setAttribute("updateUserProfile", new UserDTO());
+		return model;
+	}
+	
+	// Admin Reset Password
+	@RequestMapping(value="resetUserPassword.do", method=RequestMethod.POST)
+	public ModelAndView resetUserPassword(@RequestParam(value="resetPass") int userId, HttpServletRequest req){
+		ModelAndView model = new ModelAndView();
+		model.setViewName("/manageusers");
+		
+		User resetUserPassword = businessDelegate.requestUser(userId);
+		
+		req.setAttribute("userList", businessDelegate.requestUsers());
+		req.setAttribute("updateUserProfile", new UserDTO());
+		return model;
+	}
+	
+	// Admin Activate User
+	@RequestMapping(value="activateUser.do", method=RequestMethod.POST)
+	public ModelAndView activateUser(@RequestParam(value="activate") int userId, HttpServletRequest req){
+		ModelAndView model = new ModelAndView();
+		model.setViewName("/manageusers");
+		
+		User activateUser = businessDelegate.requestUser(userId);
+		activateUser.setActive(true);
+		businessDelegate.updateRecord(activateUser);	
+		
+		req.setAttribute("userList", businessDelegate.requestUsers());
+		req.setAttribute("updateUserProfile", new UserDTO());
+		return model;
+	}
+	
+	
 	
 	// Update Password Page
 	@RequestMapping(value="updatePassword.do", method=RequestMethod.POST)
