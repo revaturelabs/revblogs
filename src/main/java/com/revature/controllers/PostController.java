@@ -299,7 +299,7 @@ public class PostController {
 		String role = resetUserPassword.getUserRole().getRole();
 		
 		// Generate a Temporary Password
-		String password = Crypt.encrypt("7Pas8WoR", email, role);
+		String password = businessDelegate.getRandom(6);
 		resetUserPassword.setPassword(password);
 		
 		// Save in Database
