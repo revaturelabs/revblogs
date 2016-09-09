@@ -93,4 +93,9 @@ public interface BusinessDelegate {
 	public BlogPostCollectionDTO requestBlogPosts(Tags category, int page, int perPage);
 	public BlogPostCollectionDTO requestBlogPosts(User author, int page, int perPage);
 	public Blog requestBlog(int id);
+	
+	// Encryption
+	public String maskElement(String target, String key1, String key2);
+	public String revealElement(String target, String key1, String key2);
+	public String getRandom(int length);
 }

@@ -21,7 +21,8 @@
   
   <jsp:include page="navbar.jsp"></jsp:include>
   
-  <div class="container page-content">
+ <div class="overall-container">
+  <div class="container page-content content-padding">
   	<div class="row">
   		<div class="col-xs-12">
   			<h2>Latest Posts</h2>
@@ -73,13 +74,14 @@
   <!-- PAGINATION -->
   </div>
   <!-- FOOTER -->
+  <div class="footer2">
   <jsp:include page="footer.jsp"></jsp:include>
-  
+  </div>
   <input type="hidden" ng-model="blogsPerPage">
   <input type="hidden" ng-model="curPage">
   <input type="hidden" ng-model="nextPagePosts">
   <input type="hidden" ng-model="prevPagePosts">
-  
+ </div>
 </body>
 
 <script type="text/javascript" src="resources/js/ui.js"></script>

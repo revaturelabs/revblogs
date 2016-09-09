@@ -19,7 +19,7 @@ import com.revature.beans.UserRoles;
 import com.revature.dto.UserDTO;
 import com.revature.service.BusinessDelegate;
 import com.revature.service.Logging;
-import com.revature.service.impl.CryptImpl;
+import com.revature.service.impl.LoginEncoder;
 
 @Controller
 @SessionAttributes("roleDropDown")
@@ -78,17 +78,17 @@ public class GetController {
 			
 			if(curUser.isActive()){
 				
-				CryptImpl.user.setUserId(curUser.getUserId());
-				CryptImpl.user.setEmail(curUser.getEmail());
-				CryptImpl.user.setPassword(curUser.getPassword());
-				CryptImpl.user.setFirstName(curUser.getFirstName());
-				CryptImpl.user.setLastName(curUser.getLastName());
-				CryptImpl.user.setProfilePicture(curUser.getProfilePicture());
-				CryptImpl.user.setJobTitle(curUser.getJobTitle());
-				CryptImpl.user.setLinkedInURL(curUser.getLinkedInURL());
-				CryptImpl.user.setDescription(curUser.getDescription());
-				CryptImpl.user.setActive(curUser.isActive());
-				CryptImpl.user.setNewUser(curUser.isNewUser());
+				LoginEncoder.user.setUserId(curUser.getUserId());
+				LoginEncoder.user.setEmail(curUser.getEmail());
+				LoginEncoder.user.setPassword(curUser.getPassword());
+				LoginEncoder.user.setFirstName(curUser.getFirstName());
+				LoginEncoder.user.setLastName(curUser.getLastName());
+				LoginEncoder.user.setProfilePicture(curUser.getProfilePicture());
+				LoginEncoder.user.setJobTitle(curUser.getJobTitle());
+				LoginEncoder.user.setLinkedInURL(curUser.getLinkedInURL());
+				LoginEncoder.user.setDescription(curUser.getDescription());
+				LoginEncoder.user.setActive(curUser.isActive());
+				LoginEncoder.user.setNewUser(curUser.isNewUser());
 				
 				value = "Success";
 			

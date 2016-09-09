@@ -24,38 +24,53 @@ import com.revature.dto.AuthorDTO;
 import com.revature.dto.BlogPostCollectionDTO;
 import com.revature.dto.BlogPostDTO;
 import com.revature.service.BusinessDelegate;
+import com.revature.service.Crypt;
 import com.revature.service.JetS3;
 import com.revature.service.ServiceLocator;
 
 @Service
 public class BusinessDelegateImpl implements BusinessDelegate{
 	
-	private AWSCredentials credentials;
-	private S3Service s3;
-
 	/*
 	 * 	Attributes && Getters/Setters
 	 * 
 	 */
+	
+	private AWSCredentials credentials;
+	private Crypt crypt;
 	private DataService dataService;
 	private JetS3 jetS3;
+	private S3Service s3;
 
+	public void setCrypt(Crypt crypt) {
+		this.crypt = crypt;
+	}
+	public Crypt getCrypt() {
+		return crypt;
+	}
 	public void setDataService(DataService dataService) {
 		this.dataService = dataService;
 	}
-	public void setServiceLocator(ServiceLocator serviceLocator) {
-	}
-	public Session requestSession() {
-		return dataService.grabSession();
+	public DataService getDataService() {
+		return dataService;
 	}
 	public void setJetS3(JetS3 jetS3) {
 		this.jetS3 = jetS3;
 		jetS3.syncBusinessDelegate(this);
 	}
-	
 	public JetS3 getJetS3() {
 		return jetS3;
 	}
+	
+	/*
+	 *  Methods
+	 * 
+	 */
+	
+	public Session requestSession() {
+		return dataService.grabSession();
+	}
+	
 	/**
 	 * Attempts to upload a resource (such as a CSS or JS file) to the S3 server
 	 * @param fileName the destination name of the file, a valid extension should be included
@@ -156,9 +171,8 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 		return dataService.grabRoles(role);
 	}
 	public String requestProperty(PropertyType type){
-		return dataService.grabProperty(type);
+		return crypt.getProperty(type);
 	}
-	
 	public List<User> requestUsers(){
 		return dataService.grabUsers();
 	}
@@ -181,6 +195,23 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 		return dataService.grabTag(id);
 	}
 	
+	/*
+	 * 
+	 *  Encryption
+	 */
+	
+	public String maskElement(String target, String key1, String key2){
+		
+		return crypt.encrypt(target, key1, key2);
+	}
+	public String revealElement(String target, String key1, String key2){
+		
+		return crypt.decrypt(target, key1, key2);
+	}
+	public String getRandom(int length){
+		
+		return crypt.getRandom(length);
+	}
 	
 	//-------------------------------------------------------------------------------------------------
 	// Pagination

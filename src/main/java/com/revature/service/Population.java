@@ -9,33 +9,23 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
-import com.revature.beans.ApplicationProperties;
 import com.revature.beans.Blog;
 import com.revature.beans.Tags;
 import com.revature.beans.User;
 import com.revature.beans.UserRoles;
-import com.revature.data.impl.PropertyType;
-import com.revature.service.impl.Crypt;
 
 public class Population {
 
-	private BusinessDelegate delegate;
-	private Logging logger;
+	private BusinessDelegate businessDelegate;
 	private Session session;
-	
-	public void setDelegate(BusinessDelegate delegate) {
-		this.delegate = delegate;
-	}
-	public void setLogger(Logging logger) {
-		this.logger = logger;
+
+	public void setBusinessDelegate(BusinessDelegate businessDelegate) {
+		this.businessDelegate = businessDelegate;
 	}
 
 	//-----------------------------------
 	// Complete Population (Besides Evidence)
 	public void populateDatabase(String[] properties){
-		
-		// Props
-		encryptProperty(properties);
 		
 		populateRoles();
 		populateTags();
@@ -47,7 +37,7 @@ public class Population {
 	// Roles
 	public void populateRoles(){
 		
-		/**
+		/*
 		 *  List the roles.
 		 *  Iterate through the list.
 		 *  Insantiate a new Role for each role description.
@@ -66,16 +56,16 @@ public class Population {
 		}
 		
 		Object[] roleArray = roleList.toArray();
-		delegate.putRecord(roleArray);
+		businessDelegate.putRecord(roleArray);
 		
-		logger.log("-- Done Populating Role Table --");
+		Logging.info("-- Done Populating Role Table --");
 	}
 	
 	//-----------------------------------
 	// Tags
 	public void populateTags(){
 		
-		/**
+		/*
 		 *  List the tags.
 		 *  Iterate through the tags.
 		 *  Insantiate a new Tag for each tag description.
@@ -95,9 +85,9 @@ public class Population {
 		}
 		
 		Object[] tagArray = tagList.toArray();
-		delegate.putRecord(tagArray);
+		businessDelegate.putRecord(tagArray);
 		
-		logger.log("-- Done Populating Tags Table --");
+		Logging.info("-- Done Populating Tags Table --");
 	}
 	
 	//-----------------------------------
@@ -105,14 +95,14 @@ public class Population {
 	@SuppressWarnings("unchecked")
 	public void populateBlogs(){
 		
-		/**
+		/*
 		 *  List the blog data.
 		 *  Iterate through the blog data.
 		 *  Insantiate a new Blog for each corresponding data element.
 		 *  Save that blog in the database.
 		 */
 		
-		session = delegate.requestSession();
+		session = businessDelegate.requestSession();
 		
 		List<Tags> tagList = new ArrayList<>();
 		
@@ -203,7 +193,7 @@ public class Population {
 			{1, 2, 0, 0, 0, 6, 0, 0, 0}
 		};
 		
-		List<User> users = delegate.requestUsers();
+		List<User> users = businessDelegate.requestUsers();
 		
 		List<Blog> blogList = new ArrayList<Blog>();
 		Blog blog;
@@ -226,16 +216,16 @@ public class Population {
 		}
 		
 		Object[] blogArray = blogList.toArray();
-		delegate.putRecord(blogArray);
+		businessDelegate.putRecord(blogArray);
 
-		logger.log("-- Done Populating Blogs Table --");
+		Logging.info("-- Done Populating Blogs Table --");
 	}
 	
 	//-----------------------------------
 	// Users
 	public void populateUsers(){
 		
-		session = delegate.requestSession();
+		session = businessDelegate.requestSession();
 		
 		Criteria criteria1 = session.createCriteria(UserRoles.class).add(Restrictions.eq("role", "ADMIN"));
 		Criteria criteria2 = session.createCriteria(UserRoles.class).add(Restrictions.eq("role", "CONTRIBUTOR"));
@@ -370,77 +360,15 @@ public class Population {
 			}
 			
 			// Encrypt Password
-			user.setPassword(Crypt.encrypt(user.getPassword(), user.getEmail(), user.getFullname()));
+			user.setPassword(businessDelegate.maskElement(user.getPassword(), user.getEmail(), user.getFullname()));
 			
 			user.setUserRole(myRole);
 			userList.add(user);
 		}
 		
 		Object[] userArray = userList.toArray();
-		delegate.putRecord(userArray);
+		businessDelegate.putRecord(userArray);
 		
-		logger.log("-- Done Populating Users Table --");
-	}
-	
-	//-----------------------------------
-	// Properties
-	public void encryptProperty(String[] property){
-		
-		if(property.length == 11){
-			
-
-			property[0] = Crypt.encrypt(property[0], 
-										"CZmTgoznKnJocTkGuFFURvZjUDuVvBhoETorfnzPOfqymleBbOOHfqPCSSty", 
-										"pneumonoultramicroscopicsilicovolcanoconiosis"); 
-		
-			property[1] = Crypt.encrypt(property[1], 
-										"GSXWzGGiiDBvlYxTNddabeUOsSPLHoYnibqBEAtRrSDnZPrACvUjBMGxcoBZ", 
-										"Pseudopseudohypoparathyroidism"); 
-					
-			property[2] = Crypt.encrypt(property[2], 
-										"cCpQZBETFySMWXeMTQDQomszbDhIgTCWNfjzrBQjwyzcMIrNeFGZggWpzSdQ", 
-										"Floccinaucinihilipilification"); 
-			
-			property[3] = Crypt.encrypt(property[3], 
-										"UjVheJqfrHXEuciEaIEibjRYjaxGEJFPrLcZNuugxZQmpHdeoBJRVLFeEDfc", 
-										"Antidisestablishmentarianism"); 
-			
-			property[4] = Crypt.encrypt(property[4], 
-										"BhXCFkEevSCHlJMCJyvqhyOiNnKDaoxwcdWrNGxUZySIJspidexHSROVXDAh", 
-										"supercalifragilisticexpialidocious"); 
-			
-			property[5] = Crypt.encrypt(property[5], 
-										"RnhHIlwovrapdVzySrOIfmMZPOPOEACAsVScsBIflnsIphgireiIRKkmINdr", 
-										"Incomprehensibilities"); 
-			
-			property[6] = Crypt.encrypt(property[6], 
-										"momGKfMimvxYGNKmZCzdXNSBGpvQngTbtvxETwjePoZWyirhkyAWMhkFzxQI", 
-										"honorificabilitudinitatibus"); 
-			
-			property[7] = Crypt.encrypt(property[7], 
-										"TuJgzrAAFblqmFUfDvRyNHOtKQjVpxESLwrXecnGMSrSEJyhfkgPGvTccbPJ", 
-										"sesquipedalianism"); 
-			
-			property[8] = Crypt.encrypt(property[8], 
-										"JplYSkoJXvxUEIaEZtLMzYugcPINpzArbIoGHjwHwFzdoUtfNfMOetPvvsHn", 
-										"METHIONYLTHREONYLTHREONYGLUTAMINYLARGINY"); 
-		
-			property[9] = Crypt.encrypt(property[9], 
-										"iqGJkjoSepUYggqxsZCdxXzCSyjxADhQtsiMPhyNRMxJbGowMrGmlIQETFzC", 
-										"Aequeosalinocalcalinoceraceoaluminosocupreovitriolic"); 
-			
-			property[10] = Crypt.encrypt(property[10], 
-										"boosNkoVgLkjnWJUMEeHAGbUmwWhVlBOPZKZjUduUXunxwbsZmnNxKdAWePg", 
-										"peobuefdvxjbtoajefspkfuccfngbf"); 
-	
-			
-	
-			ApplicationProperties propObj = new ApplicationProperties(	property[0], property[1], property[2], property[3],
-																		property[4], property[5], property[6], property[7],
-																		property[8], property[9], property[10]);
-			delegate.putRecord(propObj);
-			
-			logger.log("-- Done Populating Properties Table --");
-		}
+		Logging.info("-- Done Populating Users Table --");
 	}
 }
