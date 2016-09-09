@@ -23,6 +23,8 @@ public class Mailer {
 	public static void sendMail(String newEmail, String newPassword) {
 		Logger log = Logger.getRootLogger();
 		
+		System.err.println("enter send mail method");
+		
 		Properties props = new Properties();
 		props.put("mail.smtp.host", "smtp.gmail.com");
 		props.put("mail.smtp.socketFactory.port", "465");
@@ -39,7 +41,9 @@ public class Mailer {
 			});
 
 		try {
-
+			
+			System.err.println("try to set message");
+			
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress("revblogs@gmail.com"));
 			message.setRecipients(Message.RecipientType.TO,
@@ -86,10 +90,8 @@ public class Mailer {
 	         // put everything together
 	         message.setContent(multipart);
 			
-			/*message.setText("Your Password is: "+newPassword
-					+"\nLog in with your email and proceed to the link below."
-					+ "\nhttp://localhost:7001/revblogs/loginPage");*/
-
+			System.err.println("attempting to send message");
+	         
 			Transport.send(message);
 
 		} catch (MessagingException e) {

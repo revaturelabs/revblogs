@@ -18,7 +18,7 @@
 		<security:intercept-url pattern="/edit-blog/**" requires-channel="https" access="hasAnyRole('ADMIN','CONTRIBUTOR')"/>
 		<security:intercept-url pattern="/makeClientAccount/**" requires-channel="https" access="hasRole('ADMIN')"/>
 		<security:intercept-url pattern="/management/**" requires-channel="https" access="hasRole('ADMIN')"/>
-		<security:intercept-url pattern="/manageusers/**" requires-channel="https" access="hasRole('ADMIN')"/>
+		<security:intercept-url pattern="/manageusers/**" requires-channel="http" access="hasRole('ADMIN')"/>
 		<security:intercept-url pattern="/password/**" requires-channel="https" access="hasAnyRole('ADMIN','CONTRIBUTOR')"/>
 		<security:intercept-url pattern="/preview-blog**" requires-channel="https" access="hasAnyRole('CONTRIBUTOR','ADMIN')" />
 		<security:intercept-url pattern="/profile/**" requires-channel="https" access="hasAnyRole('ADMIN','CONTRIBUTOR')"/>

@@ -189,6 +189,9 @@ public class PostController {
 			// Save in Database
 			businessDelegate.putRecord(newUser);
 			
+			// Send Email to Account
+			Mailer.sendMail(email, password);
+			
 			
 			//Get default picture
 			URL fileURL = PostController.class.getClassLoader().getResource("default.png");
@@ -209,14 +212,13 @@ public class PostController {
 				
 			} catch (URISyntaxException e) {
 				logging.log(e.toString());
+				
 			}
-			
-			// Send Email to Account
-			Mailer.sendMail(email, password);
 			
 			model.setViewName("redirect:/manageusers");
 			
 			return model;
+			
 		}
 		
 		model.setViewName("redirect:/manageusers");
