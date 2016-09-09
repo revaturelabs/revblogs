@@ -14,14 +14,13 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
-import org.apache.log4j.Logger;
+import com.revature.service.Logging;
 
 public class Mailer {
 	private Mailer(){
 		throw new IllegalAccessError("Utility Class");
 	}
 	public static void sendMail(String newEmail, String newPassword) {
-		Logger log = Logger.getRootLogger();
 		
 		Properties props = new Properties();
 		props.put("mail.smtp.host", "smtp.gmail.com");
@@ -85,15 +84,11 @@ public class Mailer {
 
 	         // put everything together
 	         message.setContent(multipart);
-			
-			/*message.setText("Your Password is: "+newPassword
-					+"\nLog in with your email and proceed to the link below."
-					+ "\nhttp://localhost:7001/revblogs/loginPage");*/
 
 			Transport.send(message);
 
 		} catch (MessagingException e) {
-			log.error(e);
+			Logging.error(e);
 		}
     }
 

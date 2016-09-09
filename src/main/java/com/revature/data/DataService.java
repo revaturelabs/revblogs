@@ -26,7 +26,6 @@ public interface DataService {
 	
 	// Pull 1
 	public User grabUsers(String email);
-	public String grabProperty(PropertyType type);
 	public UserRoles grabRoles(int roleId);
 	public User grabUser(int id);
 	public Tags grabTag(int id);

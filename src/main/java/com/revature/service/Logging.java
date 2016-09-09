@@ -16,8 +16,13 @@ import org.aspectj.lang.annotation.Pointcut;
 public class Logging {
 	
 	private static Logger log = Logger.getRootLogger(); 
+	
+	private Logging(){
+		throw new IllegalAccessError("Utility class");
+	}
 
-//  Temporarily moved to non-smell
+	// Auto Logs
+	
 	@Before("logPerformance()")
 	public void logInsert(JoinPoint jp){
 		log.debug("[REVBLOGS LOGGER]: Executing Method " + jp.getSignature());
@@ -33,15 +38,20 @@ public class Logging {
 	}
 	
 	public void log(String message){		
-		log.info("[AOP LOGGER]:" + message);		
+		log.info("[REVBLOGS LOGGER]:" + message);		
 	}
-	public static void info(Throwable t){log.info(t);}
+	
+	// Manual Logs (Static to prevent class instantiation);
+	
+	public static void info(String str){
+		log.info("[REVBLOGS LOGGER]:" + str);
+	}
+	public static void error (Exception e){
+		log.error("[REVBLOGS LOGGER]:" + e);
+	}
 
-//	
-//	 //------------------POINTCUTS------------------//
-//	//Whenever any method is executed
+	//------------------POINTCUTS------------------//
+
 	@Pointcut("within(com.revature..*..*)")
-	public void logPerformance(){
-		//Empty for readability of above code
-	}
+	public void logPerformance(){}
 }
