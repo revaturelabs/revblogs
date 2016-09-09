@@ -81,7 +81,7 @@
 $(document).ready(function(){
 	$("#send").click(function(){
 	
-		validateForm();
+		
 		
 		var email = $("#userAuth").val();
 
@@ -89,7 +89,9 @@ $(document).ready(function(){
 			
 			if(response === "Success"){
 				
+				validateForm();
 				$("#form").submit();
+				
 				
 			} else {
 				

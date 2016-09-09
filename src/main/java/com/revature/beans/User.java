@@ -14,7 +14,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.search.annotations.Field;
-import org.springframework.context.annotation.Configuration;
 
 
 @Entity

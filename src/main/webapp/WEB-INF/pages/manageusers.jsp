@@ -32,11 +32,11 @@
 					<th>Email</th>
 					<th>User Name</th>
 					<th>Job Title</th>
-					<th>LinkedIn URL</th>
 					<th>Edit Profile</th>
 					<th>Edit Picture</th>
 					<th>Set Active</th>
 					<th>Reset Password</th>
+					<th hidden></th>
 					<th hidden></th>
 					<th hidden></th>
 					<th hidden></th>
@@ -51,31 +51,40 @@
 						<td id="email${user.userId}"><c:out value="${user.email}" /></td>
 						<td> <c:out value="${user.lastName}, ${user.firstName}"/></td>
 						<td id="job${user.userId}"><c:out value="${user.jobTitle}" /></td>
-						<td id="link${user.userId}"><c:out value="${user.linkedInURL}" /></td>
 						<td>
 							<span data-toggle="modal" data-target="#editUserProfile" id="${user.userId}" onclick=edit(this.id) style="cursor: pointer;" 
 								class="glyphicon glyphicon-edit" aria-hidden="true">
 							</span>
-<!-- 							<a data-toggle="modal" data-target="#editUserProfile" role="button" href="#editUserProfile">  -->
-<!-- 								<span class="glyphicon glyphicon-edit"></span> -->
-<!-- 							</a> -->
 						</td>
-						<td><input type="submit" class="btn btn-primary form-control" value="Edit Picture" /></td>
+						<td>
+							<form action="resetProfile.do" method="post">
+								<button name="resetProfile" value="${user.userId }" type="submit" class="btn btn-primary form-control" >Reset Picture</button>
+							</form>
+						</td>
 						<td><c:choose>
-								<c:when test="${user.active}">
-									<input type="submit" class="btn btn-primary form-control" value="Set Inactive" />
+								<c:when id="activeTest" test="${user.active}">
+									<form action="deactivateUser.do" method="post">
+										<button name="deactivate" value="${user.userId}" type="submit" class="btn btn-primary form-control">Deactivate</button>
+									</form>
 								</c:when>
 								<c:otherwise>
-									<input type="submit" class="btn btn-primary form-control" value="Set Active" />
+									<form action="activateUser.do" method="post">
+										<button name="activate" value="${user.userId}" type="submit" class="btn btn-primary form-control">Activate</button>
+									</form>
 								</c:otherwise>
 							</c:choose>
 						</td>
-						<td><input type="submit" class="btn btn-primary form-control" value="Reset Password" /></td>
+						<td>
+							<form action="resetUserPassword.do" method="post">
+								<button name="resetPass" value="${user.userId}" type="submit" class="btn btn-primary form-control" >Reset Password</button>
+							</form>
+						</td>
 						<td id="userId${user.userId}" hidden><c:out value="${user.userId}" /></td>
 						<td id="password${user.userId}" hidden><c:out value="${user.password}" /></td>
 						<td id="description${user.userId}" hidden><c:out value="${user.description}" /></td>
 						<td id="firstName${user.userId}" hidden><c:out value="${user.firstName}" /></td>
 						<td id="lastName${user.userId}" hidden><c:out value="${user.lastName}" /></td>
+						<td id="link${user.userId}" hidden><c:out value="${user.linkedInURL}" /></td>
 					</tr>
 				</c:forEach>
 			</tbody>
@@ -111,23 +120,9 @@
 					</div>
 					</form:form>
 				</div>
-
 			</div>
 		</div>
 	</div>
-
-
-	<!-- 				<select id="editType" class="btn btn-primary form-control"> -->
-	<!-- 					<option disabled selected value=""> -- Select a Type -- </option> -->
-	<%-- 					<c:forEach var="t" items="${types}"> --%>
-	<%-- 						<option value="${t.clientType}"><c:out value="${t.clientType}"></c:out></option> --%>
-	<%-- 					</c:forEach>  --%>
-	<!-- 			    </select> -->
-
-
-
-
-
 
 
 	<jsp:include page="footer.jsp"></jsp:include>
@@ -148,6 +143,32 @@ function edit(userId){
 	$("#selectedLinkedInURL").val($("#link" + userId).html());
 	
 }
+
+// function resetPicture(userId){
+	
+// }
+
+// function deactivateUser(userId){
+// 	$.ajax({
+// 			url: "deactivateUser.do",
+// 			method: "POST",
+// 			data : { 'userId'  : userId},
+// 			success: function(success){
+				
+// 			}
+// 	});
+// }
+
+// function activateUser(userId){
+// 	$.ajax({
+// 			url: "activateUser.do",
+// 			method: "POST",
+// 			data : { 'userId'  : userId},
+// 			success: function(success){
+				
+// 			}
+// 	});
+// }
 	
 </script>
 <!-- <script type="text/javascript" src="resources/js/ui.js"></script> -->
