@@ -65,7 +65,7 @@ public class Mailer {
 	         				+ 					"<h2>You have been invited to Revature Blogs</h2>"
 	         				+ 					"<p>Your Username will be: <strong>"+newEmail+"</strong></p>"
 	         				+ 					"<p>Here is your password: <strong>"+newPassword+"</strong></p>"
-	         				+ 					"<p> Please proceed to <a href=\"http://localhost:7001/revblogs/loginPage\">http://logs.pjw6193.tech</a> and login to change your password.</p>"
+	         				+ 					"<p> Please proceed to <a href=\"http://localhost:7001/revblogs/loginPage\">http://blogs.pjw6193.tech</a> and login to change your password.</p>"
 	         				+ 					"<br /><br /><br /><br /><br />"
 	         				+ 					"<img src=\"http://blogs.pjw6193.tech/content/resources/img/rev-brand.png\">"
 	         				+ 					"<p>"
