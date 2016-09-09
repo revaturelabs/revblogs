@@ -129,8 +129,8 @@ public class JetS3Impl implements JetS3{
 		return null; // Resource could not be uploaded
 	}
 	
-	public String uploadInitial(String fileName, File file) {
-		return uploadFile("",fileName,file);
+	public String uploadInitial(File file) {
+		return uploadFile("",file.getName(),file);
 	}
 	/**
 	 * Attempts to upload a file to the S3 server

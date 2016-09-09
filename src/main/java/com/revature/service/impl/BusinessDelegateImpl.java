@@ -122,8 +122,8 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 		return jetS3.uploadProfileItem(loginName, file);
 	}
 	
-	public String uploadInitial(String fileName, File file){
-		return jetS3.uploadInitial(fileName, file);
+	public String uploadInitial(File file){
+		return jetS3.uploadInitial(file);
 	}
 	
 	public String[] getList(){
