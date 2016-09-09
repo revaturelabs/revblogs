@@ -202,3 +202,8 @@ html, body {
   .highlight {
   	background-color: tomato;
   }
+  
+  .btn-social-icon {
+    width: 34px!important;
+    height: 34px!important;
+  }
