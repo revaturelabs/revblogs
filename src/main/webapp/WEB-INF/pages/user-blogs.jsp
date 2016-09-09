@@ -14,7 +14,6 @@
 <script src="resources/js/angular.min.js"></script>
 <script src="resources/js/app.js"></script>
 <script src="resources/js/controllers/UserBlogIndexController.js"></script>
-
 </head>
 
 <body ng-app="app" ng-controller="UserBlogIndexController">
