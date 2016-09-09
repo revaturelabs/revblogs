@@ -8,7 +8,6 @@ import java.io.PrintWriter;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
@@ -20,7 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
-import org.bouncycastle.math.raw.Mod;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -290,9 +288,7 @@ public class PostController {
 	public ModelAndView resetUserPassword(@RequestParam(value="resetPass") int userId, HttpServletRequest req){
 		ModelAndView model = new ModelAndView();
 		model.setViewName("/manageusers");
-		
-		User resetUserPassword = businessDelegate.requestUser(userId);
-		
+				
 		req.setAttribute("userList", businessDelegate.requestUsers());
 		req.setAttribute("updateUserProfile", new UserDTO());
 		return model;
@@ -537,7 +533,6 @@ public class PostController {
 	public String deleteUserBlog(HttpServletRequest req, HttpServletResponse resp) {
 		String blogLink = req.getParameter("blog-link");
 		String cutBlogLink = blogLink.replace("http://blogs.pjw6193.tech/", "");
-		System.out.println(cutBlogLink);
 		businessDelegate.delete(cutBlogLink);
 		return "user-blogs";
 	}
