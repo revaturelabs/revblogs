@@ -39,7 +39,7 @@
 		          <div class="form-group input-group post-search">
 		            <input ng-model="searchQuery" type="text" class="form-control" placeholder="Search">
 		            <span class="input-group-btn">
-		              <button ng-click="getSearch(1, postsPerPage, searchQuery)" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
+		              <button ng-href="" ng-click="getSearch(1, postsPerPage, searchQuery)" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
 		            </span>
 		          </div>
 		        </form>
@@ -92,8 +92,6 @@
   	<select  ng-model="postsPerPage" ng-change="getPage(curPage, postsPerPage)">
   		<option ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 5]">5</option>
   		<option ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 10]" selected>10</option>
-  		<option ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 25]">25</option>
-  		<option ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 50]">50</option>
   	</select>
   </div>
   

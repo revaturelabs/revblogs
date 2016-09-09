@@ -8,7 +8,6 @@ import java.io.PrintWriter;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
@@ -19,8 +18,6 @@ import java.util.TreeMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-
-import org.bouncycastle.math.raw.Mod;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -42,7 +39,6 @@ import com.revature.service.BusinessDelegate;
 import com.revature.service.HtmlWriter;
 import com.revature.service.Logging;
 import com.revature.service.Population;
-import com.revature.service.impl.Crypt;
 import com.revature.service.impl.Mailer;
 
 @Controller
@@ -54,7 +50,6 @@ public class PostController {
 	 */
 	private BusinessDelegate businessDelegate;
 	private Population population;
-	private Logging logging;
 
 	public void setBusinessDelegate(BusinessDelegate businessDelegate){
 		this.businessDelegate = businessDelegate;
@@ -67,12 +62,6 @@ public class PostController {
 	}
 	public void setPopulation(Population population) {
 		this.population = population;
-	}
-	public Logging getLogging() {
-		return logging;
-	}
-	public void setLogging(Logging logging) {
-		this.logging = logging;
 	}
 	
 	/*
@@ -93,7 +82,7 @@ public class PostController {
 							 HttpServletRequest req, HttpServletResponse resp){
 		
 		ModelAndView model = new ModelAndView();
-		model.setViewName("/profile");
+		model.setViewName("redirect:/profile");
 		if(bindingResult.hasErrors()){
 			return model;
 		}
@@ -101,7 +90,7 @@ public class PostController {
 		User loggedIn = (User) req.getSession().getAttribute("user");
 		
 		//password needed to be decrypted first
-		loggedIn.setPassword(Crypt.decrypt(loggedIn.getPassword(), loggedIn.getEmail(), loggedIn.getFullname()));
+		loggedIn.setPassword(businessDelegate.revealElement(loggedIn.getPassword(), loggedIn.getEmail(), loggedIn.getFullname()));
 		//end decryption
 		
 		loggedIn.setEmail(updateUser.getEmail());
@@ -112,11 +101,14 @@ public class PostController {
 		loggedIn.setDescription(updateUser.getDescription());
 		
 		//re-encrypt password
-		loggedIn.setPassword(Crypt.encrypt(loggedIn.getPassword(), loggedIn.getEmail(), loggedIn.getFullname()));
+		loggedIn.setPassword(businessDelegate.maskElement(loggedIn.getPassword(), loggedIn.getEmail(), loggedIn.getFullname()));
 		//end re-encryption
 		
+		String userUpdate = "update";
 		req.getSession().setAttribute("user", loggedIn);
+		req.getSession().setAttribute("passwordSuccess", null);
 		businessDelegate.updateRecord(loggedIn);
+		req.getSession().setAttribute("userUpdate", userUpdate);
 		req.setAttribute("updateUser", new User());
 		return model;
 	}
@@ -137,7 +129,7 @@ public class PostController {
 
 				
 		//password needed to be decrypted first
-		updateUser.setPassword(Crypt.decrypt(updateUser.getPassword(), updateUser.getEmail(),
+		updateUser.setPassword(businessDelegate.revealElement(updateUser.getPassword(), updateUser.getEmail(),
 				updateUser.getFullname()));
 		//end decryption
 		
@@ -150,7 +142,7 @@ public class PostController {
 		updateUser.setDescription(updateUserProfile.getDescription());		
 		
 		//re-encrypt password
-		updateUser.setPassword(Crypt.encrypt(updateUser.getPassword(), updateUser.getEmail(), 
+		updateUser.setPassword(businessDelegate.maskElement(updateUser.getPassword(), updateUser.getEmail(), 
 				updateUser.getFullname()));
 		//end re-encryption
 		
@@ -163,22 +155,19 @@ public class PostController {
 	//Create a new User
 	@RequestMapping(value="createAccount.do", method=RequestMethod.POST)
 	public ModelAndView createAccount(HttpServletRequest req, HttpServletResponse resp){
-
 		ModelAndView model = new ModelAndView();
 		
 		// User Supplied
 		String email = req.getParameter("email");
-		String role = req.getParameter("role");
+		String role = businessDelegate.requestRoles(2).getRole();
 		
 		// Check if email exists
 		if(businessDelegate.requestUsers(email) == null){
 			
 			// Generate a Temporary Password
-			String password = Crypt.encrypt("7Pas8WoR", email, role);
+			String password = businessDelegate.getRandom(6);
 			String firstName = " ";
 			String lastName = " ";
-			
-			//String profilePicture - currently not used
 			
 			String jobTitle = " ";
 			String linkedInURL = null;
@@ -186,11 +175,20 @@ public class PostController {
 			
 			// Role Obj from Database
 			UserRoles userRole = businessDelegate.requestRoles(role);
-			User newUser = new User(email, Crypt.encrypt(password, email, lastName+", "+firstName), firstName, lastName, jobTitle,
-					linkedInURL, description, userRole);
-			
+			User newUser = new User(email, 
+									businessDelegate.maskElement(password, email, lastName+", "+firstName), 
+									firstName, 
+									lastName, 
+									jobTitle,
+									linkedInURL, 
+									description, 
+									userRole);
+
 			// Save in Database
 			businessDelegate.putRecord(newUser);
+			
+			// Send Email to Account
+			Mailer.sendMail(email, password);
 			
 			
 			//Get default picture
@@ -198,7 +196,8 @@ public class PostController {
 			File file;
 			try {
 				file = new File(fileURL.toURI());
-				logging.log("File length: " + file.length());
+				
+				Logging.info("File length: " + file.length());
 				
 				User getNewUser = businessDelegate.requestUsers(email);
 				
@@ -211,17 +210,17 @@ public class PostController {
 				businessDelegate.updateRecord(getNewUser);
 				
 			} catch (URISyntaxException e) {
-				logging.log(e.toString());
+				
+				Logging.error(e);
 			}
 			
-			// Send Email to Account
-			Mailer.sendMail(email, password);
+			model.setViewName("redirect:/manageusers");
 			
-			model.setViewName("/home");
 			return model;
+			
 		}
 		
-		model.setViewName("/makeClientAccount");
+		model.setViewName("redirect:/manageusers");
 		
 		return model;
 	}
@@ -239,7 +238,8 @@ public class PostController {
 		File file;
 		try {
 			file = new File(fileURL.toURI());
-			logging.log("File length: " + file.length());
+			
+			Logging.info("File length: " + file.length());
 			
 			String user = "" + resetUserPic.getUserId();
 			
@@ -250,7 +250,8 @@ public class PostController {
 			businessDelegate.updateRecord(resetUserPic);
 			
 		} catch (URISyntaxException e) {
-			logging.log(e.toString());
+			
+			Logging.error(e);
 		}
 		
 		req.setAttribute("userList", businessDelegate.requestUsers());
@@ -285,13 +286,26 @@ public class PostController {
 	}
 	
 	
-	// Admin Reset Password
+	// Admin Can Reset Password
 	@RequestMapping(value="resetUserPassword.do", method=RequestMethod.POST)
 	public ModelAndView resetUserPassword(@RequestParam(value="resetPass") int userId, HttpServletRequest req){
 		ModelAndView model = new ModelAndView();
-		model.setViewName("/manageusers");
+
+		model.setViewName("redirect:/manageusers");
 		
 		User resetUserPassword = businessDelegate.requestUser(userId);
+		String email = resetUserPassword.getEmail();
+		String role = resetUserPassword.getUserRole().getRole();
+		
+		// Generate a Temporary Password
+		String password = businessDelegate.getRandom(6);
+		resetUserPassword.setPassword(password);
+		
+		// Save in Database
+		businessDelegate.updateRecord(resetUserPassword);
+		
+		// Send Email to Account
+		Mailer.sendMail(email, password);
 		
 		req.setAttribute("userList", businessDelegate.requestUsers());
 		req.setAttribute("updateUserProfile", new UserDTO());
@@ -300,29 +314,33 @@ public class PostController {
 		
 	// Update Password Page
 	@RequestMapping(value="updatePassword.do", method=RequestMethod.POST)
-	public String updatePassword(@ModelAttribute("updatePassword") @Valid UserDTO passwordDTO, BindingResult bindingResult,
+	public ModelAndView updatePassword(@ModelAttribute("updatePassword") @Valid UserDTO passwordDTO, BindingResult bindingResult,
 							   HttpServletRequest req, HttpServletResponse resp){
 		
 		ModelAndView model = new ModelAndView();
-		model.setViewName("/password");
+		model.setViewName("redirect:/profile");
 		if(bindingResult.hasErrors()){
-			
-			return "redirect:/password";
+			model.setViewName("redirect:/password");
+			return model;
 		}
 		
 		String password = passwordDTO.getNewPassword();
 		
 		User loggedIn = (User) req.getSession().getAttribute("user");
 		
-		loggedIn.setPassword(Crypt.encrypt(password, loggedIn.getEmail(), loggedIn.getFullname()));
+		loggedIn.setPassword(businessDelegate.maskElement(password, loggedIn.getEmail(), loggedIn.getFullname()));
 		
 		if(loggedIn.isNewUser()){
 			loggedIn.setNewUser(false);
 		}
 		
+		String success = "success";
+		
 		req.getSession().setAttribute("user", loggedIn);
+		req.getSession().setAttribute("passwordSuccess", success);
+		req.getSession().setAttribute("userUpdate", null);
 		businessDelegate.updateRecord(loggedIn);
-		return "redirect:/profile";
+		return model;
 	}
 	
 	// Updates a Users Profile Picture
@@ -336,7 +354,9 @@ public class PostController {
 		String url = businessDelegate.uploadProfileItem(""+loggedIn.getUserId(),""+loggedIn.getUserId(), profilePicture);		
 		loggedIn.setProfilePicture(url);
 		businessDelegate.updateRecord(loggedIn);
-		return loggedIn.getProfilePicture();
+		req.getSession().setAttribute("passwordSuccess", null);
+		req.getSession().setAttribute("userUpdate", null);
+		return "Success";
 	}
 	
 	// Uploads a Blog Picture
@@ -353,7 +373,7 @@ public class PostController {
 					"</textarea></body><script>window.onload=function(){" +
 					"document.getElementById(\"picLink\").select();};</script></html>");
 		} catch (IOException e) {
-			Logging.info(e);
+			Logging.error(e);
 		}
 	}
 	
@@ -365,7 +385,7 @@ public class PostController {
 			PrintWriter writer = resp.getWriter();
 			writer.append("<html><body><img src=\"" + url + "\" /></body></html>");
 		} catch (IOException e) {
-			Logging.info(e);
+			Logging.error(e);
 		}
 	}
 	
@@ -379,7 +399,7 @@ public class PostController {
 			PrintWriter writer = resp.getWriter();
 			writer.append("<html><body><a href=\"" + url + "\">" + url + "</a></body></html>");
 		} catch (IOException e) {
-			Logging.info(e);
+			Logging.error(e);
 		}
 	}
 	
@@ -400,7 +420,7 @@ public class PostController {
 					references.put(referenceNum, paramValue);
 					highestReferenceNum = Math.max(highestReferenceNum, referenceNum);
 				} catch ( NumberFormatException e ) {
-					Logging.info(e);
+					Logging.error(e);
 				}
 			}
 		}
@@ -438,9 +458,9 @@ public class PostController {
 		if(!editingBlogInDatabase) {
 			List<Blog> myBlogs = businessDelegate.requestBlogs();
 			for(Blog curBlog : myBlogs){
-				if(curBlog.getBlogTitle().equals(blog.getBlogTitle())){
+				if(curBlog.getBlogTitle().equalsIgnoreCase(blog.getBlogTitle())){
 					return "create-blog";
-				};
+				}
 			}
 			author = (User) req.getSession().getAttribute("user");
 		} else {
@@ -521,9 +541,9 @@ public class PostController {
 			req.getSession().setAttribute("editingBlogInDatabase", false);
 			req.getSession().setAttribute("blogToEditId", 0);
 		} catch (FileNotFoundException e) { 
-			Logging.info(e);
+			Logging.error(e);
 		} catch (IOException e1) {
-			Logging.info(e1);
+			Logging.error(e1);
 		}
 		return "redirect: " + url;
 	}
@@ -543,7 +563,6 @@ public class PostController {
 	public String deleteUserBlog(HttpServletRequest req, HttpServletResponse resp) {
 		String blogLink = req.getParameter("blog-link");
 		String cutBlogLink = blogLink.replace("http://blogs.pjw6193.tech/", "");
-		System.out.println(cutBlogLink);
 		businessDelegate.delete(cutBlogLink);
 		return "user-blogs";
 	}
