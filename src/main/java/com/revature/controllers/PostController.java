@@ -459,7 +459,6 @@ public class PostController {
 			List<Blog> myBlogs = businessDelegate.requestBlogs();
 			for(Blog curBlog : myBlogs){
 				if(curBlog.getBlogTitle().equalsIgnoreCase(blog.getBlogTitle())){
-					System.out.println(curBlog.getBlogTitle().equalsIgnoreCase(blog.getBlogTitle()));
 					return "create-blog";
 				}
 			}
