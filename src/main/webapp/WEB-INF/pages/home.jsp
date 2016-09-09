@@ -19,9 +19,12 @@
 </head>
 <body>
 <jsp:include page="navbar.jsp"></jsp:include>
-<div class="container page-content">
-	<h1><c:out value="${title}"></c:out></h1>
-	<h2><c:out value="${message}"></c:out></h2>
+
+<div class="overall-container">
+<div class="container page-content content-padding">
+	<h1>${title}</h1>
+	<h2>${message}</h2>
+
 	
 	<!-- place change form here. Have a post call, change it, 
 	update it and the newUser parameter, and then redirect 
@@ -107,7 +110,10 @@
 	</table>
 	</c:if>
 </div>
+<div class="footer2">
 <jsp:include page="footer.jsp"></jsp:include>
+</div>
+</div>
 </body>
 <script type="text/javascript" src="resources/js/ui.js"></script>
 </html>
