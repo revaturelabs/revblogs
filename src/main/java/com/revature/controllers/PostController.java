@@ -284,12 +284,27 @@ public class PostController {
 	}
 	
 	
-	// Admin Reset Password
+	// Admin Can Reset Password
 	@RequestMapping(value="resetUserPassword.do", method=RequestMethod.POST)
 	public ModelAndView resetUserPassword(@RequestParam(value="resetPass") int userId, HttpServletRequest req){
 		ModelAndView model = new ModelAndView();
-		model.setViewName("/manageusers");
-				
+
+		model.setViewName("redirect:/manageusers");
+		
+		User resetUserPassword = businessDelegate.requestUser(userId);
+		String email = resetUserPassword.getEmail();
+		String role = resetUserPassword.getUserRole().getRole();
+		
+		// Generate a Temporary Password
+		String password = Crypt.encrypt("7Pas8WoR", email, role);
+		resetUserPassword.setPassword(password);
+		
+		// Save in Database
+		businessDelegate.updateRecord(resetUserPassword);
+		
+		// Send Email to Account
+		Mailer.sendMail(email, password);
+		
 		req.setAttribute("userList", businessDelegate.requestUsers());
 		req.setAttribute("updateUserProfile", new UserDTO());
 		return model;
