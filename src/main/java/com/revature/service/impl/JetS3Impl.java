@@ -129,6 +129,9 @@ public class JetS3Impl implements JetS3{
 		return null; // Resource could not be uploaded
 	}
 	
+	public String uploadInitial(File file) {
+		return uploadFile("",file.getName(),file);
+	}
 	/**
 	 * Attempts to upload a file to the S3 server
 	 * @param folderPath the path to the folder this file will be stored at starting at the S3 root
