@@ -3,7 +3,6 @@ package com.revature.service.impl;
 import java.io.File;
 import java.io.FileInputStream;
 
-import org.apache.log4j.Logger;
 import org.jets3t.service.S3Service;
 import org.jets3t.service.acl.AccessControlList;
 import org.jets3t.service.acl.GroupGrantee;
@@ -17,23 +16,19 @@ import org.springframework.web.multipart.MultipartFile;
 import com.revature.data.impl.PropertyType;
 import com.revature.service.BusinessDelegate;
 import com.revature.service.JetS3;
+import com.revature.service.Logging;
 
 public class JetS3Impl implements JetS3{
 
 	private AWSCredentials credentials;
 	private S3Service s3;
-	private Logger log = Logger.getRootLogger();
 	private static final String BUCKET = "blogs.pjw6193.tech";
 	private BusinessDelegate businessDelegate;
 
-
-	
-	
 	public void setBusinessDelegate(BusinessDelegate businessDelegate) {
 		this.businessDelegate = businessDelegate;
 		syncBusinessDelegate(this.businessDelegate);
 	}
-
 
 	public synchronized void syncBusinessDelegate(BusinessDelegate businessDelegate){
 		 
@@ -41,7 +36,6 @@ public class JetS3Impl implements JetS3{
 	   	s3 = new RestS3Service(credentials);
 	}
 
-	
 	public String[] list(){
 		try {
 			S3Object[] storage = s3.listObjects(BUCKET);
@@ -51,7 +45,7 @@ public class JetS3Impl implements JetS3{
 			}
 			return str;
 		} catch (Exception e) {
-			log.info(e);
+			Logging.error(e);
 			return new String[0];
 		}
 	}
@@ -130,7 +124,7 @@ public class JetS3Impl implements JetS3{
 			
 		} catch (Exception e) {
 			
-			log.info(e);
+			Logging.error(e);
 		}
 		return null; // Resource could not be uploaded
 	}
@@ -161,7 +155,7 @@ public class JetS3Impl implements JetS3{
 					"http://" + BUCKET+ "/" + folderPath + fileName;
 			
 		} catch (Exception e) {
-			log.info(e);
+			Logging.error(e);
 		}
 		return null; // Resource could not be uploaded
 	}
@@ -192,7 +186,7 @@ public class JetS3Impl implements JetS3{
 					"http://" + BUCKET+ "/" + folderPath + file.getName();
 			
 		} catch (Exception e) {
-			log.info(e);
+			Logging.error(e);
 		}
 		return null; // Resource could not be uploaded
 	}
@@ -212,7 +206,7 @@ public class JetS3Impl implements JetS3{
 			s3.putObject(bucket, file);
 			}catch(Exception e)
 			{
-				log.info(e);
+				Logging.error(e);
 				return false;
 			}	
 			return true;
@@ -229,7 +223,7 @@ public class JetS3Impl implements JetS3{
 		s3.putObject(bucket, file);
 		}catch(Exception e)
 		{
-			log.info(e);
+			Logging.error(e);
 			return false;
 		}	
 		return true;
@@ -241,10 +235,9 @@ public class JetS3Impl implements JetS3{
 			s3.deleteObject(bucket, filename);
 		}catch(Exception e)
 		{
-			log.info(e);
+			Logging.error(e);
 			return false;
 		}	
 		return true;
 	}
-
 }

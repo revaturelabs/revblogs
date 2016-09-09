@@ -9,15 +9,15 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.revature.service.impl.BusinessDelegateImpl;
-import com.revature.service.impl.Crypt;
 import com.revature.service.impl.CryptImpl;
+import com.revature.service.impl.LoginEncoder;
 import com.revature.service.impl.JetS3Impl;
 import com.revature.service.impl.Mailer;
 import com.revature.service.impl.ServiceLocatorImpl;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes={ BusinessDelegateImpl.class,
-		CryptImpl.class, Crypt.class, JetS3Impl.class,
+		LoginEncoder.class, CryptImpl.class, JetS3Impl.class,
 		Mailer.class, ServiceLocatorImpl.class})
 public class SerivceImplTest {
 
@@ -35,10 +35,10 @@ public class SerivceImplTest {
 	private BusinessDelegateImpl businessDelegateImpl;
 	
 	@Autowired
-	private Crypt crypt;
+	private CryptImpl crypt;
 	
 	@Autowired
-	private CryptImpl cryptImpl;
+	private LoginEncoder cryptImpl;
 	
 	@Autowired
 	private JetS3Impl jetS3Impl;

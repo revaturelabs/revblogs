@@ -19,12 +19,8 @@ import com.revature.service.Logging;
 @Controller
 @RequestMapping("/api")
 public class AjaxController {
-	private Logger log = Logger.getRootLogger();
 	private BusinessDelegate businessDelegate;
 	
-	public BusinessDelegate getBusinessDelegate() {
-		return businessDelegate;
-	}
 	public void setBusinessDelegate(BusinessDelegate businessDelegate) {
 		this.businessDelegate = businessDelegate;
 	}
@@ -40,10 +36,10 @@ public class AjaxController {
 			HttpServletRequest request, HttpServletResponse response) {
 		response.addHeader("Access-Control-Allow-Origin", "*");
 		try {
-			log.error(authorId);
+			Logging.info(""+authorId);
 			
 			User author = businessDelegate.requestUser(authorId);
-			log.error(author);
+			Logging.info(author.toString());
 			
 			Tags category = businessDelegate.requestTag(tagId);
 			
@@ -60,7 +56,7 @@ public class AjaxController {
 				return businessDelegate.requestBlogPosts(page, perPage);
 			}
 		} catch (IllegalArgumentException e) {
-			Logging.info(e);
+			Logging.error(e);
 			return null;
 		}
 	}

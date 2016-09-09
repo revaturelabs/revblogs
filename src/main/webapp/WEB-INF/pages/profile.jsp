@@ -25,6 +25,12 @@
 <jsp:include page="navbar.jsp"></jsp:include>
 <div class="container page-content">
 	<div>
+	<c:if test="${passwordSuccess eq 'success'}">
+		<span id="password-success" class="label-success">Password changed successfully.</span>
+	</c:if>
+	<c:if test="${userUpdate eq 'update'}">
+		<span id=userUpdate class="label-success">Profile updated successfully.</span>
+	</c:if>
 	<h3>Update Profile</h3><br />
 		<form:form action="updateUser.do" method="post" commandName="updateUser">
 		<table>
@@ -79,7 +85,7 @@
 		</tr>
 		<tr>
 			<td colspan=2>
-				<input type="submit" class="btn btn-primary form-control" value="Update Profile" />
+				<input type="submit" class="btn btn-primary" value="Update Profile" />
 			</td>
 		</tr>
 		
@@ -129,6 +135,8 @@
   		</div>
 	</div>
 </div>
+<br />
+<br />
 <jsp:include page="footer.jsp"></jsp:include>
 </body>
 <script type="text/javascript" src="resources/js/ui.js"></script>
@@ -153,12 +161,11 @@ $(document).ready(function(){
 				type: "POST",
 				cache: false,
 				success: function(response){
-					console.log(response);
-					$("#profilePic").attr("src", response);
-					$("#newProfilePic").attr("src", response);
-					currentPicture = newPicture;
- 					$("#newProfilePic").attr("src", currentPicture);
-					alert("Profile Picture Updated!");
+					
+					if(response == "Success"){
+					alert("picture uploaded");
+					location.reload();
+					}
 				}		
 			});
 			
@@ -183,6 +190,14 @@ $(document).ready(function(){
 	
 	$("#descriptionTextArea").val(description);
 });
+
+$(document).ready(function(){
+	$('#password-success').delay(2000).fadeOut('slow');
+});
+
+$(document).ready(function(){
+	$('#userUpdate').delay(2000).fadeOut('slow');
+})
 
 </script>
 </html>

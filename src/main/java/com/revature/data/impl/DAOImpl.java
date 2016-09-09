@@ -18,14 +18,12 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.revature.beans.ApplicationProperties;
 import com.revature.beans.Blog;
 import com.revature.beans.Evidence;
 import com.revature.beans.Tags;
 import com.revature.beans.User;
 import com.revature.beans.UserRoles;
 import com.revature.data.DAO;
-import com.revature.service.impl.Crypt;
 
 @Repository
 @Transactional
@@ -161,110 +159,7 @@ public class DAOImpl implements DAO {
 		return (Tags) ses.get(Tags.class, id);
 	}
 	
-	// Property by Type (Enum)
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public String getProperty(PropertyType type){
-		
-		Session ses = sessionFactory.getCurrentSession();
-		setSession(ses);
-		
-		Criteria criteria = ses.createCriteria(ApplicationProperties.class);
-		ApplicationProperties props = (ApplicationProperties) criteria.uniqueResult();
-
-		String[][] keys = new String[][]{
-			
-			/*
-			 *  These keys are used to decrypt the corresponding properties
-			 */
-			
-			{"CZmTgoznKnJocTkGuFFURvZjUDuVvBhoETorfnzPOfqymleBbOOHfqPCSSty", "pneumonoultramicroscopicsilicovolcanoconiosis"},
-			{"GSXWzGGiiDBvlYxTNddabeUOsSPLHoYnibqBEAtRrSDnZPrACvUjBMGxcoBZ", "Pseudopseudohypoparathyroidism"},
-			{"cCpQZBETFySMWXeMTQDQomszbDhIgTCWNfjzrBQjwyzcMIrNeFGZggWpzSdQ", "Floccinaucinihilipilification"},
-			{"UjVheJqfrHXEuciEaIEibjRYjaxGEJFPrLcZNuugxZQmpHdeoBJRVLFeEDfc", "Antidisestablishmentarianism"},
-			{"BhXCFkEevSCHlJMCJyvqhyOiNnKDaoxwcdWrNGxUZySIJspidexHSROVXDAh", "supercalifragilisticexpialidocious"},
-			{"RnhHIlwovrapdVzySrOIfmMZPOPOEACAsVScsBIflnsIphgireiIRKkmINdr", "Incomprehensibilities"},
-			{"momGKfMimvxYGNKmZCzdXNSBGpvQngTbtvxETwjePoZWyirhkyAWMhkFzxQI", "honorificabilitudinitatibus"},
-			{"TuJgzrAAFblqmFUfDvRyNHOtKQjVpxESLwrXecnGMSrSEJyhfkgPGvTccbPJ", "sesquipedalianism"},
-			{"JplYSkoJXvxUEIaEZtLMzYugcPINpzArbIoGHjwHwFzdoUtfNfMOetPvvsHn", "METHIONYLTHREONYLTHREONYGLUTAMINYLARGINY"},
-			{"iqGJkjoSepUYggqxsZCdxXzCSyjxADhQtsiMPhyNRMxJbGowMrGmlIQETFzC", "Aequeosalinocalcalinoceraceoaluminosocupreovitriolic"},
-			{"boosNkoVgLkjnWJUMEeHAGbUmwWhVlBOPZKZjUduUXunxwbsZmnNxKdAWePg", "peobuefdvxjbtoajefspkfuccfngbf"}
-		};
-		
-		String value;
-		
-		switch(type){
-		
-			case COMPANY:
-				
-				value = props.getCompany();
-				value = Crypt.decrypt(value, keys[0][0], keys[0][1]);
-				return value;
-				
-			case APP:
-
-				value = props.getApp();
-				value = Crypt.decrypt(value, keys[1][0], keys[1][1]);
-				return value;
-				
-			case S3:
-
-				value = props.getS3();
-				value = Crypt.decrypt(value, keys[2][0], keys[2][1]);
-				return value;
-				
-			case SERVER:
-
-				value = props.getServer();
-				value = Crypt.decrypt(value, keys[3][0], keys[3][1]);
-				return value;
-				
-			case JENKINS:
-
-				value = props.getJenkins();
-				value = Crypt.decrypt(value, keys[4][0], keys[4][1]);
-				return value;
-				
-			case SONARQUBE:
-
-				value = props.getSonarqube();
-				value = Crypt.decrypt(value, keys[5][0], keys[5][1]);
-				return value;
-				
-			case K:
-
-				value = props.getK();
-				value = Crypt.decrypt(value, keys[6][0], keys[6][1]);
-				return value;
-				
-			case V:
-
-				value = props.getV();
-				value = Crypt.decrypt(value, keys[7][0], keys[7][1]);
-				return value;
-				
-			case FAPP:
-
-				value = props.getFapp();
-				value = Crypt.decrypt(value, keys[8][0], keys[8][1]);
-				return value;
-				
-			case LINKTOKEN:
-
-				value = props.getLinkToken();
-				value = Crypt.decrypt(value, keys[9][0], keys[9][1]);
-				return value;
-				
-			case S3BUCKET:
-
-				value = props.getBucketURL();
-				value = Crypt.decrypt(value, keys[10][0], keys[10][1]);
-				return value;	
-				
-			default:
-
-				return null;
-		}
-	}
+	
 	
 	//Pull a Single Role
 	@Transactional(propagation = Propagation.REQUIRES_NEW)

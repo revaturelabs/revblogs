@@ -14,16 +14,13 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
-import org.apache.log4j.Logger;
+import com.revature.service.Logging;
 
 public class Mailer {
 	private Mailer(){
 		throw new IllegalAccessError("Utility Class");
 	}
 	public static void sendMail(String newEmail, String newPassword) {
-		Logger log = Logger.getRootLogger();
-		
-		System.err.println("enter send mail method");
 		
 		Properties props = new Properties();
 		props.put("mail.smtp.auth", "true");
@@ -40,8 +37,6 @@ public class Mailer {
 			});
 
 		try {
-			
-			System.err.println("try to set message");
 			
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress("revblogs@gmail.com"));
@@ -89,12 +84,10 @@ public class Mailer {
 	         // put everything together
 	         message.setContent(multipart);
 			
-			System.err.println("attempting to send message");
-	         
 			Transport.send(message);
 
 		} catch (MessagingException e) {
-			log.error(e);
+			Logging.error(e);
 		}
     }
 

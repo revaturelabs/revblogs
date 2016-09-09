@@ -19,10 +19,12 @@
 </head>
 <body>
 <jsp:include page="navbar.jsp"></jsp:include>
+
 <div class="overall-container">
 <div class="container page-content content-padding">
 	<h1>${title}</h1>
 	<h2>${message}</h2>
+
 	
 	<!-- place change form here. Have a post call, change it, 
 	update it and the newUser parameter, and then redirect 

@@ -18,7 +18,6 @@ import com.revature.beans.Tags;
 import com.revature.beans.User;
 import com.revature.dto.UserDTO;
 import com.revature.service.BusinessDelegate;
-import com.revature.service.Logging;
 
 @Controller
 public class BaseController {
@@ -27,7 +26,6 @@ public class BaseController {
 	 * 	Attributes && Getters/Setters
 	 * 
 	 */
-	private Logging logging;
 	private BusinessDelegate businessDelegate;
 	private static final String HOME = "/home";
 	private static final String TITLE = "title";
@@ -35,18 +33,11 @@ public class BaseController {
 	private static final String MESSAGE = "message";
 	private static final String WELCOME = "Welcome ";
 	
-	
 	public void setBusinessDelegate(BusinessDelegate businessDelegate){
 		this.businessDelegate = businessDelegate;
 	}
 	public BusinessDelegate getBusinessDelegate() {
 		return businessDelegate;
-	}
-	public Logging getLogging() {
-		return logging;
-	}
-	public void setLogging(Logging logging) {
-		this.logging = logging;
 	}
 
 	/*
