@@ -29,7 +29,7 @@
 </script>
 <script src="https://use.fontawesome.com/ebec39e24e.js"></script>
 <link rel="stylesheet" href="resources/css/bootstrap-social.css">
-<link rel="blogs.pjw6193.tech/content/resources/img/favicon.png" href="blogs.pjw6193.tech/content/resources/img/favicon.png"/>
+<link rel="shortcut icon" href="blogs.pjw6193.tech/content/resources/img/favicon.png"/>
 </head>
 
 <body>
