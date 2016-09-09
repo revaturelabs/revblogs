@@ -184,9 +184,9 @@ html, body {
   	margin-top: 0;
   }
   .post-thumbnail {
-  	padding-bottom:100%; 
-  	overflow:hidden; 
-  	position:relative;
+  	padding-bottom: 100%; 
+  	overflow: hidden; 
+  	position: relative;
   }
   .post-thumbnail img {
   	position: absolute;
@@ -198,9 +198,9 @@ html, body {
   }
   
   .update-blog-btn {
-     background:none!important;
-     border:none; 
-     padding:0!important;
+     background: none!important;
+     border: none; 
+     padding: 0!important;
      font: inherit;
      cursor: pointer;
   }
@@ -209,13 +209,13 @@ html, body {
   	background-color: tomato;
   }
   .overall-container{
-  	min-height:100%;
-   	position:relative;
+  	min-height: 100%;
+   	position: relative;
   }
   .footer2{
-  	position:absolute;
-	bottom:0;
-	width:100%;
+  	position: absolute;
+	bottom: 0;
+	width: 100%;
   }
   .btn-social-icon {
     width: 34px!important;
