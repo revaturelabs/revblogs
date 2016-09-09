@@ -289,6 +289,7 @@ public class PostController {
 	@RequestMapping(value="resetUserPassword.do", method=RequestMethod.POST)
 	public ModelAndView resetUserPassword(@RequestParam(value="resetPass") int userId, HttpServletRequest req){
 		ModelAndView model = new ModelAndView();
+
 		model.setViewName("redirect:/manageusers");
 		
 		User resetUserPassword = businessDelegate.requestUser(userId);
