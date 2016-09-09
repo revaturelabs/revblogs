@@ -41,6 +41,14 @@ public interface JetS3 {
 	public String uploadProfileItem(String folderPath, String fileName, File file);
 	
 	public String uploadProfileItem(String loginName, File file);
+	
+	/**
+	 * Used to upload the files at initialization
+	 * @param fileName the name of the file to save as
+	 * @param file the actual file that is to be saved
+	 * @return
+	 */
+	public String uploadInitial(String fileName, File file);
 	/**
 	 * Used as a base for uploading data to S3, should not be used 
 	 * @param fileName the destination name of the file, a valid extension should be included
