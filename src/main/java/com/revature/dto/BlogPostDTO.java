@@ -74,8 +74,8 @@ public class BlogPostDTO {
 	public List<String> getTags() {
 		return tags;
 	}
-	public void setTags(ArrayList<String> tags) {
-		this.tags = tags;
+	public void setTags(List<String> tags) {
+		this.tags = (ArrayList<String>) tags;
 	}
 	public AuthorDTO getAuthor() {
 		return author;

@@ -290,9 +290,7 @@ public class PostController {
 	public ModelAndView resetUserPassword(@RequestParam(value="resetPass") int userId, HttpServletRequest req){
 		ModelAndView model = new ModelAndView();
 		model.setViewName("/manageusers");
-		
-		User resetUserPassword = businessDelegate.requestUser(userId);
-		
+				
 		req.setAttribute("userList", businessDelegate.requestUsers());
 		req.setAttribute("updateUserProfile", new UserDTO());
 		return model;
