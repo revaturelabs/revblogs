@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.StringTokenizer;
 
@@ -25,7 +26,6 @@ public class HtmlWriter {
 	private Blog blog;
 	private User author;
 //	Check if both are necessary
-//	private String tempPath;
 	private InputStream templateStream;
 	
 	public HtmlWriter(Blog blog, User author, InputStream templateStream) throws FileNotFoundException {
@@ -104,7 +104,7 @@ public class HtmlWriter {
 			}
 			if (line.contains("post-references-body")) {
 				Map<Integer, String> references = blog.getReferences();
-				for ( Integer key : references.keySet() ) {
+				for ( Entry<Integer, String> key : references.entrySet() ) {
 					blogWriter.write("<div class=\"post-reference-item\">"
 							+ "[" + key.toString() + "] - "
 							+ references.get(key) + "</div>");
