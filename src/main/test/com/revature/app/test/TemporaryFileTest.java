@@ -1,4 +1,4 @@
-package com.revature.appTest;
+package com.revature.app.test;
 
 import static org.junit.Assert.assertTrue;
 
@@ -24,7 +24,7 @@ public class TemporaryFileTest {
 		File testTempFile = temporaryFile.getTemporaryFile();
 		FileReader fileReader = new FileReader(testTempFile);
 		BufferedReader buff = new BufferedReader(fileReader);
-		String line = buff.readLine();
+		String line;
 		while ( (line = buff.readLine()) != null ) {
 			assertTrue(line.equals(contents));
 		}
@@ -36,7 +36,6 @@ public class TemporaryFileTest {
 	
 	@After
 	public void cleanup() {
-		//boolean wasNull = temporaryFile == null || temporaryFile.isDestroyed();
 		temporaryFile.destroy();
 	}
 

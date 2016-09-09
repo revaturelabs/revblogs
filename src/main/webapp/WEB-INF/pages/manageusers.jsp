@@ -20,6 +20,7 @@
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
 <link href="http://blogs.pjw6193.tech/content/resources/css/main.css" rel="stylesheet">
 <title>Manage Users</title>
+<link rel="shortcut icon" href="blogs.pjw6193.tech/content/resources/img/favicon.png"/>
 </head>
 <body>
 	<jsp:include page="navbar.jsp"></jsp:include>

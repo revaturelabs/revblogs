@@ -13,7 +13,7 @@
 <meta http-equiv="Expires" content="Sat, 01 Dec 2001 00:00:00 GMT">
 <title>Create User</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-</head>
+<link rel="shortcut icon" href="blogs.pjw6193.tech/content/resources/img/favicon.png"/></head>
 <body>
 	<div class="container">
 		<h3> Create a User </h3>

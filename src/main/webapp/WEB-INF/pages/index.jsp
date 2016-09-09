@@ -14,23 +14,12 @@
 <script src="resources/js/angular.min.js"></script>
 <script src="resources/js/app.js"></script>
 <script src="resources/js/controllers/BlogIndexController.js"></script>
-
+<link rel="shortcut icon" href="http://blogs.pjw6193.tech/content/resources/img/favicon.png"/>
 </head>
 
 <body ng-app="app" ng-controller="BlogIndexController">
   
   <jsp:include page="navbar.jsp"></jsp:include>
-  
-  <div class="container visible-xs-block" style="margin-top: 80px">
-  	<form>
-       <div class="form-group input-group post-search">
-         <input type="text" class="form-control" placeholder="Search">
-         <span class="input-group-btn">
-           <button class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
-         </span>
-       </div>
-     </form>
-  </div>
   
   <div class="container page-content">
   	<div class="row">
