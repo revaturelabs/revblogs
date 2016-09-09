@@ -3,15 +3,14 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html ng-app="createBlog" xmlns="http://www.w3.org/1999/xhtml" xmlns:og="http://ogp.me/ns#" xmlns:fb="http://www.facebook.com/2008/fbml">
+<html  xmlns="http://www.w3.org/1999/xhtml" xmlns:og="http://ogp.me/ns#" xmlns:fb="http://www.facebook.com/2008/fbml">
 <head>
-<link rel="blogs.pjw6193.tech/content/resources/img/favicon.png" href="blogs.pjw6193.tech/content/resources/img/favicon.png"/>
-<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
-<script src="resources/js/angular.min.js"></script>
-<script src="resources/js/img-mgmt.js"></script>
-<script src="resources/js/create-blog.js"></script>
+<script src="${pageContext.servletContext.contextPath}/resources/js/angular.min.js"></script>
+<script src="${pageContext.servletContext.contextPath}/resources/js/img-mgmt.js"></script>
+<script src="${pageContext.servletContext.contextPath}/resources/js/create-blog.js"></script>
 <script src="${pageContext.servletContext.contextPath}/resources/tinymce/js/tinymce/tinymce.min.js"></script>
-
+<script src="${pageContext.servletContext.contextPath}/resources/js/jquery-3.1.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <!-- HEADERS NEEDED TO PREVENT BACK BUTTON ON LOGOUT. DO NOT REMOVE ME! -->
 <meta http-equiv="Pragma" content="no-cache">
@@ -27,13 +26,18 @@
 <meta property="fb:app_id" content="1070815552954243"/>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://use.fontawesome.com/ebec39e24e.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
 <link rel="stylesheet" href="resources/css/main.css" >
+<link rel="shortcut icon" href="blogs.pjw6193.tech/content/resources/img/favicon.png"/>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
 <title>Blog Post</title>
 </head>
-<body ng-controller='createBlogCtrl'>
+<body ng-app="createBlog" ng-controller='createBlogCtrl'>
+
 <jsp:include page="navbar.jsp"></jsp:include>
+
 <div class="container page-content">
 <h2>Create new blog post</h2>
 
@@ -64,7 +68,8 @@
 </div>
 <jsp:include page="footer.jsp"></jsp:include>
 </body>
-<script type="text/javascript" src="resources/js/ui.js"></script>
-<script src="https://s3-us-west-2.amazonaws.com/dan-pickles-jar/content/resources/js/facebookConnection.js"></script>
+
+<script type="text/javascript" src="${pageContext.servletContext.contextPath}/resources/js/ui.js"></script>
+
 <script src="${pageContext.servletContext.contextPath}/resources/js/tinyMCE.js"></script>
 </html>

@@ -24,7 +24,7 @@
 		          <div class="form-group input-group post-search">
 		            <input type="text" class="form-control" placeholder="Search">
 		            <span class="input-group-btn">
-		              <button ng-click="getPage(1, postsPerPage, searchQuery)" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
+		              <button ng-click="getSearch(1, postsPerPage, searchQuery)" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
 		            </span>
 		          </div>
 		        </form>
@@ -35,7 +35,7 @@
 			        	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" 
 			        	aria-haspopup="true" aria-expanded="false">
 			        	<span class="glyphicon glyphicon-user"></span>
-			        	User <span class="caret"></span></a>
+			        	<c:out value="${user.firstName}" /> <span class="caret"></span></a>
 			        	<ul class="dropdown-menu">
 			        		<li><a href="${pageContext.servletContext.contextPath}/contributor">Home</a></li>
 			        		<li role="separator" class="divider"></li>
@@ -52,7 +52,7 @@
 			        	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" 
 			        	aria-haspopup="true" aria-expanded="false">
 			        	<span class="glyphicon glyphicon-user"></span>
-			        	Admin <span class="caret"></span></a>
+			        	<c:out value="${user.firstName}" /> <span class="caret"></span></a>
 			        	<ul class="dropdown-menu">
 			        		<li><a href="${pageContext.servletContext.contextPath}/admin">Home</a></li>
 			        		<li role="separator" class="divider"></li>
