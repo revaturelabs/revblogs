@@ -68,6 +68,8 @@
 </div>
 <jsp:include page="footer.jsp"></jsp:include>
 </body>
+
 <script type="text/javascript" src="${pageContext.servletContext.contextPath}/resources/js/ui.js"></script>
+
 <script src="${pageContext.servletContext.contextPath}/resources/js/tinyMCE.js"></script>
 </html>

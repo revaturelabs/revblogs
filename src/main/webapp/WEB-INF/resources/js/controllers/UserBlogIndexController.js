@@ -16,13 +16,14 @@ app.controller("UserBlogIndexController", ["$scope", "$http", function($scope, $
 				if($scope.curPage < $scope.posts.total_pages) {
 					nextPage = $scope.curPage + 1;
 				}
-				
 				$('#postsDiv').load();
 				
 				$scope.numOfPages = [];
+				$scope.numOfPages[0] = 1;
 				
-				for (var i = 1; i < $scope.posts.total_pages; i++) {
-					$scope.numOfPages[i] = i;
+				for (var i = 1; i < $scope.posts.total_pages+1; i++)
+				{
+					$scope.numOfPages[i - 1] = i;
 				}
 				
 				if($scope.curPage < $scope.posts.total_pages) {
@@ -38,10 +39,9 @@ app.controller("UserBlogIndexController", ["$scope", "$http", function($scope, $
 	
 	$scope.changeView = function(direction){
 		if($scope.isLoading) {
-			console.log("HEY! I'm loading!");
+			
 		} else {
-
-			if(direction == 1) {
+			if(direction === 1) {
 				$scope.posts = $scope.nextPagePosts;
 				$scope.curPage = $scope.curPage + 1;
 				
@@ -53,21 +53,15 @@ app.controller("UserBlogIndexController", ["$scope", "$http", function($scope, $
 
 		        window.scrollTo(0, $('#postsDiv').offsetTop + 100)
 			} else {
-				if($scope.curPage == 1) {
-					
-				}
+				$scope.posts = $scope.prevPagePosts;
+				$scope.curPage = $scope.curPage - 1;
 				
-				else {
-					$scope.posts = $scope.prevPagePosts;
-					$scope.curPage = $scope.curPage - 1;
-					
-					$scope.isLoading = true;
-					preloadPage($scope.curPage - 1);
-					preloadPage($scope.curPage + 1);
-					$scope.isLoading = false;
-					
-			        window.scrollTo(0, $('#postsDiv').offsetTop + 100)
-				}
+				$scope.isLoading = true;
+				preloadPage($scope.curPage - 1);
+				preloadPage($scope.curPage + 1);
+				$scope.isLoading = false;
+				
+		        window.scrollTo(0, $('#postsDiv').offsetTop + 100)
 			}
 		}
 	}
@@ -75,15 +69,12 @@ app.controller("UserBlogIndexController", ["$scope", "$http", function($scope, $
 	function preloadPage(page) {
 		$http.get("/revblogs/api/posts?author=" + $scope.userid + "&page=" + page + "&per_page=" + $scope.postsPerPage).success(
 		    function(resp) {
-				var prevPage = $scope.curPage;
-				
 				if($scope.curPage > page) {
 					$scope.prevPagePosts = resp;
 				}
 				
 				if($scope.curPage < page) {
 					$scope.nextPagePosts = resp;
-					$scope.isLoading = false;
 				}
 			}
 		);
