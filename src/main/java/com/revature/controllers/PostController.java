@@ -161,7 +161,6 @@ public class PostController {
 	//Create a new User
 	@RequestMapping(value="createAccount.do", method=RequestMethod.POST)
 	public ModelAndView createAccount(HttpServletRequest req, HttpServletResponse resp){
-
 		ModelAndView model = new ModelAndView();
 		
 		// User Supplied
@@ -216,6 +215,7 @@ public class PostController {
 			Mailer.sendMail(email, password);
 			
 			model.setViewName("redirect:/manageusers");
+			
 			return model;
 		}
 		

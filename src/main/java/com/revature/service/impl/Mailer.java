@@ -34,14 +34,14 @@ public class Mailer {
 		Session session = Session.getInstance(props,
 			new javax.mail.Authenticator() {
 				protected PasswordAuthentication getPasswordAuthentication() {
-					return new PasswordAuthentication("d.p.pgdr@gmail.com","danpickles1");
+					return new PasswordAuthentication("revblogs@gmail.com","danpickles1");
 				}
 			});
 
 		try {
 
 			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress("d.p.pgdr@gmail.com"));
+			message.setFrom(new InternetAddress("revblogs@gmail.com"));
 			message.setRecipients(Message.RecipientType.TO,
 					InternetAddress.parse(newEmail));
 			message.setSubject("Revature Blog Registration (DO NOT REPLY)");
