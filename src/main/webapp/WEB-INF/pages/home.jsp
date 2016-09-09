@@ -5,7 +5,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<link rel="shortcut icon" href="blogs.pjw6193.tech/content/resources/img/favicon.png"/><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="shortcut icon" type="image/png" href="blogs.pjw6193.tech/content/resources/img/favicon.png"/>
 <!-- HEADERS NEEDED TO PREVENT BACK BUTTON ON LOGOUT. DO NOT REMOVE ME! -->
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Cache-Control" content="no-cache">
@@ -20,7 +20,6 @@
 <body>
 <jsp:include page="navbar.jsp"></jsp:include>
 <div class="container page-content">
-	
 	<!-- place change form here. Have a post call, change it, 
 	update it and the newUser parameter, and then redirect 
 	to page with reload. -->
@@ -28,7 +27,15 @@
 	<c:if test="${user.newUser eq true}">
 		<c:redirect url="/password"/>
 	</c:if>
+	<div id="home-page-content">
 	<c:if test="${user.userRole.role eq 'ADMIN'}">
+		<div class="row">
+			<div class="col-xs-1"></div>
+			<div class="col-xs-4">
+				<h1 style="color:#444444">Dashboard</h1>
+			</div>
+			<div class="col-xs-7"></div>
+		</div>
 		<div class="row">
 			<div class="col-xs-2"></div>
 			<div class="col-xs-4">
@@ -71,6 +78,13 @@
 	</c:if>
 	<c:if test="${user.userRole.role eq 'CONTRIBUTOR'}">
 		<div class="row">
+			<div class="col-xs-1"></div>
+			<div class="col-xs-4">
+				<h1 style="color:#444444">Dashboard</h1>
+			</div>
+			<div class="col-xs-7"></div>
+		</div>
+		<div class="row">
 			<div class="col-xs-2"></div>
 			<div class="col-xs-4">
 				<h2><a href="profile"><span class="glyphicon glyphicon-wrench"></span>&nbsp;Update profile</a></h2>
@@ -99,6 +113,7 @@
 			<div class="col-xs-2"></div>
 		</div>
 	</c:if>
+	</div>
 </div>
 <div class="footer2">
 <jsp:include page="footer.jsp"></jsp:include>
