@@ -23,7 +23,7 @@ public class JetS3Impl implements JetS3{
 	private AWSCredentials credentials;
 	private S3Service s3;
 	private Logger log = Logger.getRootLogger();
-	private final String BUCKET = "blogs.pjw6193.tech";
+	private static final String BUCKET = "blogs.pjw6193.tech";
 	private BusinessDelegate businessDelegate;
 
 
@@ -52,7 +52,7 @@ public class JetS3Impl implements JetS3{
 			return str;
 		} catch (Exception e) {
 			log.info(e);
-			return null;
+			return new String[0];
 		}
 	}
 
