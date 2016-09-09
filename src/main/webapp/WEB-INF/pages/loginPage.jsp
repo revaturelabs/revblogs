@@ -22,7 +22,8 @@
 </head>
 <body>
 <jsp:include page="navbar.jsp"></jsp:include>
-<div class="container page-content">
+<div class="overall-container">
+<div class="container page-content content-padding">
 
 	<c:if test="${user.userRole.role eq 'ADMIN'}">
 		<c:redirect url="/admin"/>
@@ -76,7 +77,10 @@
 	</form>
 	</div>
 </div>
+<div class="footer2">
 <jsp:include page="footer.jsp"></jsp:include>
+</div>
+</div>
 </body>
 <script type="text/javascript">
 $(document).ready(function(){

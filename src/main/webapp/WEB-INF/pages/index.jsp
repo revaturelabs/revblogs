@@ -21,7 +21,8 @@
   
   <jsp:include page="navbar.jsp"></jsp:include>
   
-  <div class="container page-content">
+ <div class="overall-container">
+  <div class="container page-content content-padding">
   	<div class="row">
   		<div class="col-xs-12">
   			<h2>Latest Posts</h2>
@@ -29,12 +30,9 @@
   	</div>
     <div id="postsDiv" class="row">
       <div class="col-sm-8">
-      	<c:if test="${user.userRole.userRoleId eq 1}">
-      		<div ng-repeat="post in posts.posts" ng-include src="'resources/js/templates/editable-post-preview.html'"></div>
-      	</c:if>
-      	<c:if test="${user.userRole.userRoleId eq 2}">
+      	
       		<div ng-repeat="post in posts.posts" ng-include src="'resources/js/templates/post-preview.html'"></div>
-      	</c:if>
+      	
       </div>
       <div class="col-sm-4 hidden-xs">
         <div class="panel panel-primary">
@@ -76,13 +74,14 @@
   <!-- PAGINATION -->
   </div>
   <!-- FOOTER -->
+  <div class="footer2">
   <jsp:include page="footer.jsp"></jsp:include>
-  
+  </div>
   <input type="hidden" ng-model="blogsPerPage">
   <input type="hidden" ng-model="curPage">
   <input type="hidden" ng-model="nextPagePosts">
   <input type="hidden" ng-model="prevPagePosts">
-  
+ </div>
 </body>
 
 <script type="text/javascript" src="resources/js/ui.js"></script>

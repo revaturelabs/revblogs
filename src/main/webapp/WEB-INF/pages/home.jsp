@@ -100,7 +100,10 @@
 		</div>
 	</c:if>
 </div>
+<div class="footer2">
 <jsp:include page="footer.jsp"></jsp:include>
+</div>
+</div>
 </body>
 <script type="text/javascript" src="resources/js/ui.js"></script>
 </html>

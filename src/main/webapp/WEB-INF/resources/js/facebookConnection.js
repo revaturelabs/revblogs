@@ -13,18 +13,21 @@
 	
 	  (function(d, s, id){
 	     var js, fjs = d.getElementsByTagName(s)[0];
-	     if (d.getElementById(id)) {return;}
-	     js = d.createElement(s); js.id = id;
+	     if (d.getElementById(id)) {
+	    	 return;
+	     }
+	     js = d.createElement(s);
+	     js.id = id;
 	     js.src = "//connect.facebook.net/en_US/sdk.js";
 	     fjs.parentNode.insertBefore(js, fjs);
 	   }(document, 'script', 'facebook-jssdk'));
 	  
 	document.getElementById('shareBtn').onclick = function() {
 		var urlEnd = $("#facebookurl").val();
-	  FB.ui({
-	    method: 'share',
-	    display: 'popup',
-	    href: 'http://blogs.pjw6193.tech/content/pages/'+urlEnd,
-	  }, function(response){});
+		FB.ui({
+			method: 'share',
+			display: 'popup',
+			href: 'http://blogs.pjw6193.tech/content/pages/'+urlEnd,
+		}, function(response){});
 	}
 }

@@ -1,6 +1,9 @@
 html, body {
     font-family: 'Source Sans Pro', 'Helvetica Neue', helvetica, arial, sans-serif;
     background-color: #F9F9F9;
+    margin: 0;
+   	padding: 0;
+   	height: 95.71%;
   }
   .navbar {
     border-radius: 0;
@@ -202,8 +205,19 @@ html, body {
   .highlight {
   	background-color: tomato;
   }
-  
+  .overall-container{
+  	min-height: 100%;
+   	position: relative;
+  }
+  .footer2{
+  	position: absolute;
+	bottom: 0;
+	width: 100%;
+  }
   .btn-social-icon {
     width: 34px!important;
     height: 34px!important;
   }
+.content-padding {
+	padding-bottom: 200px;
+}
