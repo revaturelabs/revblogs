@@ -23,6 +23,7 @@
 		<security:intercept-url pattern="/profile/**" requires-channel="https" access="hasAnyRole('ADMIN','CONTRIBUTOR')"/>
 		<security:intercept-url pattern="/success/**" requires-channel="https" access="hasAnyRole('ADMIN','CONTRIBUTOR')"/>
 		<security:intercept-url pattern="/resources/**" requires-channel="https" access="permitAll"/>
+		<security:intercept-url pattern="/login**" requires-channel="http" access="permitAll"/>
 		<!-- requires-channel="https"  -->
 
 <!-- PORTS FOR HTTP AND HTTPS -->
