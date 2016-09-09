@@ -20,17 +20,6 @@
   
   <jsp:include page="navbar.jsp"></jsp:include>
   
-  <div class="container visible-xs-block" style="margin-top: 80px">
-  	<form>
-       <div class="form-group input-group post-search">
-         <input type="text" class="form-control" placeholder="Search">
-         <span class="input-group-btn">
-           <button class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
-         </span>
-       </div>
-     </form>
-  </div>
-  
   <div class="container page-content">
   	<div class="row">
   		<div class="col-xs-12">
