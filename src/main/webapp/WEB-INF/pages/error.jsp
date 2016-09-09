@@ -22,7 +22,7 @@
 	          <span class="icon-bar"></span>
 	          <span class="icon-bar"></span>
 	        </button>
-	        <a class="navbar-brand" href="${pageContext.servletContext.contextPath}/"><img src="resources/img/rev-brand.png" /></a>
+	        <a class="navbar-brand" href="${pageContext.servletContext.contextPath}/"><img src="resources/img/rev-brand.png" alt="revature"/></a>
 	      </div>
 	
 	      <!-- Collect the nav links, forms, and other content for toggling -->
@@ -51,14 +51,14 @@
 		<br />
 		<br />
 		<br />
-		<img src="${pageContext.servletContext.contextPath}/resources/images/error.gif"/>
+		<img src="${pageContext.servletContext.contextPath}/resources/images/error.gif" alt="sad penguin"/>
 	</div>
 	<!-- FOOTER -->
 	  <div class="footer">
 		    <div class="container">
 		      <div class="row">
 		        <div class="col-sm-4">
-		          <img class="img-responsive" src="resources/img/rev-footer.png" />
+		          <img class="img-responsive" src="resources/img/rev-footer.png" alt="revature" />
 		        </div>
 		        <div class="col-sm-4">
 		        	<h4>Contact Info</h4>
