@@ -18,14 +18,18 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
-<link href="http://blogs.pjw6193.tech/content/resources/css/main.css" rel="stylesheet">
+<link href="resources/css/main.css" rel="stylesheet">
 <title>Manage Users</title>
 <link rel="shortcut icon" href="blogs.pjw6193.tech/content/resources/img/favicon.png"/>
 </head>
 <body>
 	<jsp:include page="navbar.jsp"></jsp:include>
 	<div class="container page-content">
-		<br/><br/><br/><br/><br/>
+		<br/><br/>
+		<button data-toggle="modal" data-target="#createContributor" style="cursor: pointer;" class="btn btn-primary" aria-hidden="true">
+			&nbsp;Add a Contributor
+		</button>
+		<br/><br/><br/>
 		<table id="userTable">
 			<thead>
 				<tr>
@@ -94,6 +98,31 @@
 
 
 		<!-- Edit User Profile Modal -->
+		<div id="createContributor" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+						<h3 class="modal-title">Create Contributor</h3>
+					</div>
+					<form action="createAccount.do" method="post" >
+						<div class="modal-body">
+							Email: <input name="email" type="text" class="form-control"/>			
+						</div>
+					<div class="modal-footer">
+						<input id="createUserButton" type="submit" value="Submit Changes" class="btn btn-primary form-control" style="width: auto;" />
+						<button id="closeCreateUser" type="button" class="btn btn-secondary" data-dismiss="modal">
+							Close
+						</button>					
+					</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+		<!-- Create Contributor Modal -->
 		<div id="editUserProfile" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
 			<div class="modal-dialog">
 				<!-- Modal content-->
@@ -123,6 +152,8 @@
 				</div>
 			</div>
 		</div>
+		
+		
 	</div>
 
 
@@ -143,34 +174,7 @@ function edit(userId){
 	$("#selectedUserPassword").val($("#password" + userId).html());
 	$("#selectedLinkedInURL").val($("#link" + userId).html());
 	
-}
-
-// function resetPicture(userId){
-	
-// }
-
-// function deactivateUser(userId){
-// 	$.ajax({
-// 			url: "deactivateUser.do",
-// 			method: "POST",
-// 			data : { 'userId'  : userId},
-// 			success: function(success){
-				
-// 			}
-// 	});
-// }
-
-// function activateUser(userId){
-// 	$.ajax({
-// 			url: "activateUser.do",
-// 			method: "POST",
-// 			data : { 'userId'  : userId},
-// 			success: function(success){
-				
-// 			}
-// 	});
-// }
-	
+}	
 </script>
 <!-- <script type="text/javascript" src="resources/js/ui.js"></script> -->
 </html>
