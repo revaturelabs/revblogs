@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.bouncycastle.math.raw.Mod;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -197,26 +198,58 @@ public class PostController {
 	
 	// Admin Reset Profile Picture
 	@RequestMapping(value="resetProfile.do", method=RequestMethod.POST)
-	public void resetProfilePicture(int userId){
+	public ModelAndView resetProfilePicture(@RequestParam(value="resetProfile") int userId, HttpServletRequest req){
+		ModelAndView model = new ModelAndView();
+		model.setViewName("/manageusers");
+		
 		User resetUserPic = businessDelegate.requestUser(userId);
 		
-		
+		req.setAttribute("userList", businessDelegate.requestUsers());
+		req.setAttribute("updateUserProfile", new UserDTO());
+		return model;		
 	}
 	
 	// Admin Deactivate User
 	@RequestMapping(value="deactivateUser.do", method=RequestMethod.POST)
-	public void deactivateUser(int userId){
+	public ModelAndView deactivateUser(@RequestParam(value="deactivate") int userId, HttpServletRequest req){
+		ModelAndView model = new ModelAndView();
+		model.setViewName("/manageusers");
+		
 		User deactivateUser = businessDelegate.requestUser(userId);
 		deactivateUser.setActive(false);
-		businessDelegate.updateRecord(deactivateUser);		
+		businessDelegate.updateRecord(deactivateUser);	
+		
+		req.setAttribute("userList", businessDelegate.requestUsers());
+		req.setAttribute("updateUserProfile", new UserDTO());
+		return model;
+	}
+	
+	// Admin Reset Password
+	@RequestMapping(value="resetUserPassword.do", method=RequestMethod.POST)
+	public ModelAndView resetUserPassword(@RequestParam(value="resetPass") int userId, HttpServletRequest req){
+		ModelAndView model = new ModelAndView();
+		model.setViewName("/manageusers");
+		
+		User resetUserPassword = businessDelegate.requestUser(userId);
+		
+		req.setAttribute("userList", businessDelegate.requestUsers());
+		req.setAttribute("updateUserProfile", new UserDTO());
+		return model;
 	}
 	
 	// Admin Activate User
 	@RequestMapping(value="activateUser.do", method=RequestMethod.POST)
-	public void activateUser(int userId){
+	public ModelAndView activateUser(@RequestParam(value="activate") int userId, HttpServletRequest req){
+		ModelAndView model = new ModelAndView();
+		model.setViewName("/manageusers");
+		
 		User activateUser = businessDelegate.requestUser(userId);
 		activateUser.setActive(true);
-		businessDelegate.updateRecord(activateUser);		
+		businessDelegate.updateRecord(activateUser);	
+		
+		req.setAttribute("userList", businessDelegate.requestUsers());
+		req.setAttribute("updateUserProfile", new UserDTO());
+		return model;
 	}
 	
 	

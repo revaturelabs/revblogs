@@ -56,17 +56,29 @@
 								class="glyphicon glyphicon-edit" aria-hidden="true">
 							</span>
 						</td>
-						<td><input id="${user.userId}" onclick=resetPicture(this.id) type="submit" class="btn btn-primary form-control" value="Reset Picture" /></td>
+						<td>
+							<form action="resetProfile.do" method="post">
+								<button name="resetProfile" value="${user.userId }" type="submit" class="btn btn-primary form-control" >Reset Picture</button>
+							</form>
+						</td>
 						<td><c:choose>
 								<c:when id="activeTest" test="${user.active}">
-									<input id="${user.userId}" onclick=deactivateUser(this.id) type="submit" class="btn btn-primary form-control" value="Deactivate" />
+									<form action="deactivateUser.do" method="post">
+										<button name="deactivate" value="${user.userId}" type="submit" class="btn btn-primary form-control">Deactivate</button>
+									</form>
 								</c:when>
 								<c:otherwise>
-									<input id="${user.userId}" onclick=activateUser(this.id) type="submit" class="btn btn-primary form-control" value="Activate" />
+									<form action="activateUser.do" method="post">
+										<button name="activate" value="${user.userId}" type="submit" class="btn btn-primary form-control">Activate</button>
+									</form>
 								</c:otherwise>
 							</c:choose>
 						</td>
-						<td><input type="submit" class="btn btn-primary form-control" value="Reset Password" /></td>
+						<td>
+							<form action="resetUserPassword.do" method="post">
+								<button name="resetPass" value="${user.userId}" type="submit" class="btn btn-primary form-control" >Reset Password</button>
+							</form>
+						</td>
 						<td id="userId${user.userId}" hidden><c:out value="${user.userId}" /></td>
 						<td id="password${user.userId}" hidden><c:out value="${user.password}" /></td>
 						<td id="description${user.userId}" hidden><c:out value="${user.description}" /></td>
@@ -132,31 +144,31 @@ function edit(userId){
 	
 }
 
-function resetPicture(userId){
+// function resetPicture(userId){
 	
-}
+// }
 
-function deactivateUser(userId){
-	$.ajax({
-			url: "deactivateUser.do",
-			method: "POST",
-			data : { 'userId'  : userId},
-			success: function(success){
+// function deactivateUser(userId){
+// 	$.ajax({
+// 			url: "deactivateUser.do",
+// 			method: "POST",
+// 			data : { 'userId'  : userId},
+// 			success: function(success){
 				
-			}
-	});
-}
+// 			}
+// 	});
+// }
 
-function activateUser(userId){
-	$.ajax({
-			url: "activateUser.do",
-			method: "POST",
-			data : { 'userId'  : userId},
-			success: function(success){
+// function activateUser(userId){
+// 	$.ajax({
+// 			url: "activateUser.do",
+// 			method: "POST",
+// 			data : { 'userId'  : userId},
+// 			success: function(success){
 				
-			}
-	});
-}
+// 			}
+// 	});
+// }
 	
 </script>
 <!-- <script type="text/javascript" src="resources/js/ui.js"></script> -->
