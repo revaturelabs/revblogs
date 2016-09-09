@@ -25,7 +25,8 @@
 <jsp:include page="navbar.jsp"></jsp:include>
 <div class="container page-content">
 	<div>
-		<div >
+		<span id="confirmMessage"></span>
+		<div>
 			<h3>Update Password</h3> <br />
 			<form:form action="updatePassword.do" method="post" commandName="updatePassword">
 			<table>
@@ -53,7 +54,7 @@
 				<td> 
 					<form:password path="confirmPassword" name="confirmPassword" 
 					class="form-control" id="confirmPassword" required
-					onkeyup="validatePassword()"/> <span id="confirmMessage"></span>
+					onkeyup="validatePassword()"/> 
 				</td>
 			</tr>
 			<tr>

@@ -224,3 +224,30 @@ html, body {
 .content-padding {
 	padding-bottom: 200px;
 }
+
+#rightColumn{
+	float:right;
+	width:50%;
+	padding-left:1em;
+}
+
+#leftColumn{
+	float:left;
+	width: 50%;
+	
+}
+
+.update-form{
+	width:175%;
+}
+
+.update-btn{
+	width: 175%;
+}
+
+.success-span{
+	padding: .5em;
+	border-radius: 25px;
+	background: rgba(76, 175, 80, 0.6);
+	font-weight: bold;
+}
