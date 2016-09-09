@@ -2,9 +2,11 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 {
 	$scope.appUrl = "http://localhost:7001/revblogs";
 	
-	$scope.getPage = function(page, postsPP)
+	$scope.getPage = function(page, postsPP, query)
 	{
-		$http.get($scope.appUrl+"/api/posts?page=" + page + "&per_page=" + $scope.postsPerPage).success(
+		$scope.searchQuery = query.replace(/ /g, '+');
+		
+		$http.get($scope.appUrl+"/api/posts?page=" + page + "&per_page=" + $scope.postsPerPage + "&author=" + $scope.author + "&q=" + $scope.searchQuery).success(
 		    function(resp)
 			{
 				$scope.posts = resp;
@@ -115,5 +117,6 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 	$scope.curPage = 1;
 	$scope.postsPerPage = 10;
 	$scope.isLoading = false;
+	$scope.author = 0;
 	$scope.getPage($scope.curPage, $scope.postsPerPage);
 }]);
