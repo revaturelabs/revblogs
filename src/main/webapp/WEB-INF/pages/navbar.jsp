@@ -24,7 +24,7 @@
 		          <div class="form-group input-group post-search">
 		            <input type="text" class="form-control" placeholder="Search">
 		            <span class="input-group-btn">
-		              <button ng-click="getPage(1, postsPerPage, searchQuery)" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
+		              <button ng-click="getSearch(1, postsPerPage, searchQuery)" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
 		            </span>
 		          </div>
 		        </form>
