@@ -44,7 +44,6 @@ public interface JetS3 {
 	
 	/**
 	 * Used to upload the files at initialization
-	 * @param fileName the name of the file to save as
 	 * @param file the actual file that is to be saved
 	 * @return
 	 */
