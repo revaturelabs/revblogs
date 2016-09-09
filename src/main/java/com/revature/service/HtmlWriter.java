@@ -98,9 +98,10 @@ public class HtmlWriter {
 				+ "</a>");
 			}
 			if(line.contains("twitter-url")) {
-				blogWriter.write("<a class='btn btn-social-icon btn-twitter' target='_blank' href='https://twitter.com/share?url='"+url+"' class='twitter-share-button' data-show-count='false'>"
-				+ "<span class='fa fa-twitter'></span>"				
-			    + "</a>");
+				String twitter = "<a class='btn btn-social-icon btn-twitter' target='_blank' href='https://twitter.com/share?url='"+url+"' class='twitter-share-button' data-show-count='false'>"
+						+ "<span class='fa fa-twitter'></span>"				
+					    + "</a>";
+				blogWriter.write(twitter);
 			}
 			if (line.contains("post-references-body")) {
 				Map<Integer, String> references = blog.getReferences();
