@@ -23,24 +23,23 @@ public class Mailer {
 	public static void sendMail(String newEmail, String newPassword) {
 		
 		Properties props = new Properties();
-		props.put("mail.smtp.host", "smtp.gmail.com");
-		props.put("mail.smtp.socketFactory.port", "465");
-		props.put("mail.smtp.socketFactory.class",
-				"javax.net.ssl.SSLSocketFactory");
 		props.put("mail.smtp.auth", "true");
-		props.put("mail.smtp.port", "465");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.port", "587");
+		props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
 
 		Session session = Session.getInstance(props,
 			new javax.mail.Authenticator() {
 				protected PasswordAuthentication getPasswordAuthentication() {
-					return new PasswordAuthentication("d.p.pgdr@gmail.com","danpickles1");
+					return new PasswordAuthentication("revblogs@gmail.com","danpickles1");
 				}
 			});
 
 		try {
-
+			
 			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress("d.p.pgdr@gmail.com"));
+			message.setFrom(new InternetAddress("revblogs@gmail.com"));
 			message.setRecipients(Message.RecipientType.TO,
 					InternetAddress.parse(newEmail));
 			message.setSubject("Revature Blog Registration (DO NOT REPLY)");
@@ -84,7 +83,7 @@ public class Mailer {
 
 	         // put everything together
 	         message.setContent(multipart);
-
+			
 			Transport.send(message);
 
 		} catch (MessagingException e) {

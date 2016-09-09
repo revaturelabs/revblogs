@@ -19,7 +19,8 @@
 </head>
 <body>
 <jsp:include page="navbar.jsp"></jsp:include>
-<div class="container page-content">
+<div class="overall-container">
+<div class="container page-content content-padding">
 	<h1>${title}</h1>
 	<h2>${message}</h2>
 	
@@ -107,7 +108,10 @@
 	</table>
 	</c:if>
 </div>
+<div class="footer2">
 <jsp:include page="footer.jsp"></jsp:include>
+</div>
+</div>
 </body>
 <script type="text/javascript" src="resources/js/ui.js"></script>
 </html>

@@ -153,12 +153,11 @@ public class PostController {
 	//Create a new User
 	@RequestMapping(value="createAccount.do", method=RequestMethod.POST)
 	public ModelAndView createAccount(HttpServletRequest req, HttpServletResponse resp){
-
 		ModelAndView model = new ModelAndView();
 		
 		// User Supplied
 		String email = req.getParameter("email");
-		String role = req.getParameter("role");
+		String role = businessDelegate.requestRoles(2).getRole();
 		
 		// Check if email exists
 		if(businessDelegate.requestUsers(email) == null){
@@ -182,9 +181,12 @@ public class PostController {
 									linkedInURL, 
 									description, 
 									userRole);
-			
+
 			// Save in Database
 			businessDelegate.putRecord(newUser);
+			
+			// Send Email to Account
+			Mailer.sendMail(email, password);
 			
 			
 			//Get default picture
@@ -210,14 +212,13 @@ public class PostController {
 				Logging.error(e);
 			}
 			
-			// Send Email to Account
-			Mailer.sendMail(email, password);
+			model.setViewName("redirect:/manageusers");
 			
-			model.setViewName("/home");
 			return model;
+			
 		}
 		
-		model.setViewName("/makeClientAccount");
+		model.setViewName("redirect:/manageusers");
 		
 		return model;
 	}
@@ -288,9 +289,7 @@ public class PostController {
 	public ModelAndView resetUserPassword(@RequestParam(value="resetPass") int userId, HttpServletRequest req){
 		ModelAndView model = new ModelAndView();
 		model.setViewName("/manageusers");
-		
-		User resetUserPassword = businessDelegate.requestUser(userId);
-		
+				
 		req.setAttribute("userList", businessDelegate.requestUsers());
 		req.setAttribute("updateUserProfile", new UserDTO());
 		return model;
@@ -535,7 +534,6 @@ public class PostController {
 	public String deleteUserBlog(HttpServletRequest req, HttpServletResponse resp) {
 		String blogLink = req.getParameter("blog-link");
 		String cutBlogLink = blogLink.replace("http://blogs.pjw6193.tech/", "");
-		System.out.println(cutBlogLink);
 		businessDelegate.delete(cutBlogLink);
 		return "user-blogs";
 	}
