@@ -93,7 +93,7 @@ public class PostController {
 							 HttpServletRequest req, HttpServletResponse resp){
 		
 		ModelAndView model = new ModelAndView();
-		model.setViewName("/profile");
+		model.setViewName("redirect:/profile");
 		if(bindingResult.hasErrors()){
 			return model;
 		}
@@ -115,8 +115,11 @@ public class PostController {
 		loggedIn.setPassword(Crypt.encrypt(loggedIn.getPassword(), loggedIn.getEmail(), loggedIn.getFullname()));
 		//end re-encryption
 		
+		String userUpdate = "update";
 		req.getSession().setAttribute("user", loggedIn);
+		req.getSession().setAttribute("passwordSuccess", null);
 		businessDelegate.updateRecord(loggedIn);
+		req.getSession().setAttribute("userUpdate", userUpdate);
 		req.setAttribute("updateUser", new User());
 		return model;
 	}
@@ -300,14 +303,14 @@ public class PostController {
 		
 	// Update Password Page
 	@RequestMapping(value="updatePassword.do", method=RequestMethod.POST)
-	public String updatePassword(@ModelAttribute("updatePassword") @Valid UserDTO passwordDTO, BindingResult bindingResult,
+	public ModelAndView updatePassword(@ModelAttribute("updatePassword") @Valid UserDTO passwordDTO, BindingResult bindingResult,
 							   HttpServletRequest req, HttpServletResponse resp){
 		
 		ModelAndView model = new ModelAndView();
-		model.setViewName("/password");
+		model.setViewName("redirect:/profile");
 		if(bindingResult.hasErrors()){
-			
-			return "redirect:/password";
+			model.setViewName("redirect:/password");
+			return model;
 		}
 		
 		String password = passwordDTO.getNewPassword();
@@ -320,9 +323,13 @@ public class PostController {
 			loggedIn.setNewUser(false);
 		}
 		
+		String success = "success";
+		
 		req.getSession().setAttribute("user", loggedIn);
+		req.getSession().setAttribute("passwordSuccess", success);
+		req.getSession().setAttribute("userUpdate", null);
 		businessDelegate.updateRecord(loggedIn);
-		return "redirect:/profile";
+		return model;
 	}
 	
 	// Updates a Users Profile Picture
@@ -336,7 +343,9 @@ public class PostController {
 		String url = businessDelegate.uploadProfileItem(""+loggedIn.getUserId(),""+loggedIn.getUserId(), profilePicture);		
 		loggedIn.setProfilePicture(url);
 		businessDelegate.updateRecord(loggedIn);
-		return loggedIn.getProfilePicture();
+		req.getSession().setAttribute("passwordSuccess", null);
+		req.getSession().setAttribute("userUpdate", null);
+		return "Success";
 	}
 	
 	// Uploads a Blog Picture

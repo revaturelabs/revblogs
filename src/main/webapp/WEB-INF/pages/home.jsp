@@ -20,8 +20,8 @@
 <body>
 <jsp:include page="navbar.jsp"></jsp:include>
 <div class="container page-content">
-	<h1>${title}</h1>
-	<h2>${message}</h2>
+	<h1><c:out value="${title}"></c:out></h1>
+	<h2><c:out value="${message}"></c:out></h2>
 	
 	<!-- place change form here. Have a post call, change it, 
 	update it and the newUser parameter, and then redirect 

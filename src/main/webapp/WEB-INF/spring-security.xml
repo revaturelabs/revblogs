@@ -10,6 +10,7 @@
 	
 <!-- HTTP SECURITY FOR CONTROLLING ACCESS BASED ON ROLL -->	
 	<security:http auto-config="true" use-expressions="true">
+	<security:intercept-url pattern="/createAccount.do" requires-channel="http" access="hasRole('ADMIN')"/>
 		<security:intercept-url pattern="/add-picture/**" requires-channel="https" access="hasAnyRole('ADMIN','CONTRIBUTOR')"/>
 		<security:intercept-url pattern="/admin**" requires-channel="https" access="hasRole('ADMIN')"/>
 		<security:intercept-url pattern="/contributor**" requires-channel="https" access="hasRole('CONTRIBUTOR')"/>
@@ -24,6 +25,7 @@
 		<security:intercept-url pattern="/success/**" requires-channel="https" access="hasAnyRole('ADMIN','CONTRIBUTOR')"/>
 		<security:intercept-url pattern="/resources**" requires-channel="any" access="permitAll"/>
 		<security:intercept-url pattern="/login**" requires-channel="http" access="permitAll"/>
+		
 		<!-- requires-channel="https"  -->
 
 <!-- PORTS FOR HTTP AND HTTPS -->
