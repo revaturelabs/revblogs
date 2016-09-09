@@ -468,15 +468,6 @@ public class PostController {
 		}
 		blog.setAuthor(author);
 		blog.setReferences(getReferences(req));
-		req.getSession().setAttribute("blog", blog);
-		return "preview-blog";
-	}
-	
-	@RequestMapping(value="publish.do", method=RequestMethod.POST)
-	public String publishBlog(HttpServletRequest req, HttpServletResponse resp) {
-		Blog blog = (Blog) req.getSession().getAttribute("blog");
-		HtmlWriter htmlWriter;
-		String url = "";
 		
 		/*
 		 * Blog Bean will be generated with proper tags and fields
@@ -488,13 +479,14 @@ public class PostController {
 			String tmp = blog.getBlogTagsString();
 			List<String> myList = Arrays.asList(tmp.split(","));
 			Set<Tags> tmpTags = new HashSet<>();
+			Set<Tags> newTags = new HashSet<Tags>();
 			List<Tags> dbTags = businessDelegate.requestTags();
 			/*
 			 * loop through List of tag descriptions the user types in
 			 */
 			for(String a : myList){
 				boolean check = false;
-				String tagDesc = a.toLowerCase().replaceAll("\\s+","");
+				String tagDesc = a.toLowerCase().trim();
 				/*
 				 * loop through database Tags to check with user input tags
 				 * if theres a match, put instance of database Tag into User bean, if not, create new Tag bean
@@ -507,12 +499,26 @@ public class PostController {
 				}
 				if(!check){
 					Tags myTag = new Tags(tagDesc);
-					businessDelegate.putRecord(myTag);
+					newTags.add(myTag);
 					tmpTags.add(myTag);
 					
 				}
 			}
 			blog.setTags(tmpTags);
+			req.getSession().setAttribute("newTags", newTags);
+		}
+		req.getSession().setAttribute("blog", blog);
+		return "preview-blog";
+	}
+	
+	@RequestMapping(value="publish.do", method=RequestMethod.POST)
+	public String publishBlog(HttpServletRequest req, HttpServletResponse resp) {
+		Blog blog = (Blog) req.getSession().getAttribute("blog");
+		HtmlWriter htmlWriter;
+		String url = "";
+		Set<Tags> newTags = (Set<Tags>)req.getSession().getAttribute("newTags");
+		for(Tags newTag : newTags){
+			businessDelegate.putRecord(newTag);
 		}
 		try {
 			InputStream templateStream = this.getClass().getClassLoader().getResourceAsStream("template.html");
