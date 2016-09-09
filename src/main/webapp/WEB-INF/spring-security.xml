@@ -22,7 +22,7 @@
 		<security:intercept-url pattern="/preview-blog**" requires-channel="https" access="hasAnyRole('CONTRIBUTOR','ADMIN')" />
 		<security:intercept-url pattern="/profile/**" requires-channel="https" access="hasAnyRole('ADMIN','CONTRIBUTOR')"/>
 		<security:intercept-url pattern="/success/**" requires-channel="https" access="hasAnyRole('ADMIN','CONTRIBUTOR')"/>
-		<security:intercept-url pattern="/resources/**" requires-channel="https" access="permitAll"/>
+		<security:intercept-url pattern="/resources**" requires-channel="any" access="permitAll"/>
 		<security:intercept-url pattern="/login**" requires-channel="http" access="permitAll"/>
 		<!-- requires-channel="https"  -->
 

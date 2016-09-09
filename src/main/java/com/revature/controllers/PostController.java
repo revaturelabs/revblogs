@@ -300,14 +300,14 @@ public class PostController {
 		
 	// Update Password Page
 	@RequestMapping(value="updatePassword.do", method=RequestMethod.POST)
-	public ModelAndView updatePassword(@ModelAttribute("updatePassword") @Valid UserDTO passwordDTO, BindingResult bindingResult,
+	public String updatePassword(@ModelAttribute("updatePassword") @Valid UserDTO passwordDTO, BindingResult bindingResult,
 							   HttpServletRequest req, HttpServletResponse resp){
 		
 		ModelAndView model = new ModelAndView();
 		model.setViewName("/password");
 		if(bindingResult.hasErrors()){
 			
-			return model;
+			return "redirect:/password";
 		}
 		
 		String password = passwordDTO.getNewPassword();
@@ -322,7 +322,7 @@ public class PostController {
 		
 		req.getSession().setAttribute("user", loggedIn);
 		businessDelegate.updateRecord(loggedIn);
-		return model;
+		return "redirect:/profile";
 	}
 	
 	// Updates a Users Profile Picture
