@@ -40,7 +40,6 @@ import com.revature.service.BusinessDelegate;
 import com.revature.service.HtmlWriter;
 import com.revature.service.Logging;
 import com.revature.service.Population;
-import com.revature.service.impl.Crypt;
 import com.revature.service.impl.Mailer;
 
 @Controller
@@ -52,7 +51,6 @@ public class PostController {
 	 */
 	private BusinessDelegate businessDelegate;
 	private Population population;
-	private Logging logging;
 
 	public void setBusinessDelegate(BusinessDelegate businessDelegate){
 		this.businessDelegate = businessDelegate;
@@ -65,12 +63,6 @@ public class PostController {
 	}
 	public void setPopulation(Population population) {
 		this.population = population;
-	}
-	public Logging getLogging() {
-		return logging;
-	}
-	public void setLogging(Logging logging) {
-		this.logging = logging;
 	}
 	
 	/*
@@ -99,7 +91,7 @@ public class PostController {
 		User loggedIn = (User) req.getSession().getAttribute("user");
 		
 		//password needed to be decrypted first
-		loggedIn.setPassword(Crypt.decrypt(loggedIn.getPassword(), loggedIn.getEmail(), loggedIn.getFullname()));
+		loggedIn.setPassword(businessDelegate.revealElement(loggedIn.getPassword(), loggedIn.getEmail(), loggedIn.getFullname()));
 		//end decryption
 		
 		loggedIn.setEmail(updateUser.getEmail());
@@ -110,7 +102,7 @@ public class PostController {
 		loggedIn.setDescription(updateUser.getDescription());
 		
 		//re-encrypt password
-		loggedIn.setPassword(Crypt.encrypt(loggedIn.getPassword(), loggedIn.getEmail(), loggedIn.getFullname()));
+		loggedIn.setPassword(businessDelegate.maskElement(loggedIn.getPassword(), loggedIn.getEmail(), loggedIn.getFullname()));
 		//end re-encryption
 		
 		req.getSession().setAttribute("user", loggedIn);
@@ -135,7 +127,7 @@ public class PostController {
 
 				
 		//password needed to be decrypted first
-		updateUser.setPassword(Crypt.decrypt(updateUser.getPassword(), updateUser.getEmail(),
+		updateUser.setPassword(businessDelegate.revealElement(updateUser.getPassword(), updateUser.getEmail(),
 				updateUser.getFullname()));
 		//end decryption
 		
@@ -148,7 +140,7 @@ public class PostController {
 		updateUser.setDescription(updateUserProfile.getDescription());		
 		
 		//re-encrypt password
-		updateUser.setPassword(Crypt.encrypt(updateUser.getPassword(), updateUser.getEmail(), 
+		updateUser.setPassword(businessDelegate.maskElement(updateUser.getPassword(), updateUser.getEmail(), 
 				updateUser.getFullname()));
 		//end re-encryption
 		
@@ -171,21 +163,25 @@ public class PostController {
 		if(businessDelegate.requestUsers(email) == null){
 			
 			// Generate a Temporary Password
-			String password = Crypt.encrypt("7Pas8WoR", email, role);
+			String password = businessDelegate.getRandom(6);
 			String firstName = " ";
 			String lastName = " ";
-			
-			//String profilePicture - currently not used
 			
 			String jobTitle = " ";
 			String linkedInURL = null;
 			String description = " ";
 			
 			// Role Obj from Database
-			UserRoles userRole = businessDelegate.requestRoles(2);
-			User newUser = new User(email, Crypt.encrypt(password, email, lastName+", "+firstName), firstName, lastName, jobTitle,
-					linkedInURL, description, userRole);
-			
+			UserRoles userRole = businessDelegate.requestRoles(role);
+			User newUser = new User(email, 
+									businessDelegate.maskElement(password, email, lastName+", "+firstName), 
+									firstName, 
+									lastName, 
+									jobTitle,
+									linkedInURL, 
+									description, 
+									userRole);
+
 			// Save in Database
 			businessDelegate.putRecord(newUser);
 			
@@ -198,7 +194,8 @@ public class PostController {
 			File file;
 			try {
 				file = new File(fileURL.toURI());
-				logging.log("File length: " + file.length());
+				
+				Logging.info("File length: " + file.length());
 				
 				User getNewUser = businessDelegate.requestUsers(email);
 				
@@ -211,8 +208,8 @@ public class PostController {
 				businessDelegate.updateRecord(getNewUser);
 				
 			} catch (URISyntaxException e) {
-				logging.log(e.toString());
 				
+				Logging.error(e);
 			}
 			
 			model.setViewName("redirect:/manageusers");
@@ -239,7 +236,8 @@ public class PostController {
 		File file;
 		try {
 			file = new File(fileURL.toURI());
-			logging.log("File length: " + file.length());
+			
+			Logging.info("File length: " + file.length());
 			
 			String user = "" + resetUserPic.getUserId();
 			
@@ -250,7 +248,8 @@ public class PostController {
 			businessDelegate.updateRecord(resetUserPic);
 			
 		} catch (URISyntaxException e) {
-			logging.log(e.toString());
+			
+			Logging.error(e);
 		}
 		
 		req.setAttribute("userList", businessDelegate.requestUsers());
@@ -312,7 +311,7 @@ public class PostController {
 		
 		User loggedIn = (User) req.getSession().getAttribute("user");
 		
-		loggedIn.setPassword(Crypt.encrypt(password, loggedIn.getEmail(), loggedIn.getFullname()));
+		loggedIn.setPassword(businessDelegate.maskElement(password, loggedIn.getEmail(), loggedIn.getFullname()));
 		
 		if(loggedIn.isNewUser()){
 			loggedIn.setNewUser(false);
@@ -351,7 +350,7 @@ public class PostController {
 					"</textarea></body><script>window.onload=function(){" +
 					"document.getElementById(\"picLink\").select();};</script></html>");
 		} catch (IOException e) {
-			Logging.info(e);
+			Logging.error(e);
 		}
 	}
 	
@@ -363,7 +362,7 @@ public class PostController {
 			PrintWriter writer = resp.getWriter();
 			writer.append("<html><body><img src=\"" + url + "\" /></body></html>");
 		} catch (IOException e) {
-			Logging.info(e);
+			Logging.error(e);
 		}
 	}
 	
@@ -377,7 +376,7 @@ public class PostController {
 			PrintWriter writer = resp.getWriter();
 			writer.append("<html><body><a href=\"" + url + "\">" + url + "</a></body></html>");
 		} catch (IOException e) {
-			Logging.info(e);
+			Logging.error(e);
 		}
 	}
 	
@@ -398,7 +397,7 @@ public class PostController {
 					references.put(referenceNum, paramValue);
 					highestReferenceNum = Math.max(highestReferenceNum, referenceNum);
 				} catch ( NumberFormatException e ) {
-					Logging.info(e);
+					Logging.error(e);
 				}
 			}
 		}
@@ -513,9 +512,9 @@ public class PostController {
 			req.getSession().setAttribute("editingBlogInDatabase", false);
 			req.getSession().setAttribute("blogToEditId", 0);
 		} catch (FileNotFoundException e) { 
-			Logging.info(e);
+			Logging.error(e);
 		} catch (IOException e1) {
-			Logging.info(e1);
+			Logging.error(e1);
 		}
 		return "redirect: " + url;
 	}

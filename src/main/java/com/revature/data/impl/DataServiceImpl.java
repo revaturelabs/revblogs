@@ -58,9 +58,6 @@ public class DataServiceImpl implements DataService{
 	public UserRoles grabRoles(String role) {
 		return dao.getRoles(role);
 	}
-	public String grabProperty(PropertyType type){
-		return dao.getProperty(type);
-	}
 	
 	public List<User> grabUsers(){
 		return dao.getUsers();

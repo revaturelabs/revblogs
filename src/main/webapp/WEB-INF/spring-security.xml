@@ -48,7 +48,7 @@
 <!-- AUTHENTICATION SECURITY FOR CALLING THE DATABASE AND QUERYING -->
 	<security:authentication-manager>
 		<security:authentication-provider>
-			<security:password-encoder ref="cryptImpl" />
+			<security:password-encoder ref="loginEncoder" />
 			<security:jdbc-user-service 
 			id="userService" data-source-ref="dataSource"
 			users-by-username-query="SELECT USER_EMAIL, USER_PASSWORD, USER_ACTIVE FROM PP_USER WHERE LOWER(USER_EMAIL)=LOWER(?)"
