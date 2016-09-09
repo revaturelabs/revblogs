@@ -16,7 +16,6 @@
 	        <div class="col-sm-4">
 	        	<a href="http://blogs.pjw6193.tech">Home</a><br>
 	        	<a href="${pageContext.servletContext.contextPath}/profile">Contributors - Log In</a><br>
-	        	<a href="#">Site map</a>
 	        </div>
 	      </div>
 	    </div>
