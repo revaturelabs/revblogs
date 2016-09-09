@@ -59,7 +59,7 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 	
 	$scope.getSearch = function(page, postsPP, query)
 	{
-		$scope.searchQuery = query.replace(/ /g, '+');
+		$scope.searchQuery = query.replace(/\s/g, '+');
 		
 		$http.get($scope.appUrl+"/api/posts?page=" + page + "&per_page=" + $scope.postsPerPage + "&author=" + $scope.author + "&q=" + $scope.searchQuery).success(
 		    function(resp)
@@ -168,7 +168,7 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 			}
 		);
 	}	
-
+	$scope.searchQuery = "";
 	$scope.curPage = 1;
 	$scope.postsPerPage = 10;
 	$scope.isLoading = false;
