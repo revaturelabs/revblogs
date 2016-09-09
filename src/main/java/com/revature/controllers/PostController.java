@@ -190,7 +190,6 @@ public class PostController {
 			// Send Email to Account
 			Mailer.sendMail(email, password);
 			
-			
 			//Get default picture
 			URL fileURL = PostController.class.getClassLoader().getResource("default.png");
 			File file;

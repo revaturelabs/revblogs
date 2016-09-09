@@ -16,7 +16,8 @@
 	<mvc:resources location="WEB-INF/resources/" mapping="resources/**"/>
 	
 	<aop:aspectj-autoproxy/>
-
+	
+	<bean name="logger" class="com.revature.service.Logging"/>
 	<bean name="dataSource" 
 		class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="oracle.jdbc.OracleDriver" />
