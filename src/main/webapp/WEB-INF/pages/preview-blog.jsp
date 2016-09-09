@@ -33,6 +33,23 @@
 </head>
 
 <body>
+
+<div id="curseModal" class="modal fade">
+ 	<div class="modal-dialog">
+   		<div class="modal-content">
+     		<div class="modal-header">
+       			<button type="button" class="close" data-dismiss="modal">&times;</button>
+       			<h4 class="modal-title">Error</h4>
+    		</div>
+    		<form action="newReimbursement.do" method="post" class="form">
+    		<div class="modal-body">
+    			Please remove any highlighted swear words.
+     		</div>
+     		</form>
+   		</div>
+ 	</div>
+</div>
+
 <jsp:include page="navbar.jsp"></jsp:include>
   <div class="container page-content">
     <div class="row">
