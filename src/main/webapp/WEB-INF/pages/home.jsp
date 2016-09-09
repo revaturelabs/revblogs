@@ -15,13 +15,11 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
 <link href="resources/css/main.css" rel="stylesheet">
-<title>Logged In</title>
+<title>Revature Blogs Home</title>
 </head>
 <body>
 <jsp:include page="navbar.jsp"></jsp:include>
 <div class="container page-content">
-	<h1>${title}</h1>
-	<h2>${message}</h2>
 	
 	<!-- place change form here. Have a post call, change it, 
 	update it and the newUser parameter, and then redirect 
@@ -30,81 +28,76 @@
 	<c:if test="${user.newUser eq true}">
 		<c:redirect url="/password"/>
 	</c:if>
-	
-	<sec:authorize access="hasRole('ADMIN')" >Welcome Admin!</sec:authorize>
 	<c:if test="${user.userRole.role eq 'ADMIN'}">
-		<table>
-		<tr>
-			<td>
-				<h4><a href="${pageContext.servletContext.contextPath}/profile"><span class="glyphicon glyphicon-wrench"></span>&nbsp;Update profile</a></h4>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<h4><a href="${pageContext.servletContext.contextPath}/makeClientAccount"><span class="glyphicon glyphicon-user"></span>&nbsp;Add a Client</a></h4>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<h4><a href="${pageContext.servletContext.contextPath}/create-blog"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Create a Blog</a></h4>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<h4><a href="${pageContext.servletContext.contextPath}/user-blogs"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;View Your Blogs</a></h4>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<h4><a href="${pageContext.servletContext.contextPath}/"><span class="glyphicon glyphicon-book"></span>&nbsp;View All Blogs</a></h4>
-			</td>
-
-		</tr>
-		<tr>
-			<td>
-				<h4><a href="${pageContext.servletContext.contextPath}/manage-S3"><span class="glyphicon glyphicon-remove"></span>&nbsp;Manage Bucket</a></h4>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<h4><a href="${pageContext.servletContext.contextPath}/go-logout"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Logout</a></h4>
-			</td>
-		</tr>
-		</table>
-		
+		<div class="row">
+			<div class="col-xs-2"></div>
+			<div class="col-xs-4">
+				<h2><a href="profile"><span class="glyphicon glyphicon-wrench"></span>&nbsp;Update profile</a></h2>
+			</div>
+			<div class="col-xs-4">
+				<h2><a href="manageusers"><span class="glyphicon glyphicon-user"></span>&nbsp;Manage Users</a></h2>
+			</div>
+			<div class="col-xs-2"></div>
+		</div>
+		<div class="row">
+			<div class="col-xs-2"></div>
+			<div class="col-xs-4">
+				<h2><a href="create-blog"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Create a Blog</a></h2>
+			</div>
+			<div class="col-xs-4">
+				<h2><a href="user-blogs"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;View Your Blogs</a></h2>
+			</div>
+			<div class="col-xs-2"></div>
+		</div>
+		<div class="row">
+			<div class="col-xs-2"></div>
+			<div class="col-xs-4">
+				<h2><a href="/revblogs"><span class="glyphicon glyphicon-book"></span>&nbsp;View All Blogs</a></h2>
+			</div>
+			<div class="col-xs-4">
+				<h2><a href="manage-S3"><span class="glyphicon glyphicon-remove"></span>&nbsp;Manage Bucket</a></h2>
+			</div>
+			<div class="col-xs-2"></div>
+		</div>
+		<div class="row">
+			<div class="col-xs-2"></div>
+			<div class="col-xs-4 offset-xs-2">
+				<h2><a href="go-logout"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Logout</a></h2>
+			</div>
+			<div class="col-xs-4">
+			</div>
+			<div class="col-xs-2"></div>
+		</div>
 	</c:if>
-	<sec:authorize access="hasRole('CONTRIBUTOR')" >Welcome Contributor!</sec:authorize>
 	<c:if test="${user.userRole.role eq 'CONTRIBUTOR'}">
-	<table>
-	<tr>
-		<td>
-			<h4><a href="${pageContext.servletContext.contextPath}/profile"><span class="glyphicon glyphicon-wrench"></span>&nbsp;Profile</a></h4>
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<h4><a href="${pageContext.servletContext.contextPath}/create-blog"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Create a Blog</a></h4>
-		</td>
-
-	</tr>
-	<tr>
-		<td>
-			<h4><a href="${pageContext.servletContext.contextPath}/user-blogs"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;View Your Blogs</a></h4>
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<h4><a href="${pageContext.servletContext.contextPath}/"><span class="glyphicon glyphicon-book"></span>&nbsp;View All Blogs</a></h4>
-		</td>
-
-	</tr>
-
-	<tr>
-		<td>
-			<h4><a href="${pageContext.servletContext.contextPath}/go-logout"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Logout</a></h4>
-		</td>
-	</tr>
-	</table>
+		<div class="row">
+			<div class="col-xs-2"></div>
+			<div class="col-xs-4">
+				<h2><a href="profile"><span class="glyphicon glyphicon-wrench"></span>&nbsp;Update profile</a></h2>
+			</div>
+			<div class="col-xs-4">
+				<h2><a href="create-blog"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Create a Blog</a></h2>
+			</div>
+			<div class="col-xs-2"></div>
+		</div>
+		<div class="row">
+			<div class="col-xs-2"></div>
+			<div class="col-xs-4">
+				<h2><a href="user-blogs"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;View Your Blogs</a></h2>
+			</div>
+			<div class="col-xs-4">
+				<h2><a href="/revblogs"><span class="glyphicon glyphicon-book"></span>&nbsp;View All Blogs</a></h2>
+			</div>
+			<div class="col-xs-2"></div>
+		</div>
+		<div class="row">
+			<div class="col-xs-2"></div>
+			<div class="col-xs-4">
+				<h2><a href="go-logout"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Logout</a></h2>
+			</div>
+			<div class="col-xs-4"></div>
+			<div class="col-xs-2"></div>
+		</div>
 	</c:if>
 </div>
 <jsp:include page="footer.jsp"></jsp:include>

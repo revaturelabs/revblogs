@@ -105,8 +105,8 @@ html, body {
     margin-top: .5em;
     border-bottom: 1px solid #dddddd;
     color: #474c55;
-    margin-bottom: 0.25em;
-    padding-bottom: 0.25em;
+    margin-bottom: .25em;
+    padding-bottom: .25em;
   }
   .post-heading .post-meta {
     font-weight: bold;
@@ -114,7 +114,7 @@ html, body {
   }
   .post-heading .post-author:before {
     content: "|";
-    padding: 0 0.5em;
+    padding: 0 .5em;
   }
   .post-content {
     padding: 2em;
@@ -178,9 +178,9 @@ html, body {
   	margin-top: 0;
   }
   .post-thumbnail {
-  	padding-bottom:100%; 
-  	overflow:hidden; 
-  	position:relative;
+  	padding-bottom: 100%; 
+  	overflow: hidden; 
+  	position: relative;
   }
   .post-thumbnail img {
   	position: absolute;
@@ -192,9 +192,9 @@ html, body {
   }
   
   .update-blog-btn {
-     background:none!important;
-     border:none; 
-     padding:0!important;
+     background: none!important;
+     border: none; 
+     padding: 0!important;
      font: inherit;
      cursor: pointer;
   }
