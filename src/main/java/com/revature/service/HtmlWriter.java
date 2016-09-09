@@ -105,7 +105,7 @@ public class HtmlWriter {
 			}
 			if (line.contains("post-references-body")) {
 				Map<Integer, String> references = blog.getReferences();
-				for ( Entry<Integer, String> key : references.entrySet() ) {
+				for (Integer key : references.keySet() ) {
 					blogWriter.write("<div class=\"post-reference-item\">"
 							+ "[" + key.toString() + "] - "
 							+ references.get(key) + "</div>");
