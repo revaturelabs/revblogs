@@ -26,7 +26,8 @@
 	<jsp:include page="navbar.jsp"></jsp:include>
 	<div class="container page-content">
 		<br/><br/>
-		<button data-toggle="modal" data-target="#createContributor" style="cursor: pointer;" class="btn btn-primary" aria-hidden="true">&nbsp;Add a Contributor
+		<button data-toggle="modal" data-target="#createContributor" style="cursor: pointer;" class="btn btn-primary" aria-hidden="true">
+			&nbsp;Add a Contributor
 		</button>
 		<br/><br/><br/>
 		<table id="userTable">

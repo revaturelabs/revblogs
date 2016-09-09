@@ -219,7 +219,7 @@ public class PostController {
 			return model;
 		}
 		
-		model.setViewName("/makeClientAccount");
+		model.setViewName("redirect:/manageusers");
 		
 		return model;
 	}
