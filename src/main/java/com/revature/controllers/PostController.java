@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Enumeration;
@@ -127,11 +129,9 @@ public class PostController {
 		model.setViewName("/manageusers");
 		if(bindingResult.hasErrors()){
 			return model;
-
 		}
-
-
-		User updateUser = businessDelegate.requestUser(updateUserProfile.getUserId());	
+		
+		User updateUser = businessDelegate.requestUser(updateUserProfile.getUserId());
 
 
 				
@@ -171,20 +171,49 @@ public class PostController {
 		
 		// Check if email exists
 		if(businessDelegate.requestUsers(email) == null){
+			
 			// Generate a Temporary Password
 			String password = Crypt.encrypt("7Pas8WoR", email, role);
 			String firstName = " ";
 			String lastName = " ";
+			
 			//String profilePicture - currently not used
+			
 			String jobTitle = " ";
 			String linkedInURL = null;
 			String description = " ";
+			
 			// Role Obj from Database
 			UserRoles userRole = businessDelegate.requestRoles(role);
 			User newUser = new User(email, Crypt.encrypt(password, email, lastName+", "+firstName), firstName, lastName, jobTitle,
 					linkedInURL, description, userRole);
+			
 			// Save in Database
 			businessDelegate.putRecord(newUser);
+			
+			
+			//Get default picture
+			URL fileURL = PostController.class.getClassLoader().getResource("default.png");
+			File file;
+			try {
+				file = new File(fileURL.toURI());
+				logging.log("File length: " + file.length());
+				
+				User getNewUser = businessDelegate.requestUsers(email);
+				
+				String user = "" + getNewUser.getUserId();
+				
+				String profilePicture = businessDelegate.uploadProfileItem(user, user, file);
+				
+				getNewUser.setProfilePicture(profilePicture);
+				
+				businessDelegate.updateRecord(getNewUser);
+				
+			} catch (URISyntaxException e) {
+				// TODO Auto-generated catch block
+				logging.log(e.toString());
+			}
+			
 			// Send Email to Account
 			Mailer.sendMail(email, password);
 			

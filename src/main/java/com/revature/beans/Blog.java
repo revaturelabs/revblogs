@@ -90,21 +90,19 @@ public class Blog {
 	 */
 	public Blog() {
 		super();
+		// Blogs publish date is the date of construction
+		this.publishDate = new Date();
+		// Blogs always start active
+		this.active = true;
 	}	
 	public Blog(String blogTitle, String blogSubtitle, String blogContent, String locationURL, User author, Set<Tags> tags) {
-		super();
+		this();
 		this.blogTitle = blogTitle;
 		this.blogSubtitle = blogSubtitle;
 		this.blogContent = blogContent;
 		this.author = author;
 		this.tags = tags;
 		this.locationURL = locationURL;
-		
-		// Blogs publish date is the date of construction
-		this.publishDate = new Date();
-		
-		// Blogs always start active
-		this.active = true;
 	}
 
 	/*
