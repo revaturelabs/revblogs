@@ -14,7 +14,7 @@
 <script src="resources/js/angular.min.js"></script>
 <script src="resources/js/app.js"></script>
 <script src="resources/js/controllers/BlogIndexController.js"></script>
-<link rel="blogs.pjw6193.tech/content/resources/img/favicon.png" href="blogs.pjw6193.tech/content/resources/img/favicon.png"/>
+<link rel="shortcut icon" href="blogs.pjw6193.tech/content/resources/img/favicon.png"/>
 </head>
 
 <body ng-app="app" ng-controller="BlogIndexController">
