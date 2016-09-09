@@ -182,6 +182,8 @@ public class BaseController {
 		if((req.getParameter("blogid")) != null){
 			int id = Integer.parseInt(req.getParameter("blogid"));
 			Blog blog = businessDelegate.requestBlog(id);
+			User author = blog.getAuthor();
+			req.getSession().setAttribute("blogToEditAuthor", author);
 			req.getSession().setAttribute("editingBlogInDatabase", true);
 			req.getSession().setAttribute("blogToEditId", id);
 			Set<Tags> tags = blog.getTags();

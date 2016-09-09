@@ -34,12 +34,12 @@
   <div class="container page-content">
   	<div class="row">
   		<div class="col-xs-12">
-  			<h2>Latest Posts</h2>
+  			<h2>Your Blog Posts</h2>
   		</div>
   	</div>
     <div id="postsDiv" class="row">
       <div class="col-sm-8">
-      	<div ng-repeat="post in posts.posts" ng-include src="'resources/js/templates/user-post-preview.html'"></div>
+      	<div ng-repeat="post in posts.posts" ng-include src="'resources/js/templates/editable-post-preview.html'"></div>
       </div>
       <div class="col-sm-4 hidden-xs">
         <div class="panel panel-primary">

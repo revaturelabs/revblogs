@@ -418,19 +418,23 @@ public class PostController {
 		 * If exists, redirect to current page, if new, go to preview blog page.
 		 */
 		Boolean editingBlogInDatabase = (Boolean)req.getSession().getAttribute("editingBlogInDatabase");
-		if(editingBlogInDatabase != null && !editingBlogInDatabase) {
+		User author = null;
+		if(editingBlogInDatabase == null) {
+			editingBlogInDatabase = false;
+		}
+		if(!editingBlogInDatabase) {
 			List<Blog> myBlogs = businessDelegate.requestBlogs();
 			for(Blog curBlog : myBlogs){
 				if(curBlog.getBlogTitle().equals(blog.getBlogTitle())){
 					return "create-blog";
 				};
 			}
+			author = (User) req.getSession().getAttribute("user");
+		} else {
+			author = (User) req.getSession().getAttribute("blogToEditAuthor");
 		}
-		
-		blog.setReferences(getReferences(req));
-		User author = (User) req.getSession().getAttribute("user");
-		author.getFirstName();
 		blog.setAuthor(author);
+		blog.setReferences(getReferences(req));
 		req.getSession().setAttribute("blog", blog);
 		return "preview-blog";
 	}

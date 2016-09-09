@@ -1,5 +1,6 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%><%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!doctype html>
 <html>
 <head>
@@ -39,7 +40,12 @@
   	</div>
     <div id="postsDiv" class="row">
       <div class="col-sm-8">
-      	<div ng-repeat="post in posts.posts" ng-include src="'resources/js/templates/post-preview.html'"></div>
+      	<c:if test="${user.userRole.userRoleId eq 1}">
+      		<div ng-repeat="post in posts.posts" ng-include src="'resources/js/templates/editable-post-preview.html'"></div>
+      	</c:if>
+      	<c:if test="${user.userRole.userRoleId eq 2}">
+      		<div ng-repeat="post in posts.posts" ng-include src="'resources/js/templates/post-preview.html'"></div>
+      	</c:if>
       </div>
       <div class="col-sm-4 hidden-xs">
         <div class="panel panel-primary">
