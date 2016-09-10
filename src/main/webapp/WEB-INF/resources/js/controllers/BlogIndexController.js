@@ -2,31 +2,22 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 {
 	$scope.getFilter = function()
 	{
-		for (var i = 0; i < $scope.posts.posts.length; i++) 
+		var ulQuery = $scope.searchQuery.toLowerCase();
+		console.log(ulQuery);
+		
+		$scope.searchPosts = $scope.posts;
+		
+		for (var i = 0; i < $scope.searchPosts.posts.length; i++) 
 		{
 			$scope.searchPage = true;
-			var ulQuery = $scope.searchQuery.toLowerCase();
-			var ulTitle = $scope.posts.posts[i].title.toLowerCase();
-			var ulSubtitle = $scope.posts.posts[i].subtitle.toLowerCase();
-			var ulContent = $scope.posts.posts[i].content.toLowerCase();
-			if (ulTitle.includes(ulQuery) || ulSubtitle.includes(ulQuery) || ulContent.includes(ulContent))
+			var ulTitle = $scope.searchPosts.posts[i].title.toLowerCase();
+			console.log(ulTitle);
+			if (!ulTitle.includes(ulQuery))
 			{
 				console.log("found");
-				$scope.posts.posts[i].title = "e2a3a746c33617187a3a";
+				$scope.searchPosts.posts[i].title = "e2a3a746c33617187a3a";
 				continue;
 			}
-
-			/*if (!($scope.posts[i].subtitle.indexOf($scope.searchQuery) >= 0))
-			{
-				$scope.posts[i].title = "e2a3a746c33617187a3a";
-				continue;
-			}
-
-			if (!($scope.posts[i].content.indexOf($scope.searchQuery) >= 0))
-			{
-				$scope.posts[i].title = "e2a3a746c33617187a3a";
-				continue;
-			}*/
 		}
 			
 		return false;
