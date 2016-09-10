@@ -306,6 +306,7 @@ public class PostController {
 		String password = businessDelegate.getRandom(6);
 
 		resetUserPassword.setPassword(businessDelegate.maskElement(password, email, resetUserPassword.getLastName()+", "+resetUserPassword.getFirstName()));
+		resetUserPassword.setNewUser(true);
 		
 		// Save in Database
 		businessDelegate.updateRecord(resetUserPassword);
@@ -523,8 +524,11 @@ public class PostController {
 		HtmlWriter htmlWriter;
 		String url = "";
 		Set<Tags> newTags = (Set<Tags>)req.getSession().getAttribute("newTags");
-		for(Tags newTag : newTags){
-			businessDelegate.putRecord(newTag);
+		if(newTags != null) {
+			for(Tags newTag : newTags){
+				businessDelegate.putRecord(newTag);
+			}
+			req.getSession().setAttribute("newTags", null);
 		}
 		try {
 			InputStream templateStream = this.getClass().getClassLoader().getResourceAsStream("template.html");
