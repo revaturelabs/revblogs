@@ -10,7 +10,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="http://blogs.pjw6193.tech"><img src="resources/img/rev-brand.png" /></a>
+        <a class="navbar-brand" href="http://blogs.pjw6193.tech"><img src="resources/img/rev-brand.png" alt = "revature"/></a>
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->

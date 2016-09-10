@@ -5,7 +5,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<link rel="shortcut icon" type="image/png" href="blogs.pjw6193.tech/content/resources/img/favicon.png"/>
+<link rel="shortcut icon" type="image/png" href="/content/resources/img/favicon.png"/>
 <!-- HEADERS NEEDED TO PREVENT BACK BUTTON ON LOGOUT. DO NOT REMOVE ME! -->
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Cache-Control" content="no-cache">
@@ -19,7 +19,8 @@
 </head>
 <body>
 <jsp:include page="navbar.jsp"></jsp:include>
-<div class="container page-content">
+<div class="overall-container">
+<div class="container page-content content-padding">
 	<!-- place change form here. Have a post call, change it, 
 	update it and the newUser parameter, and then redirect 
 	to page with reload. -->

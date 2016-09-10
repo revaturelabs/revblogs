@@ -17,7 +17,7 @@
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
 <link href="resources/css/main.css" rel="stylesheet">
 <title>Logged In</title>
-<link rel="shortcut icon" type="image/png" href="blogs.pjw6193.tech/content/resources/img/favicon.png"/>
+<link rel="shortcut icon" type="image/png" href="/content/resources/img/favicon.png"/>
 <style type="text/css">
 .scroll{
 	height: 422px;
