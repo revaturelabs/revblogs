@@ -36,10 +36,10 @@ public class AjaxController {
 			HttpServletRequest request, HttpServletResponse response) {
 		response.addHeader("Access-Control-Allow-Origin", "*");
 		try {
+			System.out.println("--------------------------"+authorId+"---------------------------------");
 			Logging.info(""+authorId);
 			
 			User author = businessDelegate.requestUser(authorId);
-			Logging.info(author.toString());
 			
 			Tags category = businessDelegate.requestTag(tagId);
 			

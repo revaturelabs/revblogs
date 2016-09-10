@@ -1,6 +1,6 @@
 app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http) 
 {
-	$scope.appUrl = "http://localhost:7001/revblogs";
+	$scope.appUrl = "https://localhost:7002/revblogs/";
 	$scope.posts = {
 			page: 0,
 			prev: null,
@@ -12,9 +12,9 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 			per_page: 0,
 			total_posts: 0
 	};
-	$scope.getPage = function(page, postsPP)
+	$scope.getPage = function(page)
 	{
-		$http.get($scope.appUrl+"/api/posts?page=" + page + "&per_page=" + $scope.postsPerPage).success(
+		$http.get($scope.appUrl + "api/posts?page=" + page + "&per_page=" + $scope.postsPerPage).success(
 		    function(resp)
 			{
 				$scope.posts = resp;
@@ -61,7 +61,7 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 	{
 		$scope.searchQuery = query.replace(/\s/g, '+');
 		
-		$http.get($scope.appUrl+"/api/posts?page=" + page + "&per_page=" + $scope.postsPerPage + "&author=" + $scope.author + "&q=" + $scope.searchQuery).success(
+		$http.get($scope.appUrl + "api/posts?page=" + page + "&per_page=" + $scope.postsPerPage + "&author=" + $scope.author + "&q=" + $scope.searchQuery).success(
 		    function(resp)
 			{
 				$scope.posts = resp;
@@ -148,7 +148,7 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 	function preloadPage(page, postsPP)
 	{
 		console.log("Pre-loading");
-		$http.get($scope.appUrl+"/api/posts?page=" + page).success(
+		$http.get($scope.appUrl + "api/posts?page=" + page).success(
 		    function(resp)
 			{
 				var prevPage = $scope.curPage;
@@ -173,5 +173,5 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 	$scope.postsPerPage = 10;
 	$scope.isLoading = false;
 	$scope.author = 0;
-	$scope.getPage($scope.curPage, $scope.postsPerPage);
+	$scope.getPage($scope.curPage);
 }]);

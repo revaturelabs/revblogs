@@ -54,12 +54,6 @@
   <div class="container page-content">
     <div class="row">
       <div class="panel panel-default col-sm-8">
-        <div class="hero-image-container">
-          <div class="hero-image">
-            <div class="dummy"></div>
-          </div>
-        </div>
-		
         <div class="post-content" id="postContent" style="padding-top: 60px;">
           <div class="post-heading">
             <div class="post-meta">
