@@ -185,7 +185,7 @@ $(document).ready(function(){
 				cache: false,
 				success: function(response){
 					
-					if(response == "Success"){
+					if(response === "Success"){
 					alert("Picture Uploaded Successfully!");
 					$("#loading").hide();
 					location.reload();

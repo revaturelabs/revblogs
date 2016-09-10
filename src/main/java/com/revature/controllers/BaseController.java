@@ -142,7 +142,7 @@ public class BaseController {
 			session = request.getSession();
 		session.setAttribute("user", user);
 
-		//DON'T TAKE THESE OUT!!!!!
+		//DON'T TAKE THESE OUT!!!!! Thank you! =)
 		request.getSession().setAttribute(SUCCESS, null);
 		request.getSession().setAttribute(UPDATE, null);
 
@@ -160,7 +160,7 @@ public class BaseController {
 			session = request.getSession();
 		session.setAttribute("user", user);
 		
-		//DON'T TAKE THESE OUT!!!!!
+		//DON'T TAKE THESE OUT!!!!! Thank you =)
 		request.getSession().setAttribute(SUCCESS, null);
 		request.getSession().setAttribute(UPDATE, null);
 		
