@@ -67,6 +67,5 @@
 <jsp:include page="footer.jsp"></jsp:include>
 </body>
 <script type="text/javascript" src="resources/js/ui.js"></script>
-<script src="https://s3-us-west-2.amazonaws.com/dan-pickles-jar/content/resources/js/facebookConnection.js"></script>
 <script src="${pageContext.servletContext.contextPath}/resources/js/tinyMCE.js"></script>
 </html>
