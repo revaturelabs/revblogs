@@ -3,18 +3,15 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 	$scope.getFilter = function()
 	{
 		var ulQuery = $scope.searchQuery.toLowerCase();
-		console.log(ulQuery);
 		
 		$scope.searchPosts = $scope.posts;
+		$scope.searchPage = true;
 		
 		for (var i = 0; i < $scope.searchPosts.posts.length; i++) 
 		{
-			$scope.searchPage = true;
 			var ulTitle = $scope.searchPosts.posts[i].title.toLowerCase();
-			console.log(ulTitle);
 			if (!ulTitle.includes(ulQuery))
 			{
-				console.log("found");
 				$scope.searchPosts.posts[i].title = "e2a3a746c33617187a3a";
 				continue;
 			}
@@ -71,7 +68,8 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 	$scope.changeView = function(direction)
 	{
 		if(!$scope.isLoading)	
-		{
+		{	$scope.searchPosts = $scope.posts;
+			$scope.searchPage = false;
 			console.log("ChangeView " + direction);
 			console.log($scope.curPage);
 			
