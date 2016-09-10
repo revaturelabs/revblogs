@@ -36,10 +36,10 @@ public class AjaxController {
 			HttpServletRequest request, HttpServletResponse response) {
 		response.addHeader("Access-Control-Allow-Origin", "*");
 		try {
-			Logging.info(""+authorId);
+			
+			 //		I TOOK OUT THE LOGGING FOR AUTHOR, DO NOT ADD IT BACK IN, IT BREAKS THE CODE!!!
 			
 			User author = businessDelegate.requestUser(authorId);
-			Logging.info(author.toString());
 			
 			Tags category = businessDelegate.requestTag(tagId);
 			
