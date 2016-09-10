@@ -4,7 +4,7 @@
 	    <div class="container">
 	      <div class="row">
 	        <div class="col-sm-4">
-	          <img class="img-responsive" src="http://blogs.pjw6193.tech/content/resources/img/rev-footer.png" />
+	          <img class="img-responsive" src="http://blogs.pjw6193.tech/content/resources/img/rev-footer.png" alt="revature"/>
 	        </div>
 	        <div class="col-sm-4">
 	        	<h4>Contact Info</h4>
