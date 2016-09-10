@@ -50,10 +50,10 @@ public class GetController {
 	 *  
 	 */
 	
-	@ModelAttribute("roleDropDown")
+	/*@ModelAttribute("roleDropDown")
 	public List<UserRoles> instantiateRoleDrop(){
 		return businessDelegate.requestRoles();
-	}
+	}*/
 	
 	/*
 	 *  Methods that pull from the database
