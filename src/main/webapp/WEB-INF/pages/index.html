@@ -34,16 +34,6 @@
           <li id="navhome" class="active"><a href="/">Home</a></li>
         </ul>
         <ul id="rightnavs" class="nav navbar-nav navbar-right">
-	        <li id="navsearch">
-		        <form class="navbar-form navbar-right .hidden-xs">
-		          <div class="form-group input-group post-search">
-		            <input ng-model="searchQuery" type="text" class="form-control" placeholder="Search">
-		            <span class="input-group-btn">
-		              <button ng-click="getFilter()" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
-		            </span>
-		          </div>
-		        </form>
-	        </li>
 		    <li id="navlogin"><a ng-href="{{appUrl}}/loginPage"><span class="glyphicon glyphicon-user"></span>&nbsp;Contributors</a></li>
         </ul>
       </div><!-- /.navbar-collapse -->
@@ -53,6 +43,15 @@
   <div class="container page-content">
   	<div class="row">
   		<div class="col-xs-12">
+			<form class="navbar-form navbar-right .hidden-xs">
+			  <div class="form-group input-group post-search">
+			    <span>Search&nbsp;</span>
+			    <input ng-model="searchQuery" type="text" class="form-control" placeholder="Search">
+			    <span class="input-group-btn">
+			      <button ng-click="getFilter()" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
+			    </span>
+			  </div>
+			</form>
         <h2 ng-show="searchPage">Search Results for: {{searchQuery}}</h2>
         <h2 ng-show="!searchPage">Latest Posts</h2>
   		</div>

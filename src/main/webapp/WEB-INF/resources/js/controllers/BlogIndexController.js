@@ -2,16 +2,17 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 {
 	$scope.getFilter = function()
 	{
-		console.log("get filter");
-		for (var i = 0; i < $scope.posts.length; i++) 
+		for (var i = 0; i < $scope.posts.posts.length; i++) 
 		{
 			$scope.searchPage = true;
-
-			if (!($scope.posts[i].title.indexOf($scope.searchQuery) >= 0) 
-			 && !($scope.posts[i].subtitle.indexOf($scope.searchQuery) >= 0) 
-			 && !($scope.posts[i].content.indexOf($scope.searchQuery) >= 0))
+			var ulQuery = $scope.searchQuery.toLowerCase();
+			var ulTitle = $scope.posts.posts[i].title.toLowerCase();
+			var ulSubtitle = $scope.posts.posts[i].subtitle.toLowerCase();
+			var ulContent = $scope.posts.posts[i].content.toLowerCase();
+			if (ulTitle.includes(ulQuery) || ulSubtitle.includes(ulQuery) || ulContent.includes(ulContent))
 			{
-				$scope.posts[i].title = "e2a3a746c33617187a3a";
+				console.log("found");
+				$scope.posts.posts[i].title = "e2a3a746c33617187a3a";
 				continue;
 			}
 
