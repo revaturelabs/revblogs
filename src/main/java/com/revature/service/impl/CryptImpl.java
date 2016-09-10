@@ -102,8 +102,6 @@ public class CryptImpl implements Crypt {
 	}
 	private char cipherLetter(char[] alpha1, char[] alpha2, char letter, int keyIndex, char[] keyword){
 		
-		//Use a new constructor or use as is below
-		//Setting to 0 then reassigning is a waste of resources
 		int cipherLetter;
 		int indexLetter = 0;
 		int indexKey = 0;
@@ -161,7 +159,7 @@ public class CryptImpl implements Crypt {
 			case 9:
 				return 54;
 			default:
-				return 48;
+				return 0; // NULL
 		}
 	}
 	private char cipherOther(char other){
@@ -201,7 +199,7 @@ public class CryptImpl implements Crypt {
 			case 124: return 95;
 			case 125: return 94;
 			case 126: return 96;
-			default:  return 77;
+			default:  return 0; // NULL
 		}
 	}
 	
@@ -336,47 +334,47 @@ public class CryptImpl implements Crypt {
 			case 9:
 				return 54;
 			default:
-				return 48;
+				return 0; // NULL
 		}
 	}
 	private char decipherOther(char other){
 		
 		switch(other){
 		
-		case 32: return 37;
-		case 33: return 35;
-		case 34: return 36;
-		case 35: return 61;
-		case 36: return 44;
-		case 37: return 64;
-		case 38: return 93;
-		case 39: return 94;
-		case 40: return 62;
-		case 41: return 34;
-		case 42: return 33; 
-		case 43: return 91;
-		case 44: return 123;
-		case 45: return 32;
-		case 46: return 58;
-		case 47: return 46;
-		case 58: return 39;
-		case 59: return 45;
-		case 60: return 43;
-		case 61: return 47;
-		case 62: return 63;
-		case 63: return 96;
-		case 64: return 42; 
-		case 91: return 40;
-		case 92: return 38;
-		case 93: return 59;
-		case 94: return 125;
-		case 95: return 124;
-		case 96: return 126;
-		case 123: return 41;
-		case 124: return 92;
-		case 125: return 60;
-		case 126: return 95;
-		default: return 77;
+			case 32:  return 37;
+			case 33:  return 35;
+			case 34:  return 36;
+			case 35:  return 61;
+			case 36:  return 44;
+			case 37:  return 64;
+			case 38:  return 93;
+			case 39:  return 94;
+			case 40:  return 62;
+			case 41:  return 34;
+			case 42:  return 33; 
+			case 43:  return 91;
+			case 44:  return 123;
+			case 45:  return 32;
+			case 46:  return 58;
+			case 47:  return 46;
+			case 58:  return 39;
+			case 59:  return 45;
+			case 60:  return 43;
+			case 61:  return 47;
+			case 62:  return 63;
+			case 63:  return 96;
+			case 64:  return 42; 
+			case 91:  return 40;
+			case 92:  return 38;
+			case 93:  return 59;
+			case 94:  return 125;
+			case 95:  return 124;
+			case 96:  return 126;
+			case 123: return 41;
+			case 124: return 92;
+			case 125: return 60;
+			case 126: return 95;
+			default:  return 0; // NULL
 		}
 	}
 	
@@ -480,6 +478,10 @@ public class CryptImpl implements Crypt {
 					props[counter] = encrypt(passedProps[counter], keys[10][0], keys[10][1]);
 					propertyObj[counter] = props[counter];
 					counter++;
+					
+				default: 
+					
+					throw new IllegalArgumentException("Invalid Property Type!");
 			}
 		}
 		
@@ -568,9 +570,9 @@ public class CryptImpl implements Crypt {
 				value = decrypt(value, keys[10][0], keys[10][1]);
 				return value;	
 				
-			default:
-
-				return null;
+			default: 
+				
+				throw new IllegalArgumentException("Invalid Property Type!");
 		}
 	}
 
@@ -588,7 +590,8 @@ public class CryptImpl implements Crypt {
 				
 			if((num > 47 && num < 57) || (num > 65 && num < 90) || (num > 97 && num < 122)){
 				
-				myChar = (char) num;
+				myChar = (char)num;
+			
 				rand += myChar;
 				
 			} else {
