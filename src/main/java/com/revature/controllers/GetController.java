@@ -46,16 +46,6 @@ public class GetController {
 	}
 	
 	/*
-	 *  Model Attributes
-	 *  
-	 */
-	
-	/*@ModelAttribute("roleDropDown")
-	public List<UserRoles> instantiateRoleDrop(){
-		return businessDelegate.requestRoles();
-	}*/
-	
-	/*
 	 *  Methods that pull from the database
 	 *  
 	 */
