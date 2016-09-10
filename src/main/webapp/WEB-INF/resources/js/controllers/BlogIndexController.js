@@ -28,9 +28,10 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 	
 	$scope.getPage = function(page, postsPP)
 	{
-		$http.get($scope.appUrl+"/api/posts?page=" + page + "&per_page=" + $scope.postsPerPage).success(
-		    function(resp)
-			{
+        document.getElementById("loading").style = "visibility: visible";
+        $http.get($scope.appUrl+"/api/posts?page=" + page + "&per_page=" + $scope.postsPerPage).success(
+            function(resp){
+                document.getElementById("loading").style = "visibility: hidden";
 				$scope.searchPage = false;
 				$scope.posts = resp;
 				
