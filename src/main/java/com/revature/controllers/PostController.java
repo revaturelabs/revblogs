@@ -306,6 +306,7 @@ public class PostController {
 		String password = businessDelegate.getRandom(6);
 
 		resetUserPassword.setPassword(businessDelegate.maskElement(password, email, resetUserPassword.getLastName()+", "+resetUserPassword.getFirstName()));
+		resetUserPassword.setNewUser(true);
 		
 		// Save in Database
 		businessDelegate.updateRecord(resetUserPassword);
