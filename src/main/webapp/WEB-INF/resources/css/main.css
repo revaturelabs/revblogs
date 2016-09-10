@@ -250,6 +250,14 @@ html, body {
 	font-weight: bold;
 }
 
+.danger-span{
+	padding: .5em;
+	border-radius: 25px;
+	background: rgba(204, 0, 0, 0.6);
+	font-weight: bold;
+}
+
+
 #home-page-content{
 	margin-top: 30px;
 

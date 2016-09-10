@@ -68,6 +68,13 @@
 			</tr>
 			</table>
 			</form:form>
+			<br />
+			<c:if test="${passwordFailure1 eq 'failure'}">
+				<span id="password-failure1" class="label-danger danger-span">Current Password Doesn't Match!</span>
+			</c:if>
+			<c:if test="${passwordFailure2 eq 'failure'}">
+				<span id="password-failure1" class="label-danger danger-span">You Must Change Your Password!</span>
+			</c:if>
 		</div>
 	</div>
 </div>
@@ -90,7 +97,7 @@ $(document).ready(function(){
 			type: "POST",
 			cache: false,
 			success: function(response){
-				console.log(response);
+				
 			}		
 		});
 		
@@ -116,13 +123,13 @@ $(document).ready(function(){
 			$("#confirmMessage").css("color", "black");
 			
 		}
-		
-			
 	});
+});
 
-})
-
-
+$(document).ready(function(){
+	$('#password-failure1').delay(2000).fadeOut('slow');
+	$('#password-failure2').delay(2000).fadeOut('slow');
+});
 
 </script>
 </html>

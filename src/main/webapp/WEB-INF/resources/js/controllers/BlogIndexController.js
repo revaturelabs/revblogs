@@ -133,7 +133,7 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 		);
 	}	
 
-	$scope.appUrl = "http://localhost:7001/revblogs";
+	$scope.appUrl = "https://localhost:7002/revblogs";
 	$scope.posts = {
 			page: 0,
 			prev: null,

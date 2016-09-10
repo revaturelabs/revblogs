@@ -107,21 +107,23 @@ $(document).ready(function(){
 		var keyCode = e.keyCode || e.which;
 		if (keyCode === 13) { 
 			e.preventDefault();
-			if(validateForm() === true){
-			var email = $("#userAuth").val();
+			if($("#passAuth").is(':focus')){
+				if((validateForm() === true) ){
+					var email = $("#userAuth").val();
 
-			$.get("http://localhost:7001/revblogs/bindUser?u=" + email, function(response){
+					$.get("http://localhost:7001/revblogs/bindUser?u=" + email, function(response){
 			
-				if(response === "Success"){
-				
-					$("#form").submit();
-				
-				} else {
-				
-					e.preventDefault();
+						if(response === "Success"){
+			
+							$("#form").submit();
+			
+						} else {
+			
+							e.preventDefault();
+						}
+					});
 				}
-			});
-		}
+			}
 		}
 	});
 	
