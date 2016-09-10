@@ -80,9 +80,7 @@
 							</c:choose>
 						</td>
 						<td>
-							<form action="resetUserPassword.do" method="post">
-								<button name="resetPass" value="${user.userId}" type="submit" class="btn btn-primary form-control" >Reset Password</button>
-							</form>
+							<button id="resetPassButton" name="resetPass" value="${user.userId}" type="submit" class="btn btn-primary form-control" data-toggle="modal" data-target="#confirmPasswordMod">Reset Password</button>
 						</td>
 						<td id="userId${user.userId}" hidden><c:out value="${user.userId}" /></td>
 						<td id="password${user.userId}" hidden><c:out value="${user.password}" /></td>
@@ -120,7 +118,32 @@
 				</div>
 			</div>
 		</div>
-	</div>
+		
+		<!-- Confirm Password Modal -->
+		<div id="confirmPasswordMod" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+						<h3 class="modal-title">Confirm Password</h3>
+					</div>
+					<div class="modal-body">
+						Are you sure you want to reset this users password?
+						<br/>
+					</div>
+					
+					
+					<img id="loading" src="http://blogs.pjw6193.tech/content/resources/img/rev.gif" />
+					<div class="modal-footer">
+						<input id="confirmPassword" type="submit" value="Confirm" class="btn btn-primary form-control" style="width: auto;" />
+						<button id="closeCreateUser" type="button" class="btn btn-secondary" data-dismiss="modal">
+							Deny
+						</button>					
+					</div>
+				</div>
+			</div>
+		</div>
 	
 		<!-- Create Contributor Modal -->
 		<div id="editUserProfile" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
@@ -163,13 +186,33 @@
 		
 	</div>
 
-
+	
 	<jsp:include page="footer.jsp"></jsp:include>
 </body>
 <script>
-	$(document).ready(function() {
-		$('#userTable').DataTable();
+$(document).ready(function() {
+	
+	document.getElementById("loading").style = "visibility: hidden";
+	
+	$('#userTable').DataTable({
+		
+		"dom": 'frtp',
+   		"pagingType": "simple"		
 	});
+	
+	$("#confirmPassword").click(function(){
+		
+		document.getElementById("loading").style = "visibility: visible";
+		
+		var id = $("#resetPassButton").val();
+		
+		$.get("resetUserPassword.do?resetPass=" + id, function(response){
+		
+			document.getElementById("loading").style = "visibility: hidden";
+			location.reload();
+		});
+	});
+});
 	
 function edit(userId){
 	$("#selectedUserId").val($("#userId" + userId).html());
