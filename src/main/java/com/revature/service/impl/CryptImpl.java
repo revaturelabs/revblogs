@@ -1,5 +1,6 @@
 package com.revature.service.impl;
 
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 import org.hibernate.Criteria;
@@ -573,25 +574,28 @@ public class CryptImpl implements Crypt {
 		}
 	}
 
-	
 	public String getRandom(int length) {
+		
+		Random randObj = new Random();
 		
 		String rand = "";
 		
 		for(int i = 0; i < length; i++){
 			
-			if(i == 0){
+			char myChar;
+			
+			int num = randObj.nextInt();
 				
-				rand += (char)ThreadLocalRandom.current().nextInt(97, 122 + 1);
+			if((num > 47 && num < 57) || (num > 65 && num < 90) || (num > 97 && num < 122)){
 				
-				if((i % 2) == 0){
-					
-					rand += (char)ThreadLocalRandom.current().nextInt(48, 57 + 1);
-					
-				} else {
-					
-					rand += (char)ThreadLocalRandom.current().nextInt(65, 90 + 1);
-				}
+				myChar = (char) num;
+				rand += myChar;
+				
+			} else {
+				
+				// Not Alphanumeric -- Rerun
+				
+				i--;
 			}
 		}
 	

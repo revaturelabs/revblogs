@@ -17,10 +17,6 @@ public class Logging {
 	
 	private static Logger log = Logger.getRootLogger(); 
 	
-	private Logging(){
-		throw new IllegalAccessError("Utility class");
-	}
-
 	// Auto Logs
 	
 	@Before("logPerformance()")
@@ -37,11 +33,7 @@ public class Logging {
 		log.error("[REVBLOGS LOGGER]: "+jp.getSignature()+" threw "+e);
 	}
 	
-	public void log(String message){		
-		log.info("[REVBLOGS LOGGER]:" + message);		
-	}
-	
-	// Manual Logs (Static to prevent class instantiation);
+	// Manual Logs (Static to prevent class instantiation)
 	
 	public static void info(String str){
 		log.info("[REVBLOGS LOGGER]:" + str);
