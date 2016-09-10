@@ -297,7 +297,9 @@ public class PostController {
 		String role = resetUserPassword.getUserRole().getRole();
 		
 		// Generate a Temporary Password
+
 		String password = businessDelegate.getRandom(6);
+
 		resetUserPassword.setPassword(password);
 		
 		// Save in Database
