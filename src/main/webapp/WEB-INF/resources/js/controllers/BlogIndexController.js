@@ -112,7 +112,7 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 	function preloadPage(page, postsPP)
 	{
 		console.log("Pre-loading");
-		$http.get($scope.appUrl+"/api/posts?page=" + page).success(
+		$http.get($scope.appUrl+"/api/posts?page=" + page  + "&per_page" + postsPP).success(
 		    function(resp)
 			{
 				var prevPage = $scope.curPage;
