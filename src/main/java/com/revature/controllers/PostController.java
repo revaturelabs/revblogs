@@ -300,13 +300,13 @@ public class PostController {
 
 		String password = businessDelegate.getRandom(6);
 
-		resetUserPassword.setPassword(password);
+		resetUserPassword.setPassword(businessDelegate.maskElement(password, email, resetUserPassword.getLastName()+", "+resetUserPassword.getFirstName()));
 		
 		// Save in Database
 		businessDelegate.updateRecord(resetUserPassword);
 		
 		// Send Email to Account
-		Mailer.sendMail(email, password);
+		Mailer.sendMail(email, password, resetUserPassword.getFullname());
 		
 		req.setAttribute("userList", businessDelegate.requestUsers());
 		req.setAttribute("updateUserProfile", new UserDTO());
