@@ -131,8 +131,6 @@ public class PostController {
 		}
 		
 		User updateUser = businessDelegate.requestUser(updateUserProfile.getUserId());
-
-
 				
 		//password needed to be decrypted first
 		updateUser.setPassword(businessDelegate.revealElement(updateUser.getPassword(), updateUser.getEmail(),
@@ -161,8 +159,9 @@ public class PostController {
 	//Create a new User
 	@RequestMapping(value="createAccount.do", method=RequestMethod.POST)
 	public ModelAndView createAccount(HttpServletRequest req, HttpServletResponse resp){
-		ModelAndView model = new ModelAndView();
 		
+		ModelAndView model = new ModelAndView();
+	
 		// User Supplied
 		String email = req.getParameter("email");
 		String role = businessDelegate.requestRoles(2).getRole();
@@ -324,29 +323,57 @@ public class PostController {
 	public ModelAndView updatePassword(@ModelAttribute("updatePassword") @Valid UserDTO passwordDTO, BindingResult bindingResult,
 							   HttpServletRequest req, HttpServletResponse resp){
 		
+		req.getSession().setAttribute("passwordFailure", null);
+		
 		ModelAndView model = new ModelAndView();
 		model.setViewName("redirect:/profile");
+		
 		if(bindingResult.hasErrors()){
 			model.setViewName("redirect:/password");
 			return model;
 		}
 		
-		String password = passwordDTO.getNewPassword();
-		
 		User loggedIn = (User) req.getSession().getAttribute("user");
 		
-		loggedIn.setPassword(businessDelegate.maskElement(password, loggedIn.getEmail(), loggedIn.getFullname()));
-		
-		if(loggedIn.isNewUser()){
-			loggedIn.setNewUser(false);
-		}
+		String prevPass = businessDelegate.maskElement(passwordDTO.getOldPassword(), loggedIn.getEmail(), loggedIn.getFullname());
+		String password = passwordDTO.getNewPassword();
 		
 		String success = "success";
+		String failure = "failure";
 		
-		req.getSession().setAttribute("user", loggedIn);
-		req.getSession().setAttribute(SUCCESS, success);
-		req.getSession().setAttribute(UPDATE, null);
-		businessDelegate.updateRecord(loggedIn);
+		// if old password matches current password
+		if(prevPass.equals(loggedIn.getPassword())){
+			
+			
+			String maskedPass = businessDelegate.maskElement(password, loggedIn.getEmail(), loggedIn.getFullname());
+			
+			// if old password does not match new password
+			if((prevPass.equals(maskedPass)) == false){
+			
+				loggedIn.setPassword(businessDelegate.maskElement(password, loggedIn.getEmail(), loggedIn.getFullname()));
+				
+				if(loggedIn.isNewUser()){
+					loggedIn.setNewUser(false);
+				}
+				
+				req.getSession().setAttribute("user", loggedIn);
+				req.getSession().setAttribute("passwordSuccess", success);
+				req.getSession().setAttribute("userUpdate", null);
+				businessDelegate.updateRecord(loggedIn);
+			}
+			
+			else {
+				
+				req.getSession().setAttribute("passwordFailure2", failure);
+				model.setViewName("redirect:/password");
+			}
+			
+		} else {
+			
+			req.getSession().setAttribute("passwordFailure1", failure);
+			model.setViewName("redirect:/password");
+		}
+		
 		return model;
 	}
 	

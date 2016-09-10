@@ -165,7 +165,6 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	var currentPicture = '${user.profilePicture}';
-	console.log(currentPicture);
 
 	$("#fileChooser").change(function(event){
 		newPicture = URL.createObjectURL(event.target.files[0]);
