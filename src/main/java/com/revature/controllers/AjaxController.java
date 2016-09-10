@@ -3,7 +3,6 @@ package com.revature.controllers;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,10 +35,10 @@ public class AjaxController {
 			HttpServletRequest request, HttpServletResponse response) {
 		response.addHeader("Access-Control-Allow-Origin", "*");
 		try {
-			Logging.info(""+authorId);
+			
+			 //		I TOOK OUT THE LOGGING FOR AUTHOR, DO NOT ADD IT BACK IN, IT BREAKS THE CODE!!!
 			
 			User author = businessDelegate.requestUser(authorId);
-			Logging.info(author.toString());
 			
 			Tags category = businessDelegate.requestTag(tagId);
 			
