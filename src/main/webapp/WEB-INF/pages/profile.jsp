@@ -19,7 +19,7 @@
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
 <link href="resources/css/main.css" rel="stylesheet">
 <title>Profile</title>
-<link rel="shortcut icon" type="image/png" href="blogs.pjw6193.tech/content/resources/img/favicon.png"/>
+<link rel="shortcut icon" type="image/png" href="/content/resources/img/favicon.png"/>
 </head>
 <body>
 <jsp:include page="navbar.jsp"></jsp:include>
