@@ -19,7 +19,8 @@
 </head>
 <body>
 <jsp:include page="navbar.jsp"></jsp:include>
-<div class="container page-content">
+<div class="overall-container">
+<div class="container page-content content-padding">
 	<!-- place change form here. Have a post call, change it, 
 	update it and the newUser parameter, and then redirect 
 	to page with reload. -->
