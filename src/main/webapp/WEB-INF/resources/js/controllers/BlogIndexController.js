@@ -3,7 +3,7 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 	$scope.getFilter = function()
 	{
 		var ulQuery = $scope.searchQuery.toLowerCase();
-		
+		$scope.searchPosts = [];
 		$scope.searchPosts = $scope.posts;
 		$scope.searchPage = true;
 		
@@ -16,7 +16,7 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 				continue;
 			}
 		}
-			
+		console.log(searchPosts);
 		return false;
 	}
 	
