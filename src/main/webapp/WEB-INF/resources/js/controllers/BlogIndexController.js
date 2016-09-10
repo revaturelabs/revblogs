@@ -3,24 +3,27 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 	$scope.getFilter = function()
 	{
 		var ulQuery = $scope.searchQuery.toLowerCase();
-		console.log(ulQuery);
-		
+		$scope.searchPosts = [];
 		$scope.searchPosts = $scope.posts;
+		$scope.searchPage = true;
 		
 		for (var i = 0; i < $scope.searchPosts.posts.length; i++) 
 		{
-			$scope.searchPage = true;
 			var ulTitle = $scope.searchPosts.posts[i].title.toLowerCase();
-			console.log(ulTitle);
 			if (!ulTitle.includes(ulQuery))
 			{
-				console.log("found");
 				$scope.searchPosts.posts[i].title = "e2a3a746c33617187a3a";
 				continue;
 			}
 		}
-			
+		console.log($scope.searchPosts);
 		return false;
+	}
+	
+	$scope.clearSearch = function() {
+		$scope.searchPosts = [];
+		$scope.searchPosts = $scope.posts;
+		$scope.searchPage = false;
 	}
 	
 	$scope.getPage = function(page, postsPP)
@@ -28,6 +31,7 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 		$http.get($scope.appUrl+"/api/posts?page=" + page + "&per_page=" + $scope.postsPerPage).success(
 		    function(resp)
 			{
+				$scope.searchPage = false;
 				$scope.posts = resp;
 				
 				$scope.curPage = page;  //current page
@@ -71,7 +75,8 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 	$scope.changeView = function(direction)
 	{
 		if(!$scope.isLoading)	
-		{
+		{	
+			$scope.clearSearch();
 			console.log("ChangeView " + direction);
 			console.log($scope.curPage);
 			

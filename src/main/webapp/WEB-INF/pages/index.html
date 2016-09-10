@@ -84,25 +84,26 @@
     </div>
   
   <!-- Customize posts to view -->
-  <div id="postsPerPage">
-  <label>Number of posts to show: </label>
-  	<select  ng-model="postsPerPage" ng-change="getPage(curPage, postsPerPage)">
-  		<option ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 5]">5</option>
-  		<option ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 10]" selected>10</option>
-  	</select>
-  </div>
-  
-  
-  <!-- PAGINATION -->
-  <nav id="pageNumsNav" aria-label="...">
-  	<div>
-  	<ul id="pageNums" class="pagination">
-   	  <li ng:class="{true:'disabled', false:'enabled'}[curPage == 1 || isLoading]" ng-click="changeView(0)"><a id="previous" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
- 		<li ng:class="{true:'active', false:''}[number == curPage]" ng-repeat="number in numOfPages" ng-if="number > 0"> <a ng-click="getPage(number)">{{number}}</a> </li>
-   	  <li ng:class="{true:'disabled', false:'enabled'}[curPage == numOfPages || isLoading]" ng-click="changeView(1)"><a id="next" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
-  	</ul>
-  	</div>
-  </nav>
+  	<button ng-show="searchPage===true" ng-click="getPage(1,postsPerPage)">Clear Search Results</button>
+
+	  <div id="postsPerPage">
+	  	<label>Number of posts to show: </label>
+	  	<select  ng-model="postsPerPage" ng-change="getPage(curPage, postsPerPage)">
+	  		<option ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 5]">5</option>
+	  		<option ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 10]" selected>10</option>
+	  	</select>
+	  </div>
+	  
+	  <!-- PAGINATION -->
+	  <nav id="pageNumsNav" aria-label="...">
+	  	<div>
+	  	<ul id="pageNums" class="pagination">
+	   	  <li ng:class="{true:'disabled', false:'enabled'}[curPage == 1 || isLoading]" ng-click="changeView(0)"><a id="previous" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+	 		<li ng:class="{true:'active', false:''}[number == curPage]" ng-repeat="number in numOfPages" ng-if="number > 0"> <a ng-click="getPage(number)">{{number}}</a> </li>
+	   	  <li ng:class="{true:'disabled', false:'enabled'}[curPage == numOfPages || isLoading]" ng-click="changeView(1)"><a id="next" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+	  	</ul>
+	  	</div>
+	  </nav>
   <!-- PAGINATION -->
   </div>
   <div class="footer2">
