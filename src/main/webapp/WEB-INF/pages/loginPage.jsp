@@ -84,7 +84,6 @@
 </body>
 <script type="text/javascript">
 $(document).ready(function(){
-	
 	$("#send").click(function(){
 	
 		
@@ -105,47 +104,25 @@ $(document).ready(function(){
 		}
 	});
 	$('#form').keyup(function(e) {
-		if($("#passAuth").is(':focus')){
-			var keyCode = e.keyCode || e.which;
-			if (keyCode === 13) { 
-				e.preventDefault();
-				if(validateForm() === true){
+		var keyCode = e.keyCode || e.which;
+		if (keyCode === 13) { 
+			e.preventDefault();
+			if($("#passAuth").is(':focus')){
+				if((validateForm() === true) ){
 					var email = $("#userAuth").val();
 
 					$.get("http://localhost:7001/revblogs/bindUser?u=" + email, function(response){
-				
+			
 						if(response === "Success"){
-				
+			
 							$("#form").submit();
-				
+			
 						} else {
-				
+			
 							e.preventDefault();
 						}
 					});
 				}
-			}
-		}
-	});
-	
-	$(document).on('keypress', function(event){
-	
-		if(event.which === 13){
-		
-			if(validateForm() === true){
-				var email = $("#userAuth").val();
-	
-				$.get("http://localhost:7001/revblogs/bindUser?u=" + email, function(response){
-				
-					if(response === "Success"){
-					
-						$("#form").submit();
-					
-					} else {
-					
-						e.preventDefault();
-					}
-				});
 			}
 		}
 	});
