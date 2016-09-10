@@ -107,8 +107,8 @@ public class HtmlWriter {
 				Map<Integer, String> references = blog.getReferences();
 				for (Integer key : references.keySet() ) {
 					blogWriter.write("<div class=\"post-reference-item\">"
-							+ "[" + key.toString() + "] - "
-							+ references.get(key) + "</div>");
+							+ "[" + key.toString() + "] - <a target=\"_blank\" href=" + references.get(key) + ">"
+							+ references.get(key) + "</a></div>");
 				}
 			}
 		}
