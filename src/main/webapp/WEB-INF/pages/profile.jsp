@@ -24,14 +24,9 @@
 <body>
 <jsp:include page="navbar.jsp"></jsp:include>
 <div class="container page-content">
-	<div>
-	<c:if test="${passwordSuccess eq 'success'}">
-		<span id="password-success" class="label-success">Password changed successfully.</span>
-	</c:if>
-	<c:if test="${userUpdate eq 'update'}">
-		<span id=userUpdate class="label-success">Profile updated successfully.</span>
-	</c:if>
-	<h3>Update Profile</h3><br />
+	<br />
+	<div id="rightColumn">
+		<h3>Update Profile</h3><br />
 		<form:form action="updateUser.do" method="post" commandName="updateUser">
 		<table>
 		<tr>
@@ -39,7 +34,7 @@
 				Email:&nbsp;&nbsp;&nbsp;
 			</td>
 			<td>
-				<form:input path="email" class="form-control" value="${user.email}"/>
+				<form:input path="email" class="form-control update-form" value="${user.email}"/>
 			</td>
 		</tr>
 		<tr>
@@ -47,7 +42,7 @@
 				First Name:&nbsp;&nbsp;&nbsp; 
 			</td>
 			<td>
-				<form:input path="firstName" class="form-control" value="${user.firstName}"/>
+				<form:input path="firstName" class="form-control update-form" value="${user.firstName}"/>
 			</td>
 		</tr>
 		<tr>
@@ -55,7 +50,7 @@
 				Last Name:&nbsp;&nbsp;&nbsp; 
 			</td>
 			<td>
-				<form:input path="lastName" class="form-control" value="${user.lastName}"/>
+				<form:input path="lastName" class="form-control update-form" value="${user.lastName}"/>
 			</td>
 		</tr>
 		<tr>
@@ -63,7 +58,7 @@
 				Job Title:&nbsp;&nbsp;&nbsp; 
 			</td>
 			<td>
-				<form:input path="jobTitle" class="form-control" value="${user.jobTitle}"/>
+				<form:input path="jobTitle" class="form-control update-form" value="${user.jobTitle}"/>
 			</td>
 		</tr>
 		<tr>
@@ -71,7 +66,7 @@
 				LinkedIn URL:&nbsp;&nbsp;&nbsp; 
 			</td>
 			<td>
-				<form:input path="linkedInURL" class="form-control" value="${user.linkedInURL}"/>
+				<form:input path="linkedInURL" class="form-control update-form" value="${user.linkedInURL}"/>
 			</td>
 		</tr>
 		<tr>
@@ -80,19 +75,37 @@
 			</td>
 			<td>
 				<input type="hidden" value="${user.description}" id="userDescription" />
-				<form:textarea path="description" class="form-control" id="descriptionTextArea" rows="10"/>
+				<form:textarea path="description" class="form-control update-form" id="descriptionTextArea" rows="10"/>
 			</td>
 		</tr>
 		<tr>
-			<td colspan=2>
-				<input type="submit" class="btn btn-primary" value="Update Profile" />
+			<td>
+				&nbsp;
+			</td>
+			<td>
+				<input type="submit" class="btn btn-primary update-btn" value="Update Profile" />
 			</td>
 		</tr>
 		
 		</table>
 		</form:form>
-	</div>
-	<div>
+		<br />
+		<c:if test="${userUpdate eq 'update'}">
+			<span id=userUpdate class="label-success success-span">Profile updated successfully.</span>
+		</c:if>
+	</div>	
+	<br />
+	
+	<br />
+	
+	<div id="leftColumn">
+		<h3>Upload Profile Picture</h3>
+			<a href="#profilePicModal" role="button" data-toggle="modal">
+				<img id="profilePic" src="${user.profilePicture}" width="128px" height=auto/>
+			</a>
+
+	<br />
+	<br />
 	<hr>
 	<h3>Update Password</h3>
 	<br />
@@ -103,19 +116,21 @@
 			</td>
 		</tr>
 	</table>
+	<br />
+	<br />
 	</div>
-	<hr>
-	<div>
-		<h3>Upload Profile Picture</h3>
-			<a href="#profilePicModal" role="button" data-toggle="modal">
-				<img id="profilePic" src="${user.profilePicture}" width="128px" height=auto/>
-			</a>
-	</div>
+	<br />
+	<c:if test="${passwordSuccess eq 'success'}">
+		<span id="password-success" class="label-success success-span">Password changed successfully.</span>
+	</c:if>
+	<br />
+
 	
 	<div id="profilePicModal" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
   		<div class="modal-dialog modal-sm">
   			<div class="modal-content">
   				<div class="modal-header">
+  					<label id="picSuccess" class="label-success"></label>
 	        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	         		<span aria-hidden="true">&times;</span>
 	       			</button>
@@ -163,7 +178,7 @@ $(document).ready(function(){
 				success: function(response){
 					
 					if(response == "Success"){
-					alert("picture uploaded");
+					alert("Picture Uploaded Successfully!");
 					location.reload();
 					}
 				}		
