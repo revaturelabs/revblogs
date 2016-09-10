@@ -1,5 +1,6 @@
 app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http) 
 {
+<<<<<<< HEAD
 	$scope.appUrl = "https://localhost:7002/revblogs/";
 	$scope.posts = {
 			page: 0,
@@ -13,6 +14,32 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 			total_posts: 0
 	};
 	$scope.getPage = function(page)
+=======
+	$scope.getFilter = function()
+	{
+		var ulQuery = $scope.searchQuery.toLowerCase();
+		console.log(ulQuery);
+		
+		$scope.searchPosts = $scope.posts;
+		
+		for (var i = 0; i < $scope.searchPosts.posts.length; i++) 
+		{
+			$scope.searchPage = true;
+			var ulTitle = $scope.searchPosts.posts[i].title.toLowerCase();
+			console.log(ulTitle);
+			if (!ulTitle.includes(ulQuery))
+			{
+				console.log("found");
+				$scope.searchPosts.posts[i].title = "e2a3a746c33617187a3a";
+				continue;
+			}
+		}
+			
+		return false;
+	}
+	
+	$scope.getPage = function(page, postsPP)
+>>>>>>> refs/heads/master
 	{
 		$http.get($scope.appUrl + "api/posts?page=" + page + "&per_page=" + $scope.postsPerPage).success(
 		    function(resp)
@@ -56,6 +83,7 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 			}
 		);
 	}
+<<<<<<< HEAD
 	
 	$scope.getSearch = function(page, postsPP, query)
 	{
@@ -104,6 +132,9 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 		);
 	}
 	
+=======
+
+>>>>>>> refs/heads/master
 	$scope.changeView = function(direction)
 	{
 		if(!$scope.isLoading)	
@@ -148,7 +179,11 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 	function preloadPage(page, postsPP)
 	{
 		console.log("Pre-loading");
+<<<<<<< HEAD
 		$http.get($scope.appUrl + "api/posts?page=" + page).success(
+=======
+		$http.get($scope.appUrl+"/api/posts?page=" + page  + "&per_page" + postsPP).success(
+>>>>>>> refs/heads/master
 		    function(resp)
 			{
 				var prevPage = $scope.curPage;
@@ -168,7 +203,21 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 			}
 		);
 	}	
+
+	$scope.appUrl = "http://localhost:7001/revblogs";
+	$scope.posts = {
+			page: 0,
+			prev: null,
+			next: null,
+			posts:[],
+			author: null,
+			category: null,
+			total_pages: 0,
+			per_page: 0,
+			total_posts: 0
+	};
 	$scope.searchQuery = "";
+	$scope.searchPage = false;
 	$scope.curPage = 1;
 	$scope.postsPerPage = 10;
 	$scope.isLoading = false;

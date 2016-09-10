@@ -132,7 +132,6 @@ public class BaseController {
 	// Admin Page
 	@RequestMapping(value="/admin**")
 	public ModelAndView viewAdmin(HttpServletRequest request, HttpServletRequest response, Principal principal){
-		System.out.println("pie");
 		String name = principal.getName();
 		User user = businessDelegate.requestUsers(name);
 		HttpSession session = request.getSession(false);
@@ -140,19 +139,26 @@ public class BaseController {
 			session = request.getSession();
 		session.setAttribute("user", user);
 		
+		//Both necessary to clear out the password success message
+		request.getSession().setAttribute("passwordSuccess", null);
+		request.getSession().setAttribute("userUpdate", null);
+		
 		return modelCreation(user.getJobTitle(), user.getFirstName());
 	}
 	
 	// Contributor Page
 	@RequestMapping(value="/contributor**")
 	public ModelAndView viewContributor(HttpServletRequest request, HttpServletRequest response, Principal principal){
-		System.out.println("pie");
 		String name = principal.getName();
 		User user = businessDelegate.requestUsers(name);
 		HttpSession session = request.getSession(false);
 		if(session == null)
 			session = request.getSession();
 		session.setAttribute("user", user);
+		
+		//Both necessary to clear out the password success message
+		request.getSession().setAttribute("passwordSuccess", null);
+		request.getSession().setAttribute("userUpdate", null);
 		
 		return modelCreation(user.getJobTitle(), user.getFirstName());
 	}
