@@ -134,29 +134,32 @@ public class BaseController {
 	// Admin Page
 	@RequestMapping(value="/admin**")
 	public ModelAndView viewAdmin(HttpServletRequest request, HttpServletRequest response, Principal principal){
-		
+
 		String name = principal.getName();
 		User user = businessDelegate.requestUsers(name);
 		HttpSession session = request.getSession(false);
 		if(session == null)
 			session = request.getSession();
 		session.setAttribute("user", user);
+
 		//DON'T TAKE THESE OUT!!!!!
 		request.getSession().setAttribute(SUCCESS, null);
 		request.getSession().setAttribute(UPDATE, null);
+
 		return modelCreation(user.getJobTitle(), user.getFirstName());
 	}
 	
 	// Contributor Page
 	@RequestMapping(value="/contributor**")
 	public ModelAndView viewContributor(HttpServletRequest request, HttpServletRequest response, Principal principal){
-		
+
 		String name = principal.getName();
 		User user = businessDelegate.requestUsers(name);
 		HttpSession session = request.getSession(false);
 		if(session == null)
 			session = request.getSession();
 		session.setAttribute("user", user);
+		
 		//DON'T TAKE THESE OUT!!!!!
 		request.getSession().setAttribute(SUCCESS, null);
 		request.getSession().setAttribute(UPDATE, null);

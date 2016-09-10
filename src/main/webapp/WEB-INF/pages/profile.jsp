@@ -23,7 +23,8 @@
 </head>
 <body>
 <jsp:include page="navbar.jsp"></jsp:include>
-<div class="container page-content">
+<div class="overall-container">
+<div class="container page-content content-padding">
 	<br />
 	<div id="rightColumn">
 		<h3>Update Profile</h3><br />
@@ -155,7 +156,10 @@
 </div>
 <br />
 <br />
+<div class="footer2">
 <jsp:include page="footer.jsp"></jsp:include>
+</div>
+</div>
 </body>
 <script type="text/javascript" src="resources/js/ui.js"></script>
 <script type="text/javascript">
