@@ -16,8 +16,14 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 				continue;
 			}
 		}
-		console.log(searchPosts);
+		console.log($scope.searchPosts);
 		return false;
+	}
+	
+	$scope.clearSearch = function() {
+		$scope.searchPosts = [];
+		$scope.searchPosts = $scope.posts;
+		$scope.searchPage = false;
 	}
 	
 	$scope.getPage = function(page, postsPP)
@@ -25,6 +31,7 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 		$http.get($scope.appUrl+"/api/posts?page=" + page + "&per_page=" + $scope.postsPerPage).success(
 		    function(resp)
 			{
+				$scope.searchPage = false;
 				$scope.posts = resp;
 				
 				$scope.curPage = page;  //current page
@@ -68,8 +75,8 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 	$scope.changeView = function(direction)
 	{
 		if(!$scope.isLoading)	
-		{	$scope.searchPosts = $scope.posts;
-			$scope.searchPage = false;
+		{	
+			$scope.clearSearch();
 			console.log("ChangeView " + direction);
 			console.log($scope.curPage);
 			
