@@ -1,20 +1,5 @@
 app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http) 
 {
-<<<<<<< HEAD
-	$scope.appUrl = "https://localhost:7002/revblogs/";
-	$scope.posts = {
-			page: 0,
-			prev: null,
-			next: null,
-			posts:[],
-			author: null,
-			category: null,
-			total_pages: 0,
-			per_page: 0,
-			total_posts: 0
-	};
-	$scope.getPage = function(page)
-=======
 	$scope.getFilter = function()
 	{
 		var ulQuery = $scope.searchQuery.toLowerCase();
@@ -39,9 +24,8 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 	}
 	
 	$scope.getPage = function(page, postsPP)
->>>>>>> refs/heads/master
 	{
-		$http.get($scope.appUrl + "api/posts?page=" + page + "&per_page=" + $scope.postsPerPage).success(
+		$http.get($scope.appUrl+"/api/posts?page=" + page + "&per_page=" + $scope.postsPerPage).success(
 		    function(resp)
 			{
 				$scope.posts = resp;
@@ -83,58 +67,7 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 			}
 		);
 	}
-<<<<<<< HEAD
-	
-	$scope.getSearch = function(page, postsPP, query)
-	{
-		$scope.searchQuery = query.replace(/\s/g, '+');
-		
-		$http.get($scope.appUrl + "api/posts?page=" + page + "&per_page=" + $scope.postsPerPage + "&author=" + $scope.author + "&q=" + $scope.searchQuery).success(
-		    function(resp)
-			{
-				$scope.posts = resp;
-				
-				$scope.curPage = page;  //current page
-				
-				var prevPage = $scope.curPage;
-				var nextPage = $scope.curPage;
-				
-				if($scope.curPage > 1)
-				{
-					prevPage = $scope.curPage - 1;
-				}
-				
-				if($scope.curPage < $scope.posts.total_pages)
-				{
-					nextPage = $scope.curPage + 1;
-				}
-				
-				$scope.numOfPages = [];
-				$scope.numOfPages[0] = 1;
-				
-				for (var i = 1; i < $scope.posts.total_pages+1; i++)
-				{
-					$scope.numOfPages[i - 1] = i;
-				}
-				
-				if($scope.curPage < $scope.posts.total_pages)
-				{
-					preloadPage(nextPage, $scope.postsPerPage);
-				}
-				
-				if($scope.curPage > 1)
-				{
-					preloadPage(prevPage, $scope.postsPerPage);
-				}
-				
-				$('#postsDiv').load();
-			}
-		);
-	}
-	
-=======
 
->>>>>>> refs/heads/master
 	$scope.changeView = function(direction)
 	{
 		if(!$scope.isLoading)	
@@ -179,11 +112,7 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 	function preloadPage(page, postsPP)
 	{
 		console.log("Pre-loading");
-<<<<<<< HEAD
-		$http.get($scope.appUrl + "api/posts?page=" + page).success(
-=======
 		$http.get($scope.appUrl+"/api/posts?page=" + page  + "&per_page" + postsPP).success(
->>>>>>> refs/heads/master
 		    function(resp)
 			{
 				var prevPage = $scope.curPage;
@@ -222,5 +151,5 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 	$scope.postsPerPage = 10;
 	$scope.isLoading = false;
 	$scope.author = 0;
-	$scope.getPage($scope.curPage);
+	$scope.getPage($scope.curPage, $scope.postsPerPage);
 }]);
