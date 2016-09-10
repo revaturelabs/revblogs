@@ -204,4 +204,9 @@ public class BaseController {
 	public String getUserBlogs(){
 		return "user-blogs";
 	}
+	
+	@RequestMapping(value="all-blogs")
+	public String getAllBlogs(){
+		return "all-blogs";
+	}
 }
