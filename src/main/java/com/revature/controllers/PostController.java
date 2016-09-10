@@ -317,6 +317,8 @@ public class PostController {
 	public ModelAndView updatePassword(@ModelAttribute("updatePassword") @Valid UserDTO passwordDTO, BindingResult bindingResult,
 							   HttpServletRequest req, HttpServletResponse resp){
 		
+		req.getSession().setAttribute("passwordFailure", null);
+		
 		ModelAndView model = new ModelAndView();
 		model.setViewName("redirect:/profile");
 		
@@ -334,10 +336,13 @@ public class PostController {
 		String failure = "failure";
 		
 		// if old password matches current password
-		if(prevPass == loggedIn.getPassword()){
+		if(prevPass.equals(loggedIn.getPassword())){
+			
+			
+			String maskedPass = businessDelegate.maskElement(password, loggedIn.getEmail(), loggedIn.getFullname());
 			
 			// if old password does not match new password
-			if(prevPass != password){
+			if((prevPass.equals(maskedPass)) == false){
 			
 				loggedIn.setPassword(businessDelegate.maskElement(password, loggedIn.getEmail(), loggedIn.getFullname()));
 				
@@ -353,13 +358,13 @@ public class PostController {
 			
 			else {
 				
-				req.getSession().setAttribute("passwordSuccess", failure);
+				req.getSession().setAttribute("passwordFailure2", failure);
 				model.setViewName("redirect:/password");
 			}
 			
 		} else {
 			
-			req.getSession().setAttribute("passwordSuccess", failure);
+			req.getSession().setAttribute("passwordFailure1", failure);
 			model.setViewName("redirect:/password");
 		}
 		

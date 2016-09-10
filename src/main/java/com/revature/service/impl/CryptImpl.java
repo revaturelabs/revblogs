@@ -591,12 +591,8 @@ public class CryptImpl implements Crypt {
 			if((num > 47 && num < 57) || (num > 65 && num < 90) || (num > 97 && num < 122)){
 				
 				myChar = (char)num;
-				
-				System.err.println(myChar);
-				
+			
 				rand += myChar;
-				
-				System.err.println(rand);
 				
 			} else {
 				

@@ -84,6 +84,7 @@
 </body>
 <script type="text/javascript">
 $(document).ready(function(){
+	
 	$("#send").click(function(){
 	
 		
@@ -101,6 +102,28 @@ $(document).ready(function(){
 					e.preventDefault();
 				}
 			});
+		}
+	});
+	
+	$(document).on('keypress', function(event){
+	
+		if(event.which === 13){
+		
+			if(validateForm() === true){
+				var email = $("#userAuth").val();
+	
+				$.get("http://localhost:7001/revblogs/bindUser?u=" + email, function(response){
+				
+					if(response === "Success"){
+					
+						$("#form").submit();
+					
+					} else {
+					
+						e.preventDefault();
+					}
+				});
+			}
 		}
 	});
 	
