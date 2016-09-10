@@ -128,7 +128,7 @@
 
 	
 	<div id="profilePicModal" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-  		<div class="modal-dialog modal-sm">
+  		<div class="modal-dialog modal-md">
   			<div class="modal-content">
   				<div class="modal-header">
   					<label id="picSuccess" class="label-success"></label>
@@ -141,6 +141,9 @@
    					<img id="newProfilePic" src="${user.profilePicture}" width="128px" height=auto/>
    					<br />
      				<input type="file" name="profilePicture" id="fileChooser" /><br />
+     				<br />
+     				<img id="loading" src="http://blogs.pjw6193.tech/content/resources/img/rev.gif" />
+     				<br /> 
 				</div>
     		
     			<div class="modal-footer">
@@ -171,6 +174,7 @@ $(document).ready(function(){
 			var data = new FormData($("#fileChooser")[0].files);
 			
 			data.append("profilePicture",$("#fileChooser")[0].files[0]);
+			$("#loading").show();
 			$.ajax({
 				url: "uploadProfilePicture",
 				data: data,
@@ -180,8 +184,9 @@ $(document).ready(function(){
 				cache: false,
 				success: function(response){
 					
-					if(response == "Success"){
+					if(response === "Success"){
 					alert("Picture Uploaded Successfully!");
+					$("#loading").hide();
 					location.reload();
 					}
 				}		
@@ -215,7 +220,11 @@ $(document).ready(function(){
 
 $(document).ready(function(){
 	$('#userUpdate').delay(2000).fadeOut('slow');
-})
+});
+
+$(document).ready(function(){
+	$('#loading').hide();
+});
 
 </script>
 </html>
