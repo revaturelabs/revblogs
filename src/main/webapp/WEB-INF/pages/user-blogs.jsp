@@ -30,8 +30,8 @@
        </div>
      </form>
   </div>
-  
-  <div class="container page-content">
+  <div class="overall-container">
+  <div class="container page-content content-padding">
   	<div class="row">
   		<div class="col-xs-12">
   			<h2>Your Blog Posts</h2>
@@ -79,9 +79,10 @@
   </nav>
   <!-- PAGINATION -->
   </div>
-  
+  <div class="footer2">
   <jsp:include page="footer.jsp"></jsp:include>
-  
+  </div>
+  </div>
   <input type="hidden" id="userid" value="${user.userId}">
   <input type="hidden" ng-model="blogsPerPage">
   <input type="hidden" ng-model="curPage">
