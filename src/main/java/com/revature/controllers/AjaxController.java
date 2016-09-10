@@ -36,18 +36,16 @@ public class AjaxController {
 		response.addHeader("Access-Control-Allow-Origin", "*");
 		try {
 			
-			 //		I TOOK OUT THE LOGGING FOR AUTHOR, DO NOT ADD IT BACK IN, IT BREAKS THE CODE!!!
-			
 			User author = businessDelegate.requestUser(authorId);
 			
-			Tags category = businessDelegate.requestTag(tagId);
+			//Tags category = businessDelegate.requestTag(tagId);
 			
 			if (author != null) {
 				return businessDelegate.requestBlogPosts(author, page, perPage);
 			}
-			else if (category != null) {
+			/*else if (category != null) {
 				return businessDelegate.requestBlogPosts(category, page, perPage);
-			}
+			}*/
 			else if (searchQuery != null) {
 				return businessDelegate.searchBlogPosts(searchQuery, page, perPage);
 			}

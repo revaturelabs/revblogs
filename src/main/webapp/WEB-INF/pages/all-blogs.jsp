@@ -30,9 +30,12 @@
   	</div>
     <div id="postsDiv" class="row">
       <div class="col-sm-8">
-      	
+      	<c:if test="${user.userRole.userRoleId eq 1}">
+      		<div ng-repeat="post in posts.posts" ng-include src="'resources/js/templates/editable-post-preview.html'"></div>
+      	</c:if>
+      	<c:if test="${user.userRole.userRoleId eq 2}">
       		<div ng-repeat="post in posts.posts" ng-include src="'resources/js/templates/post-preview.html'"></div>
-      	
+      	</c:if>
       </div>
       <div class="col-sm-4 hidden-xs">
         <div class="panel panel-primary">
