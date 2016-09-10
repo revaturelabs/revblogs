@@ -104,24 +104,26 @@ $(document).ready(function(){
 		}
 	});
 	$('#form').keyup(function(e) {
-		var keyCode = e.keyCode || e.which;
-		if (keyCode === 13) { 
-			e.preventDefault();
-			if(validateForm() === true){
-			var email = $("#userAuth").val();
+		if($("#passAuth").is(':focus')){
+			var keyCode = e.keyCode || e.which;
+			if (keyCode === 13) { 
+				e.preventDefault();
+				if(validateForm() === true){
+					var email = $("#userAuth").val();
 
-			$.get("http://localhost:7001/revblogs/bindUser?u=" + email, function(response){
-			
-				if(response === "Success"){
+					$.get("http://localhost:7001/revblogs/bindUser?u=" + email, function(response){
 				
-					$("#form").submit();
+						if(response === "Success"){
 				
-				} else {
+							$("#form").submit();
 				
-					e.preventDefault();
+						} else {
+				
+							e.preventDefault();
+						}
+					});
 				}
-			});
-		}
+			}
 		}
 	});
 	
