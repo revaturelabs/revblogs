@@ -90,7 +90,7 @@ public class HtmlWriter {
 				}
 			}
 			if(line.contains("facebook-url")){
-				blogWriter.write("<input type='text' id='facebookurl' value='"+fileName+"'/>");
+				blogWriter.write("<input type='text' hidden id='facebookurl' value='"+fileName+"'/>");
 			}
 			if(line.contains("linkedin-url")){
 				blogWriter.write("<a class='btn btn-social-icon btn-linkedin' target='_blank' href='https://www.linkedin.com/shareArticle?mini=true&url=" + url + "'>"														
