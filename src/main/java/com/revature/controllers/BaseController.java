@@ -134,7 +134,9 @@ public class BaseController {
 	public ModelAndView viewAdmin(HttpServletRequest request, HttpServletRequest response, Principal principal){
 		String name = principal.getName();
 		User user = businessDelegate.requestUsers(name);
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
+		if(session == null)
+			session = request.getSession();
 		session.setAttribute("user", user);
 		
 		return modelCreation(user.getJobTitle(), user.getFirstName());
@@ -146,7 +148,9 @@ public class BaseController {
 		
 		String name = principal.getName();
 		User user = businessDelegate.requestUsers(name);
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
+		if(session == null)
+			session = request.getSession();
 		session.setAttribute("user", user);
 		
 		return modelCreation(user.getJobTitle(), user.getFirstName());

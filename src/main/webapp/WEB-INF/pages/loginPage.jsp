@@ -87,22 +87,21 @@ $(document).ready(function(){
 	$("#send").click(function(){
 	
 		
-		
-		var email = $("#userAuth").val();
+		if(validateForm() === true){
+			var email = $("#userAuth").val();
 
-		$.get("http://localhost:7001/revblogs/bindUser?u=" + email, function(response){
+			$.get("http://localhost:7001/revblogs/bindUser?u=" + email, function(response){
 			
-			if(response === "Success"){
+				if(response === "Success"){
 				
-				validateForm();
-				$("#form").submit();
+					$("#form").submit();
 				
+				} else {
 				
-			} else {
-				
-				e.preventDefault();
-			}
-		});
+					e.preventDefault();
+				}
+			});
+		}
 	});
 	
 	$("#populateNow").click(function(){
@@ -145,6 +144,7 @@ function validateForm(){
 		
 		return false;
 	}
+	return true;
 }
 </script>
 </html>
