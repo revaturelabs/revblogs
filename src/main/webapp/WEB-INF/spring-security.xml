@@ -9,9 +9,8 @@
 	<bean id="roleHandler" class="com.revature.secure.AuthSuccessHandler" />
 	
 <!-- HTTP SECURITY FOR CONTROLLING ACCESS BASED ON ROLL -->	
-	<security:http auto-config="true" use-expressions="true">
+	<security:http auto-config="true" use-expressions="true" create-session="always">
 
-		<security:intercept-url pattern="/createAccount.do" requires-channel="https" access="hasRole('ADMIN')"/>
 		<security:intercept-url pattern="/add-picture/**" requires-channel="https" access="hasAnyRole('ADMIN','CONTRIBUTOR')"/>
 		<security:intercept-url pattern="/admin**" requires-channel="https" access="hasRole('ADMIN')"/>
 		<security:intercept-url pattern="/contributor**" requires-channel="https" access="hasRole('CONTRIBUTOR')"/>

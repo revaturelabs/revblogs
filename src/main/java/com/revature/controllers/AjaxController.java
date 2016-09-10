@@ -3,7 +3,6 @@ package com.revature.controllers;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,19 +35,17 @@ public class AjaxController {
 			HttpServletRequest request, HttpServletResponse response) {
 		response.addHeader("Access-Control-Allow-Origin", "*");
 		try {
-			Logging.info(""+authorId);
 			
 			User author = businessDelegate.requestUser(authorId);
-			Logging.info(author.toString());
 			
-			Tags category = businessDelegate.requestTag(tagId);
+			//Tags category = businessDelegate.requestTag(tagId);
 			
 			if (author != null) {
 				return businessDelegate.requestBlogPosts(author, page, perPage);
 			}
-			else if (category != null) {
+			/*else if (category != null) {
 				return businessDelegate.requestBlogPosts(category, page, perPage);
-			}
+			}*/
 			else if (searchQuery != null) {
 				return businessDelegate.searchBlogPosts(searchQuery, page, perPage);
 			}

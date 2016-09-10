@@ -20,7 +20,9 @@
 		<servlet-name>dispatcher</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-	
+	<session-config>
+  		<session-timeout>5</session-timeout>
+  	</session-config>
 	<!-- Spring context files to be loaded -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>

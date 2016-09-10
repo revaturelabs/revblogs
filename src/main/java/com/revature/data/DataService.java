@@ -11,7 +11,6 @@ import com.revature.beans.Tags;
 import com.revature.beans.User;
 import com.revature.beans.UserRoles;
 import com.revature.data.impl.PaginatedResultList;
-import com.revature.data.impl.PropertyType;
 
 @Service
 public interface DataService {
