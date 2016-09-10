@@ -50,12 +50,6 @@ public class PostController {
 	 */
 	private BusinessDelegate businessDelegate;
 	private Population population;
-	private final String SUCCESS = "passwordSuccess";
-	private final String UPDATE = "userUpdate";
-	private final String LIST = "userList";
-	private final String PROFILE = "updateUserProfile";
-	private final String MANAGE = "redirect:/manageusers";
-	private final String EDIT = "editingBlogInDatabase";
 
 	public void setBusinessDelegate(BusinessDelegate businessDelegate){
 		this.businessDelegate = businessDelegate;
@@ -112,16 +106,16 @@ public class PostController {
 		
 		String userUpdate = "update";
 		req.getSession().setAttribute("user", loggedIn);
-		req.getSession().setAttribute(SUCCESS, null);
+		req.getSession().setAttribute("passwordSuccess", null);
 		businessDelegate.updateRecord(loggedIn);
-		req.getSession().setAttribute(UPDATE, userUpdate);
+		req.getSession().setAttribute("userUpdate", userUpdate);
 		req.setAttribute("updateUser", new User());
 		return model;
 	}
 	
 	// Admin update a User
 	@RequestMapping(value="updateUserProfile.do", method=RequestMethod.POST)
-	public ModelAndView updateUserProfile(@ModelAttribute(PROFILE) @Valid UserDTO updateUserProfile, 
+	public ModelAndView updateUserProfile(@ModelAttribute("updateUserProfile") @Valid UserDTO updateUserProfile, 
 							 BindingResult bindingResult, HttpServletRequest req, HttpServletResponse resp){
 		
 		ModelAndView model = new ModelAndView();
@@ -153,8 +147,8 @@ public class PostController {
 		//end re-encryption
 		
 		businessDelegate.updateRecord(updateUser);
-		req.setAttribute(LIST, businessDelegate.requestUsers());
-		req.setAttribute(PROFILE, new UserDTO());
+		req.setAttribute("userList", businessDelegate.requestUsers());
+		req.setAttribute("updateUserProfile", new UserDTO());
 		return model;
 	}
 	
@@ -219,13 +213,13 @@ public class PostController {
 				Logging.error(e);
 			}
 			
-			model.setViewName(MANAGE);
+			model.setViewName("redirect:/manageusers");
 			
 			return model;
 			
 		}
 		
-		model.setViewName(MANAGE);
+		model.setViewName("redirect:/manageusers");
 		
 		return model;
 	}
@@ -234,7 +228,7 @@ public class PostController {
 	@RequestMapping(value="resetProfile.do", method=RequestMethod.POST)
 	public ModelAndView resetProfilePicture(@RequestParam(value="resetProfile") int userId, HttpServletRequest req){
 		ModelAndView model = new ModelAndView();
-		model.setViewName(MANAGE);
+		model.setViewName("redirect:/manageusers");
 		
 		User resetUserPic = businessDelegate.requestUser(userId);
 		
@@ -259,8 +253,8 @@ public class PostController {
 			Logging.error(e);
 		}
 		
-		req.setAttribute(LIST, businessDelegate.requestUsers());
-		req.setAttribute(PROFILE, new UserDTO());
+		req.setAttribute("userList", businessDelegate.requestUsers());
+		req.setAttribute("updateUserProfile", new UserDTO());
 		return model;		
 	}
 	
@@ -272,9 +266,9 @@ public class PostController {
 		deactivateUser.setActive(false);
 		businessDelegate.updateRecord(deactivateUser);	
 		
-		req.setAttribute(LIST, businessDelegate.requestUsers());
-		req.setAttribute(PROFILE, new UserDTO());
-		return MANAGE;
+		req.setAttribute("userList", businessDelegate.requestUsers());
+		req.setAttribute("updateUserProfile", new UserDTO());
+		return "redirect:/manageusers";
 	}
 	
 	// Admin Activate User
@@ -285,9 +279,9 @@ public class PostController {
 		activateUser.setActive(true);
 		businessDelegate.updateRecord(activateUser);	
 		
-		req.setAttribute(LIST, businessDelegate.requestUsers());
-		req.setAttribute(PROFILE, new UserDTO());
-		return MANAGE;
+		req.setAttribute("userList", businessDelegate.requestUsers());
+		req.setAttribute("updateUserProfile", new UserDTO());
+		return "redirect:/manageusers";
 	}
 	
 	
@@ -296,25 +290,26 @@ public class PostController {
 	public ModelAndView resetUserPassword(@RequestParam(value="resetPass") int userId, HttpServletRequest req){
 		ModelAndView model = new ModelAndView();
 
-		model.setViewName(MANAGE);
+		model.setViewName("redirect:/manageusers");
 		
 		User resetUserPassword = businessDelegate.requestUser(userId);
 		String email = resetUserPassword.getEmail();
+		String role = resetUserPassword.getUserRole().getRole();
 		
 		// Generate a Temporary Password
 
 		String password = businessDelegate.getRandom(6);
 
-		resetUserPassword.setPassword(password);
+		resetUserPassword.setPassword(businessDelegate.maskElement(password, email, resetUserPassword.getLastName()+", "+resetUserPassword.getFirstName()));
 		
 		// Save in Database
 		businessDelegate.updateRecord(resetUserPassword);
 		
 		// Send Email to Account
-		Mailer.sendMail(email, password);
+		Mailer.sendMail(email, password, resetUserPassword.getFullname());
 		
-		req.setAttribute(LIST, businessDelegate.requestUsers());
-		req.setAttribute(PROFILE, new UserDTO());
+		req.setAttribute("userList", businessDelegate.requestUsers());
+		req.setAttribute("updateUserProfile", new UserDTO());
 		return model;
 	}
 		
@@ -343,8 +338,8 @@ public class PostController {
 		String success = "success";
 		
 		req.getSession().setAttribute("user", loggedIn);
-		req.getSession().setAttribute(SUCCESS, success);
-		req.getSession().setAttribute(UPDATE, null);
+		req.getSession().setAttribute("passwordSuccess", success);
+		req.getSession().setAttribute("userUpdate", null);
 		businessDelegate.updateRecord(loggedIn);
 		return model;
 	}
@@ -360,8 +355,8 @@ public class PostController {
 		String url = businessDelegate.uploadProfileItem(""+loggedIn.getUserId(),""+loggedIn.getUserId(), profilePicture);		
 		loggedIn.setProfilePicture(url);
 		businessDelegate.updateRecord(loggedIn);
-		req.getSession().setAttribute(SUCCESS, null);
-		req.getSession().setAttribute(UPDATE, null);
+		req.getSession().setAttribute("passwordSuccess", null);
+		req.getSession().setAttribute("userUpdate", null);
 		return "Success";
 	}
 	
@@ -412,7 +407,7 @@ public class PostController {
 	public Map<Integer, String> getReferences(HttpServletRequest req) {
 		
 		int highestReferenceNum = -1;
-		TreeMap<Integer, String> references = new TreeMap<>();
+		TreeMap<Integer, String> references = new TreeMap<Integer, String>();
 		for ( Enumeration<String> params = req.getParameterNames();
 				params.hasMoreElements(); )
 		{
@@ -456,7 +451,7 @@ public class PostController {
 		 * Check to see if the current blog's title already exists. 
 		 * If exists, redirect to current page, if new, go to preview blog page.
 		 */
-		Boolean editingBlogInDatabase = (Boolean)req.getSession().getAttribute(EDIT);
+		Boolean editingBlogInDatabase = (Boolean)req.getSession().getAttribute("editingBlogInDatabase");
 		User author = null;
 		if(editingBlogInDatabase == null) {
 			editingBlogInDatabase = false;
@@ -485,7 +480,7 @@ public class PostController {
 			String tmp = blog.getBlogTagsString();
 			List<String> myList = Arrays.asList(tmp.split(","));
 			Set<Tags> tmpTags = new HashSet<>();
-			Set<Tags> newTags = new HashSet<>();
+			Set<Tags> newTags = new HashSet<Tags>();
 			List<Tags> dbTags = businessDelegate.requestTags();
 			/*
 			 * loop through List of tag descriptions the user types in
@@ -533,7 +528,7 @@ public class PostController {
 			String fileName = blogTempFile.getTemporaryFile().getName();
 			url = "http://blogs.pjw6193.tech/content/pages/" + fileName;
 			blog.setLocationURL(url);
-			Boolean editingBlogInDatabase = (Boolean)req.getSession().getAttribute(EDIT);
+			Boolean editingBlogInDatabase = (Boolean)req.getSession().getAttribute("editingBlogInDatabase");
 			if(editingBlogInDatabase != null && editingBlogInDatabase) {
 				int id = (int) req.getSession().getAttribute("blogToEditId");
 				blog.setBlogId(id);
@@ -544,7 +539,7 @@ public class PostController {
 			businessDelegate.uploadPage(blogTempFile.getTemporaryFile());
 			blogTempFile.destroy();
 			req.getSession().setAttribute("blog", null);
-			req.getSession().setAttribute(EDIT, false);
+			req.getSession().setAttribute("editingBlogInDatabase", false);
 			req.getSession().setAttribute("blogToEditId", 0);
 		} catch (FileNotFoundException e) { 
 			Logging.error(e);

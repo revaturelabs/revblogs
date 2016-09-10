@@ -132,7 +132,6 @@ public class BaseController {
 	// Admin Page
 	@RequestMapping(value="/admin**")
 	public ModelAndView viewAdmin(HttpServletRequest request, HttpServletRequest response, Principal principal){
-		System.out.println("pie");
 		String name = principal.getName();
 		User user = businessDelegate.requestUsers(name);
 		HttpSession session = request.getSession(false);
@@ -150,7 +149,6 @@ public class BaseController {
 	// Contributor Page
 	@RequestMapping(value="/contributor**")
 	public ModelAndView viewContributor(HttpServletRequest request, HttpServletRequest response, Principal principal){
-		System.out.println("pie");
 		String name = principal.getName();
 		User user = businessDelegate.requestUsers(name);
 		HttpSession session = request.getSession(false);
