@@ -89,6 +89,4 @@
 		</property>
 		
 	</bean>
-	
-	<bean name="autoDeployer" class="com.revature.beans.AutoDeployer"></bean>
 </beans>

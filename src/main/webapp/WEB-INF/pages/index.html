@@ -11,7 +11,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
 <script src="http://blogs.pjw6193.tech/content/resources/js/app.js"></script>
 <script src="http://blogs.pjw6193.tech/content/resources/js/controllers/BlogIndexController.js"></script>
-<link rel="shortcut icon" type="image/png" href="blogs.pjw6193.tech/content/resources/img/favicon.png"/>
+<link rel="shortcut icon" href="blogs.pjw6193.tech/content/resources/img/favicon.png"/>
 </head>
 
 <body ng-app="app" ng-controller="BlogIndexController">
@@ -39,7 +39,7 @@
 		          <div class="form-group input-group post-search">
 		            <input ng-model="searchQuery" type="text" class="form-control" placeholder="Search">
 		            <span class="input-group-btn">
-		              <button ng-href="" ng-click="getSearch(1, postsPerPage, searchQuery)" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
+		              <button ng-click="getFilter()" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
 		            </span>
 		          </div>
 		        </form>
@@ -50,26 +50,16 @@
     </div><!-- /.container-fluid -->
   </nav>
   
-  <div class="container visible-xs-block" style="margin-top: 80px">
-  	<form>
-       <div class="form-group input-group post-search">
-         <input type="text" class="form-control" placeholder="Search">
-         <span class="input-group-btn">
-           <button class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
-         </span>
-       </div>
-     </form>
-  </div>
-  
   <div class="container page-content">
   	<div class="row">
   		<div class="col-xs-12">
-  			<h2>Latest Posts</h2>
+        <h2 ng-show="searchPage">Search Results for: {{searchQuery}}</h2>
+        <h2 ng-show="!searchPage">Latest Posts</h2>
   		</div>
   	</div>
     <div id="postsDiv" class="row">
-      <div class="col-sm-8">
-      	<div ng-repeat="post in posts.posts" ng-include src="'http://blogs.pjw6193.tech/content/resources/js/templates/post-preview.html'"></div>
+      <div class="col-sm-8">                                     <!-- PLEASE CHECK THIS!!! -->
+      	<div ng-repeat="post in posts.posts" ng-show="post.title != 'e2a3a746c33617187a3a'" ng-include src="'http://blogs.pjw6193.tech/content/resources/js/templates/post-preview.html'"></div>
       </div>
       <div class="col-sm-4 hidden-xs">
         <div class="panel panel-primary">
@@ -134,6 +124,7 @@
   <input type="hidden" ng-model="curPage">
   <input type="hidden" ng-model="nextPagePosts">
   <input type="hidden" ng-model="prevPagePosts">
+  <input type="hidden" ng-model="searchPage">
   
 </body>
 

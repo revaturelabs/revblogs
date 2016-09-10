@@ -24,16 +24,7 @@
         </c:if>
         </ul>
         <ul id="rightnavs" class="nav navbar-nav navbar-right">
-	        <li id="navsearch">
-		        <form class="navbar-form navbar-right .hidden-xs">
-		          <div class="form-group input-group post-search">
-		            <input ng-model="searchQuery" type="text" class="form-control" placeholder="Search">
-		            <span class="input-group-btn">
-		              <button ng-href="http://blogs.pjw6193.tech/search.html" ng-click="getSearch(1, postsPerPage, searchQuery)" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
-		            </span>
-		          </div>
-		        </form>
-	        </li>
+	        
 	        <c:choose>
 	        	<c:when test="${user.userRole.role eq 'CONTRIBUTOR'}">
 			        <li id="navuser" class="dropdown">
