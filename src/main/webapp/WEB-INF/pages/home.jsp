@@ -59,7 +59,7 @@
 		<div class="row">
 			<div class="col-xs-2"></div>
 			<div class="col-xs-4">
-				<h2><a href="/revblogs"><span class="glyphicon glyphicon-book"></span>&nbsp;View All Blogs</a></h2>
+				<h2><a href="all-blogs"><span class="glyphicon glyphicon-book"></span>&nbsp;View All Blogs</a></h2>
 			</div>
 			<div class="col-xs-4">
 				<h2><a href="manage-S3"><span class="glyphicon glyphicon-remove"></span>&nbsp;Manage Bucket</a></h2>
@@ -100,7 +100,7 @@
 				<h2><a href="user-blogs"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;View Your Blogs</a></h2>
 			</div>
 			<div class="col-xs-4">
-				<h2><a href="/revblogs"><span class="glyphicon glyphicon-book"></span>&nbsp;View All Blogs</a></h2>
+				<h2><a href="all-blogs"><span class="glyphicon glyphicon-book"></span>&nbsp;View All Blogs</a></h2>
 			</div>
 			<div class="col-xs-2"></div>
 		</div>
