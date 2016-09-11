@@ -185,9 +185,9 @@ $(document).ready(function(){
 				success: function(response){
 					
 					if(response === "Success"){
-					alert("Picture Uploaded Successfully!");
-					$("#loading").hide();
-					location.reload();
+					
+						$("#loading").hide();
+						location.reload();
 					}
 				}		
 			});

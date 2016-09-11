@@ -257,8 +257,20 @@ html, body {
 	font-weight: bold;
 }
 
+#picButton {
+	background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+}
 
 #home-page-content{
 	margin-top: 30px;
 
+}
+
+#error-info {
+	text-align: center;
 }

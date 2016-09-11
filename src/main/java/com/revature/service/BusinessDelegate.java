@@ -76,6 +76,7 @@ public interface BusinessDelegate {
 	public void putRecord(Object obj);
 	public void putRecord(Object[] obj);
 	public void updateRecord(Object obj);
+	public void updateRecord(Object[] obj);
 	
 	// Pull
 	public User requestUsers(String username);
@@ -100,4 +101,5 @@ public interface BusinessDelegate {
 	public String maskElement(String target, String key1, String key2);
 	public String revealElement(String target, String key1, String key2);
 	public String getRandom(int length);
+	public void setProperty(String[] props);
 }

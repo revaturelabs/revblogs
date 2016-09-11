@@ -78,10 +78,12 @@
           <div class="post-references-heading">
           </div>
           <div class="post-references-body">
-            <c:forEach var="element" items="${blog.references}">
-              <div class="post-reference-item">
-              	<c:out value="[${element.key}] - ${element.value}"></c:out>
-              </div>
+            <c:forEach varStatus="vs" var="ref" items="${blog.references}">
+              <c:if test="${not empty ref}">
+              	<div class="post-reference-item">
+              	  <c:out value="[${vs.index+1}] - ${ref}"></c:out>
+              	</div>
+              </c:if>
             </c:forEach>
           </div>
           <div class="post-tags">

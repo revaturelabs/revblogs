@@ -1,6 +1,8 @@
 package com.revature.beans;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -64,7 +66,7 @@ public class Blog {
 	@Lob
 	private String staticHTML;
 	
-	private transient Map<Integer, String> references;
+	private transient List<String> references;
 	private transient String blogTagsString;
 	
 	//----------------------------------
@@ -90,6 +92,10 @@ public class Blog {
 	 */
 	public Blog() {
 		super();
+		this.references = new ArrayList<String>();
+		for ( int i=0; i<20; i++ ) {
+			this.references.add("");
+		}
 		// Blogs publish date is the date of construction
 		this.publishDate = new Date();
 		// Blogs always start active
@@ -180,10 +186,10 @@ public class Blog {
 	public void setAuthor(User author) {
 		this.author = author;
 	}
-	public Map<Integer, String> getReferences() {
+	public List<String> getReferences() {
 		return references;
 	}
-	public void setReferences(Map<Integer, String> references) {
+	public void setReferences(List<String> references) {
 		this.references = references;
 	}
 	public String getBlogTagsString() {

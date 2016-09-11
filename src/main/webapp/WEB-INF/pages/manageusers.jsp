@@ -19,6 +19,7 @@
 <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
 <link href="resources/css/main.css" rel="stylesheet">
+<link href="resources/css/dataTable.css" rel="stylesheet">
 <title>Manage Users</title>
 <link rel="shortcut icon" type="image/png" href="/content/resources/img/favicon.png"/>
 </head>
@@ -30,16 +31,28 @@
 			&nbsp;Add a Contributor
 		</button>
 		<br/><br/><br/>
-		<table id="userTable">
-			<thead>
+		<table id="userTable" class="table table-hover">
+			<col width="15%">
+	  		<col width="15%">
+	  		<col width="15%">
+	  		<col width="15%">
+	  		<col width="10%">
+	  		<col width="15%">
+	  		<col width="15%">
+	  		<col width="0%">
+	  		<col width="0%">
+	  		<col width="0%">
+	  		<col width="0%">
+	  		<col width="0%">
+	  		<col width="0%">
+		  	<thead>
 				<tr>
-					<th>Profile Picture</th>
+					<th>Picture</th>
 					<th>Email</th>
-					<th>User Name</th>
-					<th>Job Title</th>
-					<th>Edit Profile</th>
-					<th>Edit Picture</th>
-					<th>Set Active</th>
+					<th>Name</th>
+					<th>Title</th>
+					<th>Edit</th>
+					<th>Activation</th>
 					<th>Reset Password</th>
 					<th hidden></th>
 					<th hidden></th>
@@ -52,19 +65,20 @@
 			<tbody>
 				<c:forEach items="${userList}" var="user">
 					<tr id="${user.userId}">
-						<td id="proPic${user.userId}"><img src="${user.profilePicture}" width="50" height="auto" /></td>
+						<td id="proPic${user.userId}">
+							<form action="resetProfile.do" method="post">
+								<button id="picButton" name="resetProfile" value="${user.userId}" type="submit">
+									<img src="${user.profilePicture}" width="50" height="auto" />
+								</button>
+							</form>
+						</td>
 						<td id="email${user.userId}"><c:out value="${user.email}" /></td>
-						<td> <c:out value="${user.lastName}, ${user.firstName}"/></td>
+						<td><c:out value="${user.lastName}, ${user.firstName}"/></td>
 						<td id="job${user.userId}"><c:out value="${user.jobTitle}" /></td>
 						<td>
 							<span data-toggle="modal" data-target="#editUserProfile" id="${user.userId}" onclick=edit(this.id) style="cursor: pointer;" 
 								class="glyphicon glyphicon-edit" aria-hidden="true">
 							</span>
-						</td>
-						<td>
-							<form action="resetProfile.do" method="post">
-								<button name="resetProfile" value="${user.userId }" type="submit" class="btn btn-primary form-control" >Reset Picture</button>
-							</form>
 						</td>
 						<td><c:choose>
 								<c:when id="activeTest" test="${user.active}">
@@ -80,9 +94,7 @@
 							</c:choose>
 						</td>
 						<td>
-							<form action="resetUserPassword.do" method="post">
-								<button name="resetPass" value="${user.userId}" type="submit" class="btn btn-primary form-control" >Reset Password</button>
-							</form>
+							<button id="resetPassButton" name="resetPass" value="${user.userId}" type="submit" class="btn btn-primary form-control" data-toggle="modal" data-target="#confirmPasswordMod">Reset Password</button>
 						</td>
 						<td id="userId${user.userId}" hidden><c:out value="${user.userId}" /></td>
 						<td id="password${user.userId}" hidden><c:out value="${user.password}" /></td>
@@ -120,7 +132,32 @@
 				</div>
 			</div>
 		</div>
-	</div>
+		
+		<!-- Confirm Password Modal -->
+		<div id="confirmPasswordMod" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+						<h3 class="modal-title">Confirm Password</h3>
+					</div>
+					<div class="modal-body">
+						Are you sure you want to reset this users password?
+						<br/>
+					</div>
+					<img id="loading" src="http://blogs.pjw6193.tech/content/resources/img/rev.gif" />
+					<div class="modal-footer">
+						<button id="confirmPassword" class="btn btn-primary form-control" style="width: auto;">
+							Confirm
+						</button>
+						<button id="closeCreateUser" class="btn btn-secondary" data-dismiss="modal">
+							Deny
+						</button>					
+					</div>
+				</div>
+			</div>
+		</div>
 	
 		<!-- Create Contributor Modal -->
 		<div id="editUserProfile" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
@@ -163,13 +200,34 @@
 		
 	</div>
 
-
+	
 	<jsp:include page="footer.jsp"></jsp:include>
 </body>
 <script>
-	$(document).ready(function() {
-		$('#userTable').DataTable();
+$(document).ready(function() {
+	
+	document.getElementById("loading").style = "visibility: hidden";
+	
+	$('#userTable').DataTable({
+		
+		"dom": 'lftipr',
+		"lengthMenu": [[5, 10, 20, -1], [5, 10, 20, "All"]], 
+   		"pagingType": "simple_numbers"		
 	});
+	
+	$("#confirmPassword").click(function(){
+		
+		document.getElementById("loading").style = "visibility: visible";
+		
+		var id = $("#resetPassButton").val();
+		
+		$.get("https://localhost:7002/revblogs/resetUserPassword.do?resetPass=" + id, function(response){
+		
+			document.getElementById("loading").style = "visibility: hidden";
+			location.reload();
+		});
+	});
+});
 	
 function edit(userId){
 	$("#selectedUserId").val($("#userId" + userId).html());
