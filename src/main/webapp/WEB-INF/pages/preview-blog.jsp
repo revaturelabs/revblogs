@@ -12,7 +12,7 @@
 <link href="resources/css/main.css" rel="stylesheet">
 <script src="resources/js/angular.min.js"></script>
 <script src="resources/js/app.js"></script>
-<script src="resources/js/controllers/BlogIndexController.js"></script>
+<script src="resources/js/controllers/TagSearchController.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <!-- HEADERS NEEDED TO PREVENT BACK BUTTON ON LOGOUT. DO NOT REMOVE ME! -->
 <meta http-equiv="Pragma" content="no-cache">
@@ -35,7 +35,7 @@
 <link rel="shortcut icon" type="image/png" href="/content/resources/img/favicon.png"/>
 </head>
 
-<body ng-app="app" ng-controller="BlogIndexController">
+<body ng-app="app" ng-controller="TagSearchController">
 
 <div id="curseModal" class="modal fade">
  	<div class="modal-dialog">
@@ -89,7 +89,7 @@
           </div>
           <div class="post-tags">
           	<c:forEach var="t" items="${blog.tags}">
-          		<a target="_blank" href="" ng-click="getPageWithTagsFromBlogPost(1,${t.tagId})"><c:out value="${t.description}"></c:out></a>
+          		<a target="_blank" href="" ng-click="getPageWithTagsFromBlogPost(${t.tagId})"><c:out value="${t.description}"></c:out></a>
            	</c:forEach>
           </div>
           <form:form action="edit.do">
