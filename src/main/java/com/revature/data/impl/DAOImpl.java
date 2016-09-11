@@ -100,6 +100,19 @@ public class DAOImpl implements DAO {
 		ses.update(obj);
 	}
 	
+	// Batch Update
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public void editRecord(Object[] obj){
+		
+		Session ses = sessionFactory.getCurrentSession();
+		setSession(ses);
+
+		for(Object o : obj){
+			
+			ses.update(o);
+		}
+	}
+	
 	// Delete or Archive
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void deleteRecord(Object obj){

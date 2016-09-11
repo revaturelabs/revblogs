@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -104,11 +105,15 @@ public class HtmlWriter {
 				blogWriter.write(twitter);
 			}
 			if (line.contains("post-references-body")) {
-				Map<Integer, String> references = blog.getReferences();
-				for (Integer key : references.keySet() ) {
-					blogWriter.write("<div class=\"post-reference-item\">"
-							+ "[" + key.toString() + "] - "
-							+ references.get(key) + "</div>");
+				List<String> references = blog.getReferences();
+				Integer i=1;
+				for (String reference : references ) {
+					if ( reference != null && reference.length() > 0 ) {
+						blogWriter.write("<div class=\"post-reference-item\">"
+								+ "[" + i + "] - <a target=\"_blank\" href=" + reference + ">"
+								+ reference + "</a></div>");
+						i = i+1;
+					}
 				}
 			}
 		}

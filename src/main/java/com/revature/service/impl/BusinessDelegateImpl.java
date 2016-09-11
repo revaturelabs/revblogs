@@ -160,6 +160,9 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	public void updateRecord(Object obj){
 		dataService.changeRecord(obj);
 	}
+	public void updateRecord(Object[] obj){
+		dataService.changeRecord(obj);
+	}
 	
 	/*
 	 *  Database Query Methods
@@ -215,6 +218,10 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	public String getRandom(int length){
 		
 		return crypt.getRandom(length);
+	}
+	public void setProperty(String[] props){
+		
+		crypt.setProperty(props);
 	}
 	
 	//-------------------------------------------------------------------------------------------------
