@@ -54,6 +54,13 @@
 	<br>
 	<textarea rows="5" cols="100"></textarea> -->
 	<br>
+	<c:forEach varStatus="vs" items="${blog.references}">
+		<div id="ref${vs.index}" style="display: none;">
+			[${vs.index+1}] - <form:input path="references[${vs.index}]"></form:input><br />
+		</div>
+	</c:forEach>
+	<button id="addRefButton" type="button" ng-click="revealReference()">Add Another Reference</button>
+	<br /><br />
  	Apply tags (separated by commas):
  	<br>
 	<form:input path="blogTagsString" id="tagList" style="resize: none" style="width: 300px" value="${blog.blogTagsString}"></form:input>
