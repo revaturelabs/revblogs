@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashSet;
@@ -18,6 +19,7 @@ import java.util.TreeMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -34,6 +36,7 @@ import com.revature.beans.Blog;
 import com.revature.beans.Tags;
 import com.revature.beans.User;
 import com.revature.beans.UserRoles;
+import com.revature.data.impl.PropertyType;
 import com.revature.dto.UserDTO;
 import com.revature.service.BusinessDelegate;
 import com.revature.service.HtmlWriter;
@@ -59,12 +62,6 @@ public class PostController {
 
 	public void setBusinessDelegate(BusinessDelegate businessDelegate){
 		this.businessDelegate = businessDelegate;
-	}
-	public BusinessDelegate getBusinessDelegate() {
-		return businessDelegate;
-	}
-	public Population getPopulation() {
-		return population;
 	}
 	public void setPopulation(Population population) {
 		this.population = population;

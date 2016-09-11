@@ -21,6 +21,7 @@ public interface DAO {
 	public void insertRecord(Object obj);
 	public void insertRecord(Object[] obj);
 	public void editRecord(Object obj);
+	public void editRecord(Object[] obj);
 	public void deleteRecord(Object obj);
 	
 	// Pull 1

@@ -21,6 +21,7 @@ public interface DataService {
 	public void makeRecord(Object obj);
 	public void makeRecord(Object[] obj);
 	public void changeRecord(Object obj);
+	public void changeRecord(Object[] obj);
 	public void deleteRecord(Object obj);
 	
 	// Pull 1
