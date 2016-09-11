@@ -27,6 +27,8 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 	{
 		if($scope.author != null){
 			var fullUrl = $scope.appUrl+"/api/posts?author=" + $scope.author + "&page=" + page + "&per_page=" + $scope.postsPerPage;
+		} else if($scope.tag != null){
+			var fullUrl = $scope.appUrl+"/api/posts?category=" + $scope.tag + "&page=" + page + "&per_page=" + $scope.postsPerPage;
 		} else {
 			var fullUrl = $scope.appUrl+"/api/posts?page=" + page + "&per_page=" + $scope.postsPerPage;
 		}
@@ -117,6 +119,12 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 				$('#postsDiv').load();
 			}	
 		);
+	}
+	
+	$scope.getPageWithTagsFromBlogPost = function(page, tagid) 
+	{
+		$scope.tag = tagid;
+		window.location = "all-blogs";
 	}
 
 	$scope.changeView = function(direction)

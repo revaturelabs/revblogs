@@ -35,17 +35,22 @@ public class AjaxController {
 			HttpServletRequest request, HttpServletResponse response) {
 		response.addHeader("Access-Control-Allow-Origin", "*");
 		try {
+			User author = null;
+			Tags category = null;
+			if(authorId > 0) {
+				author = businessDelegate.requestUser(authorId);
+			}
 			
-			User author = businessDelegate.requestUser(authorId);
-			
-			//Tags category = businessDelegate.requestTag(tagId);
+			if(tagId > 0) {
+				category = businessDelegate.requestTag(tagId);
+			}
 			
 			if (author != null) {
 				return businessDelegate.requestBlogPosts(author, page, perPage);
 			}
-			/*else if (category != null) {
+			else if (category != null) {
 				return businessDelegate.requestBlogPosts(category, page, perPage);
-			}*/
+			}
 			else if (searchQuery != null) {
 				return businessDelegate.searchBlogPosts(searchQuery, page, perPage);
 			}
