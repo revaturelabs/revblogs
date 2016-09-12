@@ -21,11 +21,11 @@ createBlogModule.controller('createBlogCtrl', function($scope) {
 	
 	$scope.init = function() {
 		for ( var i=0; i<$scope.maxReferences; i++ ) {
-			if ( document.getElementById("ref" + i).value != null &&
-				 document.getElementById("ref" + i).value.length > 0 ) {
+			if ( document.getElementById("references" + i).value != null &&
+				 document.getElementById("references" + i).value.length > 0 ) {
 				
 				while ( $scope.referencesRevealed < $scope.maxReferences &&
-						$scope.referencesRevealed < i ) {
+						$scope.referencesRevealed < i+1 ) {
 					$scope.revealReference();
 				}
 			}
