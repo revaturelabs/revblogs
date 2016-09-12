@@ -43,7 +43,7 @@
 
 <form:form action="add-blog.do" method="post" commandName="blog">
 	<h3>Title</h3>
-	<form:input name="ngTitle" ng-model="ngTitle" required path="blogTitle" />
+	<form:input name="ngTitle" ng-model="ngTitle" path="blogTitle" />
 <%-- 	<span class="validateHint" ng-show="ngTitle == null || ngTitle.length <= 0">A title is required!</span> --%>
 	<br />
 	<h4>Subtitle</h4>
