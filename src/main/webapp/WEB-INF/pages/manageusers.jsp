@@ -68,7 +68,7 @@
 						<td id="proPic${user.userId}">
 							<form action="resetProfile.do" method="post">
 								<button id="picButton" name="resetProfile" value="${user.userId}" type="submit">
-									<img src="${user.profilePicture}" width="50" height="auto" />
+									<img src="${user.profilePicture}" width="50" height="auto" alt="profile picture" />
 								</button>
 							</form>
 						</td>
@@ -226,6 +226,14 @@ $(document).ready(function() {
 			document.getElementById("loading").style = "visibility: hidden";
 			location.reload();
 		});
+	});
+	
+	$("#picButton").click(function(){
+		
+		setTimeout(function(){
+			location.reload();
+		}, 10000);
+		
 	});
 });
 	
