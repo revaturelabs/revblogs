@@ -7,7 +7,6 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashSet;
@@ -36,7 +35,6 @@ import com.revature.beans.Blog;
 import com.revature.beans.Tags;
 import com.revature.beans.User;
 import com.revature.beans.UserRoles;
-import com.revature.data.impl.PropertyType;
 import com.revature.dto.UserDTO;
 import com.revature.service.BusinessDelegate;
 import com.revature.service.HtmlWriter;
@@ -53,12 +51,14 @@ public class PostController {
 	 */
 	private BusinessDelegate businessDelegate;
 	private Population population;
-	private final String SUCCESS = "passwordSuccess";
-	private final String UPDATE = "userUpdate";
-	private final String LIST = "userList";
-	private final String PROFILE = "updateUserProfile";
-	private final String MANAGE = "redirect:/manageusers";
-	private final String EDIT = "editingBlogInDatabase";
+	private static final String SUCCESS = "passwordSuccess";
+	private static final String UPDATE = "userUpdate";
+	private static final String LIST = "userList";
+	private static final String PROFILE = "updateUserProfile";
+	private static final String MANAGE = "redirect:/manageusers";
+	private static final String EDIT = "editingBlogInDatabase";
+	private static final String REDIRECTP = "redirect:/password";
+	private static final String TAGS = "newTags";
 
 	public void setBusinessDelegate(BusinessDelegate businessDelegate){
 		this.businessDelegate = businessDelegate;
@@ -326,7 +326,7 @@ public class PostController {
 		model.setViewName("redirect:/profile");
 		
 		if(bindingResult.hasErrors()){
-			model.setViewName("redirect:/password");
+			model.setViewName(REDIRECTP);
 			return model;
 		}
 		
@@ -345,7 +345,7 @@ public class PostController {
 			String maskedPass = businessDelegate.maskElement(password, loggedIn.getEmail(), loggedIn.getFullname());
 			
 			// if old password does not match new password
-			if((prevPass.equals(maskedPass)) == false){
+			if(!(prevPass.equals(maskedPass))){
 			
 				loggedIn.setPassword(businessDelegate.maskElement(password, loggedIn.getEmail(), loggedIn.getFullname()));
 				
@@ -362,13 +362,13 @@ public class PostController {
 			else {
 				
 				req.getSession().setAttribute("passwordFailure2", failure);
-				model.setViewName("redirect:/password");
+				model.setViewName(REDIRECTP);
 			}
 			
 		} else {
 			
 			req.getSession().setAttribute("passwordFailure1", failure);
-			model.setViewName("redirect:/password");
+			model.setViewName(REDIRECTP);
 		}
 		
 		return model;
@@ -536,7 +536,7 @@ public class PostController {
 				}
 			}
 			blog.setTags(tmpTags);
-			req.getSession().setAttribute("newTags", newTags);
+			req.getSession().setAttribute(TAGS, newTags);
 		}
 		req.getSession().setAttribute("blog", blog);
 		return "preview-blog";
@@ -547,12 +547,12 @@ public class PostController {
 		Blog blog = (Blog) req.getSession().getAttribute("blog");
 		HtmlWriter htmlWriter;
 		String url = "";
-		Set<Tags> newTags = (Set<Tags>)req.getSession().getAttribute("newTags");
+		Set<Tags> newTags = (Set<Tags>)req.getSession().getAttribute(TAGS);
 		if(newTags != null) {
 			for(Tags newTag : newTags){
 				businessDelegate.putRecord(newTag);
 			}
-			req.getSession().setAttribute("newTags", null);
+			req.getSession().setAttribute(TAGS, null);
 		}
 		try {
 			InputStream templateStream = this.getClass().getClassLoader().getResourceAsStream("template.html");

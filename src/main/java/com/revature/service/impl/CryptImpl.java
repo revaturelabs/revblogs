@@ -17,6 +17,24 @@ import com.revature.service.Crypt;
 public class CryptImpl implements Crypt {
 
 	private BusinessDelegate businessDelegate;
+	String[][] keys = new String[][]{
+		
+		/*
+		 *  These keys are used to encode the corresponding properties
+		 */
+			
+		{"CZmTgoznKnJocTkGuFFURvZjUDuVvBhoETorfnzPOfqymleBbOOHfqPCSSty", "pneumonoultramicroscopicsilicovolcanoconiosis"},
+		{"GSXWzGGiiDBvlYxTNddabeUOsSPLHoYnibqBEAtRrSDnZPrACvUjBMGxcoBZ", "Pseudopseudohypoparathyroidism"},
+		{"cCpQZBETFySMWXeMTQDQomszbDhIgTCWNfjzrBQjwyzcMIrNeFGZggWpzSdQ", "Floccinaucinihilipilification"},
+		{"UjVheJqfrHXEuciEaIEibjRYjaxGEJFPrLcZNuugxZQmpHdeoBJRVLFeEDfc", "Antidisestablishmentarianism"},
+		{"BhXCFkEevSCHlJMCJyvqhyOiNnKDaoxwcdWrNGxUZySIJspidexHSROVXDAh", "supercalifragilisticexpialidocious"},
+		{"RnhHIlwovrapdVzySrOIfmMZPOPOEACAsVScsBIflnsIphgireiIRKkmINdr", "Incomprehensibilities"},
+		{"momGKfMimvxYGNKmZCzdXNSBGpvQngTbtvxETwjePoZWyirhkyAWMhkFzxQI", "honorificabilitudinitatibus"},
+		{"TuJgzrAAFblqmFUfDvRyNHOtKQjVpxESLwrXecnGMSrSEJyhfkgPGvTccbPJ", "sesquipedalianism"},
+		{"JplYSkoJXvxUEIaEZtLMzYugcPINpzArbIoGHjwHwFzdoUtfNfMOetPvvsHn", "METHIONYLTHREONYLTHREONYGLUTAMINYLARGINY"},
+		{"iqGJkjoSepUYggqxsZCdxXzCSyjxADhQtsiMPhyNRMxJbGowMrGmlIQETFzC", "Aequeosalinocalcalinoceraceoaluminosocupreovitriolic"},
+		{"boosNkoVgLkjnWJUMEeHAGbUmwWhVlBOPZKZjUduUXunxwbsZmnNxKdAWePg", "peobuefdvxjbtoajefspkfuccfngbf"}
+	};
 	
 	public void setBusinessDelegate(BusinessDelegate businessDelegate) {
 		this.businessDelegate = businessDelegate;
@@ -445,7 +463,7 @@ public class CryptImpl implements Crypt {
 	}
 	private char decipherLetter(char[] alpha1, char[] alpha2, char letter, int keyIndex, char[] keyword){
 		
-		int cipherLetter = 0;
+		int cipherLetter;
 		int indexLetter = 0;
 		int indexKey = 0;
 		
@@ -548,7 +566,7 @@ public class CryptImpl implements Crypt {
 	private String clearMask(String maskedField){
 		
 		char[] maskedArray = maskedField.toCharArray();
-		char[] trueLetters = new char[(maskedField.length() / 6)];
+		char[] trueLetters = new char[maskedField.length() / 6];
 		
 		int startPos = 0;
 		int counter = 1;
@@ -574,131 +592,206 @@ public class CryptImpl implements Crypt {
 			startPos += 6;
 	
 			switch(mini){
-			
-				case "$OhuT#": trueLetters[i] = 'A'; break;
-				case "TtFTiY": trueLetters[i] = 'B'; break;
-				case "tCdOUC": trueLetters[i] = 'C'; break;
-				case "3xwtpi": trueLetters[i] = 'D'; break;
-				case "!M0$Xe": trueLetters[i] = 'E'; break;
-				case "wvQvVO": trueLetters[i] = 'F'; break;
-				case "e#t3hA": trueLetters[i] = 'G'; break;
-				case "zZJuZE": trueLetters[i] = 'H'; break;
-				case "E#kkTA": trueLetters[i] = 'I'; break;
-				case "YRd0V$": trueLetters[i] = 'J'; break;
-				case "S5Z6CN": trueLetters[i] = 'K'; break;
-				case "ruBvQq": trueLetters[i] = 'L'; break;
-				case "DYOohJ": trueLetters[i] = 'M'; break;
-				case "C!4zE8": trueLetters[i] = 'N'; break;
-				case "fOY9iN": trueLetters[i] = 'O'; break;
-				case "FYpp4u": trueLetters[i] = 'P'; break;
-				case "0sG4r3": trueLetters[i] = 'Q'; break;
-				case "KYtiUl": trueLetters[i] = 'R'; break;
-				case "q$kreA": trueLetters[i] = 'S'; break;
-				case "jv8MUZ": trueLetters[i] = 'T'; break;
-				case "wa0$Hn": trueLetters[i] = 'U'; break;
-				case "mw154U": trueLetters[i] = 'V'; break;
-				case "K0xe4k": trueLetters[i] = 'W'; break;
-				case "NngHYK": trueLetters[i] = 'X'; break;
-				case "pJE1Nw": trueLetters[i] = 'Y'; break;
-				case "COqVzq": trueLetters[i] = 'Z'; break;
-				case "mPcFC2": trueLetters[i] = 'a'; break;
-				case "JINKJk": trueLetters[i] = 'b'; break;
-				case "wkNBhR": trueLetters[i] = 'c'; break;
-				case "kesPkg": trueLetters[i] = 'd'; break;
-				case "nkfZn4": trueLetters[i] = 'e'; break;
-				case "$w?fY2": trueLetters[i] = 'f'; break;
-				case "Xwo?Kg": trueLetters[i] = 'g'; break;
-				case "CPa?8Y": trueLetters[i] = 'h'; break;
-				case "o?!9w4": trueLetters[i] = 'i'; break;
-				case "UzdBgX": trueLetters[i] = 'j'; break;
-				case "gcEI3h": trueLetters[i] = 'k'; break;
-				case "F#qIp?": trueLetters[i] = 'l'; break;
-				case "3YeSkm": trueLetters[i] = 'm'; break;
-				case "gFCXbS": trueLetters[i] = 'n'; break;
-				case "dHZ6g!": trueLetters[i] = 'o'; break;
-				case "kb65mt": trueLetters[i] = 'p'; break;
-				case "7b7099": trueLetters[i] = 'q'; break;
-				case "oHyVZ?": trueLetters[i] = 'r'; break;
-				case "XR#i3C": trueLetters[i] = 's'; break;
-				case "hp7X#v": trueLetters[i] = 't'; break;
-				case "SfyQSZ": trueLetters[i] = 'u'; break;
-				case "ACro8E": trueLetters[i] = 'v'; break;
-				case "gh4BjV": trueLetters[i] = 'w'; break;
-				case "8cUb0S": trueLetters[i] = 'x'; break;
-				case "Iey9ay": trueLetters[i] = 'y'; break;
-				case "j5Db9V": trueLetters[i] = 'z'; break;
-				case "2b6pD8": trueLetters[i] = 32; break;
-				case "M54?bE": trueLetters[i] = 33; break; 
-				case "Rp$wGi": trueLetters[i] = 34; break; 
-				case "I0uQ9Y": trueLetters[i] = 35; break; 
-				case "a9PjnL": trueLetters[i] = 36; break; 
-				case "nZVNug": trueLetters[i] = 37; break; 
-				case "7Jf!lN": trueLetters[i] = 38; break; 
-				case "2CU6Ft": trueLetters[i] = 39; break; 
-				case "OPRQfR": trueLetters[i] = 40; break; 
-				case "jY3zgw": trueLetters[i] = 41; break; 
-				case "DOVa2s": trueLetters[i] = 42; break; 
-				case "KP6JVz": trueLetters[i] = 43; break; 
-				case "wuws!m": trueLetters[i] = 44; break; 
-				case "HOQraS": trueLetters[i] = 45; break; 
-				case "IPNHri": trueLetters[i] = 46; break; 
-				case "7XEj5R": trueLetters[i] = 47; break;
-				case "p90dHj": trueLetters[i] = 48; break;
-				case "1i!Rc!": trueLetters[i] = 49; break;
-				case "h00pFz": trueLetters[i] = 50; break;
-				case "5p1Qp9": trueLetters[i] = 51; break;
-				case "7tU0fU": trueLetters[i] = 52; break;
-				case "Ukmety": trueLetters[i] = 53; break;
-				case "Hy32BQ": trueLetters[i] = 54; break;
-				case "Dgyllp": trueLetters[i] = 55; break;
-				case "MGvJXc": trueLetters[i] = 56; break;
-				case "MDCqbq": trueLetters[i] = 57; break;
-				case "YpkzKT": trueLetters[i] = 58; break; 
-				case "EkvUI0": trueLetters[i] = 59; break; 
-				case "eqBO7c": trueLetters[i] = 60; break; 
-				case "16RYrG": trueLetters[i] = 61; break; 
-				case "gFswj6": trueLetters[i] = 62; break; 
-				case "?TJQUA": trueLetters[i] = 63; break; 
-				case "inP8eS": trueLetters[i] = 64; break;
-				case "dmFtkx": trueLetters[i] = 91; break;
-				case "IVD3EC": trueLetters[i] = 92; break;
-				case "C4tdtH": trueLetters[i] = 93; break;
-				case "w$LsgQ": trueLetters[i] = 94; break;
-				case "1xRt1X": trueLetters[i] = 95; break;
-				case "4bbblY": trueLetters[i] = 96; break;
-				case "kToyO1": trueLetters[i] = 123; break;
-				case "aP1chC": trueLetters[i] = 124; break; 
-				case "Cfhven": trueLetters[i] = 125; break;
-				case "yvx?ZC": trueLetters[i] = 126; break;
+				case "$OhuT#": trueLetters[i] = 'A'; 
+					break;
+				case "TtFTiY": trueLetters[i] = 'B'; 
+					break;
+				case "tCdOUC": trueLetters[i] = 'C'; 
+					break;
+				case "3xwtpi": trueLetters[i] = 'D'; 
+					break;
+				case "!M0$Xe": trueLetters[i] = 'E'; 
+					break;
+				case "wvQvVO": trueLetters[i] = 'F'; 
+					break;
+				case "e#t3hA": trueLetters[i] = 'G'; 
+					break;
+				case "zZJuZE": trueLetters[i] = 'H'; 
+					break;
+				case "E#kkTA": trueLetters[i] = 'I'; 
+					break;
+				case "YRd0V$": trueLetters[i] = 'J'; 
+					break;
+				case "S5Z6CN": trueLetters[i] = 'K'; 
+					break;
+				case "ruBvQq": trueLetters[i] = 'L'; 
+					break;
+				case "DYOohJ": trueLetters[i] = 'M'; 
+					break;
+				case "C!4zE8": trueLetters[i] = 'N'; 
+					break;
+				case "fOY9iN": trueLetters[i] = 'O'; 
+					break;
+				case "FYpp4u": trueLetters[i] = 'P'; 
+					break;
+				case "0sG4r3": trueLetters[i] = 'Q'; 
+					break;
+				case "KYtiUl": trueLetters[i] = 'R'; 
+					break;
+				case "q$kreA": trueLetters[i] = 'S'; 
+					break;
+				case "jv8MUZ": trueLetters[i] = 'T'; 
+					break;
+				case "wa0$Hn": trueLetters[i] = 'U'; 
+					break;
+				case "mw154U": trueLetters[i] = 'V'; 
+					break;
+				case "K0xe4k": trueLetters[i] = 'W'; 
+					break;
+				case "NngHYK": trueLetters[i] = 'X'; 
+					break;
+				case "pJE1Nw": trueLetters[i] = 'Y'; 
+					break;
+				case "COqVzq": trueLetters[i] = 'Z'; 
+					break;
+				case "mPcFC2": trueLetters[i] = 'a'; 
+					break;
+				case "JINKJk": trueLetters[i] = 'b'; 
+					break;
+				case "wkNBhR": trueLetters[i] = 'c'; 
+					break;
+				case "kesPkg": trueLetters[i] = 'd'; 
+					break;
+				case "nkfZn4": trueLetters[i] = 'e'; 
+					break;
+				case "$w?fY2": trueLetters[i] = 'f'; 
+					break;
+				case "Xwo?Kg": trueLetters[i] = 'g'; 
+					break;
+				case "CPa?8Y": trueLetters[i] = 'h'; 
+					break;
+				case "o?!9w4": trueLetters[i] = 'i'; 
+					break;
+				case "UzdBgX": trueLetters[i] = 'j'; 
+					break;
+				case "gcEI3h": trueLetters[i] = 'k'; 
+					break;
+				case "F#qIp?": trueLetters[i] = 'l'; 
+					break;
+				case "3YeSkm": trueLetters[i] = 'm'; 
+					break;
+				case "gFCXbS": trueLetters[i] = 'n'; 
+					break;
+				case "dHZ6g!": trueLetters[i] = 'o'; 
+					break;
+				case "kb65mt": trueLetters[i] = 'p'; 
+					break;
+				case "7b7099": trueLetters[i] = 'q'; 
+					break;
+				case "oHyVZ?": trueLetters[i] = 'r'; 
+					break;
+				case "XR#i3C": trueLetters[i] = 's'; 
+					break;
+				case "hp7X#v": trueLetters[i] = 't'; 
+					break;
+				case "SfyQSZ": trueLetters[i] = 'u'; 
+					break;
+				case "ACro8E": trueLetters[i] = 'v'; 
+					break;
+				case "gh4BjV": trueLetters[i] = 'w'; 
+					break;
+				case "8cUb0S": trueLetters[i] = 'x'; 
+					break;
+				case "Iey9ay": trueLetters[i] = 'y'; 
+					break;
+				case "j5Db9V": trueLetters[i] = 'z'; 
+					break;
+				case "2b6pD8": trueLetters[i] = 32; 
+					break;
+				case "M54?bE": trueLetters[i] = 33; 
+					break; 
+				case "Rp$wGi": trueLetters[i] = 34; 
+					break; 
+				case "I0uQ9Y": trueLetters[i] = 35; 
+					break; 
+				case "a9PjnL": trueLetters[i] = 36; 
+					break; 
+				case "nZVNug": trueLetters[i] = 37; 
+					break; 
+				case "7Jf!lN": trueLetters[i] = 38; 
+					break; 
+				case "2CU6Ft": trueLetters[i] = 39; 
+					break; 
+				case "OPRQfR": trueLetters[i] = 40; 
+					break; 
+				case "jY3zgw": trueLetters[i] = 41; 
+					break; 
+				case "DOVa2s": trueLetters[i] = 42; 
+					break; 
+				case "KP6JVz": trueLetters[i] = 43; 
+					break; 
+				case "wuws!m": trueLetters[i] = 44; 
+					break; 
+				case "HOQraS": trueLetters[i] = 45; 
+					break; 
+				case "IPNHri": trueLetters[i] = 46; 
+					break; 
+				case "7XEj5R": trueLetters[i] = 47; 
+					break;
+				case "p90dHj": trueLetters[i] = 48; 
+					break;
+				case "1i!Rc!": trueLetters[i] = 49; 
+					break;
+				case "h00pFz": trueLetters[i] = 50; 
+					break;
+				case "5p1Qp9": trueLetters[i] = 51; 
+					break;
+				case "7tU0fU": trueLetters[i] = 52; 
+					break;
+				case "Ukmety": trueLetters[i] = 53; 
+					break;
+				case "Hy32BQ": trueLetters[i] = 54; 
+					break;
+				case "Dgyllp": trueLetters[i] = 55; 
+					break;
+				case "MGvJXc": trueLetters[i] = 56; 
+					break;
+				case "MDCqbq": trueLetters[i] = 57; 
+					break;
+				case "YpkzKT": trueLetters[i] = 58; 
+					break; 
+				case "EkvUI0": trueLetters[i] = 59; 
+					break; 
+				case "eqBO7c": trueLetters[i] = 60; 
+					break; 
+				case "16RYrG": trueLetters[i] = 61; 
+					break; 
+				case "gFswj6": trueLetters[i] = 62; 
+					break; 
+				case "?TJQUA": trueLetters[i] = 63; 
+					break; 
+				case "inP8eS": trueLetters[i] = 64; 
+					break;
+				case "dmFtkx": trueLetters[i] = 91; 
+					break;
+				case "IVD3EC": trueLetters[i] = 92; 
+					break;
+				case "C4tdtH": trueLetters[i] = 93; 
+					break;
+				case "w$LsgQ": trueLetters[i] = 94; 
+					break;
+				case "1xRt1X": trueLetters[i] = 95; 
+					break;
+				case "4bbblY": trueLetters[i] = 96; 
+					break;
+				case "kToyO1": trueLetters[i] = 123; 
+					break;
+				case "aP1chC": trueLetters[i] = 124; 
+					break; 
+				case "Cfhven": trueLetters[i] = 125; 
+					break;
+				case "yvx?ZC": trueLetters[i] = 126; 
+					break;
+				default:break;
 			}
 		}
 		
-		String temp = new String(trueLetters);
-		return temp;
+		return new String(trueLetters);
 	}
-	
-	String[][] keys = new String[][]{
-		
-		/*
-		 *  These keys are used to encode the corresponding properties
-		 */
-			
-		{"CZmTgoznKnJocTkGuFFURvZjUDuVvBhoETorfnzPOfqymleBbOOHfqPCSSty", "pneumonoultramicroscopicsilicovolcanoconiosis"},
-		{"GSXWzGGiiDBvlYxTNddabeUOsSPLHoYnibqBEAtRrSDnZPrACvUjBMGxcoBZ", "Pseudopseudohypoparathyroidism"},
-		{"cCpQZBETFySMWXeMTQDQomszbDhIgTCWNfjzrBQjwyzcMIrNeFGZggWpzSdQ", "Floccinaucinihilipilification"},
-		{"UjVheJqfrHXEuciEaIEibjRYjaxGEJFPrLcZNuugxZQmpHdeoBJRVLFeEDfc", "Antidisestablishmentarianism"},
-		{"BhXCFkEevSCHlJMCJyvqhyOiNnKDaoxwcdWrNGxUZySIJspidexHSROVXDAh", "supercalifragilisticexpialidocious"},
-		{"RnhHIlwovrapdVzySrOIfmMZPOPOEACAsVScsBIflnsIphgireiIRKkmINdr", "Incomprehensibilities"},
-		{"momGKfMimvxYGNKmZCzdXNSBGpvQngTbtvxETwjePoZWyirhkyAWMhkFzxQI", "honorificabilitudinitatibus"},
-		{"TuJgzrAAFblqmFUfDvRyNHOtKQjVpxESLwrXecnGMSrSEJyhfkgPGvTccbPJ", "sesquipedalianism"},
-		{"JplYSkoJXvxUEIaEZtLMzYugcPINpzArbIoGHjwHwFzdoUtfNfMOetPvvsHn", "METHIONYLTHREONYLTHREONYGLUTAMINYLARGINY"},
-		{"iqGJkjoSepUYggqxsZCdxXzCSyjxADhQtsiMPhyNRMxJbGowMrGmlIQETFzC", "Aequeosalinocalcalinoceraceoaluminosocupreovitriolic"},
-		{"boosNkoVgLkjnWJUMEeHAGbUmwWhVlBOPZKZjUduUXunxwbsZmnNxKdAWePg", "peobuefdvxjbtoajefspkfuccfngbf"}
-	};
 	
 	public void setProperty(String[] props){
 		
-		List<String> propsList = new ArrayList<String>();
+		List<String> propsList = new ArrayList<>();
 		
 		for(int i = 0; i < props.length; i++){
 				
@@ -796,6 +889,13 @@ public class CryptImpl implements Crypt {
 		}
 	}
 
+	private boolean condition(int num){
+		if(num > 47 && num < 57) return true;
+		else if(num > 65 && num < 90) return true;
+		else if(num > 97 && num < 122) return true;
+		return false;
+	}
+	
 	public String getRandom(int length) {
 		
 		Random randObj = new Random();
@@ -808,7 +908,7 @@ public class CryptImpl implements Crypt {
 			
 			int num = randObj.nextInt();
 				
-			if((num > 47 && num < 57) || (num > 65 && num < 90) || (num > 97 && num < 122)){
+			if(condition(num)){
 				
 				myChar = (char)num;
 			
