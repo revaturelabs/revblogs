@@ -45,5 +45,7 @@ public class Logging {
 	//------------------POINTCUTS------------------//
 
 	@Pointcut("within(com.revature..*..*)")
-	public void logPerformance(){}
+	public void logPerformance(){
+		//Empty for aop, STOP deleting this comment
+	}
 }

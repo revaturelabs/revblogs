@@ -46,7 +46,7 @@ public class Population {
 		
 		String[] roles = new String[]{"ADMIN", "CONTRIBUTOR"};
 		
-		List<UserRoles> roleList = new ArrayList<UserRoles>();
+		List<UserRoles> roleList = new ArrayList<>();
 		UserRoles role;
 		
 		for(int i = 0; i < 2; i++){
@@ -75,7 +75,7 @@ public class Population {
 		
 		String[] tags = new String[]{"Java", "SQL", "Apian", "JSP", "Servlet", "Hibernate", "Spring", "REST", "SOAP"};
 		
-		List<Tags> tagList = new ArrayList<Tags>();
+		List<Tags> tagList = new ArrayList<>();
 		Tags tag;
 		
 		for(int i = 0; i < tags.length; i++){
@@ -104,7 +104,7 @@ public class Population {
 		
 		session = businessDelegate.requestSession();
 		
-		List<Tags> tagList = new ArrayList<>();
+		List<Tags> tagList;
 		
 		Criteria criteria = session.createCriteria(Tags.class);
 		tagList = (List<Tags>)criteria.list();
@@ -195,7 +195,7 @@ public class Population {
 		
 		List<User> users = businessDelegate.requestUsers();
 		
-		List<Blog> blogList = new ArrayList<Blog>();
+		List<Blog> blogList = new ArrayList<>();
 		Blog blog;
 		
 		for(int i = 0; i < blogTitle.length; i++){
@@ -290,11 +290,16 @@ public class Population {
 					case 6:				
 						users[i][j] = "I am a software developer who focuses on applications that revolve around pickles.";
 						break;
+					
+					//Unsupported call
+					default:
+						users[i][j] = "";
+						break;
 				}	
 			}
 		}
 		
-		List<User> userList = new ArrayList<User>();
+		List<User> userList = new ArrayList<>();
 		UserRoles myRole = new UserRoles();
 
 		for(int k = 0; k < users.length; k++){
@@ -355,6 +360,10 @@ public class Population {
 					case 6:				
 						
 						user.setDescription(users[k][q]);
+						break;
+						
+					//Unsupported call
+					default:
 						break;
 				}
 			}
