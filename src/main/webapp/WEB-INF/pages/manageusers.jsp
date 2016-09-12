@@ -25,6 +25,9 @@
 </head>
 <body>
 	<jsp:include page="navbar.jsp"></jsp:include>
+	<br />
+		<img id="loadingManage" src="http://blogs.pjw6193.tech/content/resources/img/rev.gif"/>
+	<br />
 	<div class="container page-content">
 		<br/><br/>
 		<button data-toggle="modal" data-target="#createContributor" style="cursor: pointer;" class="btn btn-primary" aria-hidden="true">
@@ -47,7 +50,7 @@
 	  		<col width="0%">
 		  	<thead>
 				<tr>
-					<th>Picture</th>
+					<th>Picture(Reset)</th>
 					<th>Email</th>
 					<th>Name</th>
 					<th>Title</th>
@@ -68,7 +71,7 @@
 						<td id="proPic${user.userId}">
 							<form action="resetProfile.do" method="post">
 								<button id="picButton" name="resetProfile" value="${user.userId}" type="submit">
-									<img src="${user.profilePicture}" width="50" height="auto" />
+									<img src="${user.profilePicture}" width="50" height="auto" alt="profile picture" />
 								</button>
 							</form>
 						</td>
@@ -227,7 +230,21 @@ $(document).ready(function() {
 			location.reload();
 		});
 	});
+	
+	$("#picButton").click(function(){
+		
+		$("#loadingManage").show();
+		setTimeout(function(){
+			$("#loadingManage").hide();
+			location.reload();
+		}, 10000);
+		
+	});
 });
+	
+$(document).ready(function(){
+	$('#loadingManage').hide();
+});	
 	
 function edit(userId){
 	$("#selectedUserId").val($("#userId" + userId).html());

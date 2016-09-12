@@ -280,3 +280,7 @@ html, body {
 #error-info {
 	text-align: center;
 }
+
+#loadingManager{
+	text-align:center;
+}
