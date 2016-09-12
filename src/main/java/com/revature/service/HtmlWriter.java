@@ -87,7 +87,7 @@ public class HtmlWriter {
 			if(line.contains("post-tags")){
 				Set<Tags> tags = blog.getTags();
 				for(Tags tag: tags){
-					blogWriter.write("<a href='' ng-click=getPageWithTagsFromBlogPost(1, " + tag.getTagId() + ")>" + tag.getDescription() + "</a> ");
+					blogWriter.write("<a href='' ng-click='getPageWithTagsFromBlogPost(1, " + tag.getTagId() + ")'>" + tag.getDescription() + "</a> ");
 				}
 			}
 			if(line.contains("facebook-url")){
