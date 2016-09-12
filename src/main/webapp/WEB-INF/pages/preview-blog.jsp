@@ -54,7 +54,8 @@
 </div>
 
 <jsp:include page="navbar.jsp"></jsp:include>
-  <div class="container page-content">
+<div class="overall-container">
+  <div class="container page-content content-padding">
     <div class="row">
       <div class="panel panel-default col-sm-8">
         <div class="post-content" id="postContent" style="padding-top: 60px;">
@@ -160,7 +161,7 @@
       </div>
     </div>
   </div>
-  <div class="footer">
+  <div class="footer footer2">
     <div class="container">
       <div class="row">
         <div class="col-sm-6">
@@ -169,6 +170,7 @@
       </div>
     </div>
   </div>
+ </div>
 </body>
 <script type="text/javascript" src="resources/js/ui.js"></script>
 <script src="${pageContext.servletContext.contextPath}/resources/js/antiCursing.js"></script>
