@@ -46,7 +46,8 @@
 	      </div><!-- /.navbar-collapse -->
 	    </div><!-- /.container-fluid -->
 	</nav>
-	<div id="error-info" class="container page-content">
+	<div class="overall-container">
+	<div id="error-info" class="container page-content content-padding">
 		<h2>Error <c:out value="${pageContext.errorData.statusCode}" /> Occurred</h2>
 		<br />
 		<br />
@@ -57,7 +58,7 @@
 		<br />
 	</div>
 	<!-- FOOTER -->
-	  <div class="footer">
+	  <div class="footer footer2">
 		    <div class="container">
 		      <div class="row">
 		        <div class="col-sm-4">
@@ -78,6 +79,7 @@
 		      </div>
 		    </div>
 		</div>
+	</div>
 </body>
 <script type="text/javascript" src="resources/js/ui.js"></script>
 </html>
