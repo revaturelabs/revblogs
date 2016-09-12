@@ -22,6 +22,7 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 	
 	$scope.getPage = function(page, postsPP)
 	{
+		document.getElementById("loading").style = "visibility: visible";
 		var fullUrl;
 		if($scope.author != null && $scope.author > 0){
 			fullUrl = $scope.appUrl+"/api/posts?author=" + $scope.author + "&page=" + page + "&per_page=" + $scope.postsPerPage;
@@ -67,7 +68,7 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 				{
 					preloadPage(prevPage, $scope.postsPerPage);
 				}
-				
+				document.getElementById("loading").style = "visibility: hidden";
 				$('#postsDiv').load();
 				window.scrollTo(0, $('#postsDiv').offsetTop + 100);
 			}
