@@ -25,9 +25,6 @@
 </head>
 <body>
 	<jsp:include page="navbar.jsp"></jsp:include>
-	<br />
-		<img id="loadingManage" src="http://blogs.pjw6193.tech/content/resources/img/rev.gif"/>
-	<br />
 	<div class="container page-content">
 		<br/><br/>
 		<button data-toggle="modal" data-target="#createContributor" style="cursor: pointer;" class="btn btn-primary" aria-hidden="true">
@@ -69,11 +66,9 @@
 				<c:forEach items="${userList}" var="user">
 					<tr id="${user.userId}">
 						<td id="proPic${user.userId}">
-							<form action="resetProfile.do" method="post">
-								<button id="picButton" name="resetProfile" value="${user.userId}" type="submit">
-									<img src="${user.profilePicture}" width="50" height="auto" alt="profile picture" />
-								</button>
-							</form>
+							<button id="picButton" name="resetProfile" value="${user.userId}" data-toggle="modal" data-target="#confirmPictureMod">
+								<img src="${user.profilePicture}" width="50" height="50" alt="profile picture" />
+							</button>
 						</td>
 						<td id="email${user.userId}"><c:out value="${user.email}" /></td>
 						<td><c:out value="${user.lastName}, ${user.firstName}"/></td>
@@ -161,6 +156,32 @@
 				</div>
 			</div>
 		</div>
+		
+		<!-- Confirm Picture Reset Modal -->
+		<div id="confirmPictureMod" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+						<h3 class="modal-title">Confirm Picture Reset</h3>
+					</div>
+					<div class="modal-body">
+						Are you sure you want to reset this users profile picture?
+						<br/>
+					</div>
+					<img id="loadingManage" src="http://blogs.pjw6193.tech/content/resources/img/rev.gif" />
+					<div class="modal-footer">
+						<button id="confirmPicture" class="btn btn-primary form-control" style="width: auto;">
+							Confirm
+						</button>
+						<button id="closeCreateUser" class="btn btn-secondary" data-dismiss="modal">
+							Deny
+						</button>					
+					</div>
+				</div>
+			</div>
+		</div>
 	
 		<!-- Create Contributor Modal -->
 		<div id="editUserProfile" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
@@ -210,6 +231,7 @@
 $(document).ready(function() {
 	
 	$("#loading").hide();
+	$('#loadingManage').hide();
 	
 	$('#userTable').DataTable({
 		
@@ -231,19 +253,18 @@ $(document).ready(function() {
 		});
 	});
 	
-	$("#picButton").click(function(){
+	$("#confirmPicture").click(function(){
 		
 		$("#loadingManage").show();
-		setTimeout(function(){
+		
+		var id = $("#picButton").val();
+		
+		$.get("https://localhost:7002/revblogs/resetProfile.do?resetProfile=" + id, function(response){
+		
 			$("#loadingManage").hide();
 			location.reload();
-		}, 10000);
-		
+		});
 	});
-});
-	
-$(document).ready(function(){
-	$('#loadingManage').hide();
 });	
 	
 function edit(userId){

@@ -43,11 +43,11 @@
 
 <form:form action="add-blog.do" method="post" commandName="blog">
 	<h3>Title</h3>
-	<form:input name="ngTitle" ng-model="ngTitle" path="blogTitle" />
+	<form:input id="blogTitle" name="ngTitle" ng-model="ngTitle" path="blogTitle" />
 <%-- 	<span class="validateHint" ng-show="ngTitle == null || ngTitle.length <= 0">A title is required!</span> --%>
 	<br />
 	<h4>Subtitle</h4>
-	<form:input name="ngSubtitle" ng-model="ngSubtitle" path="blogSubtitle"/><br />
+	<form:input id="blogSubtitle" name="ngSubtitle" ng-model="ngSubtitle" path="blogSubtitle"/><br />
 	<br>
 	<form:textarea path="blogContent" rows="30" cols="100"></form:textarea>
 	<br>

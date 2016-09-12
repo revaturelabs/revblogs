@@ -227,7 +227,7 @@ public class PostController {
 	}
 	
 	// Admin Reset Profile Picture
-	@RequestMapping(value="resetProfile.do", method=RequestMethod.POST)
+	@RequestMapping(value="resetProfile.do", method=RequestMethod.GET)
 	public ModelAndView resetProfilePicture(@RequestParam(value="resetProfile") int userId, HttpServletRequest req){
 		ModelAndView model = new ModelAndView();
 		model.setViewName(MANAGE);

@@ -46,11 +46,11 @@
 
 <form:form action="add-blog.do" method="post" commandName="blog">
 	Title
-	<form:input name="ngTitle" ng-model="ngTitle" path="blogTitle" value="${blog.blogTitle}" /><br />
+	<form:input id="blogTitle" ng-model="ngTitle" path="blogTitle"></form:input><br />
 	Subtitle
-	<form:input name="ngSubtitle" ng-model="ngSubtitle" path="blogSubtitle" value="${blog.blogSubtitle}" /><br />
+	<form:input id="blogSubtitle" name="ngSubtitle" ng-model="ngSubtitle" path="blogSubtitle"></form:input><br />
 	<br>
-	<form:textarea path="blogContent" rows="30" cols="100" value="${blog.blogContent}" ></form:textarea>
+	<form:textarea path="blogContent" rows="30" cols="100" ></form:textarea>
 	<br>
 	<br />
 	References:
@@ -63,7 +63,7 @@
 	<br /><br />
  	Apply tags (separated by commas):
  	<br>
-	<form:input path="blogTagsString" id="tagList" style="resize:none;width:300px;" value="${blog.blogTagsString}"></form:input>
+	<form:input path="blogTagsString" id="tagList" style="resize:none;width:300px;"></form:input>
 	<br>
 	<span ng-show="ngTitle == null || ngTitle.length <= 0 || ngSubtitle == null || ngSubtitle.length <= 0"><br />Please provide a title and subtitle to proceed.</span>
 	<input ng-show="ngTitle != null && ngTitle.length > 0 && ngSubtitle != null && ngSubtitle.length > 0" type="submit" value="Preview" />
