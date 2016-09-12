@@ -48,7 +48,7 @@
   <div class="container page-content content-padding">
   	<div class="row">
   		<div class="col-xs-12">
-	        <h2 ng-show="searchPage">Search Results for: {{searchQuery}}</h2>
+	        <h2 ng-show="searchPage">Search Results for: {{savedQuery}}</h2>
 	        <h2 ng-show="!searchPage">Latest Posts</h2>
   		</div>
   	</div>
@@ -89,7 +89,7 @@
     </div>
   
   <!-- Customize posts to view -->
-  	<button ng-show="searchPage===true" ng-click="getPage(1,postsPerPage)">Clear Search Results</button>
+  	<button ng-show="searchPage===true" ng-click="clearSearch()">Clear Search Results</button>
 
 	  <div id="postsPerPage">
 	  	<label>Number of posts to show: </label>

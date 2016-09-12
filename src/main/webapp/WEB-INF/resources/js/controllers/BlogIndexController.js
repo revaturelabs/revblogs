@@ -3,12 +3,12 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 	$scope.getFilter = function()
 	{
 		var ulQuery = $scope.searchQuery.toLowerCase();
-		
+		$scope.savedQuery = $scope.searchQuery;
 		$scope.searchPosts = $scope.posts;
+		$scope.searchPage = true;
 		
 		for (var i = 0; i < $scope.searchPosts.posts.length; i++) 
 		{
-			$scope.searchPage = true;
 			var ulTitle = $scope.searchPosts.posts[i].title.toLowerCase();
 			if (!ulTitle.includes(ulQuery))
 			{
@@ -18,6 +18,12 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 		}
 			
 		return false;
+	}
+	
+	$scope.clearSearch = function()
+	{
+		console.log($scope.searchPage);
+		$scope.searchPage = false;
 	}
 	
 	$scope.getPage = function(page, postsPP)
@@ -36,7 +42,7 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 				$scope.posts = resp;
 				
 				$scope.curPage = page;  //current page
-				
+				$scope.searchPage = false;
 				var prevPage = $scope.curPage;
 				var nextPage = $scope.curPage;
 				
@@ -205,6 +211,7 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 			total_posts: 0
 	};
 	$scope.searchQuery = "";
+	$scope.savedQuery = "";
 	$scope.searchPage = false;
 	$scope.curPage = 1;
 	$scope.postsPerPage = 10;
