@@ -50,13 +50,19 @@
 	<form:textarea path="blogContent" rows="30" cols="100"></form:textarea>
 	<br>
 	<br />
-	<div margin="0" data-ng-repeat="reference in references">
-		<input type="text" ng-model="reference.name" name="{{reference.id}}" placeholder="Reference">
-		<span ng-hide="maxedReference">
-			<button type="button" ng-show="showAddChoice(reference)" ng-click="addNewChoice()">Add another reference</button>
-		</span>
-	</div>
-	<br>
+	<c:forEach varStatus="vs" items="${blog.references}">
+		<div id="ref${vs.index}" style="display: none;">
+			[${vs.index+1}] - <form:input path="references[${vs.index}]"></form:input><br />
+		</div>
+	</c:forEach>
+	<button id="addRefButton" type="button" ng-click="revealReference()">Add Another Reference</button>
+<!-- 	<div margin="0" data-ng-repeat="reference in references"> -->
+<!-- 		<input type="text" ng-model="reference.name" name="{{reference.id}}" placeholder="Reference"> -->
+<!-- 		<span ng-hide="maxedReference"> -->
+<!-- 			<button type="button" ng-show="showAddChoice(reference)" ng-click="addNewChoice()">Add another reference</button> -->
+<!-- 		</span> -->
+<!-- 	</div> -->
+	<br /><br />
  	Apply tags (separated by commas):
  	<br>
 	<form:input path="blogTagsString" id="tagList" style="resize:none;width:300px;"></form:input>

@@ -498,7 +498,7 @@ public class PostController {
 			author = (User) req.getSession().getAttribute("blogToEditAuthor");
 		}
 		blog.setAuthor(author);
-		blog.setReferences(getReferences(req));
+		//blog.setReferences(getReferences(req));
 		
 		/*
 		 * Blog Bean will be generated with proper tags and fields
