@@ -47,7 +47,7 @@
 	  		<col width="0%">
 		  	<thead>
 				<tr>
-					<th>Picture</th>
+					<th>Picture(Reset)</th>
 					<th>Email</th>
 					<th>Name</th>
 					<th>Title</th>
@@ -66,11 +66,9 @@
 				<c:forEach items="${userList}" var="user">
 					<tr id="${user.userId}">
 						<td id="proPic${user.userId}">
-							<form action="resetProfile.do" method="post">
-								<button id="picButton" name="resetProfile" value="${user.userId}" type="submit">
-									<img src="${user.profilePicture}" width="50" height="auto" />
-								</button>
-							</form>
+							<button id="picButton" name="resetProfile" value="${user.userId}" data-toggle="modal" data-target="#confirmPictureMod">
+								<img src="${user.profilePicture}" width="50" height="50" alt="profile picture" />
+							</button>
 						</td>
 						<td id="email${user.userId}"><c:out value="${user.email}" /></td>
 						<td><c:out value="${user.lastName}, ${user.firstName}"/></td>
@@ -158,6 +156,32 @@
 				</div>
 			</div>
 		</div>
+		
+		<!-- Confirm Picture Reset Modal -->
+		<div id="confirmPictureMod" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+						<h3 class="modal-title">Confirm Picture Reset</h3>
+					</div>
+					<div class="modal-body">
+						Are you sure you want to reset this users profile picture?
+						<br/>
+					</div>
+					<img id="loadingManage" src="http://blogs.pjw6193.tech/content/resources/img/rev.gif" />
+					<div class="modal-footer">
+						<button id="confirmPicture" class="btn btn-primary form-control" style="width: auto;">
+							Confirm
+						</button>
+						<button id="closeCreateUser" class="btn btn-secondary" data-dismiss="modal">
+							Deny
+						</button>					
+					</div>
+				</div>
+			</div>
+		</div>
 	
 		<!-- Create Contributor Modal -->
 		<div id="editUserProfile" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
@@ -206,7 +230,8 @@
 <script>
 $(document).ready(function() {
 	
-	document.getElementById("loading").style = "visibility: hidden";
+	$("#loading").hide();
+	$('#loadingManage').hide();
 	
 	$('#userTable').DataTable({
 		
@@ -217,17 +242,30 @@ $(document).ready(function() {
 	
 	$("#confirmPassword").click(function(){
 		
-		document.getElementById("loading").style = "visibility: visible";
+		$("#loading").show();
 		
 		var id = $("#resetPassButton").val();
 		
 		$.get("https://localhost:7002/revblogs/resetUserPassword.do?resetPass=" + id, function(response){
 		
-			document.getElementById("loading").style = "visibility: hidden";
+			$("#loading").hide();
 			location.reload();
 		});
 	});
-});
+	
+	$("#confirmPicture").click(function(){
+		
+		$("#loadingManage").show();
+		
+		var id = $("#picButton").val();
+		
+		$.get("https://localhost:7002/revblogs/resetProfile.do?resetProfile=" + id, function(response){
+		
+			$("#loadingManage").hide();
+			location.reload();
+		});
+	});
+});	
 	
 function edit(userId){
 	$("#selectedUserId").val($("#userId" + userId).html());
