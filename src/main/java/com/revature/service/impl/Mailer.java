@@ -74,7 +74,7 @@ public class Mailer {
 	         				+ 			"<tr>"
 	         				+ 				"<td></td>"
 	         				+ 				"<td colspan=\"2\">"
-	         				+ 					"<h1>Hello"+emailInfo[2]+",</h1>"
+	         				+ 					"<h1>Hello "+emailInfo[2]+".</h1>"
 	         				+ 					"<h2>Your password has been reset.</h2>"
 	         				+ 					"<p>Here is your new password: <strong>"+emailInfo[1]+"</strong></p>"
 	         				+					"<p> Please proceed to <a href=\"http://localhost:7001/revblogs/loginPage\">http://blogs.pjw6193.tech</a> and login to change your password.</p>"
