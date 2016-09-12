@@ -92,7 +92,7 @@ public class Blog {
 	 */
 	public Blog() {
 		super();
-		this.references = new ArrayList<String>();
+		this.references = new ArrayList<>();
 		for ( int i=0; i<20; i++ ) {
 			this.references.add("");
 		}

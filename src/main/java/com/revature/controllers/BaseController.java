@@ -131,10 +131,7 @@ public class BaseController {
 		return model;
 	}
 	
-	// Admin Page
-	@RequestMapping(value="/admin**")
-	public ModelAndView viewAdmin(HttpServletRequest request, HttpServletRequest response, Principal principal){
-
+	private ModelAndView viewSetter(HttpServletRequest request, HttpServletRequest response,Principal principal){
 		String name = principal.getName();
 		User user = businessDelegate.requestUsers(name);
 		HttpSession session = request.getSession(false);
@@ -149,22 +146,18 @@ public class BaseController {
 		return modelCreation(user.getJobTitle(), user.getFirstName());
 	}
 	
+	// Admin Page
+	@RequestMapping(value="/admin**")
+	public ModelAndView viewAdmin(HttpServletRequest request, HttpServletRequest response, Principal principal){
+
+		return viewSetter(request, response, principal);
+	}
+	
 	// Contributor Page
 	@RequestMapping(value="/contributor**")
 	public ModelAndView viewContributor(HttpServletRequest request, HttpServletRequest response, Principal principal){
 
-		String name = principal.getName();
-		User user = businessDelegate.requestUsers(name);
-		HttpSession session = request.getSession(false);
-		if(session == null)
-			session = request.getSession();
-		session.setAttribute("user", user);
-		
-		//DON'T TAKE THESE OUT!!!!! Thank you =)
-		request.getSession().setAttribute(SUCCESS, null);
-		request.getSession().setAttribute(UPDATE, null);
-		
-		return modelCreation(user.getJobTitle(), user.getFirstName());
+		return viewSetter(request, response, principal);
 	}
 	
 	@RequestMapping(value="/go-admin")

@@ -24,6 +24,8 @@ public class JetS3Impl implements JetS3{
 	private S3Service s3;
 	private static final String BUCKET = "blogs.pjw6193.tech";
 	private BusinessDelegate businessDelegate;
+	private static final String PROFILES = "content/profiles/";
+	private static final String HTTP = "http://";
 
 	public void setBusinessDelegate(BusinessDelegate businessDelegate) {
 		this.businessDelegate = businessDelegate;
@@ -87,15 +89,15 @@ public class JetS3Impl implements JetS3{
 	 * @return the URL where the file was uploaded if successful, null otherwise
 	 */
 	public String uploadProfileItem(String loginName, String fileName, MultipartFile file) {
-		return uploadFile("content/profiles/" + loginName + "/", fileName, file);
+		return uploadFile(PROFILES + loginName + "/", fileName, file);
 	}
 	
 	public String uploadProfileItem(String loginName, String fileName, File file){
-		return uploadFile("content/profiles/" + loginName + "/", fileName, file);
+		return uploadFile(PROFILES + loginName + "/", fileName, file);
 	}
 	
 	public String uploadProfileItem(String loginName, File file){
-		return uploadFile("content/profiles/" + loginName + "/", file);
+		return uploadFile(PROFILES + loginName + "/", file);
 	}
 	
 	/**
@@ -120,7 +122,7 @@ public class JetS3Impl implements JetS3{
 			s3.putObject(bucket, s3Obj);
 
 			return 
-				"http://" + BUCKET+ "/" + folderPath + fileName;
+				HTTP + BUCKET+ "/" + folderPath + fileName;
 			
 		} catch (Exception e) {
 			
@@ -155,7 +157,7 @@ public class JetS3Impl implements JetS3{
 			s3.putObject(bucket, s3Obj);
 			
 			return 
-					"http://" + BUCKET+ "/" + folderPath + fileName;
+					HTTP + BUCKET+ "/" + folderPath + fileName;
 			
 		} catch (Exception e) {
 			Logging.error(e);
@@ -186,7 +188,7 @@ public class JetS3Impl implements JetS3{
 			s3.putObject(bucket, s3Obj);
 			
 			return 
-					"http://" + BUCKET+ "/" + folderPath + file.getName();
+					HTTP + BUCKET+ "/" + folderPath + file.getName();
 			
 		} catch (Exception e) {
 			Logging.error(e);
