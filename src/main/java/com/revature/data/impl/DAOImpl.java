@@ -354,28 +354,6 @@ public class DAOImpl implements DAO {
 	
 	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	public PaginatedResultList<Blog> getBlogs(Tags category, int start, int max) {
-//		Session ses = sessionFactory.getCurrentSession();
-//		setSession(ses);
-//		
-//		PaginatedResultList<Blog> blogPosts = new PaginatedResultList<>();
-//		
-//        String hql = "from Tags where active and tagId=:tagId left join com.revature.beans.Blog order by publishDate";
-//		
-//		Query query = ses.createQuery("select count(*) " + hql).setInteger("tagId", category.getTagId());
-//		blogPosts.setTotalItems((long)query.uniqueResult());
-//		
-//		query = ses.createQuery(hql).setInteger("tagId", category.getTagId());
-//		query.setFirstResult(start);
-//		query.setMaxResults(max);
-//		
-//		List<Blog> postList = query.list();
-//		for (Blog post: postList) {
-//			Hibernate.initialize(post.getTags());
-//		}
-//		blogPosts.setItems(postList);
-//		
-//		return blogPosts;
-		
 		Session ses = sessionFactory.getCurrentSession();
 		setSession(ses);
 		
