@@ -6,6 +6,9 @@ var createBlogModule = angular.module('createBlog', []);
 
 createBlogModule.controller('createBlogCtrl', function($scope) {
 	
+	$scope.ngTitle = document.getElementById("blogTitle").value;
+	$scope.ngSubtitle = document.getElementById("blogSubtitle").value;
+	
 	$scope.maxReferences = 20;
 	$scope.referencesRevealed = 0;
 	
