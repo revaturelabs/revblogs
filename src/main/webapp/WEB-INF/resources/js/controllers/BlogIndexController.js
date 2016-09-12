@@ -120,8 +120,6 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 			}	
 		);
 	}
-	
-	$scope.getPageWith
 
 	$scope.changeView = function(direction)
 	{
@@ -197,7 +195,10 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 		);
 	}	
 	
-
+	window.onbeforeunload = function (e) {
+        sessionStorage.clear();
+	};
+	
 	$scope.appUrl = "https://localhost:7002/revblogs";
 	$scope.posts = {
 			page: 0,
