@@ -59,7 +59,6 @@
   		<option ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 5]">5</option>
   		<option ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 10]" selected>10</option>
   		<option ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 25]">25</option>
-  		<option ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 50]">50</option>
   	</select>
   </div>
   
@@ -68,9 +67,9 @@
   <nav id="pageNumsNav" aria-label="...">
   	<div>
   	<ul id="pageNums" class="pagination">
-   	  <li ng:class="{true:'disabled', false:'enabled'}[curPage == 1 || !isLoading]" ng-click="changeView(0)"><a id="previous" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+   	  <li ng-class="{true:'disabled', false:'enabled'}[curPage == 1 || isLoading]" ng-click="changeView(0)"><a id="previous" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
  		<li ng:class="{true:'active', false:''}[number == curPage]" ng-repeat="number in numOfPages" ng-if="number > 0"> <a ng-click="getPage(number)">{{number}}</a> </li>
-   	  <li ng:class="{true:'disabled', false:'enabled'}[curPage == numOfPages || !isLoading]" ng-click="changeView(1)"><a id="next" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+   	  <li ng:class="{true:'disabled', false:'enabled'}[curPage == numOfPages.length || isLoading]" ng-click="changeView(1)"><a id="next" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
   	</ul>
   	</div>
   </nav>
