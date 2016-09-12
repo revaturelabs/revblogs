@@ -25,8 +25,10 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 	
 	$scope.getPage = function(page, postsPP)
 	{
-		if($scope.author != null){
+		if($scope.author != null && $scope.author > 0){
 			var fullUrl = $scope.appUrl+"/api/posts?author=" + $scope.author + "&page=" + page + "&per_page=" + $scope.postsPerPage;
+		} else if($scope.category != null && sessionStorage.tag > 0){
+			var fullUrl = $scope.appUrl+"/api/posts?category=" + $scope.category + "&page=" + page + "&per_page=" + $scope.postsPerPage;
 		} else {
 			var fullUrl = $scope.appUrl+"/api/posts?page=" + page + "&per_page=" + $scope.postsPerPage;
 		}
@@ -164,7 +166,15 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 	{
 		console.log("Pre-loading");
 		
-		$http.get($scope.appUrl+"/api/posts?page=" + page  + "&per_page" + postsPP).success(
+		if($scope.author != null && $scope.author > 0){
+			var fullUrl = $scope.appUrl+"/api/posts?author=" + $scope.author + "&page=" + page + "&per_page=" + postsPP;
+		} else if($scope.category != null && $scope.category > 0){
+			var fullUrl = $scope.appUrl+"/api/posts?category=" + $scope.category + "&page=" + page + "&per_page=" + postsPP;
+		} else {
+			var fullUrl = $scope.appUrl+"/api/posts?page=" + page + "&per_page=" + postsPP;
+		}
+		
+		$http.get(fullUrl).success(
 		    function(resp)
 			{
 				var prevPage = $scope.curPage;
@@ -185,7 +195,10 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 		);
 	}	
 	
-
+	window.onbeforeunload = function (e) {
+        sessionStorage.clear();
+	};
+	
 	$scope.appUrl = "https://localhost:7002/revblogs";
 	$scope.posts = {
 			page: 0,
@@ -204,5 +217,6 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 	$scope.postsPerPage = 10;
 	$scope.isLoading = false;
 	$scope.author = 0;
+	$scope.category = sessionStorage.tag;
 	$scope.getPage($scope.curPage, $scope.postsPerPage);
 }]);

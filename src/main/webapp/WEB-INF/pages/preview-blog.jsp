@@ -10,6 +10,9 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
 <link href="resources/css/main.css" rel="stylesheet">
+<script src="resources/js/angular.min.js"></script>
+<script src="resources/js/app.js"></script>
+<script src="resources/js/controllers/TagSearchController.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <!-- HEADERS NEEDED TO PREVENT BACK BUTTON ON LOGOUT. DO NOT REMOVE ME! -->
 <meta http-equiv="Pragma" content="no-cache">
@@ -32,7 +35,7 @@
 <link rel="shortcut icon" type="image/png" href="/content/resources/img/favicon.png"/>
 </head>
 
-<body>
+<body ng-app="app" ng-controller="TagSearchController">
 
 <div id="curseModal" class="modal fade">
  	<div class="modal-dialog">
@@ -87,6 +90,9 @@
             </c:forEach>
           </div>
           <div class="post-tags">
+          	<c:forEach var="t" items="${blog.tags}">
+          		<a target="_blank" href="" ng-click="getPageWithTagsFromBlogPost(${t.tagId})"><c:out value="${t.description}"></c:out></a>
+           	</c:forEach>
           </div>
           <form:form action="edit.do">
           	<button type="submit">Edit</button>
