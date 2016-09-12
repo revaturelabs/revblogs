@@ -67,7 +67,7 @@
 					<tr id="${user.userId}">
 						<td id="proPic${user.userId}">
 							<button id="picButton" name="resetProfile" value="${user.userId}" data-toggle="modal" data-target="#confirmPictureMod">
-								<img src="${user.profilePicture}" width="50" height="50" alt="profile picture" />
+								<img src="${user.profilePicture}" width="100" height="100" alt="profile picture" />
 							</button>
 						</td>
 						<td id="email${user.userId}"><c:out value="${user.email}" /></td>
@@ -80,14 +80,10 @@
 						</td>
 						<td><c:choose>
 								<c:when id="activeTest" test="${user.active}">
-									<form action="deactivateUser.do" method="post">
-										<button name="deactivate" value="${user.userId}" type="submit" class="btn btn-primary form-control">Deactivate</button>
-									</form>
+									<button id="deactivateUser" name="deactivate" value="${user.userId}" class="btn btn-primary form-control" data-toggle="modal" data-target="#confirmDeactivateMod">Deactivate</button>
 								</c:when>
 								<c:otherwise>
-									<form action="activateUser.do" method="post">
-										<button name="activate" value="${user.userId}" type="submit" class="btn btn-primary form-control">Activate</button>
-									</form>
+									<button id="activateUser" name="activate" value="${user.userId}" class="btn btn-primary form-control" data-toggle="modal" data-target="#confirmActivateMod">Activate</button>
 								</c:otherwise>
 							</c:choose>
 						</td>
@@ -147,6 +143,58 @@
 					<img id="loading" src="http://blogs.pjw6193.tech/content/resources/img/rev.gif" />
 					<div class="modal-footer">
 						<button id="confirmPassword" class="btn btn-primary form-control" style="width: auto;">
+							Confirm
+						</button>
+						<button id="closeCreateUser" class="btn btn-secondary" data-dismiss="modal">
+							Deny
+						</button>					
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Confirm Activate Modal -->
+		<div id="confirmActivateMod" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+						<h3 class="modal-title">Confirm Activation</h3>
+					</div>
+					<div class="modal-body">
+						Are you sure you want to activate this user?
+						<br/>
+					</div>
+					<img id="loadingActive" src="http://blogs.pjw6193.tech/content/resources/img/rev.gif" />
+					<div class="modal-footer">
+						<button id="confirmActivate" class="btn btn-primary form-control" style="width: auto;">
+							Confirm
+						</button>
+						<button id="closeCreateUser" class="btn btn-secondary" data-dismiss="modal">
+							Deny
+						</button>					
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Confirm Deactivate Modal -->
+		<div id="confirmDeactivateMod" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+						<h3 class="modal-title">Confirm Deactivation</h3>
+					</div>
+					<div class="modal-body">
+						Are you sure you want to deactivate this user?
+						<br/>
+					</div>
+					<img id="loadingDeactive" src="http://blogs.pjw6193.tech/content/resources/img/rev.gif" />
+					<div class="modal-footer">
+						<button id="confirmDeactivate" class="btn btn-primary form-control" style="width: auto;">
 							Confirm
 						</button>
 						<button id="closeCreateUser" class="btn btn-secondary" data-dismiss="modal">
@@ -232,6 +280,8 @@ $(document).ready(function() {
 	
 	$("#loading").hide();
 	$('#loadingManage').hide();
+	$('#loadingActive').hide();
+	$('#loadingDeactive').hide();
 	
 	$('#userTable').DataTable({
 		
@@ -262,6 +312,32 @@ $(document).ready(function() {
 		$.get("https://localhost:7002/revblogs/resetProfile.do?resetProfile=" + id, function(response){
 		
 			$("#loadingManage").hide();
+			location.reload();
+		});
+	});
+	
+	$("#confirmActivate").click(function(){
+		
+		$("#loadingActive").show();
+		
+		var id = $("#activateUser").val();
+	
+		$.get("https://localhost:7002/revblogs/activateUser.do?activate=" + id, function(response){
+		
+			$("#loadingActive").hide();
+			location.reload();
+		});
+	});
+	
+	$("#confirmDeactivate").click(function(){
+		
+		$("#loadingDeactive").show();
+		
+		var id = $("#deactivateUser").val();
+		
+		$.get("https://localhost:7002/revblogs/deactivateUser.do?deactivate=" + id, function(response){
+		
+			$("#loadingDeactive").hide();
 			location.reload();
 		});
 	});
