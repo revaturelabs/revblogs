@@ -48,7 +48,7 @@
   <div class="container page-content content-padding">
   	<div class="row">
   		<div class="col-xs-12">
-	        <h2 ng-show="searchPage">Search Results for: {{searchQuery}}</h2>
+	        <h2 ng-show="searchPage">Search Results for: {{savedQuery}}</h2>
 	        <h2 ng-show="!searchPage">Latest Posts</h2>
   		</div>
   	</div>
@@ -67,7 +67,7 @@
     <div id="postsDiv" class="row">
       <div class="col-sm-8">
         <div ng-if="searchPage===true">
-        	<div ng-repeat="post in searchPosts.posts" ng-show="post.title != 'e2a3a746c33617187a3a' && searchPage === true" ng-include src="'http://blogs.pjw6193.tech/content/resources/js/templates/post-preview.html'"></div>
+        	<div ng-repeat="post in searchPosts.posts" ng-include src="'http://blogs.pjw6193.tech/content/resources/js/templates/post-preview.html'"></div>
         </div>
         <div ng-if="searchPage===false">                            <!-- PLEASE CHECK THIS!!! -->
       		<div ng-repeat="post in posts.posts" ng-include src="'http://blogs.pjw6193.tech/content/resources/js/templates/post-preview.html'"></div>
@@ -89,13 +89,14 @@
     </div>
   
   <!-- Customize posts to view -->
-  	<button ng-show="searchPage===true" ng-click="getPage(1,postsPerPage)">Clear Search Results</button>
+  	<button ng-show="searchPage===true" ng-click="clearSearch()">Clear Search Results</button>
 
 	  <div id="postsPerPage">
 	  	<label>Number of posts to show: </label>
 	  	<select  ng-model="postsPerPage" ng-change="getPage(curPage, postsPerPage)">
 	  		<option ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 5]">5</option>
 	  		<option ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 10]" selected>10</option>
+	  		<option ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 25]">25</option>
 	  	</select>
 	  </div>
 	  
