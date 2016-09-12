@@ -209,7 +209,7 @@
 <script>
 $(document).ready(function() {
 	
-	document.getElementById("loading").style = "visibility: hidden";
+	$("#loading").hide();
 	
 	$('#userTable').DataTable({
 		
@@ -220,13 +220,13 @@ $(document).ready(function() {
 	
 	$("#confirmPassword").click(function(){
 		
-		document.getElementById("loading").style = "visibility: visible";
+		$("#loading").show();
 		
 		var id = $("#resetPassButton").val();
 		
 		$.get("https://localhost:7002/revblogs/resetUserPassword.do?resetPass=" + id, function(response){
 		
-			document.getElementById("loading").style = "visibility: hidden";
+			$("#loading").hide();
 			location.reload();
 		});
 	});
