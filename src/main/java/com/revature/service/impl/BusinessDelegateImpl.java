@@ -26,7 +26,6 @@ import com.revature.dto.BlogPostDTO;
 import com.revature.service.BusinessDelegate;
 import com.revature.service.Crypt;
 import com.revature.service.JetS3;
-import com.revature.service.ServiceLocator;
 
 @Service
 public class BusinessDelegateImpl implements BusinessDelegate{
@@ -35,12 +34,11 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	 * 	Attributes && Getters/Setters
 	 * 
 	 */
-	
-	private AWSCredentials credentials;
+
 	private Crypt crypt;
 	private DataService dataService;
 	private JetS3 jetS3;
-	private S3Service s3;
+	private static final String ILLEGAL = "page and perPage must be positive integers";
 
 	public void setCrypt(Crypt crypt) {
 		this.crypt = crypt;
@@ -227,10 +225,10 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	//-------------------------------------------------------------------------------------------------
 	// Pagination
 	
-	public BlogPostCollectionDTO requestBlogPosts(int page, int perPage) throws IllegalArgumentException {
+	public BlogPostCollectionDTO requestBlogPosts(int page, int perPage){
 		
 		if (page < 1 || perPage < 1) {
-			throw new IllegalArgumentException("page and perPage must be positive integers");
+			throw new IllegalArgumentException(ILLEGAL);
 		}
 		
 		// Instantiate post collection DTO
@@ -256,10 +254,10 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 		return postCollection;
 	}
 	
-	public BlogPostCollectionDTO requestBlogPosts(User author, int page, int perPage) throws IllegalArgumentException {
+	public BlogPostCollectionDTO requestBlogPosts(User author, int page, int perPage){
 		
 		if (page < 1 || perPage < 1) {
-			throw new IllegalArgumentException("page and perPage must be positive integers");
+			throw new IllegalArgumentException(ILLEGAL);
 		}
 		
 		// Instantiate post collection DTO
@@ -286,10 +284,10 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 		return postCollection;
 	}
 
-	public BlogPostCollectionDTO requestBlogPosts(Tags category, int page, int perPage) throws IllegalArgumentException {
+	public BlogPostCollectionDTO requestBlogPosts(Tags category, int page, int perPage){
 		
 		if (page < 1 || perPage < 1) {
-			throw new IllegalArgumentException("page and perPage must be positive integers");
+			throw new IllegalArgumentException(ILLEGAL);
 		}
 		
 		// Instantiate post collection DTO
@@ -316,10 +314,10 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 		return postCollection;
 	}
 	
-	public BlogPostCollectionDTO searchBlogPosts(String query, int page, int perPage) throws IllegalArgumentException {
+	public BlogPostCollectionDTO searchBlogPosts(String query, int page, int perPage){
 		
 		if (page < 1 || perPage < 1) {
-			throw new IllegalArgumentException("page and perPage must be positive integers");
+			throw new IllegalArgumentException(ILLEGAL);
 		}
 		
 		// Instantiate post collection DTO

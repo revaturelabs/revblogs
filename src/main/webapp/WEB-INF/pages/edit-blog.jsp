@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:og="http://ogp.me/ns#" xmlns:fb="http://www.facebook.com/2008/fbml">
@@ -35,7 +37,7 @@
 
 <title>Blog Post</title>
 </head>
-<body>
+<body ng-app="createBlog" ng-controller='createBlogCtrl'>
 <jsp:include page="navbar.jsp"></jsp:include>
 <div class="container page-content">
 <h2>Edit Post</h2>
@@ -44,29 +46,27 @@
 
 <form:form action="add-blog.do" method="post" commandName="blog">
 	Title
-	<form:input path="blogTitle" value="${blog.blogTitle}" /><br />
+	<form:input name="ngTitle" ng-model="ngTitle" path="blogTitle" value="${blog.blogTitle}" /><br />
 	Subtitle
-	<form:input path="blogSubtitle" value="${blog.blogSubtitle}" /><br />
+	<form:input name="ngSubtitle" ng-model="ngSubtitle" path="blogSubtitle" value="${blog.blogSubtitle}" /><br />
 	<br>
 	<form:textarea path="blogContent" rows="30" cols="100" value="${blog.blogContent}" ></form:textarea>
 	<br>
-	<!-- <button type="button">Add Reference</button>
-	<br>
-	<textarea rows="5" cols="100"></textarea> -->
-	<br>
+	<br />
+	References:
 	<c:forEach varStatus="vs" items="${blog.references}">
 		<div id="ref${vs.index}" style="display: none;">
-			[${vs.index+1}] - <form:input path="references[${vs.index}]"></form:input><br />
+			[${vs.index+1}] - <form:input path="references[${vs.index}]"></form:input>
 		</div>
 	</c:forEach>
 	<button id="addRefButton" type="button" ng-click="revealReference()">Add Another Reference</button>
 	<br /><br />
  	Apply tags (separated by commas):
  	<br>
-	<form:input path="blogTagsString" id="tagList" style="resize: none" style="width: 300px" value="${blog.blogTagsString}"></form:input>
+	<form:input path="blogTagsString" id="tagList" style="resize:none;width:300px;" value="${blog.blogTagsString}"></form:input>
 	<br>
-	
-	<input type="submit" value="Preview" />
+	<span ng-show="ngTitle == null || ngTitle.length <= 0 || ngSubtitle == null || ngSubtitle.length <= 0"><br />Please provide a title and subtitle to proceed.</span>
+	<input ng-show="ngTitle != null && ngTitle.length > 0 && ngSubtitle != null && ngSubtitle.length > 0" type="submit" value="Preview" />
 	<br/>
 </form:form>
 <br/>

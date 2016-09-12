@@ -36,6 +36,9 @@ public class DAOImpl implements DAO {
 	
 	private SessionFactory sessionFactory;
 	private Session session;
+	private boolean indexBuilt = false;
+	private static final String ACTIVE = "active";
+	private static final String PUBLISH = "publishDate";
 
 	public DAOImpl(){
 		super();
@@ -275,7 +278,7 @@ public class DAOImpl implements DAO {
 				          .createQuery()
 				  ).must(
 						qb.keyword()
-						  .onField("active")
+						  .onField(ACTIVE)
 						  .matching("true")
 						  .createQuery()
 				  )
@@ -305,12 +308,12 @@ public class DAOImpl implements DAO {
 		PaginatedResultList<Blog> blogPosts = new PaginatedResultList<>();
 		
 		Criteria criteria = ses.createCriteria(Blog.class);
-		criteria.add(Restrictions.eq("active", true));
+		criteria.add(Restrictions.eq(ACTIVE, true));
 		criteria.setProjection(Projections.rowCount());
 		blogPosts.setTotalItems((long)criteria.uniqueResult());
 		
 		criteria = ses.createCriteria(Blog.class);
-		criteria.add(Restrictions.eq("active", true));
+		criteria.add(Restrictions.eq(ACTIVE, true));
 		criteria.addOrder(Order.desc("publishDate"));
 		criteria.setFirstResult(start);
 		criteria.setMaxResults(max);
@@ -332,14 +335,14 @@ public class DAOImpl implements DAO {
 		
 		Criteria criteria = ses.createCriteria(Blog.class);
 		criteria.add(Restrictions.eq("author", author));
-		criteria.add(Restrictions.eq("active", true));
+		criteria.add(Restrictions.eq(ACTIVE, true));
 		criteria.setProjection(Projections.rowCount());
 		blogPosts.setTotalItems((long)criteria.uniqueResult());
 		
 		criteria = ses.createCriteria(Blog.class);
 		criteria.addOrder(Order.desc("publishDate"));
 		criteria.add(Restrictions.eq("author", author));
-		criteria.add(Restrictions.eq("active", true));
+		criteria.add(Restrictions.eq(ACTIVE, true));
 		criteria.setFirstResult(start);
 		criteria.setMaxResults(max);
 
@@ -362,7 +365,7 @@ public class DAOImpl implements DAO {
 		Criteria criteria = ses.createCriteria(Blog.class);
 		criteria.createAlias("tags", "t");
 		criteria.add(Restrictions.eq("t.tagId", category.getTagId()));
-		criteria.add(Restrictions.eq("active", true));
+		criteria.add(Restrictions.eq(ACTIVE, true));
 		criteria.setProjection(Projections.rowCount());
 		blogPosts.setTotalItems((long)criteria.uniqueResult());
 		
@@ -370,7 +373,7 @@ public class DAOImpl implements DAO {
 		criteria.addOrder(Order.desc("publishDate"));
 		criteria.createAlias("tags", "t");
 		criteria.add(Restrictions.eq("t.tagId", category.getTagId()));
-		criteria.add(Restrictions.eq("active", true));
+		criteria.add(Restrictions.eq(ACTIVE, true));
 		criteria.setFirstResult(start);
 		criteria.setMaxResults(max);
 
@@ -382,8 +385,6 @@ public class DAOImpl implements DAO {
 		
 		return blogPosts;
 	}
-	
-	private boolean indexBuilt = false;
 	
 	public void rebuildIndex() throws InterruptedException {
 		if (!indexBuilt) {

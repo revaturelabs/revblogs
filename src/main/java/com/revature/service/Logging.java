@@ -26,7 +26,7 @@ public class Logging {
 	@AfterReturning(pointcut="logPerformance()", returning="obj")
 	public void logAfterReturning(JoinPoint jp, Object obj){
 					// obj is whatever the intercepted method has returned
-		log.info("[REVBLOGS LOGGER]: "+jp.getSignature()+" Returned: " + obj);
+		log.debug("[REVBLOGS LOGGER]: "+jp.getSignature()+" Returned: " + obj);
 	}
 	@AfterThrowing(pointcut="logPerformance()", throwing="e")
 	public void logGetException(JoinPoint jp, Exception e){
@@ -45,5 +45,7 @@ public class Logging {
 	//------------------POINTCUTS------------------//
 
 	@Pointcut("within(com.revature..*..*)")
-	public void logPerformance(){}
+	public void logPerformance(){
+		//Empty for aop, STOP deleting this comment
+	}
 }

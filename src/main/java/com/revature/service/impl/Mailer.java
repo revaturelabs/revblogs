@@ -22,6 +22,7 @@ public class Mailer {
 	}
 	public static void sendMail(String...emailInfo) {
 		
+		// Prepare the properties required to perform an SSL connection to the gmail server
 		Properties props = new Properties();
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.starttls.enable", "true");
@@ -29,6 +30,7 @@ public class Mailer {
 		props.put("mail.smtp.port", "587");
 		props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
 
+		// Create a session with the properties and credentials to the gmail account linked to the server
 		Session session = Session.getInstance(props,
 			new javax.mail.Authenticator() {
 				protected PasswordAuthentication getPasswordAuthentication() {
@@ -37,21 +39,30 @@ public class Mailer {
 			});
 
 		try {
-			
+			// Start an email to be sent
 			Message message = new MimeMessage(session);
+			
+			// Part of the email designating where the email is coming from
 			message.setFrom(new InternetAddress("revblogs@gmail.com"));
+			
+			// Part of the email designating where the email is being sent to
 			message.setRecipients(Message.RecipientType.TO,
 					InternetAddress.parse(emailInfo[0]));
+			
+			// Part of the email that contains the subject
 			message.setSubject("Revature Blog Registration (DO NOT REPLY)");
 			
-			 // This mail has 2 part, the BODY and the embedded image
-	         MimeMultipart multipart = new MimeMultipart("related");
+			// Create a body that contains multiple parts
+	        MimeMultipart multipart = new MimeMultipart("related");
 
-	         // first part (the html)
-	         BodyPart messageBodyPart = new MimeBodyPart();
-	         String htmlText = "";
-	         if(emailInfo.length == 3){
-	        	 htmlText = "<!DOCTYPE html>"
+	        // first part (the html)
+	        BodyPart messageBodyPart = new MimeBodyPart();
+	        String htmlText = "";
+	        
+	        // Constructs the body of the email in a form of html tables
+	        // 3 arguments references a password being reset
+	        if(emailInfo.length == 3){
+	        	htmlText = "<!DOCTYPE html>"
 	         				+ "<html>"
 	         				+ 	"<body style=\"background-color: #F9F9F9;\">"
 	         				+ 		"<table style=\"background-color: #FFFFFF;\" align=\"center\">"
@@ -63,9 +74,10 @@ public class Mailer {
 	         				+ 			"<tr>"
 	         				+ 				"<td></td>"
 	         				+ 				"<td colspan=\"2\">"
-	         				+ 					"<h1>Hello"+emailInfo[2]+",</h1>"
+	         				+ 					"<h1>Hello "+emailInfo[2]+".</h1>"
 	         				+ 					"<h2>Your password has been reset.</h2>"
 	         				+ 					"<p>Here is your new password: <strong>"+emailInfo[1]+"</strong></p>"
+	         				+					"<p> Please proceed to <a href=\"http://localhost:7001/revblogs/loginPage\">http://blogs.pjw6193.tech</a> and login to change your password.</p>"
 	         				+ 					"<br /><br /><br /><br /><br />"
 	         				+ 					"<img src=\"http://blogs.pjw6193.tech/content/resources/img/rev-brand.png\">"
 	         				+ 					"<p>"
@@ -78,6 +90,7 @@ public class Mailer {
 	         				+ 	"</body>"
 	         				+ "</html>";
 	         }
+	         // Body of the email for which a new account is made and their password is sent
 	         else{
 	        	 htmlText = "<!DOCTYPE html>"
 	         				+ "<html>"
@@ -115,7 +128,8 @@ public class Mailer {
 	         // put everything together
 	         message.setContent(multipart);
 			
-			Transport.send(message);
+	         // Send the email
+			 Transport.send(message);
 
 		} catch (MessagingException e) {
 			Logging.error(e);
