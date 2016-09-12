@@ -57,7 +57,7 @@ public class PostController {
 	private static final String PROFILE = "updateUserProfile";
 	private static final String MANAGE = "redirect:/manageusers";
 	private static final String EDIT = "editingBlogInDatabase";
-	private static final String PASSWORD = "redirect:/password";
+	private static final String REDIRECTP = "redirect:/password";
 	private static final String TAGS = "newTags";
 
 	public void setBusinessDelegate(BusinessDelegate businessDelegate){
@@ -326,7 +326,7 @@ public class PostController {
 		model.setViewName("redirect:/profile");
 		
 		if(bindingResult.hasErrors()){
-			model.setViewName(PASSWORD);
+			model.setViewName(REDIRECTP);
 			return model;
 		}
 		
@@ -362,13 +362,13 @@ public class PostController {
 			else {
 				
 				req.getSession().setAttribute("passwordFailure2", failure);
-				model.setViewName(PASSWORD);
+				model.setViewName(REDIRECTP);
 			}
 			
 		} else {
 			
 			req.getSession().setAttribute("passwordFailure1", failure);
-			model.setViewName(PASSWORD);
+			model.setViewName(REDIRECTP);
 		}
 		
 		return model;
