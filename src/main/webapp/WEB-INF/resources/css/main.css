@@ -205,6 +205,12 @@ html, body {
   .highlight {
   	background-color: tomato;
   }
+  
+  .btn-social-icon {
+  	height:34px!important;
+  	width:34px!important;  
+  }
+  
   .overall-container{
   	min-height: 100%;
    	position: relative;
