@@ -7,15 +7,17 @@
   *zoom: 1;
   zoom: 1;
 }
-/*
+
 .dataTables_wrapper .dataTables_filter {
-  float: left;
+  float: right;
   text-align: left;
 }
-.dataTables_wrapper .dataTables_filter input {
+
+.dataTables_wrapper .dataTables_length {
+  float: left;
   margin-left: 0.5em;
 }
-*/
+
 .dataTables_wrapper .dataTables_paginate {
   width: 100%;
   text-align: center;
