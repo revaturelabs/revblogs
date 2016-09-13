@@ -226,9 +226,10 @@ public class PostController implements ServletContextAware {
 				
 				String user = "" + getNewUser.getUserId();
 				
-				String profilePicture = businessDelegate.uploadProfileItem(user, user, file);
+				// Default profile image not being uploaded to S3 correctly. Hard coded for now.
+				// String profilePicture = businessDelegate.uploadProfileItem(user, user, file)
 				
-				getNewUser.setProfilePicture(profilePicture);
+				getNewUser.setProfilePicture("http://blogs.pjw6193.tech/content/resources/img/default.png");
 				
 				businessDelegate.updateRecord(getNewUser);
 				

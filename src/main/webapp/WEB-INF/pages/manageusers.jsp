@@ -66,7 +66,8 @@
 				<c:forEach items="${userList}" var="user">
 					<tr id="${user.userId}" onclick=grabId(this.id)>
 						<td id="proPic">
-							<button id="picButton${user.userId}" name="resetProfile" value="${user.userId}" data-toggle="modal" data-target="#confirmPictureMod">
+						<!--  data-toggle="modal" data-target="#confirmPictureMod" Default profile picture cannot be reset right now. -->
+							<button id="picButton${user.userId}" name="resetProfile" value="${user.userId}" disabled>
 								<img src="${user.profilePicture}" width="100" height="100" alt="profile picture" />
 							</button>
 						</td>
