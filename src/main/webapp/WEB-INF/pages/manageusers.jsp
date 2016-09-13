@@ -278,6 +278,7 @@
 <script>
 $(document).ready(function() {
 	
+	const HOST = "dev.pjw6193.tech"
 	
 	$("#loading").hide();
 	$('#loadingManage').hide();
@@ -297,7 +298,7 @@ $(document).ready(function() {
 		
 		var id = $("#confirmPassword").val();
 		
-		$.get("https://dev.pjw6193.tech:7002/revblogs/resetUserPassword.do?resetPass=" + id, function(response){
+		$.get("https://" + HOST + ":7002/revblogs/resetUserPassword.do?resetPass=" + id, function(response){
 		
 			$("#loading").hide();
 			location.reload();
@@ -310,7 +311,7 @@ $(document).ready(function() {
 		
 		var id = $("#confirmPicture").val();
 		
-		$.get("https://dev.pjw6193.tech:7002/revblogs/resetProfile.do?resetProfile=" + id, function(response){
+		$.get("https://" + HOST + ":7002/revblogs/resetProfile.do?resetProfile=" + id, function(response){
 		
 			$("#loadingManage").hide();
 			location.reload();
@@ -323,7 +324,7 @@ $(document).ready(function() {
 		
 		var id = $("#confirmActivate").val();
 	
-		$.get("https://dev.pjw6193.tech:7002/revblogs/activateUser.do?activate=" + id, function(response){
+		$.get("https://" + HOST + ":7002/revblogs/activateUser.do?activate=" + id, function(response){
 		
 			$("#loadingActive").hide();
 			location.reload();
@@ -336,7 +337,7 @@ $(document).ready(function() {
 		
 		var id = $("#confirmDeactivate").val();
 		
-		$.get("https://dev.pjw6193.tech:7002/revblogs/deactivateUser.do?deactivate=" + id, function(response){
+		$.get("https://" + HOST + ":7002/revblogs/deactivateUser.do?deactivate=" + id, function(response){
 		
 			$("#loadingDeactive").hide();
 			location.reload();
