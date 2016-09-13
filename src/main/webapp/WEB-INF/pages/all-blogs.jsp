@@ -45,8 +45,8 @@
           </div>
           <div class="panel-body">
             <ul class="list-unstyled">
-              <li><a href="#">Revature</a></li>
-              <li><a href="#">Life at Revature</a></li>
+              <li><a href="https://revature.com/">Revature</a></li>
+              <li><a href="http://lifeatrevature.com/">Life at Revature</a></li>
             </ul>
           </div>
         </div>
