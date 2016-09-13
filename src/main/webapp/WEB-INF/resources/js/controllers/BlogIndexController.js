@@ -2,22 +2,28 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 {
 	$scope.getFilter = function()
 	{
+		$scope.searchPosts.posts = [];
 		var ulQuery = $scope.searchQuery.toLowerCase();
-		
-		$scope.searchPosts = $scope.posts;
-		
-		for (var i = 0; i < $scope.searchPosts.posts.length; i++) 
+		$scope.savedQuery = $scope.searchQuery;
+		$scope.searchPage = true;
+		for (var i = 0; i < $scope.posts.posts.length; i++) 
 		{
-			$scope.searchPage = true;
-			var ulTitle = $scope.searchPosts.posts[i].title.toLowerCase();
-			if (!ulTitle.includes(ulQuery))
+			var ulTitle = $scope.posts.posts[i].title.toLowerCase();
+			var ulSubtitle = $scope.posts.posts[i].subtitle.toLowerCase();
+			var ulName = $scope.posts.posts[i].author.name.toLowerCase();
+			if (ulTitle.includes(ulQuery) || ulSubtitle.includes(ulQuery) || ulName.includes(ulQuery))
 			{
-				$scope.searchPosts.posts[i].title = "e2a3a746c33617187a3a";
-				continue;
+				$scope.searchPosts.posts.push($scope.posts.posts[i]);
 			}
 		}
-			
+		console.log($scope.searchPosts.posts);
 		return false;
+	}
+	
+	$scope.clearSearch = function()
+	{
+		$scope.searchPosts.posts = [];
+		$scope.searchPage = false;
 	}
 	
 	$scope.getPage = function(page, postsPP)
@@ -39,7 +45,7 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 				$scope.posts = resp;
 				
 				$scope.curPage = page;  //current page
-				
+				$scope.searchPage = false;
 				var prevPage = $scope.curPage;
 				var nextPage = $scope.curPage;
 				
@@ -73,15 +79,54 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 				$('#postsDiv').load();
 				$("#loading").hide();
 				$('#postsDiv').css('visibility', 'visible');
-				
 			}
 		);
 	}
 	
 	$scope.getPageWithAuthor = function(page, authorid)
 	{
-		$scope.author = authorid;
-		$scope.getPage(page, $scope.postsPerPage);
+		$http.get($scope.appUrl+"/api/posts?author=" + authorid + "&page=" + page + "&per_page=" + $scope.postsPerPage).success(
+			function(resp)
+			{
+				$scope.author = authorid;
+				$scope.posts = resp;
+				
+				$scope.curPage = page;  //current page
+				
+				var prevPage = $scope.curPage;
+				var nextPage = $scope.curPage;
+				
+				if($scope.curPage > 1)
+				{
+					prevPage = $scope.curPage - 1;
+				}
+				
+				if($scope.curPage < $scope.posts.total_pages)
+				{
+					nextPage = $scope.curPage + 1;
+				}
+				
+				$scope.numOfPages = [];
+				$scope.numOfPages[0] = 1;
+				
+				for (var i = 1; i < $scope.posts.total_pages+1; i++)
+				{
+					$scope.numOfPages[i - 1] = i;
+				}
+				
+				if($scope.curPage < $scope.posts.total_pages)
+				{
+					preloadPageWithAuthor(nextPage, authorid, $scope.postsPerPage);
+				}
+				
+				if($scope.curPage > 1)
+				{
+					preloadPageWithAuthor(prevPage, authorid, $scope.postsPerPage);
+				}
+				
+				$('#postsDiv').load();
+			}	
+		);
 	}
 
 	$scope.changeView = function(direction)
@@ -99,8 +144,6 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 					
 					preloadPage($scope.curPage - 1, $scope.postsPerPage);
 					preloadPage($scope.curPage + 1, $scope.postsPerPage);
-
-					$scope.isLoading = false;
 
 			        window.scrollTo(0, $('#postsDiv').offsetTop + 100);
 				}
@@ -171,7 +214,19 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 			per_page: 0,
 			total_posts: 0
 	};
+	$scope.searchPosts = {
+			page: 0,
+			prev: null,
+			next: null,
+			posts:[],
+			author: null,
+			category: null,
+			total_pages: 0,
+			per_page: 0,
+			total_posts: 0
+	};
 	$scope.searchQuery = "";
+	$scope.savedQuery = "";
 	$scope.searchPage = false;
 	$scope.curPage = 1;
 	$scope.postsPerPage = 10;

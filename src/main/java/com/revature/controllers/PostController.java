@@ -261,7 +261,7 @@ public class PostController {
 	}
 	
 	// Admin Deactivate User
-	@RequestMapping(value="deactivateUser.do", method=RequestMethod.POST)
+	@RequestMapping(value="deactivateUser.do", method=RequestMethod.GET)
 	public String deactivateUser(@RequestParam(value="deactivate") int userId, HttpServletRequest req){
 				
 		User deactivateUser = businessDelegate.requestUser(userId);
@@ -274,7 +274,7 @@ public class PostController {
 	}
 	
 	// Admin Activate User
-	@RequestMapping(value="activateUser.do", method=RequestMethod.POST)
+	@RequestMapping(value="activateUser.do", method=RequestMethod.GET)
 	public String activateUser(@RequestParam(value="activate") int userId, HttpServletRequest req){
 				
 		User activateUser = businessDelegate.requestUser(userId);
