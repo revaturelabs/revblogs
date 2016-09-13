@@ -112,7 +112,7 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 		return jetS3.uploadProfileItem(loginName, fileName, file);
 	}
 	
-	public String uploadObject(String folderPath, String fileName, String url){
+	public String uploadProfileItem(String folderPath, String fileName, String url){
 		return jetS3.uploadProfileItem(folderPath, fileName, url);
 	}
 	
