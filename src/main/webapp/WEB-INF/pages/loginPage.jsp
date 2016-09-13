@@ -84,6 +84,9 @@
 </body>
 <script type="text/javascript">
 $(document).ready(function(){
+	
+	const HOST = "localhost";
+	
 	$("#send").click(function(){
 	
 		

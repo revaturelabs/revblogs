@@ -263,13 +263,13 @@ html, body {
 	font-weight: bold;
 }
 
-#picButton {
-	background-color: Transparent;
-    background-repeat:no-repeat;
-    border: none;
-    cursor:pointer;
-    overflow: hidden;
-    outline:none;
+#proPic {
+	background-color: transparent !important;
+    background-repeat:no-repeat !important;
+    border: none !important;
+    cursor:pointer !important;
+    overflow: hidden !important;
+    outline:none !important;
 }
 
 #home-page-content{

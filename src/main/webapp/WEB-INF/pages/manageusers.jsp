@@ -64,9 +64,9 @@
 			</thead>
 			<tbody>
 				<c:forEach items="${userList}" var="user">
-					<tr id="${user.userId}">
-						<td id="proPic${user.userId}">
-							<button id="picButton" name="resetProfile" value="${user.userId}" data-toggle="modal" data-target="#confirmPictureMod">
+					<tr id="${user.userId}" onclick=grabId(this.id)>
+						<td id="proPic">
+							<button id="picButton${user.userId}" name="resetProfile" value="${user.userId}" data-toggle="modal" data-target="#confirmPictureMod">
 								<img src="${user.profilePicture}" width="100" height="100" alt="profile picture" />
 							</button>
 						</td>
@@ -80,15 +80,15 @@
 						</td>
 						<td><c:choose>
 								<c:when id="activeTest" test="${user.active}">
-									<button id="deactivateUser" name="deactivate" value="${user.userId}" class="btn btn-primary form-control" data-toggle="modal" data-target="#confirmDeactivateMod">Deactivate</button>
+									<button id="deactivateUser${user.userId}" name="deactivate" value="${user.userId}" class="btn btn-primary form-control" data-toggle="modal" data-target="#confirmDeactivateMod">Deactivate</button>
 								</c:when>
 								<c:otherwise>
-									<button id="activateUser" name="activate" value="${user.userId}" class="btn btn-primary form-control" data-toggle="modal" data-target="#confirmActivateMod">Activate</button>
+									<button id="activateUser${user.userId}" name="activate" value="${user.userId}" class="btn btn-primary form-control" data-toggle="modal" data-target="#confirmActivateMod">Activate</button>
 								</c:otherwise>
 							</c:choose>
 						</td>
 						<td>
-							<button id="resetPassButton" name="resetPass" value="${user.userId}" type="submit" class="btn btn-primary form-control" data-toggle="modal" data-target="#confirmPasswordMod">Reset Password</button>
+							<button id="resetPassButton${user.userId}" name="resetPass" value="${user.userId}" type="submit" class="btn btn-primary form-control" data-toggle="modal" data-target="#confirmPasswordMod">Reset Password</button>
 						</td>
 						<td id="userId${user.userId}" hidden><c:out value="${user.userId}" /></td>
 						<td id="password${user.userId}" hidden><c:out value="${user.password}" /></td>
@@ -278,6 +278,7 @@
 <script>
 $(document).ready(function() {
 	
+	
 	$("#loading").hide();
 	$('#loadingManage').hide();
 	$('#loadingActive').hide();
@@ -294,7 +295,7 @@ $(document).ready(function() {
 		
 		$("#loading").show();
 		
-		var id = $("#resetPassButton").val();
+		var id = $("#confirmPassword").val();
 		
 		$.get("https://dev.pjw6193.tech:7002/revblogs/resetUserPassword.do?resetPass=" + id, function(response){
 		
@@ -304,10 +305,10 @@ $(document).ready(function() {
 	});
 	
 	$("#confirmPicture").click(function(){
-		
+	
 		$("#loadingManage").show();
 		
-		var id = $("#picButton").val();
+		var id = $("#confirmPicture").val();
 		
 		$.get("https://dev.pjw6193.tech:7002/revblogs/resetProfile.do?resetProfile=" + id, function(response){
 		
@@ -320,7 +321,7 @@ $(document).ready(function() {
 		
 		$("#loadingActive").show();
 		
-		var id = $("#activateUser").val();
+		var id = $("#confirmActivate").val();
 	
 		$.get("https://dev.pjw6193.tech:7002/revblogs/activateUser.do?activate=" + id, function(response){
 		
@@ -333,7 +334,7 @@ $(document).ready(function() {
 		
 		$("#loadingDeactive").show();
 		
-		var id = $("#deactivateUser").val();
+		var id = $("#confirmDeactivate").val();
 		
 		$.get("https://dev.pjw6193.tech:7002/revblogs/deactivateUser.do?deactivate=" + id, function(response){
 		
@@ -342,7 +343,17 @@ $(document).ready(function() {
 		});
 	});
 });	
+
+function grabId(userId){
 	
+	var currentUserId = userId;
+	
+	$("#confirmPassword").attr("value", currentUserId);
+	$("#confirmActivate").attr("value", currentUserId);
+	$("#confirmDeactivate").attr("value", currentUserId);
+	$("#confirmPicture").attr("value", currentUserId);
+}
+
 function edit(userId){
 	$("#selectedUserId").val($("#userId" + userId).html());
 	$("#selectedUserEmail").val($("#email" + userId).html());
