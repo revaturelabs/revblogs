@@ -62,7 +62,7 @@ public class BaseController {
 	public String login(HttpServletRequest req){
 	
 		// Toggle Population Button (True is on)
-		req.getSession().setAttribute("populate", false);
+		req.getSession().setAttribute("populate", true);
 		
 		return "loginPage";
 	}

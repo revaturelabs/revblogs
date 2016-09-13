@@ -25,7 +25,7 @@ public class Population {
 
 	//-----------------------------------
 	// Complete Population (Besides Evidence)
-	public void populateDatabase(String[] properties){
+	public void populateDatabase(){
 		
 		populateRoles();
 		populateTags();
