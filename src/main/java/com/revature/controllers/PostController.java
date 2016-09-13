@@ -234,26 +234,18 @@ public class PostController {
 		
 		User resetUserPic = businessDelegate.requestUser(userId);
 		
-		//Get default picture
-		URL fileURL = PostController.class.getClassLoader().getResource("default.png");
-		File file;
-		try {
-			file = new File(fileURL.toURI());
-			
-			Logging.info("File length: " + file.length());
-			
-			String user = "" + resetUserPic.getUserId();
-			
-			String profilePicture = businessDelegate.uploadProfileItem(user, user, file);
-			
-			resetUserPic.setProfilePicture(profilePicture);
-			
-			businessDelegate.updateRecord(resetUserPic);
-			
-		} catch (URISyntaxException e) {
-			
-			Logging.error(e);
-		}
+		//Get default picture change this
+		File file = new File("http://blogs.pjw6193.tech/content/resources/img/default.png");
+		
+		Logging.info("File length: " + file.length());
+		
+		String user = "" + resetUserPic.getUserId();
+		
+		String profilePicture = businessDelegate.uploadProfileItem(user, user, file);
+		
+		resetUserPic.setProfilePicture(profilePicture);
+		
+		businessDelegate.updateRecord(resetUserPic);
 		
 		req.setAttribute(LIST, businessDelegate.requestUsers());
 		req.setAttribute(PROFILE, new UserDTO());
