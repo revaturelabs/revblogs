@@ -219,7 +219,7 @@ public class PostController implements ServletContextAware {
 				//Get default picture
 				URL fileURL = context.getResource("/WEB-INF/resources/images/default.png");
 				file = new File(fileURL.toString());
-				
+
 				Logging.info("File length: " + file.length());
 				
 				User getNewUser = businessDelegate.requestUsers(email);
@@ -255,6 +255,7 @@ public class PostController implements ServletContextAware {
 		model.setViewName(MANAGE);
 		
 		User resetUserPic = businessDelegate.requestUser(userId);
+
 		File file;
 		
 		try {
@@ -278,7 +279,7 @@ public class PostController implements ServletContextAware {
 			
 			Logging.error(e);
 		}
-		
+
 		req.setAttribute(LIST, businessDelegate.requestUsers());
 		req.setAttribute(PROFILE, new UserDTO());
 		return model;		

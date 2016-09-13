@@ -96,6 +96,10 @@ public class JetS3Impl implements JetS3{
 		return uploadFile(PROFILES + loginName + "/", fileName, file);
 	}
 	
+	public String uploadProfileItem(String loginName, String fileName, String url){
+		return uploadObject(PROFILES + loginName + "/", fileName, url);
+	}
+	
 	public String uploadProfileItem(String loginName, File file){
 		return uploadFile(PROFILES + loginName + "/", file);
 	}
@@ -123,6 +127,24 @@ public class JetS3Impl implements JetS3{
 
 			return 
 				HTTP + BUCKET+ "/" + folderPath + fileName;
+			
+		} catch (Exception e) {
+			
+			Logging.error(e);
+		}
+		return null; // Resource could not be uploaded
+	}
+	
+	protected String uploadObject(String folderPath, String fileName, String url) {
+		try {
+			S3Bucket bucket = s3.getBucket(BUCKET);
+			String bucketName = bucket.getName();
+			S3Object file = s3.getObject(bucketName, url);
+			file.setName(folderPath+fileName);
+			s3.putObject(bucket, file);
+
+			return 
+				HTTP + BUCKET + "/" + folderPath + fileName;
 			
 		} catch (Exception e) {
 			
