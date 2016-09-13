@@ -296,7 +296,7 @@ $(document).ready(function() {
 		
 		var id = $("#resetPassButton").val();
 		
-		$.get("https://localhost:7002/revblogs/resetUserPassword.do?resetPass=" + id, function(response){
+		$.get("https://dev.pjw6193.tech:7002/revblogs/resetUserPassword.do?resetPass=" + id, function(response){
 		
 			$("#loading").hide();
 			location.reload();
@@ -309,7 +309,7 @@ $(document).ready(function() {
 		
 		var id = $("#picButton").val();
 		
-		$.get("https://localhost:7002/revblogs/resetProfile.do?resetProfile=" + id, function(response){
+		$.get("https://dev.pjw6193.tech:7002/revblogs/resetProfile.do?resetProfile=" + id, function(response){
 		
 			$("#loadingManage").hide();
 			location.reload();
@@ -322,7 +322,7 @@ $(document).ready(function() {
 		
 		var id = $("#activateUser").val();
 	
-		$.get("https://localhost:7002/revblogs/activateUser.do?activate=" + id, function(response){
+		$.get("https://dev.pjw6193.tech:7002/revblogs/activateUser.do?activate=" + id, function(response){
 		
 			$("#loadingActive").hide();
 			location.reload();
@@ -335,7 +335,7 @@ $(document).ready(function() {
 		
 		var id = $("#deactivateUser").val();
 		
-		$.get("https://localhost:7002/revblogs/deactivateUser.do?deactivate=" + id, function(response){
+		$.get("https://dev.pjw6193.tech:7002/revblogs/deactivateUser.do?deactivate=" + id, function(response){
 		
 			$("#loadingDeactive").hide();
 			location.reload();
