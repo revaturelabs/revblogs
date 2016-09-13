@@ -211,37 +211,6 @@ public class PostController implements ServletContextAware {
 			
 			// Send Email to Account
 			Mailer.sendMail(email, password);
-			
-			File file;
-			
-			try {
-				
-				//Get default picture
-				URL fileURL = context.getResource("/WEB-INF/resources/images/default.png");
-				file = new File(fileURL.toString());
-
-				Logging.info("File length: " + file.length());
-				
-				User getNewUser = businessDelegate.requestUsers(email);
-				
-				String user = "" + getNewUser.getUserId();
-				
-				// Default profile image not being uploaded to S3 correctly. Hard coded for now.
-				// String profilePicture = businessDelegate.uploadProfileItem(user, user, file)
-				
-				getNewUser.setProfilePicture("http://blogs.pjw6193.tech/content/resources/img/default.png");
-				
-				businessDelegate.updateRecord(getNewUser);
-				
-			} catch (MalformedURLException e) {
-				
-				Logging.error(e);
-			}
-			
-			model.setViewName(MANAGE);
-			
-			return model;
-			
 		}
 		
 		model.setViewName(MANAGE);
