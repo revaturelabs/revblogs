@@ -1,13 +1,18 @@
 app.controller("UserBlogIndexController", ["$scope", "$http", function($scope, $http) {
 	
-	$scope.getPage = function(page) {
+	$scope.getPage = function(page, authorid) {
+		
+		$('#postsDiv').css('visibility', 'hidden');
+		$("#loading").show();
+		window.scrollTo(0, $('#postsDiv').offsetTop + 100);
+		
 		$http.get("/revblogs/api/posts?author=" + $scope.author + "&page=" + page + "&per_page=" + $scope.postsPerPage).success(
-		    function(resp)
+			function(resp)
 			{
 				$scope.posts = resp;
 				
 				$scope.curPage = page;  //current page
-				
+				$scope.searchPage = false;
 				var prevPage = $scope.curPage;
 				var nextPage = $scope.curPage;
 				
@@ -38,9 +43,9 @@ app.controller("UserBlogIndexController", ["$scope", "$http", function($scope, $
 				{
 					preloadPage(prevPage, $scope.postsPerPage);
 				}
-				
 				$('#postsDiv').load();
-				window.scrollTo(0, $('#postsDiv').offsetTop + 100);
+				$("#loading").hide();
+				$('#postsDiv').css('visibility', 'visible');
 			}
 		);
 	}
@@ -49,9 +54,6 @@ app.controller("UserBlogIndexController", ["$scope", "$http", function($scope, $
 	{
 		if(!$scope.isLoading)	
 		{
-			console.log("ChangeView " + direction);
-			console.log($scope.curPage);
-			
 			if(direction === 1)
 			{
 				if($scope.curPage < $scope.posts.total_pages)		
@@ -63,8 +65,6 @@ app.controller("UserBlogIndexController", ["$scope", "$http", function($scope, $
 					
 					preloadPage($scope.curPage - 1, $scope.postsPerPage);
 					preloadPage($scope.curPage + 1, $scope.postsPerPage);
-
-					$scope.isLoading = false;
 
 			        window.scrollTo(0, $('#postsDiv').offsetTop + 100);
 				}
@@ -88,12 +88,11 @@ app.controller("UserBlogIndexController", ["$scope", "$http", function($scope, $
 		}
 	}
 	
-	function preloadPage(page) {
+	function preloadPage(page, postsPP) {
 		$http.get("/revblogs/api/posts?author=" + $scope.author + "&page=" + page + "&per_page=" + $scope.postsPerPage).success(
-		    function(resp)
+			function(resp)
 			{
 				var prevPage = $scope.curPage;
-				console.log(prevPage);
 				var nextPage = $scope.curPage;
 				
 				if($scope.curPage > page)
@@ -114,6 +113,5 @@ app.controller("UserBlogIndexController", ["$scope", "$http", function($scope, $
 	$scope.curPage = 1;
 	$scope.postsPerPage = 10;
 	$scope.isLoading = false;
-	$scope.getPage($scope.curPage);
-	//
+	$scope.getPage($scope.curPage, $scope.author);
 }]);
