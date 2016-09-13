@@ -782,7 +782,8 @@ public class CryptImpl implements Crypt {
 					break;
 				case "yvx?ZC": trueLetters[i] = 126; 
 					break;
-				default:break;
+				default:
+					break;
 			}
 		}
 		

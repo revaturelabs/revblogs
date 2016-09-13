@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Arrays;
@@ -15,10 +16,14 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -27,6 +32,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -43,7 +49,7 @@ import com.revature.service.Population;
 import com.revature.service.impl.Mailer;
 
 @Controller
-public class PostController {
+public class PostController implements ServletContextAware {
 
 	/*
 	 * 	Attributes && Getters/Setters
@@ -51,6 +57,7 @@ public class PostController {
 	 */
 	private BusinessDelegate businessDelegate;
 	private Population population;
+	private ServletContext context;
 	private static final String SUCCESS = "passwordSuccess";
 	private static final String UPDATE = "userUpdate";
 	private static final String LIST = "userList";
@@ -76,6 +83,19 @@ public class PostController {
 	@RequestMapping(value="populate.do", method=RequestMethod.GET)
 	public String buildDatabase(){
 	
+		
+
+		population.populateRoles();
+		
+		Session session = businessDelegate.requestSession();
+		Criteria crit = session.createCriteria(UserRoles.class).add(Restrictions.eq("role", "ADMIN"));
+		UserRoles role = (UserRoles) crit.uniqueResult();
+		User admin = new User("danpgdr@gmail.com", "danpickles1", "Dan", "Pickles", "Pickle Master", role);
+		
+		admin.setPassword(businessDelegate.maskElement(admin.getPassword(), admin.getEmail(), admin.getFullname()));
+		
+		businessDelegate.putRecord(admin);
+		
 		return null;
 	}
 	
@@ -192,11 +212,13 @@ public class PostController {
 			// Send Email to Account
 			Mailer.sendMail(email, password);
 			
-			//Get default picture
-			URL fileURL = PostController.class.getClassLoader().getResource("default.png");
 			File file;
+			
 			try {
-				file = new File(fileURL.toURI());
+				
+				//Get default picture
+				URL fileURL = context.getResource("/WEB-INF/resources/images/default.png");
+				file = new File(fileURL.toString());
 				
 				Logging.info("File length: " + file.length());
 				
@@ -210,7 +232,7 @@ public class PostController {
 				
 				businessDelegate.updateRecord(getNewUser);
 				
-			} catch (URISyntaxException e) {
+			} catch (MalformedURLException e) {
 				
 				Logging.error(e);
 			}
@@ -233,12 +255,14 @@ public class PostController {
 		model.setViewName(MANAGE);
 		
 		User resetUserPic = businessDelegate.requestUser(userId);
-		
-		//Get default picture
-		URL fileURL = PostController.class.getClassLoader().getResource("default.png");
 		File file;
+		
 		try {
-			file = new File(fileURL.toURI());
+			
+			//Get default picture
+			URL fileURL = context.getResource("/WEB-INF/resources/images/default.png");
+			
+			file = new File(fileURL.toString());
 			
 			Logging.info("File length: " + file.length());
 			
@@ -250,7 +274,7 @@ public class PostController {
 			
 			businessDelegate.updateRecord(resetUserPic);
 			
-		} catch (URISyntaxException e) {
+		} catch (MalformedURLException e) {
 			
 			Logging.error(e);
 		}
@@ -599,5 +623,11 @@ public class PostController {
 		String cutBlogLink = blogLink.replace("http://blogs.pjw6193.tech/", "");
 		businessDelegate.delete(cutBlogLink);
 		return "user-blogs";
+	}
+
+	
+	public void setServletContext(ServletContext context) {
+	
+		this.context = context;
 	}
 }
