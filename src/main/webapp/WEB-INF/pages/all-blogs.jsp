@@ -28,6 +28,7 @@
   			<h2>Latest Posts</h2>
   		</div>
   	</div>
+  	<img id="loading" src="http://blogs.pjw6193.tech/content/resources/img/rev.gif" />
     <div id="postsDiv" class="row">
       <div class="col-sm-8">
       	<c:if test="${user.userRole.userRoleId eq 1}">
@@ -44,8 +45,8 @@
           </div>
           <div class="panel-body">
             <ul class="list-unstyled">
-              <li><a href="#">Revature</a></li>
-              <li><a href="#">Life at Revature</a></li>
+              <li><a href="https://revature.com/">Revature</a></li>
+              <li><a href="http://lifeatrevature.com/">Life at Revature</a></li>
             </ul>
           </div>
         </div>
