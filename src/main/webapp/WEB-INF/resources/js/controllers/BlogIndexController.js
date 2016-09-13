@@ -162,7 +162,7 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
         sessionStorage.clear();
 	};
 	
-	$scope.appUrl = "https://localhost:7002/revblogs";
+	$scope.appUrl = "https://dev.pjw6193.tech:7002/revblogs";
 	$scope.posts = {
 			page: 0,
 			prev: null,
