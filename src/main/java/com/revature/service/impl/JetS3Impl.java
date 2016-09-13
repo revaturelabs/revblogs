@@ -140,7 +140,7 @@ public class JetS3Impl implements JetS3{
 			S3Bucket bucket = s3.getBucket(BUCKET);
 			String bucketName = bucket.getName();
 			S3Object file = s3.getObject(bucketName, url);
-			file.setName(filePath+fileName);
+			file.setName(folderPath+fileName);
 			s3.putObject(bucket, file);
 
 			return 
