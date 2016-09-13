@@ -84,13 +84,16 @@
 </body>
 <script type="text/javascript">
 $(document).ready(function(){
+	
+	const HOST = "dev.pjw6193.tech";
+	
 	$("#send").click(function(){
 	
 		
 		if(validateForm() === true){
 			var email = $("#userAuth").val();
 
-			$.get("http://dev.pjw6193.tech:7001/revblogs/bindUser?u=" + email, function(response){
+			$.get("http://" + HOST + ":7001/revblogs/bindUser?u=" + email, function(response){
 			
 				if(response === "Success"){
 				
@@ -111,7 +114,7 @@ $(document).ready(function(){
 				if((validateForm() === true) ){
 					var email = $("#userAuth").val();
 
-					$.get("http://dev.pjw6193.tech:7001/revblogs/bindUser?u=" + email, function(response){
+					$.get("http://" + HOST + ":7001/revblogs/bindUser?u=" + email, function(response){
 			
 						if(response === "Success"){
 			
@@ -131,7 +134,7 @@ $(document).ready(function(){
 	
 		alert("Populating...");
 	
-		$.get("http://dev.pjw6193.tech:7001/revblogs/populate.do", function(response){
+		$.get("http://" + HOST + ":7001/revblogs/populate.do", function(response){
 			
 			alert(response)
 		});
