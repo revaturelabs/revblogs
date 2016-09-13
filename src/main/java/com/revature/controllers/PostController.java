@@ -235,7 +235,7 @@ public class PostController {
 		
 		String user = "" + resetUserPic.getUserId();
 		
-		String profilePicture = businessDelegate.uploadObject(user, user, file);
+		String profilePicture = businessDelegate.uploadProfileItem(user, user, file);
 		
 		resetUserPic.setProfilePicture(profilePicture);
 		
