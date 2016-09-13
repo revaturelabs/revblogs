@@ -52,6 +52,8 @@ public class HtmlWriter {
 		blogWriter = new BufferedWriter(fw);
 		while ((line=tempReader.readLine()) != null) {
 			blogWriter.write(line+"\n");
+			if (line.contains("<title>"))
+				blogWriter.write(blog.getBlogTitle()+" | Revature Blogs\n");
 			if (line.contains("post-date"))
 				blogWriter.write(blog.getPublishDate().toString()+"\n");
 			if (line.contains("post-author"))
