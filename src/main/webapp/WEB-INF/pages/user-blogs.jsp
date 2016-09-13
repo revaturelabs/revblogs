@@ -37,6 +37,7 @@
   			<h2>Your Blog Posts</h2>
   		</div>
   	</div>
+  	<img id="loading" src="http://blogs.pjw6193.tech/content/resources/img/rev.gif" />
     <div id="postsDiv" class="row">
       <div class="col-sm-8">
       	<div ng-repeat="post in posts.posts" ng-include src="'resources/js/templates/editable-post-preview.html'"></div>

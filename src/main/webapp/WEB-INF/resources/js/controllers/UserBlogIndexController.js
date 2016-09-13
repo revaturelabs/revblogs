@@ -4,6 +4,10 @@ app.controller("UserBlogIndexController", ["$scope", "$http", function($scope, $
 		$http.get("/revblogs/api/posts?author=" + $scope.author + "&page=" + page + "&per_page=" + $scope.postsPerPage).success(
 		    function(resp)
 			{
+		    	$('#postsDiv').css('visibility', 'hidden');
+				$("#loading").show();
+				window.scrollTo(0, $('#postsDiv').offsetTop + 100);
+				
 				$scope.posts = resp;
 				
 				$scope.curPage = page;  //current page
@@ -40,6 +44,8 @@ app.controller("UserBlogIndexController", ["$scope", "$http", function($scope, $
 				}
 				
 				$('#postsDiv').load();
+				$("#loading").hide();
+				$('#postsDiv').css('visibility', 'visible');
 				window.scrollTo(0, $('#postsDiv').offsetTop + 100);
 			}
 		);
