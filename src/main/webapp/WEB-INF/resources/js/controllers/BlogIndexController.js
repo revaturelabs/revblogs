@@ -85,48 +85,8 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 	
 	$scope.getPageWithAuthor = function(page, authorid)
 	{
-		$http.get($scope.appUrl+"/api/posts?author=" + authorid + "&page=" + page + "&per_page=" + $scope.postsPerPage).success(
-			function(resp)
-			{
-				$scope.author = authorid;
-				$scope.posts = resp;
-				
-				$scope.curPage = page;  //current page
-				
-				var prevPage = $scope.curPage;
-				var nextPage = $scope.curPage;
-				
-				if($scope.curPage > 1)
-				{
-					prevPage = $scope.curPage - 1;
-				}
-				
-				if($scope.curPage < $scope.posts.total_pages)
-				{
-					nextPage = $scope.curPage + 1;
-				}
-				
-				$scope.numOfPages = [];
-				$scope.numOfPages[0] = 1;
-				
-				for (var i = 1; i < $scope.posts.total_pages+1; i++)
-				{
-					$scope.numOfPages[i - 1] = i;
-				}
-				
-				if($scope.curPage < $scope.posts.total_pages)
-				{
-					preloadPageWithAuthor(nextPage, authorid, $scope.postsPerPage);
-				}
-				
-				if($scope.curPage > 1)
-				{
-					preloadPageWithAuthor(prevPage, authorid, $scope.postsPerPage);
-				}
-				
-				$('#postsDiv').load();
-			}	
-		);
+		$scope.author = authorid;
+		$scope.getPage(page,$scope.postsPerPage);
 	}
 
 	$scope.changeView = function(direction)
