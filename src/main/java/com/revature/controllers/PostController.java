@@ -193,10 +193,7 @@ public class PostController {
 			Mailer.sendMail(email, password);
 			
 			//Get default picture
-			URL fileURL = PostController.class.getClassLoader().getResource("default.png");
-			File file;
-			try {
-				file = new File(fileURL.toURI());
+			String file = "content/resources/img/default.png";
 				
 				Logging.info("File length: " + file.length());
 				
@@ -204,16 +201,13 @@ public class PostController {
 				
 				String user = "" + getNewUser.getUserId();
 				
-				String profilePicture = businessDelegate.uploadProfileItem(user, user, file);
+				String profilePicture = businessDelegate.uploadObject(user, user, file);
 				
 				getNewUser.setProfilePicture(profilePicture);
 				
 				businessDelegate.updateRecord(getNewUser);
 				
-			} catch (URISyntaxException e) {
-				
-				Logging.error(e);
-			}
+		
 			
 			model.setViewName(MANAGE);
 			
@@ -235,13 +229,13 @@ public class PostController {
 		User resetUserPic = businessDelegate.requestUser(userId);
 		
 		//Get default picture change this
-		File file = new File("http://blogs.pjw6193.tech/content/resources/img/default.png");
+		String file = "content/resources/img/default.png";
 		
 		Logging.info("File length: " + file.length());
 		
 		String user = "" + resetUserPic.getUserId();
 		
-		String profilePicture = businessDelegate.uploadProfileItem(user, user, file);
+		String profilePicture = businessDelegate.uploadObject(user, user, file);
 		
 		resetUserPic.setProfilePicture(profilePicture);
 		
