@@ -23,22 +23,71 @@
 	height: 422px;
 	overflow-y: auto;
 }
+tr.header
+{
+    cursor:pointer;
+}
+.header .sign:after{
+  content:"+";
+  display:inline-block;      
+}
+.header.expand .sign:after{
+  content:"-";
+}
 </style>
 </head>
 <body>
 <jsp:include page="navbar.jsp"></jsp:include>
 <div class="overall-container">
 <div class="container page-content scroll content-padding">
-	<table align="center">
-		<tr>
-			<th>File</th>
-			<th>Delete</th>
-		</tr>
+	<table>
+		<tr class="header"><th colspan="2">Pages<span class="sign"></span></th></tr>
+		<tr><th>File</th><th>Delete</th></tr>
 		<c:forEach items="${list}" var="name">
-			<form:form action="${pageContext.servletContext.contextPath}/deleteFile" method="get" commandName="blog">
+			<form:form action="modify.do" method="post" commandName="page">
 				<tr>
 					<td><a href="http://blogs.pjw6193.tech/${name}"><c:out value="${name}"></c:out></a></td>
-					<td><form:hidden path="blogTitle" value="${name}"/><form:button name="delete">Delete</form:button></td>
+					<td><form:hidden path="name" value="${name}"/><form:button name="delete">Delete</form:button></td>
+				</tr>
+			</form:form>
+		</c:forEach>
+		<tr class="header"><th colspan="2">Pictures/Videos<span class="sign"></span></th></tr>
+		<tr><th>File</th><th>Delete</th></tr>
+		<c:forEach items="${elist}" var="name">
+			<form:form action="modify.do" method="post" commandName="page">
+				<tr>
+					<td><a href="http://blogs.pjw6193.tech/${name}"><c:out value="${name}"></c:out></a></td>
+					<td><form:hidden path="name" value="${name}"/><form:button name="delete">Delete</form:button></td>
+				</tr>
+			</form:form>
+		</c:forEach>
+		<tr class="header"><th colspan="2">Profile Images<span class="sign"></span></th></tr>
+		<tr><th>File</th><th>Delete</th></tr>
+		<c:forEach items="${prlist}" var="name">
+			<form:form action="modify.do" method="post" commandName="page">
+				<tr>
+					<td><a href="http://blogs.pjw6193.tech/${name}"><c:out value="${name}"></c:out></a></td>
+					<td><form:hidden path="name" value="${name}"/><form:button name="delete">Delete</form:button></td>
+				</tr>
+			</form:form>
+		</c:forEach>
+		<tr class="header"><th colspan="2">Resources<span class="sign"></span></th></tr>
+		<tr><th>File</th><th>Delete</th></tr>
+		<c:forEach items="${rlist}" var="name">
+			<form:form action="modify.do" method="post" commandName="page">
+				<tr>
+					<td><a href="http://blogs.pjw6193.tech/${name}"><c:out value="${name}"></c:out></a></td>
+					<td><form:hidden path="name" value="${name}"/><form:button name="delete">Delete</form:button></td>
+				</tr>
+			</form:form>
+		</c:forEach>
+		<tr class="header"><th colspan="2">Tests<span class="sign"></span></th></tr>
+		<tr><th>File</th><th>Delete</th></tr>
+		<c:forEach items="${tlist}" var="name">
+			<form:form action="modify.do" method="post" commandName="page">
+				<tr>
+					<td><a href="http://blogs.pjw6193.tech/${name}"><c:out value="${name}"></c:out></a></td>
+					<td><form:hidden path="name" value="${name}"/><form:button name="delete">Delete</form:button></td>
 				</tr>
 			</form:form>
 		</c:forEach>
@@ -50,4 +99,16 @@
 </div>
 </body>
 <script type="text/javascript" src="resources/js/ui.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $("table").each(function() {
+         $("tr").each(function() {
+             if ($(this).hasClass('header')) {}
+              else {$(this).toggle(50);}});
+       });
+    $('.header').click(function(){
+        $(this).toggleClass('expand').nextUntil('tr.header').slideToggle(100);
+    });
+});
+</script>
 </html>

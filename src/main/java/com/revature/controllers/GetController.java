@@ -1,5 +1,8 @@
 package com.revature.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -90,8 +93,29 @@ public class GetController {
 	@RequestMapping(value="/manage-S3", method=RequestMethod.GET)
 	public String manageS3(HttpServletRequest req, HttpServletResponse resp){
 		String[] str = businessDelegate.getList();
+		List<String> pages = new ArrayList<>();
+		List<String> test = new ArrayList<>();
+		List<String> resources = new ArrayList<>();
+		List<String> evidence = new ArrayList<>();
+		List<String> profiles = new ArrayList<>();
+		for(String st:str){
+			if(!st.contains("content/")||st.contains("/resources/"))
+				resources.add(st);
+			else if(st.contains("/evidence/"))
+				evidence.add(st);
+			else if(st.contains("/pages/"))
+				pages.add(st);
+			else if(!st.contains("test/")&&st.contains("/profiles/"))
+				profiles.add(st);
+			else
+				test.add(st);
+		}
 		req.setAttribute("blog", new Blog());
-		req.setAttribute("list", str);
+		req.setAttribute("list", pages);
+		req.setAttribute("prlist", profiles);
+		req.setAttribute("elist", evidence);
+		req.setAttribute("tlist", test);
+		req.setAttribute("rlist", resources);
 		return "management";
 	}
 	

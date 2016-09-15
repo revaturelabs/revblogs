@@ -205,10 +205,20 @@ public class PostController implements ServletContextAware {
 									linkedInURL, 
 									description, 
 									userRole);
-
+			
 			// Save in Database
 			businessDelegate.putRecord(newUser);
 			
+			newUser = businessDelegate.requestUsers(email);
+				
+			String user = "" + newUser.getUserId();
+			
+			String profilePicture = businessDelegate.uploadProfileItem(user, user);
+			
+			newUser.setProfilePicture(profilePicture);
+			
+			businessDelegate.updateRecord(newUser);
+				
 			// Send Email to Account
 			Mailer.sendMail(email, password);
 		}
@@ -226,29 +236,13 @@ public class PostController implements ServletContextAware {
 		
 		User resetUserPic = businessDelegate.requestUser(userId);
 
-		File file;
+		String user = "" + resetUserPic.getUserId();
 		
-		try {
-			
-			//Get default picture
-			URL fileURL = context.getResource("/WEB-INF/resources/images/default.png");
-			
-			file = new File(fileURL.toString());
-			
-			Logging.info("File length: " + file.length());
-			
-			String user = "" + resetUserPic.getUserId();
-			
-			String profilePicture = businessDelegate.uploadProfileItem(user, user, file);
-			
-			resetUserPic.setProfilePicture(profilePicture);
-			
-			businessDelegate.updateRecord(resetUserPic);
-			
-		} catch (MalformedURLException e) {
-			
-			Logging.error(e);
-		}
+		String profilePicture = businessDelegate.uploadProfileItem(user, user);
+		
+		resetUserPic.setProfilePicture(profilePicture);
+		
+		businessDelegate.updateRecord(resetUserPic);
 
 		req.setAttribute(LIST, businessDelegate.requestUsers());
 		req.setAttribute(PROFILE, new UserDTO());

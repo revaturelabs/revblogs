@@ -96,8 +96,8 @@ public class JetS3Impl implements JetS3{
 		return uploadFile(PROFILES + loginName + "/", fileName, file);
 	}
 	
-	public String uploadProfileItem(String loginName, String fileName, String url){
-		return uploadObject(PROFILES + loginName + "/", fileName, url);
+	public String uploadProfileItem(String loginName, String fileName){
+		return copyDefault(PROFILES + loginName + "/", fileName);
 	}
 	
 	public String uploadProfileItem(String loginName, File file){
@@ -135,19 +135,15 @@ public class JetS3Impl implements JetS3{
 		return null; // Resource could not be uploaded
 	}
 	
-	protected String uploadObject(String folderPath, String fileName, String url) {
+	protected String copyDefault(String folderPath, String fileName) {
 		try {
 			S3Bucket bucket = s3.getBucket(BUCKET);
 			String bucketName = bucket.getName();
-			S3Object file = s3.getObject(bucketName, url);
-			file.setName(folderPath+fileName);
-			s3.putObject(bucket, file);
-
+			S3Object s3Obj = new S3Object(folderPath + fileName);
+			s3.copyObject(bucketName, "content/resources/img/default.png", bucketName, s3Obj, false);
 			return 
 				HTTP + BUCKET + "/" + folderPath + fileName;
-			
 		} catch (Exception e) {
-			
 			Logging.error(e);
 		}
 		return null; // Resource could not be uploaded
