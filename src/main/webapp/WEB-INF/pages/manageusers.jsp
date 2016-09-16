@@ -280,14 +280,13 @@ $(document).ready(function() {
 	
 	var loc = $(location).attr('href');
 	var temp = "";
+	var myHost = "";
 	
 	// https:// [8]
 	for(var i = 8; i < 13; i++){
 	
 		temp += loc[i];
 	}
-	
-	var myHost = "";
 	
 	if(temp === "local"){
 		
