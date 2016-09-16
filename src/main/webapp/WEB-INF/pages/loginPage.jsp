@@ -89,7 +89,7 @@ $(document).ready(function(){
 	var temp = "";
 	var myHost = "";
 	
-	// http:// [7]
+	// "http://" = 7 chars
 	for(var i = 7; i < 12; i++){
 	
 		temp += loc[i];
@@ -105,6 +105,8 @@ $(document).ready(function(){
 	}
 
 	const HOST = myHost;
+	
+	alert("Running on Host: " + HOST);
 	
 	$("#send").click(function(){
 	

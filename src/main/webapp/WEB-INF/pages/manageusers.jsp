@@ -282,7 +282,7 @@ $(document).ready(function() {
 	var temp = "";
 	var myHost = "";
 	
-	// https:// [8]
+	// "https://" = 8 chars
 	for(var i = 8; i < 13; i++){
 	
 		temp += loc[i];
@@ -298,6 +298,8 @@ $(document).ready(function() {
 	}
 
 	const HOST = myHost;
+	
+	alert("Running on Host: " + HOST);
 	
 	$("#loading").hide();
 	$('#loadingManage').hide();
