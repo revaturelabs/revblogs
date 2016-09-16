@@ -65,9 +65,8 @@
 			<tbody>
 				<c:forEach items="${userList}" var="user">
 					<tr id="${user.userId}" onclick=grabId(this.id)>
-						<td id="proPic">
-						<!--  data-toggle="modal" data-target="#confirmPictureMod" Default profile picture cannot be reset right now. -->
-							<button id="picButton${user.userId}" name="resetProfile" value="${user.userId}" disabled>
+						<td id="proPic${user.userId}">
+							<button id="picButton${user.userId}" class="hideButton" name="resetProfile" value="${user.userId}" data-toggle="modal" data-target="#confirmPictureMod">
 								<img src="${user.profilePicture}" width="100" height="100" alt="profile picture" />
 							</button>
 						</td>
@@ -279,7 +278,27 @@
 <script>
 $(document).ready(function() {
 	
-	const HOST = "dev.pjw6193.tech"
+	var loc = $(location).attr('href');
+	var temp = "";
+	
+	// https:// [8]
+	for(var i = 8; i < 13; i++){
+	
+		temp += loc[i];
+	}
+	
+	var myHost = "";
+	
+	if(temp === "local"){
+		
+		myHost = "localhost";	
+	}
+	else {
+		
+		myHost = "dev.pjw6193.tech";
+	}
+
+	const HOST = myHost;
 	
 	$("#loading").hide();
 	$('#loadingManage').hide();
