@@ -87,15 +87,14 @@ $(document).ready(function(){
 	
 	var loc = $(location).attr('href');
 	var temp = "";
+	var myHost = "";
 	
 	// http:// [7]
 	for(var i = 7; i < 12; i++){
 	
 		temp += loc[i];
 	}
-	
-	var myHost = "";
-	
+
 	if(temp === "local"){
 		
 		myHost = "localhost";	
