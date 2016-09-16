@@ -85,7 +85,27 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	
-	const HOST = "dev.pjw6193.tech";
+	var loc = $(location).attr('href');
+	var temp = "";
+	
+	// http:// [7]
+	for(var i = 7; i < 12; i++){
+	
+		temp += loc[i];
+	}
+	
+	var myHost = "";
+	
+	if(temp === "local"){
+		
+		myHost = "localhost";	
+	}
+	else {
+		
+		myHost = "dev.pjw6193.tech";
+	}
+
+	const HOST = myHost;
 	
 	$("#send").click(function(){
 	
