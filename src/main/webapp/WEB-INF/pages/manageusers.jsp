@@ -299,8 +299,6 @@ $(document).ready(function() {
 
 	const HOST = myHost;
 	
-	alert("Running on Host: " + HOST);
-	
 	$("#loading").hide();
 	$('#loadingManage').hide();
 	$('#loadingActive').hide();
