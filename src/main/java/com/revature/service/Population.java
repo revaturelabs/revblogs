@@ -369,7 +369,7 @@ public class Population {
 			}
 			
 			// Encrypt Password
-			user.setPassword(businessDelegate.maskElement(user.getPassword(), user.getEmail(), user.getFullname()));
+			user.setPassword(businessDelegate.maskElement(user.getPassword()));
 			
 			user.setUserRole(myRole);
 			userList.add(user);

@@ -61,9 +61,6 @@ public class BaseController {
 	@RequestMapping(value="/loginPage", method=RequestMethod.GET)
 	public String login(HttpServletRequest req){
 	
-		// Toggle Population Button (True is on)
-		req.getSession().setAttribute("populate", false);
-		
 		return "loginPage";
 	}
 	

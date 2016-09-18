@@ -55,41 +55,6 @@ public class GetController {
 		return "makeClientAccount";
 	}
 	
-	@RequestMapping(value="/bindUser", method=RequestMethod.GET)
-	@ResponseBody
-	public String bindUser (@RequestParam(value="u") String email, HttpServletRequest request) {
-		
-		String value = null;
-		
-		User curUser = businessDelegate.requestUsers(email.toLowerCase());
-		
-		if(curUser != null){
-			
-			if(curUser.isActive()){
-				
-				LoginEncoder.user.setUserId(curUser.getUserId());
-				LoginEncoder.user.setEmail(curUser.getEmail());
-				LoginEncoder.user.setPassword(curUser.getPassword());
-				LoginEncoder.user.setFirstName(curUser.getFirstName());
-				LoginEncoder.user.setLastName(curUser.getLastName());
-				LoginEncoder.user.setProfilePicture(curUser.getProfilePicture());
-				LoginEncoder.user.setJobTitle(curUser.getJobTitle());
-				LoginEncoder.user.setLinkedInURL(curUser.getLinkedInURL());
-				LoginEncoder.user.setDescription(curUser.getDescription());
-				LoginEncoder.user.setActive(curUser.isActive());
-				LoginEncoder.user.setNewUser(curUser.isNewUser());
-				
-				value = "Success";
-			
-			} else {
-				
-				value = "Inactive";
-			}
-		}
-		
-		return value; 
-	}
-	
 	@RequestMapping(value="/manage-S3", method=RequestMethod.GET)
 	public String manageS3(HttpServletRequest req, HttpServletResponse resp){
 		String[] str = businessDelegate.getList();

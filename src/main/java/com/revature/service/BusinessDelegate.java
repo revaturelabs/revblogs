@@ -100,8 +100,8 @@ public interface BusinessDelegate {
 	public Blog requestBlog(int id);
 	
 	// Encryption
-	public String maskElement(String target, String key1, String key2);
-	public String revealElement(String target, String key1, String key2);
+	public String maskElement(String target);
 	public String getRandom(int length);
 	public void setProperty(String[] props);
+	public boolean validate(String input, String hashed);
 }

@@ -31,12 +31,6 @@
 	<c:if test="${user.userRole.role eq 'CONTRIBUTOR'}">
 		<c:redirect url="/contributor"/>
 	</c:if>
-
-	<c:if test="${populate eq true}">
-		<div>
-			<button id="populateNow" class="btn btn-primary">Populate Database</button>
-		</div>
-	</c:if>
 	<c:if test="${'fail' eq param.auth}">
 		<div>
               <h3 id="failLogin">Failed to login. Please try again.</h3>
@@ -108,21 +102,9 @@ $(document).ready(function(){
 	
 	$("#send").click(function(){
 	
-		
 		if(validateForm() === true){
-			var email = $("#userAuth").val();
-
-			$.get("http://" + HOST + ":7001/revblogs/bindUser?u=" + email, function(response){
 			
-				if(response === "Success"){
-				
-					$("#form").submit();
-				
-				} else {
-				
-					e.preventDefault();
-				}
-			});
+			$("#form").submit();
 		}
 	});
 	$('#form').keyup(function(e) {
@@ -131,32 +113,11 @@ $(document).ready(function(){
 			e.preventDefault();
 			if($("#passAuth").is(':focus')){
 				if((validateForm() === true) ){
-					var email = $("#userAuth").val();
-
-					$.get("http://" + HOST + ":7001/revblogs/bindUser?u=" + email, function(response){
-			
-						if(response === "Success"){
-			
-							$("#form").submit();
-			
-						} else {
-			
-							e.preventDefault();
-						}
-					});
+				
+					$("#form").submit();
 				}
 			}
 		}
-	});
-	
-	$("#populateNow").click(function(){
-	
-		alert("Populating...");
-	
-		$.get("http://" + HOST + ":7001/revblogs/populate.do", function(response){
-			
-			alert(response)
-		});
 	});
 });
 function validateForm(){

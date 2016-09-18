@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
-import org.jets3t.service.S3Service;
-import org.jets3t.service.security.AWSCredentials;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -208,14 +206,13 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	 * 
 	 *  Encryption
 	 */
-	
-	public String maskElement(String target, String key1, String key2){
+	public String maskElement(String target){
 		
-		return crypt.encrypt(target, key1, key2);
+		return crypt.encrypt(target);
 	}
-	public String revealElement(String target, String key1, String key2){
+	public boolean validate(String input, String hashed) {
 		
-		return crypt.decrypt(target, key1, key2);
+		return crypt.validate(input, hashed);	
 	}
 	public String getRandom(int length){
 		

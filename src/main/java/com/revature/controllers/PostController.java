@@ -70,13 +70,6 @@ public class PostController {
 	 *  
 	 */
 	
-	// Populate Database (GET used for simplicity. No params are passed)
-	@RequestMapping(value="populate.do", method=RequestMethod.GET)
-	public String buildDatabase(){
-		
-		return null;
-	}
-	
 	// Update a User
 	@RequestMapping(value="updateUser.do", method=RequestMethod.POST)
 	public ModelAndView updateUser(@ModelAttribute("updateUser") @Valid User updateUser, BindingResult bindingResult,
@@ -90,20 +83,12 @@ public class PostController {
 		
 		User loggedIn = (User) req.getSession().getAttribute("user");
 		
-		//password needed to be decrypted first
-		loggedIn.setPassword(businessDelegate.revealElement(loggedIn.getPassword(), loggedIn.getEmail(), loggedIn.getFullname()));
-		//end decryption
-		
 		loggedIn.setEmail(updateUser.getEmail());
 		loggedIn.setFirstName(updateUser.getFirstName());
 		loggedIn.setLastName(updateUser.getLastName());
 		loggedIn.setJobTitle(updateUser.getJobTitle());
 		loggedIn.setLinkedInURL(updateUser.getLinkedInURL());
 		loggedIn.setDescription(updateUser.getDescription());
-		
-		//re-encrypt password
-		loggedIn.setPassword(businessDelegate.maskElement(loggedIn.getPassword(), loggedIn.getEmail(), loggedIn.getFullname()));
-		//end re-encryption
 		
 		String userUpdate = "update";
 		req.getSession().setAttribute("user", loggedIn);
@@ -126,11 +111,6 @@ public class PostController {
 		}
 		
 		User updateUser = businessDelegate.requestUser(updateUserProfile.getUserId());
-				
-		//password needed to be decrypted first
-		updateUser.setPassword(businessDelegate.revealElement(updateUser.getPassword(), updateUser.getEmail(),
-				updateUser.getFullname()));
-		//end decryption
 		
 		// Set attributes
 		updateUser.setEmail(updateUserProfile.getEmail());
@@ -139,11 +119,6 @@ public class PostController {
 		updateUser.setJobTitle(updateUserProfile.getJobTitle());
 		updateUser.setLinkedInURL(updateUserProfile.getLinkedInURL());
 		updateUser.setDescription(updateUserProfile.getDescription());		
-		
-		//re-encrypt password
-		updateUser.setPassword(businessDelegate.maskElement(updateUser.getPassword(), updateUser.getEmail(), 
-				updateUser.getFullname()));
-		//end re-encryption
 		
 		businessDelegate.updateRecord(updateUser);
 		req.setAttribute(LIST, businessDelegate.requestUsers());
@@ -176,7 +151,7 @@ public class PostController {
 			// Role Obj from Database
 			UserRoles userRole = businessDelegate.requestRoles(role);
 			User newUser = new User(email, 
-									businessDelegate.maskElement(password, email, lastName+", "+firstName), 
+									businessDelegate.maskElement(password), 
 									firstName, 
 									lastName, 
 									jobTitle,
@@ -268,7 +243,7 @@ public class PostController {
 
 		String password = businessDelegate.getRandom(6);
 
-		resetUserPassword.setPassword(businessDelegate.maskElement(password, email, resetUserPassword.getLastName()+", "+resetUserPassword.getFirstName()));
+		resetUserPassword.setPassword(businessDelegate.maskElement(password));
 		resetUserPassword.setNewUser(true);
 		
 		// Save in Database
@@ -299,22 +274,19 @@ public class PostController {
 		
 		User loggedIn = (User) req.getSession().getAttribute("user");
 		
-		String prevPass = businessDelegate.maskElement(passwordDTO.getOldPassword(), loggedIn.getEmail(), loggedIn.getFullname());
+		String prevPass = passwordDTO.getOldPassword();
 		String password = passwordDTO.getNewPassword();
 		
 		String success = "success";
 		String failure = "failure";
 		
 		// if old password matches current password
-		if(prevPass.equals(loggedIn.getPassword())){
-			
-			
-			String maskedPass = businessDelegate.maskElement(password, loggedIn.getEmail(), loggedIn.getFullname());
-			
+		if(businessDelegate.validate(prevPass, loggedIn.getPassword())){
+				
 			// if old password does not match new password
-			if(!(prevPass.equals(maskedPass))){
+			if(!(prevPass.equals(password))){
 			
-				loggedIn.setPassword(businessDelegate.maskElement(password, loggedIn.getEmail(), loggedIn.getFullname()));
+				loggedIn.setPassword(businessDelegate.maskElement(password));
 				
 				if(loggedIn.isNewUser()){
 					loggedIn.setNewUser(false);
