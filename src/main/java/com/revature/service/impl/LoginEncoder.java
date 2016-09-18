@@ -13,28 +13,12 @@ public class LoginEncoder implements PasswordEncoder{
 	 *  Attributes && Getters/Setters
 	 */
 	
-
-	public static final User user = new User();
-	
 	private BusinessDelegate businessDelegate;
 	
 	public void setBusinessDelegate(BusinessDelegate businessDelegate) {
 		this.businessDelegate = businessDelegate;
 	}
-	
-	/*
-	 * Password Encoder implementation for Custom Encryption
-	 * @see org.springframework.security.crypto.password.PasswordEncoder#encode(java.lang.CharSequence)
-	 */
-	public String encrypt(CharSequence passwordInput){
-		
-		if(passwordInput != null && user.getEmail() != null && user.getFullname() != null){
-			
-			return businessDelegate.maskElement((String)passwordInput, user.getEmail(), user.getFullname());
-		}
-		
-		return null;
-	}
+
 	
 	/*
 	 * 
@@ -46,19 +30,11 @@ public class LoginEncoder implements PasswordEncoder{
 	 */
 	
 	public String encode(CharSequence passwordInput) {
-		
-		//String temp = Crypt.encrypt((String)passwordInput, user.getEmail(), user.getFullname())
-		//return temp
-		
-		return "";
+
+		return null;
 	}
 	public boolean matches(CharSequence passwordInput, String encodedPassword) {
 		
-		if(encodedPassword.equals(encrypt(passwordInput))){
-			
-			return true;
-		}
-		
-		return false;
+		return businessDelegate.validate((String)passwordInput, encodedPassword);
 	}
 }

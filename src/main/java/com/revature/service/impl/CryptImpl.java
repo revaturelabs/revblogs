@@ -1,6 +1,7 @@
 package com.revature.service.impl;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
@@ -14,14 +15,9 @@ import com.revature.data.impl.PropertyType;
 import com.revature.service.BusinessDelegate;
 import com.revature.service.Crypt;
 
-public class CryptImpl implements Crypt {
+public class CryptImpl implements Crypt{
 
-	private BusinessDelegate businessDelegate;
-	String[][] keys = new String[][]{
-		
-		/*
-		 *  These keys are used to encode the corresponding properties
-		 */
+	private String[][] keys = new String[][]{
 			
 		{"CZmTgoznKnJocTkGuFFURvZjUDuVvBhoETorfnzPOfqymleBbOOHfqPCSSty", "pneumonoultramicroscopicsilicovolcanoconiosis"},
 		{"GSXWzGGiiDBvlYxTNddabeUOsSPLHoYnibqBEAtRrSDnZPrACvUjBMGxcoBZ", "Pseudopseudohypoparathyroidism"},
@@ -36,37 +32,58 @@ public class CryptImpl implements Crypt {
 		{"boosNkoVgLkjnWJUMEeHAGbUmwWhVlBOPZKZjUduUXunxwbsZmnNxKdAWePg", "peobuefdvxjbtoajefspkfuccfngbf"}
 	};
 	
+	private BusinessDelegate businessDelegate;
+	
 	public void setBusinessDelegate(BusinessDelegate businessDelegate) {
 		this.businessDelegate = businessDelegate;
 	}
 	
 	/**
 	 * 
-	 *  This method encrypts the target with the keys.
+	 *  This method salts && encrypts the target.
 	 *  
-	 * @param target The string you want encrypted.
-	 * @param key1   The keyword you want the target to cipher against. (Don't pass in the target again!)
-	 * @param key2   The keyword used to vary the output when similiar targets and keywords are utilized.
-	 * @return       Returns the encryped target.
+	 * @param target : The string you want encrypted.
+	 * @return Returns the encrypted target.
+	 * 
 	 */
-	public String encrypt(String target, String key1, String key2){
+	public String encrypt(String target){
+		
+		String temp = saltTarget(target);
+		String[] keys = bindKeys(temp);
+	
+		return encrypt(temp, keys[0], keys[1]);
+	}
+	private String encrypt(String target, String key1, String key2){
 		
 		String temp = target;
+		String holder = "";
+		char[] tempArray = temp.toCharArray();
 		
+		//------------------
+		// 1st Cipher
 		for(int i = 0; i < key2.length(); i++){
 			
 			temp = encrypt(temp, key1);
 		}
 		
-		String holder = "";
-		
-		char[] tempArray = temp.toCharArray();
+		//------------------
+		// Masking
+		String st = "" + tempArray[0] + tempArray[1];
 		
 		for(char c : tempArray){
 			
 			holder += maskRegions(c);
 		}
 		
+		//------------------
+		// 2nd Cipher
+		for(int j = 0; j < key1.length(); j++){
+			
+			holder = encrypt(holder, key2);
+		}
+		
+		holder = st + holder;
+	
 		return holder;
 	}
 	private String encrypt(String target, String keyword){
@@ -388,20 +405,288 @@ public class CryptImpl implements Crypt {
 			}
 		}
 	}
+	private String saltTarget(String target){
+		
+		Calendar cal = Calendar.getInstance();
+		String salt = String.valueOf(cal.get(Calendar.DAY_OF_MONTH));
+			
+		if(Integer.parseInt(salt) < 10){
+			
+			salt = "0" + salt;
+		}
 	
-	// Decryption
-	public String decrypt(String target, String key1, String key2){
+		switch(Integer.parseInt(salt)){
+
+			case  1: return salt + "4OY#nR" + target + "690";
+			case  2: return salt + "kt4oRA" + target + "848";
+			case  3: return salt + "tqDHZe" + target + "290";
+			case  4: return salt + "VOYhUy" + target + "575";
+			case  5: return salt + "9kA?3e" + target + "692";
+			case  6: return salt + "7mEY2Y" + target + "447";
+			case  7: return salt + "Nlt$Yl" + target + "040";
+			case  8: return salt + "J7U9wl" + target + "408";
+			case  9: return salt + "lrJy?z" + target + "199";
+			case 10: return salt + "aG9SGv" + target + "571";
+			case 11: return salt + "la9Fmw" + target + "352";
+			case 12: return salt + "5Fbdtn" + target + "394";
+			case 13: return salt + "b#?LZK" + target + "922";
+			case 14: return salt + "@b8rqK" + target + "328";
+			case 15: return salt + "E@ZwEU" + target + "432";
+			case 16: return salt + "NssU1i" + target + "107";
+			case 17: return salt + "dSa#bb" + target + "706";
+			case 18: return salt + "GavTJP" + target + "231";
+			case 19: return salt + "prp5sj" + target + "189";
+			case 20: return salt + "5KNmg2" + target + "825";
+			case 21: return salt + "erq17Q" + target + "161";
+			case 22: return salt + "xc21Ha" + target + "330";
+			case 23: return salt + "wW6!6X" + target + "212";
+			case 24: return salt + "pbk3Ob" + target + "716";
+			case 25: return salt + "zHLL7J" + target + "486";
+			case 26: return salt + "gMcyh0" + target + "095";
+			case 27: return salt + "UaFhTf" + target + "242";
+			case 28: return salt + "XJh?QJ" + target + "764";
+			case 29: return salt + "gsqrzD" + target + "182";
+			case 30: return salt + "AFOB@H" + target + "943";
+			case 31: return salt + "YxVKTz" + target + "452";
+			default: return null;
+		}
+	}
+	private String saltTarget(String target, String day){
 		
-		String temp = target;
+		switch(Integer.parseInt(day)){
+
+			case  1: return day + "4OY#nR" + target + "690";
+			case  2: return day + "kt4oRA" + target + "848";
+			case  3: return day + "tqDHZe" + target + "290";
+			case  4: return day + "VOYhUy" + target + "575";
+			case  5: return day + "9kA?3e" + target + "692";
+			case  6: return day + "7mEY2Y" + target + "447";
+			case  7: return day + "Nlt$Yl" + target + "040";
+			case  8: return day + "J7U9wl" + target + "408";
+			case  9: return day + "lrJy?z" + target + "199";
+			case 10: return day + "aG9SGv" + target + "571";
+			case 11: return day + "la9Fmw" + target + "352";
+			case 12: return day + "5Fbdtn" + target + "394";
+			case 13: return day + "b#?LZK" + target + "922";
+			case 14: return day + "@b8rqK" + target + "328";
+			case 15: return day + "E@ZwEU" + target + "432";
+			case 16: return day + "NssU1i" + target + "107";
+			case 17: return day + "dSa#bb" + target + "706";
+			case 18: return day + "GavTJP" + target + "231";
+			case 19: return day + "prp5sj" + target + "189";
+			case 20: return day + "5KNmg2" + target + "825";
+			case 21: return day + "erq17Q" + target + "161";
+			case 22: return day + "xc21Ha" + target + "330";
+			case 23: return day + "wW6!6X" + target + "212";
+			case 24: return day + "pbk3Ob" + target + "716";
+			case 25: return day + "zHLL7J" + target + "486";
+			case 26: return day + "gMcyh0" + target + "095";
+			case 27: return day + "UaFhTf" + target + "242";
+			case 28: return day + "XJh?QJ" + target + "764";
+			case 29: return day + "gsqrzD" + target + "182";
+			case 30: return day + "AFOB@H" + target + "943";
+			case 31: return day + "YxVKTz" + target + "452";
+			default: return null;
+		}
+	}
+	private String[] bindKeys(String target){
 		
-		temp = clearMask(temp);
+		String[] keys = new String[2];
 		
-		for(int i = 0; i < key2.length(); i++){
+		int temp = Integer.parseInt(target.substring(0, 2));
 		
-			temp = decrypt(temp, key1);
+		switch(temp){
+			
+			//--------------------------
+			// Left Key First
+		
+			case  1:
+				keys[0] = this.keys[0][0];
+				keys[1] = this.keys[0][1];
+				break;
+			case  2: 
+				keys[0] = this.keys[1][0];
+				keys[1] = this.keys[1][1];
+				break;
+			case  3: 
+				keys[0] = this.keys[2][0];
+				keys[1] = this.keys[2][1];
+				break;
+			case  4: 
+				keys[0] = this.keys[3][0];
+				keys[1] = this.keys[3][1];
+				break;
+			case  5: 
+				keys[0] = this.keys[4][0];
+				keys[1] = this.keys[4][1];
+				break;
+			case  6: 
+				keys[0] = this.keys[5][0];
+				keys[1] = this.keys[5][1];
+				break;
+			case  7: 
+				keys[0] = this.keys[6][0];
+				keys[1] = this.keys[6][1];
+				break;
+			case  8: 
+				keys[0] = this.keys[7][0];
+				keys[1] = this.keys[7][1];
+				break;
+			case  9:
+				keys[0] = this.keys[8][0];
+				keys[1] = this.keys[8][1];
+				break;
+			case 10:
+				keys[0] = this.keys[9][0];
+				keys[1] = this.keys[9][1];
+				break;
+			case 11:
+				keys[0] = this.keys[10][0];
+				keys[1] = this.keys[10][1];
+				break;
+			
+			//--------------------------
+			// Right Key First
+				
+			case 12:
+				keys[0] = this.keys[0][1];
+				keys[1] = this.keys[0][0];
+				break;
+			case 13:
+				keys[0] = this.keys[1][1];
+				keys[1] = this.keys[1][0];
+				break;
+			case 14:
+				keys[0] = this.keys[2][1];
+				keys[1] = this.keys[2][0];
+				break;
+			case 15:
+				keys[0] = this.keys[3][1];
+				keys[1] = this.keys[3][0];
+				break;
+			case 16:
+				keys[0] = this.keys[4][1];
+				keys[1] = this.keys[4][0];
+				break;
+			case 17:
+				keys[0] = this.keys[5][1];
+				keys[1] = this.keys[5][0];
+				break;
+			case 18:
+				keys[0] = this.keys[6][1];
+				keys[1] = this.keys[6][0];
+				break;
+			case 19:
+				keys[0] = this.keys[7][1];
+				keys[1] = this.keys[7][0];
+				break;
+			case 20:
+				keys[0] = this.keys[8][1];
+				keys[1] = this.keys[8][0];
+				break;
+			case 21:
+				keys[0] = this.keys[9][1];
+				keys[1] = this.keys[9][0];
+				break;
+			case 22:
+				keys[0] = this.keys[10][1];
+				keys[1] = this.keys[10][0];
+				break;
+			
+			//--------------------------
+			// Ascending
+			
+			case 23:
+				keys[0] = this.keys[0][0];
+				keys[1] = this.keys[1][1];
+				break;
+			case 24:
+				keys[0] = this.keys[1][0];
+				keys[1] = this.keys[2][1];
+				break;
+			case 25:
+				keys[0] = this.keys[3][0];
+				keys[1] = this.keys[4][1];
+				break;
+			case 26:
+				keys[0] = this.keys[5][0];
+				keys[1] = this.keys[6][1];
+				break;
+			case 27:
+				keys[0] = this.keys[7][0];
+				keys[1] = this.keys[8][1];
+				break;
+			case 28:
+				keys[0] = this.keys[9][0];
+				keys[1] = this.keys[10][1];
+				break;
+			
+			//--------------------------
+			// Random
+			
+			case 29:
+				keys[0] = this.keys[0][0];
+				keys[1] = this.keys[5][1];
+				break;
+			case 30:
+				keys[0] = this.keys[3][0];
+				keys[1] = this.keys[7][1];
+				break;
+			case 31:
+				keys[0] = this.keys[6][0];
+				keys[1] = this.keys[9][1];
+				break;
+			
+			default:
+				return null;
 		}
 		
-		return temp;
+		return keys;
+	}
+	
+	/**
+	 * 
+	 * This method is used to compare user supplied values to encrypted fields.
+	 * 
+	 * @param input  : User supplied value. Such as: password from user.
+	 * @param hashed : Encrypted version of that value. Such as: password from database.
+	 * @return true if they match, false if they don't.
+	 */
+	public boolean validate(String input, String hashed){
+		
+		String keys[] = bindKeys(hashed);
+		String day = hashed.substring(0, 2);
+		String salted = saltTarget(input, day);
+		
+		if(encrypt(salted, keys[0], keys[1]).equals(hashed)){
+			
+			return true;
+			
+		} else {
+			
+			return false;
+		}
+	}
+	
+	//-------------------------------------------------------------------------------------------------
+	// Decryption
+	private String decrypt(String target, String key1, String key2){
+		
+		String temp = target;
+		temp = temp.substring(2);
+		
+		//------------------
+		// Reveal Cipher
+		for(int i = 0; i < key1.length(); i++){
+			
+			temp = decrypt(temp, key2);
+		}
+		
+		//------------------
+		// Reveal Mask
+		temp = clearMask(temp);
+		
+		return unsaltTarget(temp);
 	}
 	private String decrypt(String target, String keyword){
 		
@@ -789,7 +1074,22 @@ public class CryptImpl implements Crypt {
 		
 		return new String(trueLetters);
 	}
+	private String unsaltTarget(String target){
+		
+		char[] temp = target.toCharArray();
+		
+		String result = "";
+		
+		for(int i = 8; i < temp.length - 3; i++){
+			
+			result += temp[i];
+		}
+		
+		return result;
+	}
 	
+	//-------------------------------------------------------------------------------------------------
+	// Encryption Related Tasks 
 	public void setProperty(String[] props){
 		
 		List<String> propsList = new ArrayList<>();
@@ -917,7 +1217,7 @@ public class CryptImpl implements Crypt {
 				
 			} else {
 				
-				// Not Alphanumeric -- Rerun
+				// Not alphanumeric -- Rerun
 				
 				i--;
 			}
