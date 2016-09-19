@@ -62,12 +62,11 @@ tr.header
 			</form:form>
 		</c:forEach>
 		<tr class="header"><th colspan="2">Profile Images<span class="sign"></span></th></tr>
-		<tr><th>File</th><th>Delete</th></tr>
+		<tr><th>File</th></tr>
 		<c:forEach items="${prlist}" var="name">
 			<form:form action="${pageContext.servletContext.contextPath}/deleteFile" method="get" commandName="blog">
 				<tr>
 					<td><a href="http://blogs.pjw6193.tech/${name}"><c:out value="${name}"></c:out></a></td>
-					<td><form:hidden path="blogTitle" value="${name}"/><form:button name="delete">Delete</form:button></td>
 				</tr>
 			</form:form>
 		</c:forEach>
