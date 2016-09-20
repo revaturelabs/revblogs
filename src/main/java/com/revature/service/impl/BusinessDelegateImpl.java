@@ -317,6 +317,51 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	
 	public BlogPostCollectionDTO searchBlogPosts(String query, int page, int perPage){
 		
+//		if (page < 1 || perPage < 1) {
+//			throw new IllegalArgumentException(ILLEGAL);
+//		}
+//		
+//		// Instantiate post collection DTO
+//		BlogPostCollectionDTO postCollection = new BlogPostCollectionDTO();
+//		
+//		int start = (page-1)*perPage;
+//		int maxResults = perPage;
+//		
+//		PaginatedResultList<Blog> results = dataService.grabBlogs(start, maxResults);
+//		List<BlogPostDTO> postList = new ArrayList<>();
+//		for (Blog p: results.getItems()) {
+//			BlogPostDTO blog = new BlogPostDTO(p);
+//			
+//			if(blog.getTitle().contains(query) || blog.getContent().contains(query) || blog.getAuthor().getName().contains(query) || blog.getSubtitle().contains(query))
+//			{
+//				postList.add(blog);
+//			}
+//			
+//			else
+//			{
+//				for (int i = 0; i < blog.getTags().size(); i++)
+//				{
+//					if(blog.getTags().get(i).contains(query))
+//					{
+//						postList.add(blog);
+//					}
+//				}
+//			}
+//				
+//			//postList.add(new BlogPostDTO(p));
+//		}
+//		//long totalItems = results.getTotalItems();
+//		long totalItems = postList.size();
+//		int totalPages = (int)Math.ceil((double)totalItems/perPage);
+//		
+//		postCollection.setPosts(postList);
+//		postCollection.setPage(page);
+//		postCollection.setTotalPosts(totalItems);
+//		postCollection.setTotalPages(totalPages);
+//		postCollection.setPerPage(perPage);
+//		
+//		return postCollection;
+		
 		if (page < 1 || perPage < 1) {
 			throw new IllegalArgumentException(ILLEGAL);
 		}
@@ -327,31 +372,12 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 		int start = (page-1)*perPage;
 		int maxResults = perPage;
 		
-		PaginatedResultList<Blog> results = dataService.grabBlogs(start, maxResults);
+		PaginatedResultList<Blog> results = dataService.grabBlogs(query, start, maxResults);
 		List<BlogPostDTO> postList = new ArrayList<>();
 		for (Blog p: results.getItems()) {
-			BlogPostDTO blog = new BlogPostDTO(p);
-			
-			if(blog.getTitle().contains(query) || blog.getContent().contains(query) || blog.getAuthor().getName().contains(query) || blog.getSubtitle().contains(query))
-			{
-				postList.add(blog);
-			}
-			
-			else
-			{
-				for (int i = 0; i < blog.getTags().size(); i++)
-				{
-					if(blog.getTags().get(i).contains(query))
-					{
-						postList.add(blog);
-					}
-				}
-			}
-				
-			//postList.add(new BlogPostDTO(p));
+			postList.add(new BlogPostDTO(p));
 		}
-		//long totalItems = results.getTotalItems();
-		long totalItems = postList.size();
+		long totalItems = results.getTotalItems();
 		int totalPages = (int)Math.ceil((double)totalItems/perPage);
 		
 		postCollection.setPosts(postList);

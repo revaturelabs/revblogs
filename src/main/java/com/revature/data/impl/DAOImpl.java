@@ -76,7 +76,6 @@ public class DAOImpl implements DAO {
 		
 		Session ses = sessionFactory.getCurrentSession();
 		setSession(ses);
-
 		ses.save(obj);
 	}
 	
@@ -261,6 +260,13 @@ public class DAOImpl implements DAO {
 	
 	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	public PaginatedResultList<Blog> getBlogs(String search, int start, int max) {
+//		System.out.println("before build");
+//		try {
+//			rebuildIndex();
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
+		
 		Session ses = sessionFactory.getCurrentSession();
 		setSession(ses);
 	
@@ -390,6 +396,7 @@ public class DAOImpl implements DAO {
 		if (!indexBuilt) {
 			FullTextSession fullTextSession = Search.getFullTextSession(session);
 			fullTextSession.createIndexer().startAndWait();
+			System.out.println("Success");
 			indexBuilt = true;
 		}
 	}
