@@ -45,6 +45,7 @@
 				</td>
 				<td>
 					<form:password path="newPassword" name="newPassword" id="newPassword" class="form-control" required/>
+					<form:errors path="newPassword" cssClass="errorField"/>
 				</td>
 			</tr>
 			<tr>
@@ -59,6 +60,7 @@
 			</tr>
 			<tr>
 				<td colspan=2>
+					<br/>
 					<input  type="submit" 
 							name="changePassword" 
 							class="btn btn-primary form-control" 
@@ -68,12 +70,24 @@
 			</tr>
 			</table>
 			</form:form>
+			<br/>
+			<div>
+				<strong>Password Requirements</strong>
+				<br/>
+				<button class="hideButton glyphicon glyphicon-arrow-right" disabled></button>Uppercase & Lowercase<br/>
+				<button class="hideButton glyphicon glyphicon-arrow-right" disabled></button>Numeric			  <br/>
+				<button class="hideButton glyphicon glyphicon-arrow-right" disabled></button>@ $ ! % * # ? &	  <br/>
+				<button class="hideButton glyphicon glyphicon-arrow-right" disabled></button>8-30 Characters	  <br/>
+			</div>
 			<br />
 			<c:if test="${passwordFailure1 eq 'failure'}">
 				<span id="password-failure1" class="label-danger danger-span">Current Password Doesn't Match!</span>
 			</c:if>
 			<c:if test="${passwordFailure2 eq 'failure'}">
-				<span id="password-failure1" class="label-danger danger-span">You Must Change Your Password!</span>
+				<span id="password-failure2" class="label-danger danger-span">You Must Change Your Password!</span>
+			</c:if>
+			<c:if test="${passwordFailure3 eq 'failure'}">
+				<span id="password-failure3" class="label-danger danger-span">Password NOT strong enough!</span>
 			</c:if>
 		</div>
 	</div>
@@ -113,7 +127,7 @@ $(document).ready(function(){
 		
 		if(newPass !== conPass){
 			
-			$("#confirmMessage").text("Passwords do not match.");
+			$("#confirmMessage").text("Passwords Don't Match!");
 			$("#confirmMessage").css("color", "red");
 		}
 		
@@ -129,6 +143,7 @@ $(document).ready(function(){
 $(document).ready(function(){
 	$('#password-failure1').delay(2000).fadeOut('slow');
 	$('#password-failure2').delay(2000).fadeOut('slow');
+	$('#password-failure3').delay(2000).fadeOut('slow');
 });
 
 </script>

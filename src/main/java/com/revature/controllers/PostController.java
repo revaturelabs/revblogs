@@ -140,7 +140,7 @@ public class PostController {
 		if(businessDelegate.requestUsers(email) == null){
 			
 			// Generate a Temporary Password
-			String password = businessDelegate.getRandom(6);
+			String password = businessDelegate.getRandom(10);
 			String firstName = " ";
 			String lastName = " ";
 			
@@ -241,7 +241,7 @@ public class PostController {
 		
 		// Generate a Temporary Password
 
-		String password = businessDelegate.getRandom(6);
+		String password = businessDelegate.getRandom(10);
 
 		resetUserPassword.setPassword(businessDelegate.maskElement(password));
 		resetUserPassword.setNewUser(true);
@@ -262,12 +262,20 @@ public class PostController {
 	public ModelAndView updatePassword(@ModelAttribute("updatePassword") @Valid UserDTO passwordDTO, BindingResult bindingResult,
 							   HttpServletRequest req, HttpServletResponse resp){
 		
-		req.getSession().setAttribute("passwordFailure", null);
+		req.getSession().setAttribute("passwordFailure1", null);
+		req.getSession().setAttribute("passwordFailure2", null);
+		req.getSession().setAttribute("passwordFailure3", null);
 		
 		ModelAndView model = new ModelAndView();
 		model.setViewName("redirect:/profile");
 		
+		String success = "success";
+		String failure = "failure";
+		
 		if(bindingResult.hasErrors()){
+			
+			req.getSession().setAttribute("passwordFailure3", failure);
+			
 			model.setViewName(REDIRECTP);
 			return model;
 		}
@@ -276,9 +284,6 @@ public class PostController {
 		
 		String prevPass = passwordDTO.getOldPassword();
 		String password = passwordDTO.getNewPassword();
-		
-		String success = "success";
-		String failure = "failure";
 		
 		// if old password matches current password
 		if(businessDelegate.validate(prevPass, loggedIn.getPassword())){
