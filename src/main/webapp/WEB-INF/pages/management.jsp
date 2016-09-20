@@ -44,50 +44,46 @@ tr.header
 		<tr class="header"><th colspan="2">Pages<span class="sign"></span></th></tr>
 		<tr><th>File</th><th>Delete</th></tr>
 		<c:forEach items="${list}" var="name">
-			<form:form action="modify.do" method="post" commandName="page">
+			<form:form action="${pageContext.servletContext.contextPath}/deleteFile" method="get" commandName="blog">
 				<tr>
 					<td><a href="http://blogs.pjw6193.tech/${name}"><c:out value="${name}"></c:out></a></td>
-					<td><form:hidden path="name" value="${name}"/><form:button name="delete">Delete</form:button></td>
+					<td><form:hidden path="blogTitle" value="${name}"/><form:button name="delete">Delete</form:button></td>
 				</tr>
 			</form:form>
 		</c:forEach>
 		<tr class="header"><th colspan="2">Pictures/Videos<span class="sign"></span></th></tr>
 		<tr><th>File</th><th>Delete</th></tr>
 		<c:forEach items="${elist}" var="name">
-			<form:form action="modify.do" method="post" commandName="page">
+			<form:form action="${pageContext.servletContext.contextPath}/deleteFile" method="get" commandName="blog">
 				<tr>
 					<td><a href="http://blogs.pjw6193.tech/${name}"><c:out value="${name}"></c:out></a></td>
-					<td><form:hidden path="name" value="${name}"/><form:button name="delete">Delete</form:button></td>
+					<td><form:hidden path="blogTitle" value="${name}"/><form:button name="delete">Delete</form:button></td>
 				</tr>
 			</form:form>
 		</c:forEach>
 		<tr class="header"><th colspan="2">Profile Images<span class="sign"></span></th></tr>
-		<tr><th>File</th><th>Delete</th></tr>
+		<tr><th>File</th></tr>
 		<c:forEach items="${prlist}" var="name">
-			<form:form action="modify.do" method="post" commandName="page">
+			<form:form action="${pageContext.servletContext.contextPath}/deleteFile" method="get" commandName="blog">
 				<tr>
 					<td><a href="http://blogs.pjw6193.tech/${name}"><c:out value="${name}"></c:out></a></td>
-					<td><form:hidden path="name" value="${name}"/><form:button name="delete">Delete</form:button></td>
 				</tr>
 			</form:form>
 		</c:forEach>
 		<tr class="header"><th colspan="2">Resources<span class="sign"></span></th></tr>
-		<tr><th>File</th><th>Delete</th></tr>
+		<tr><th>File</th></tr>
 		<c:forEach items="${rlist}" var="name">
-			<form:form action="modify.do" method="post" commandName="page">
-				<tr>
-					<td><a href="http://blogs.pjw6193.tech/${name}"><c:out value="${name}"></c:out></a></td>
-					<td><form:hidden path="name" value="${name}"/><form:button name="delete">Delete</form:button></td>
-				</tr>
-			</form:form>
+			<tr>
+				<td><a href="http://blogs.pjw6193.tech/${name}"><c:out value="${name}"></c:out></a></td>
+			</tr>
 		</c:forEach>
 		<tr class="header"><th colspan="2">Tests<span class="sign"></span></th></tr>
 		<tr><th>File</th><th>Delete</th></tr>
 		<c:forEach items="${tlist}" var="name">
-			<form:form action="modify.do" method="post" commandName="page">
+			<form:form action="${pageContext.servletContext.contextPath}/deleteFile" method="get" commandName="blog">
 				<tr>
 					<td><a href="http://blogs.pjw6193.tech/${name}"><c:out value="${name}"></c:out></a></td>
-					<td><form:hidden path="name" value="${name}"/><form:button name="delete">Delete</form:button></td>
+					<td><form:hidden path="blogTitle" value="${name}"/><form:button name="delete">Delete</form:button></td>
 				</tr>
 			</form:form>
 		</c:forEach>

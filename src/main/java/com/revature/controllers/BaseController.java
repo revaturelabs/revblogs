@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.revature.beans.Blog;
 import com.revature.beans.Tags;
 import com.revature.beans.User;
+import com.revature.data.impl.PropertyType;
 import com.revature.dto.UserDTO;
 import com.revature.service.BusinessDelegate;
 

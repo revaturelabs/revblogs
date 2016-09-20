@@ -670,6 +670,12 @@ public class CryptImpl implements Crypt{
 	
 	//-------------------------------------------------------------------------------------------------
 	// Decryption
+	private String decrypt(String target){
+		
+		String keys[] = bindKeys(target);
+		
+		return decrypt(target, keys[0], keys[1]);
+	}
 	private String decrypt(String target, String key1, String key2){
 		
 		String temp = target;
@@ -1092,18 +1098,21 @@ public class CryptImpl implements Crypt{
 	// Encryption Related Tasks 
 	public void setProperty(String[] props){
 		
-		List<String> propsList = new ArrayList<>();
-		
-		for(int i = 0; i < props.length; i++){
-				
-			props[i] = encrypt(props[i], keys[i][0], keys[i][1]);
-			propsList.add(props[i]);
+		if(props.length == 11){
+
+			List<String> propsList = new ArrayList<>();
+			
+			for(int i = 0; i < props.length; i++){
+					
+				props[i] = encrypt(props[i]);
+				propsList.add(props[i]);
+			}
+			
+			ApplicationProperties propObj = new ApplicationProperties(propsList.get(0), propsList.get(1), propsList.get(2), propsList.get(3),
+																	  propsList.get(4), propsList.get(5), propsList.get(6), propsList.get(7),
+																	  propsList.get(8), propsList.get(9), propsList.get(10));
+			businessDelegate.putRecord(propObj);
 		}
-		
-		ApplicationProperties propObj = new ApplicationProperties(propsList.get(0), propsList.get(1), propsList.get(2), propsList.get(3),
-																  propsList.get(4), propsList.get(5), propsList.get(6), propsList.get(7),
-																  propsList.get(8), propsList.get(9), propsList.get(10));
-		businessDelegate.putRecord(propObj);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -1121,67 +1130,67 @@ public class CryptImpl implements Crypt{
 			case COMPANY:
 				
 				value = props.getCompany();
-				value = decrypt(value, keys[0][0], keys[0][1]);
+				value = decrypt(value);
 				return value;
 				
 			case APP:
 
 				value = props.getApp();
-				value = decrypt(value, keys[1][0], keys[1][1]);
+				value = decrypt(value);
 				return value;
 				
 			case S3:
 
 				value = props.getS3();
-				value = decrypt(value, keys[2][0], keys[2][1]);
+				value = decrypt(value);
 				return value;
 				
 			case SERVER:
 
 				value = props.getServer();
-				value = decrypt(value, keys[3][0], keys[3][1]);
+				value = decrypt(value);
 				return value;
 				
 			case JENKINS:
 
 				value = props.getJenkins();
-				value = decrypt(value, keys[4][0], keys[4][1]);
+				value = decrypt(value);
 				return value;
 				
 			case SONARQUBE:
 
 				value = props.getSonarqube();
-				value = decrypt(value, keys[5][0], keys[5][1]);
+				value = decrypt(value);
 				return value;
 				
 			case K:
 
 				value = props.getK();
-				value = decrypt(value, keys[6][0], keys[6][1]);
+				value = decrypt(value);
 				return value;
 				
 			case V:
 
 				value = props.getV();
-				value = decrypt(value, keys[7][0], keys[7][1]);
+				value = decrypt(value);
 				return value;
 				
 			case FAPP:
 
 				value = props.getFapp();
-				value = decrypt(value, keys[8][0], keys[8][1]);
+				value = decrypt(value);
 				return value;
 				
 			case LINKTOKEN:
 
 				value = props.getLinkToken();
-				value = decrypt(value, keys[9][0], keys[9][1]);
+				value = decrypt(value);
 				return value;
 				
 			case S3BUCKET:
 
 				value = props.getBucketURL();
-				value = decrypt(value, keys[10][0], keys[10][1]);
+				value = decrypt(value);
 				return value;	
 				
 			default: 
