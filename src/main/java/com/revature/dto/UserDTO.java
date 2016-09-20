@@ -1,5 +1,8 @@
 package com.revature.dto;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
 public class UserDTO {
 	
 	/*
@@ -16,9 +19,21 @@ public class UserDTO {
 	private String description;
 	
 	private boolean active;
+	
+	/*
+	 *  User Password
+	 */
+	@NotNull
 	private String oldPassword;
+	
+	@Pattern(regexp="^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,30}$", 
+			 message="Password MUST contain: uppercase, lowercase, numeric, and special character between 8 and 30 characters")
 	private String newPassword;
+	
+	@NotNull
 	private String confirmPassword;
+	
+	@NotNull
 	private boolean newUser;
 	
 	public UserDTO(){
@@ -32,7 +47,7 @@ public class UserDTO {
 		this.newUser = newUser;
 	}
 	
-	/**
+	/*
 	 *	Constructor for Admin Update User Profile
 	 */	
 	public UserDTO(int userId, String email, String password, String firstName, String lastName, String jobTitle,
@@ -48,7 +63,7 @@ public class UserDTO {
 		this.description = description;
 	}
 	
-	/**
+	/*
 	 *  Getters and Setters for Admin Update User Profile
 	 */
 	public int getUserId() {
