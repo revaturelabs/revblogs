@@ -1,6 +1,7 @@
 package com.revature.service.impl;
 
 
+import java.io.IOException;
 import java.util.Properties;
 
 import javax.mail.BodyPart;
@@ -20,21 +21,24 @@ public class Mailer {
 	private Mailer(){
 		throw new IllegalAccessError("Utility Class");
 	}
+	private static final String FROMEMAIL = "revblogs@gmail.com";
+	private static final String FROMPASSWORD = "danpickles1";
+	
 	public static void sendMail(String...emailInfo) {
 		
 		// Prepare the properties required to perform an SSL connection to the gmail server
 		Properties props = new Properties();
-		props.put("mail.smtp.auth", "true");
-		props.put("mail.smtp.starttls.enable", "true");
-		props.put("mail.smtp.host", "smtp.gmail.com");
-		props.put("mail.smtp.port", "587");
-		props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+		try {
+			props.load(Mailer.class.getClassLoader().getResourceAsStream("mailer.properties"));
+		} catch (IOException e1) {
+			Logging.error(e1);
+		}
 
 		// Create a session with the properties and credentials to the gmail account linked to the server
 		Session session = Session.getInstance(props,
 			new javax.mail.Authenticator() {
 				protected PasswordAuthentication getPasswordAuthentication() {
-					return new PasswordAuthentication("revblogs@gmail.com","danpickles1");
+					return new PasswordAuthentication(FROMEMAIL,FROMPASSWORD);
 				}
 			});
 
@@ -43,7 +47,7 @@ public class Mailer {
 			Message message = new MimeMessage(session);
 			
 			// Part of the email designating where the email is coming from
-			message.setFrom(new InternetAddress("revblogs@gmail.com"));
+			message.setFrom(new InternetAddress(FROMEMAIL));
 			
 			// Part of the email designating where the email is being sent to
 			message.setRecipients(Message.RecipientType.TO,
