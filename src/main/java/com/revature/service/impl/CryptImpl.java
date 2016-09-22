@@ -491,143 +491,143 @@ public class CryptImpl implements Crypt{
 	}
 	private String[] bindKeys(String target){
 		
-		String[] keys = new String[2];
+		String[] t_keys = new String[2];
 		
 		int temp = Integer.parseInt(target.substring(0, 2));
 		
 		switch(temp){
 			
 			case  1:
-				keys[0] = this.keys[0][0];
-				keys[1] = this.keys[0][1];
+				t_keys[0] = this.keys[0][0];
+				t_keys[1] = this.keys[0][1];
 				break;
 			case  2: 
-				keys[0] = this.keys[1][0];
-				keys[1] = this.keys[1][1];
+				t_keys[0] = this.keys[1][0];
+				t_keys[1] = this.keys[1][1];
 				break;
 			case  3: 
-				keys[0] = this.keys[2][0];
-				keys[1] = this.keys[2][1];
+				t_keys[0] = this.keys[2][0];
+				t_keys[1] = this.keys[2][1];
 				break;
 			case  4: 
-				keys[0] = this.keys[3][0];
-				keys[1] = this.keys[3][1];
+				t_keys[0] = this.keys[3][0];
+				t_keys[1] = this.keys[3][1];
 				break;
 			case  5: 
-				keys[0] = this.keys[4][0];
-				keys[1] = this.keys[4][1];
+				t_keys[0] = this.keys[4][0];
+				t_keys[1] = this.keys[4][1];
 				break;
 			case  6: 
-				keys[0] = this.keys[5][0];
-				keys[1] = this.keys[5][1];
+				t_keys[0] = this.keys[5][0];
+				t_keys[1] = this.keys[5][1];
 				break;
 			case  7: 
-				keys[0] = this.keys[6][0];
-				keys[1] = this.keys[6][1];
+				t_keys[0] = this.keys[6][0];
+				t_keys[1] = this.keys[6][1];
 				break;
 			case  8: 
-				keys[0] = this.keys[7][0];
-				keys[1] = this.keys[7][1];
+				t_keys[0] = this.keys[7][0];
+				t_keys[1] = this.keys[7][1];
 				break;
 			case  9:
-				keys[0] = this.keys[8][0];
-				keys[1] = this.keys[8][1];
+				t_keys[0] = this.keys[8][0];
+				t_keys[1] = this.keys[8][1];
 				break;
 			case 10:
-				keys[0] = this.keys[9][0];
-				keys[1] = this.keys[9][1];
+				t_keys[0] = this.keys[9][0];
+				t_keys[1] = this.keys[9][1];
 				break;
 			case 11:
-				keys[0] = this.keys[10][0];
-				keys[1] = this.keys[10][1];
+				t_keys[0] = this.keys[10][0];
+				t_keys[1] = this.keys[10][1];
 				break;
 			case 12:
-				keys[0] = this.keys[0][1];
-				keys[1] = this.keys[0][0];
+				t_keys[0] = this.keys[0][1];
+				t_keys[1] = this.keys[0][0];
 				break;
 			case 13:
-				keys[0] = this.keys[1][1];
-				keys[1] = this.keys[1][0];
+				t_keys[0] = this.keys[1][1];
+				t_keys[1] = this.keys[1][0];
 				break;
 			case 14:
-				keys[0] = this.keys[2][1];
-				keys[1] = this.keys[2][0];
+				t_keys[0] = this.keys[2][1];
+				t_keys[1] = this.keys[2][0];
 				break;
 			case 15:
-				keys[0] = this.keys[3][1];
-				keys[1] = this.keys[3][0];
+				t_keys[0] = this.keys[3][1];
+				t_keys[1] = this.keys[3][0];
 				break;
 			case 16:
-				keys[0] = this.keys[4][1];
-				keys[1] = this.keys[4][0];
+				t_keys[0] = this.keys[4][1];
+				t_keys[1] = this.keys[4][0];
 				break;
 			case 17:
-				keys[0] = this.keys[5][1];
-				keys[1] = this.keys[5][0];
+				t_keys[0] = this.keys[5][1];
+				t_keys[1] = this.keys[5][0];
 				break;
 			case 18:
-				keys[0] = this.keys[6][1];
-				keys[1] = this.keys[6][0];
+				t_keys[0] = this.keys[6][1];
+				t_keys[1] = this.keys[6][0];
 				break;
 			case 19:
-				keys[0] = this.keys[7][1];
-				keys[1] = this.keys[7][0];
+				t_keys[0] = this.keys[7][1];
+				t_keys[1] = this.keys[7][0];
 				break;
 			case 20:
-				keys[0] = this.keys[8][1];
-				keys[1] = this.keys[8][0];
+				t_keys[0] = this.keys[8][1];
+				t_keys[1] = this.keys[8][0];
 				break;
 			case 21:
-				keys[0] = this.keys[9][1];
-				keys[1] = this.keys[9][0];
+				t_keys[0] = this.keys[9][1];
+				t_keys[1] = this.keys[9][0];
 				break;
 			case 22:
-				keys[0] = this.keys[10][1];
-				keys[1] = this.keys[10][0];
+				t_keys[0] = this.keys[10][1];
+				t_keys[1] = this.keys[10][0];
 				break;
 			case 23:
-				keys[0] = this.keys[0][0];
-				keys[1] = this.keys[1][1];
+				t_keys[0] = this.keys[0][0];
+				t_keys[1] = this.keys[1][1];
 				break;
 			case 24:
-				keys[0] = this.keys[1][0];
-				keys[1] = this.keys[2][1];
+				t_keys[0] = this.keys[1][0];
+				t_keys[1] = this.keys[2][1];
 				break;
 			case 25:
-				keys[0] = this.keys[3][0];
-				keys[1] = this.keys[4][1];
+				t_keys[0] = this.keys[3][0];
+				t_keys[1] = this.keys[4][1];
 				break;
 			case 26:
-				keys[0] = this.keys[5][0];
-				keys[1] = this.keys[6][1];
+				t_keys[0] = this.keys[5][0];
+				t_keys[1] = this.keys[6][1];
 				break;
 			case 27:
-				keys[0] = this.keys[7][0];
-				keys[1] = this.keys[8][1];
+				t_keys[0] = this.keys[7][0];
+				t_keys[1] = this.keys[8][1];
 				break;
 			case 28:
-				keys[0] = this.keys[9][0];
-				keys[1] = this.keys[10][1];
+				t_keys[0] = this.keys[9][0];
+				t_keys[1] = this.keys[10][1];
 				break;
 			case 29:
-				keys[0] = this.keys[0][0];
-				keys[1] = this.keys[5][1];
+				t_keys[0] = this.keys[0][0];
+				t_keys[1] = this.keys[5][1];
 				break;
 			case 30:
-				keys[0] = this.keys[3][0];
-				keys[1] = this.keys[7][1];
+				t_keys[0] = this.keys[3][0];
+				t_keys[1] = this.keys[7][1];
 				break;
 			case 31:
-				keys[0] = this.keys[6][0];
-				keys[1] = this.keys[9][1];
+				t_keys[0] = this.keys[6][0];
+				t_keys[1] = this.keys[9][1];
 				break;
 			default:
-				keys[0] = null;
-				keys[1] = null;
+				t_keys[0] = null;
+				t_keys[1] = null;
 				break;
 		}
 		
-		return keys;
+		return t_keys;
 	}
 	
 	/**
