@@ -13,6 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.hibernate.search.annotations.ContainedIn;
 import org.hibernate.search.annotations.Field;
 
 
@@ -70,6 +71,7 @@ public class User {
 		
 	@OneToMany
 	@JoinColumn(name="USER_BLOGS")
+	@ContainedIn
 	private Set<Blog> blogs;
 		
 	/*

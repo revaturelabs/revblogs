@@ -11,6 +11,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.hibernate.search.annotations.ContainedIn;
 import org.hibernate.search.annotations.Field;
 
 @Entity
@@ -32,6 +33,7 @@ public class Tags {
 	//----------------------------------
 	// Realationship Mapping
 	@ManyToMany(mappedBy="tags")
+	@ContainedIn
 	private Set<Blog> blogs;
 	
 	/**

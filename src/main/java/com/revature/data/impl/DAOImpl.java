@@ -260,12 +260,12 @@ public class DAOImpl implements DAO {
 	
 	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	public PaginatedResultList<Blog> getBlogs(String search, int start, int max) {
-//		System.out.println("before build");
-//		try {
-//			rebuildIndex();
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//		}
+		System.out.println("Before build");
+		try {
+			rebuildIndex();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		
 		Session ses = sessionFactory.getCurrentSession();
 		setSession(ses);
