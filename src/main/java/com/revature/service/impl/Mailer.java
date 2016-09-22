@@ -31,7 +31,7 @@ public class Mailer {
 		try {
 			props.load(Mailer.class.getClassLoader().getResourceAsStream("mailer.properties"));
 		} catch (IOException e1) {
-			e1.printStackTrace();
+			Logging.error(e1);
 		}
 
 		// Create a session with the properties and credentials to the gmail account linked to the server
