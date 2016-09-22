@@ -33,7 +33,7 @@ createBlogModule.controller('createBlogCtrl', function($scope) {
 				}
 			}
 		}
-		if ( $scope.referencesRevealed == 0 ) {
+		if ( $scope.referencesRevealed === 0 ) {
 			$scope.revealReference();
 		}
 	}

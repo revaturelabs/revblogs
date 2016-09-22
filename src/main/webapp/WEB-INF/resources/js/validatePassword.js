@@ -10,7 +10,7 @@ function checkPass()
     var badColor = "#ff6666";
     //Compare the values in the password field 
     //and the confirmation field
-    if(oldPassword.value == newPassword.value){
+    if(oldPassword.value === newPassword.value){
         //The passwords match. 
         //Set the color to the good color and inform
         //the user that they have entered the correct password 
