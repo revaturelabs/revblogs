@@ -49,9 +49,9 @@ public class CryptImpl implements Crypt{
 	public String encrypt(String target){
 		
 		String temp = saltTarget(target);
-		String[] keys = bindKeys(temp);
+		String[] e_keys = bindKeys(temp);
 	
-		return encrypt(temp, keys[0], keys[1]);
+		return encrypt(temp, e_keys[0], e_keys[1]);
 	}
 	private String encrypt(String target, String key1, String key2){
 		
@@ -497,9 +497,6 @@ public class CryptImpl implements Crypt{
 		
 		switch(temp){
 			
-			//--------------------------
-			// Left Key First
-		
 			case  1:
 				keys[0] = this.keys[0][0];
 				keys[1] = this.keys[0][1];
@@ -544,10 +541,6 @@ public class CryptImpl implements Crypt{
 				keys[0] = this.keys[10][0];
 				keys[1] = this.keys[10][1];
 				break;
-			
-			//--------------------------
-			// Right Key First
-				
 			case 12:
 				keys[0] = this.keys[0][1];
 				keys[1] = this.keys[0][0];
@@ -592,10 +585,6 @@ public class CryptImpl implements Crypt{
 				keys[0] = this.keys[10][1];
 				keys[1] = this.keys[10][0];
 				break;
-			
-			//--------------------------
-			// Ascending
-			
 			case 23:
 				keys[0] = this.keys[0][0];
 				keys[1] = this.keys[1][1];
@@ -620,10 +609,6 @@ public class CryptImpl implements Crypt{
 				keys[0] = this.keys[9][0];
 				keys[1] = this.keys[10][1];
 				break;
-			
-			//--------------------------
-			// Random
-			
 			case 29:
 				keys[0] = this.keys[0][0];
 				keys[1] = this.keys[5][1];
@@ -636,9 +621,10 @@ public class CryptImpl implements Crypt{
 				keys[0] = this.keys[6][0];
 				keys[1] = this.keys[9][1];
 				break;
-			
 			default:
-				return null;
+				keys[0] = null;
+				keys[1] = null;
+				break;
 		}
 		
 		return keys;
@@ -654,27 +640,31 @@ public class CryptImpl implements Crypt{
 	 */
 	public boolean validate(String input, String hashed){
 		
-		String keys[] = bindKeys(hashed);
+		String v_keys[] = bindKeys(hashed);
 		String day = hashed.substring(0, 2);
 		String salted = saltTarget(input, day);
 		
-		if(encrypt(salted, keys[0], keys[1]).equals(hashed)){
+		boolean valid = false;
+		
+		if(encrypt(salted, v_keys[0], v_keys[1]).equals(hashed)){
 			
-			return true;
+			valid = true;
 			
 		} else {
 			
-			return false;
+			valid = false;
 		}
+		
+		return valid;
 	}
 	
 	//-------------------------------------------------------------------------------------------------
 	// Decryption
 	private String decrypt(String target){
 		
-		String keys[] = bindKeys(target);
+		String d_keys[] = bindKeys(target);
 		
-		return decrypt(target, keys[0], keys[1]);
+		return decrypt(target, d_keys[0], d_keys[1]);
 	}
 	private String decrypt(String target, String key1, String key2){
 		
