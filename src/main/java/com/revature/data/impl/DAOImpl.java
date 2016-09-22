@@ -39,6 +39,8 @@ public class DAOImpl implements DAO {
 	private boolean indexBuilt = false;
 	private static final String ACTIVE = "active";
 	private static final String PUBLISH = "publishDate";
+	private static final int MAX_POSTS_PER_PAGE = 25;
+	private static final int PAGES_TO_LOAD = 3;
 
 	public DAOImpl(){
 		super();
@@ -218,7 +220,7 @@ public class DAOImpl implements DAO {
 		Session ses = sessionFactory.getCurrentSession();
 		setSession(ses);
 		
-		Criteria criteria = ses.createCriteria(Blog.class);
+		Criteria criteria = ses.createCriteria(Blog.class).setMaxResults(MAX_POSTS_PER_PAGE*PAGES_TO_LOAD);
 		return (List<Blog>)criteria.list();
 	}
 	
@@ -313,7 +315,7 @@ public class DAOImpl implements DAO {
 		
 		PaginatedResultList<Blog> blogPosts = new PaginatedResultList<>();
 		
-		Criteria criteria = ses.createCriteria(Blog.class);
+		Criteria criteria = ses.createCriteria(Blog.class).setMaxResults(MAX_POSTS_PER_PAGE*PAGES_TO_LOAD);
 		criteria.add(Restrictions.eq(ACTIVE, true));
 		criteria.setProjection(Projections.rowCount());
 		blogPosts.setTotalItems((long)criteria.uniqueResult());
@@ -321,8 +323,8 @@ public class DAOImpl implements DAO {
 		criteria = ses.createCriteria(Blog.class);
 		criteria.add(Restrictions.eq(ACTIVE, true));
 		criteria.addOrder(Order.desc("publishDate"));
-		criteria.setFirstResult(start);
-		criteria.setMaxResults(max);
+		/*criteria.setFirstResult(start);
+		criteria.setMaxResults(max);*/
 		List<Blog> postList = criteria.list();
 		for (Blog post: postList) {
 			Hibernate.initialize(post.getTags());
@@ -345,12 +347,12 @@ public class DAOImpl implements DAO {
 		criteria.setProjection(Projections.rowCount());
 		blogPosts.setTotalItems((long)criteria.uniqueResult());
 		
-		criteria = ses.createCriteria(Blog.class);
+		criteria = ses.createCriteria(Blog.class).setMaxResults(MAX_POSTS_PER_PAGE*PAGES_TO_LOAD);
 		criteria.addOrder(Order.desc("publishDate"));
 		criteria.add(Restrictions.eq("author", author));
 		criteria.add(Restrictions.eq(ACTIVE, true));
-		criteria.setFirstResult(start);
-		criteria.setMaxResults(max);
+		/*criteria.setFirstResult(start);
+		criteria.setMaxResults(max);*/
 
 		List<Blog> postList = criteria.list();
 		for (Blog post: postList) {
@@ -368,20 +370,20 @@ public class DAOImpl implements DAO {
 		
 		PaginatedResultList<Blog> blogPosts = new PaginatedResultList<>();
 		
-		Criteria criteria = ses.createCriteria(Blog.class);
+		Criteria criteria = ses.createCriteria(Blog.class).setMaxResults(MAX_POSTS_PER_PAGE*PAGES_TO_LOAD);
 		criteria.createAlias("tags", "t");
 		criteria.add(Restrictions.eq("t.tagId", category.getTagId()));
 		criteria.add(Restrictions.eq(ACTIVE, true));
 		criteria.setProjection(Projections.rowCount());
 		blogPosts.setTotalItems((long)criteria.uniqueResult());
 		
-		criteria = ses.createCriteria(Blog.class);
+		criteria = ses.createCriteria(Blog.class).setMaxResults(MAX_POSTS_PER_PAGE*PAGES_TO_LOAD);
 		criteria.addOrder(Order.desc("publishDate"));
 		criteria.createAlias("tags", "t");
 		criteria.add(Restrictions.eq("t.tagId", category.getTagId()));
 		criteria.add(Restrictions.eq(ACTIVE, true));
-		criteria.setFirstResult(start);
-		criteria.setMaxResults(max);
+		/*criteria.setFirstResult(start);
+		criteria.setMaxResults(max);*/
 
 		List<Blog> postList = criteria.list();
 		for (Blog post: postList) {
