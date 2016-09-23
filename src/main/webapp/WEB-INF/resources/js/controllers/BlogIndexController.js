@@ -90,11 +90,10 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 		} else if($scope.category != null && sessionStorage.tag > 0){
 			fullUrl = $scope.appUrl+"/api/posts?category=" + $scope.category + "&page=" + page + "&per_page=" + $scope.postsPerPage;
 		} else if($scope.searchQuery.length > 1) {
-			fullUrl = $scope.appUrl+"api/posts?page=" + page + "&per_page=" + $scope.postsPerPage + "&q=" + $scope.searchQuery;
+			fullUrl = $scope.appUrl+"/api/posts?page=" + page + "&per_page=" + $scope.postsPerPage + "&q=" + $scope.searchQuery;
 		} else {
 			fullUrl = $scope.appUrl+"/api/posts?page=" + page + "&per_page=" + $scope.postsPerPage;
 		}
-		console.log(fullUrl);
 		$http.get(fullUrl).success(
 			    function(resp)
 				{

@@ -260,7 +260,6 @@ public class DAOImpl implements DAO {
 	public PaginatedResultList<Blog> getBlogs(String search, int start, int max) {
 		Session ses = sessionFactory.getCurrentSession();
 		setSession(ses);
-		System.out.println("Building");
 		try {
 			rebuildIndex();
 		} catch (InterruptedException e) {
@@ -392,7 +391,6 @@ public class DAOImpl implements DAO {
 		if (!indexBuilt) {
 			FullTextSession fullTextSession = Search.getFullTextSession(session);
 			fullTextSession.createIndexer().startAndWait();
-			System.out.println("Success");
 			indexBuilt = true;
 		}
 	}
