@@ -181,28 +181,17 @@ public class CryptImpl implements Crypt{
 		
 		switch(trueNumber){
 		
-			case 0:
-				return 55;
-			case 1:
-				return 52;
-			case 2:
-				return 51;
-			case 3:
-				return 56;
-			case 4:
-				return 49;
-			case 5:
-				return 48;
-			case 6:
-				return 57;
-			case 7:
-				return 53;
-			case 8:
-				return 50;
-			case 9:
-				return 54;
-			default:
-				return 0; // NULL
+			case 0:  return 55;
+			case 1:  return 52;
+			case 2:  return 51;
+			case 3:  return 56;
+			case 4:  return 49;
+			case 5:  return 48;
+			case 6:  return 57;
+			case 7:  return 53;
+			case 8:  return 50;
+			case 9:  return 54;
+			default: return 0; // NULL
 		}
 	}
 	private char cipherOther(char other){
@@ -491,143 +480,143 @@ public class CryptImpl implements Crypt{
 	}
 	private String[] bindKeys(String target){
 		
-		String[] t_keys = new String[2];
+		String[] tKeys = new String[2];
 		
 		int temp = Integer.parseInt(target.substring(0, 2));
 		
 		switch(temp){
 			
 			case  1:
-				t_keys[0] = this.keys[0][0];
-				t_keys[1] = this.keys[0][1];
+				tKeys[0] = this.keys[0][0];
+				tKeys[1] = this.keys[0][1];
 				break;
 			case  2: 
-				t_keys[0] = this.keys[1][0];
-				t_keys[1] = this.keys[1][1];
+				tKeys[0] = this.keys[1][0];
+				tKeys[1] = this.keys[1][1];
 				break;
 			case  3: 
-				t_keys[0] = this.keys[2][0];
-				t_keys[1] = this.keys[2][1];
+				tKeys[0] = this.keys[2][0];
+				tKeys[1] = this.keys[2][1];
 				break;
 			case  4: 
-				t_keys[0] = this.keys[3][0];
-				t_keys[1] = this.keys[3][1];
+				tKeys[0] = this.keys[3][0];
+				tKeys[1] = this.keys[3][1];
 				break;
 			case  5: 
-				t_keys[0] = this.keys[4][0];
-				t_keys[1] = this.keys[4][1];
+				tKeys[0] = this.keys[4][0];
+				tKeys[1] = this.keys[4][1];
 				break;
 			case  6: 
-				t_keys[0] = this.keys[5][0];
-				t_keys[1] = this.keys[5][1];
+				tKeys[0] = this.keys[5][0];
+				tKeys[1] = this.keys[5][1];
 				break;
 			case  7: 
-				t_keys[0] = this.keys[6][0];
-				t_keys[1] = this.keys[6][1];
+				tKeys[0] = this.keys[6][0];
+				tKeys[1] = this.keys[6][1];
 				break;
 			case  8: 
-				t_keys[0] = this.keys[7][0];
-				t_keys[1] = this.keys[7][1];
+				tKeys[0] = this.keys[7][0];
+				tKeys[1] = this.keys[7][1];
 				break;
 			case  9:
-				t_keys[0] = this.keys[8][0];
-				t_keys[1] = this.keys[8][1];
+				tKeys[0] = this.keys[8][0];
+				tKeys[1] = this.keys[8][1];
 				break;
 			case 10:
-				t_keys[0] = this.keys[9][0];
-				t_keys[1] = this.keys[9][1];
+				tKeys[0] = this.keys[9][0];
+				tKeys[1] = this.keys[9][1];
 				break;
 			case 11:
-				t_keys[0] = this.keys[10][0];
-				t_keys[1] = this.keys[10][1];
+				tKeys[0] = this.keys[10][0];
+				tKeys[1] = this.keys[10][1];
 				break;
 			case 12:
-				t_keys[0] = this.keys[0][1];
-				t_keys[1] = this.keys[0][0];
+				tKeys[0] = this.keys[0][1];
+				tKeys[1] = this.keys[0][0];
 				break;
 			case 13:
-				t_keys[0] = this.keys[1][1];
-				t_keys[1] = this.keys[1][0];
+				tKeys[0] = this.keys[1][1];
+				tKeys[1] = this.keys[1][0];
 				break;
 			case 14:
-				t_keys[0] = this.keys[2][1];
-				t_keys[1] = this.keys[2][0];
+				tKeys[0] = this.keys[2][1];
+				tKeys[1] = this.keys[2][0];
 				break;
 			case 15:
-				t_keys[0] = this.keys[3][1];
-				t_keys[1] = this.keys[3][0];
+				tKeys[0] = this.keys[3][1];
+				tKeys[1] = this.keys[3][0];
 				break;
 			case 16:
-				t_keys[0] = this.keys[4][1];
-				t_keys[1] = this.keys[4][0];
+				tKeys[0] = this.keys[4][1];
+				tKeys[1] = this.keys[4][0];
 				break;
 			case 17:
-				t_keys[0] = this.keys[5][1];
-				t_keys[1] = this.keys[5][0];
+				tKeys[0] = this.keys[5][1];
+				tKeys[1] = this.keys[5][0];
 				break;
 			case 18:
-				t_keys[0] = this.keys[6][1];
-				t_keys[1] = this.keys[6][0];
+				tKeys[0] = this.keys[6][1];
+				tKeys[1] = this.keys[6][0];
 				break;
 			case 19:
-				t_keys[0] = this.keys[7][1];
-				t_keys[1] = this.keys[7][0];
+				tKeys[0] = this.keys[7][1];
+				tKeys[1] = this.keys[7][0];
 				break;
 			case 20:
-				t_keys[0] = this.keys[8][1];
-				t_keys[1] = this.keys[8][0];
+				tKeys[0] = this.keys[8][1];
+				tKeys[1] = this.keys[8][0];
 				break;
 			case 21:
-				t_keys[0] = this.keys[9][1];
-				t_keys[1] = this.keys[9][0];
+				tKeys[0] = this.keys[9][1];
+				tKeys[1] = this.keys[9][0];
 				break;
 			case 22:
-				t_keys[0] = this.keys[10][1];
-				t_keys[1] = this.keys[10][0];
+				tKeys[0] = this.keys[10][1];
+				tKeys[1] = this.keys[10][0];
 				break;
 			case 23:
-				t_keys[0] = this.keys[0][0];
-				t_keys[1] = this.keys[1][1];
+				tKeys[0] = this.keys[0][0];
+				tKeys[1] = this.keys[1][1];
 				break;
 			case 24:
-				t_keys[0] = this.keys[1][0];
-				t_keys[1] = this.keys[2][1];
+				tKeys[0] = this.keys[1][0];
+				tKeys[1] = this.keys[2][1];
 				break;
 			case 25:
-				t_keys[0] = this.keys[3][0];
-				t_keys[1] = this.keys[4][1];
+				tKeys[0] = this.keys[3][0];
+				tKeys[1] = this.keys[4][1];
 				break;
 			case 26:
-				t_keys[0] = this.keys[5][0];
-				t_keys[1] = this.keys[6][1];
+				tKeys[0] = this.keys[5][0];
+				tKeys[1] = this.keys[6][1];
 				break;
 			case 27:
-				t_keys[0] = this.keys[7][0];
-				t_keys[1] = this.keys[8][1];
+				tKeys[0] = this.keys[7][0];
+				tKeys[1] = this.keys[8][1];
 				break;
 			case 28:
-				t_keys[0] = this.keys[9][0];
-				t_keys[1] = this.keys[10][1];
+				tKeys[0] = this.keys[9][0];
+				tKeys[1] = this.keys[10][1];
 				break;
 			case 29:
-				t_keys[0] = this.keys[0][0];
-				t_keys[1] = this.keys[5][1];
+				tKeys[0] = this.keys[0][0];
+				tKeys[1] = this.keys[5][1];
 				break;
 			case 30:
-				t_keys[0] = this.keys[3][0];
-				t_keys[1] = this.keys[7][1];
+				tKeys[0] = this.keys[3][0];
+				tKeys[1] = this.keys[7][1];
 				break;
 			case 31:
-				t_keys[0] = this.keys[6][0];
-				t_keys[1] = this.keys[9][1];
+				tKeys[0] = this.keys[6][0];
+				tKeys[1] = this.keys[9][1];
 				break;
 			default:
-				t_keys[0] = null;
-				t_keys[1] = null;
+				tKeys[0] = null;
+				tKeys[1] = null;
 				break;
 		}
 		
-		return t_keys;
+		return tKeys;
 	}
 	
 	/**
@@ -640,13 +629,13 @@ public class CryptImpl implements Crypt{
 	 */
 	public boolean validate(String input, String hashed){
 		
-		String v_keys[] = bindKeys(hashed);
+		String[] vKeys = bindKeys(hashed);
 		String day = hashed.substring(0, 2);
 		String salted = saltTarget(input, day);
 		
-		boolean valid = false;
+		boolean valid;
 		
-		if(encrypt(salted, v_keys[0], v_keys[1]).equals(hashed)){
+		if(encrypt(salted, vKeys[0], vKeys[1]).equals(hashed)){
 			
 			valid = true;
 			
@@ -662,9 +651,9 @@ public class CryptImpl implements Crypt{
 	// Decryption
 	private String decrypt(String target){
 		
-		String d_keys[] = bindKeys(target);
+		String dKeys[] = bindKeys(target);
 		
-		return decrypt(target, d_keys[0], d_keys[1]);
+		return decrypt(target, dKeys[0], dKeys[1]);
 	}
 	private String decrypt(String target, String key1, String key2){
 		
@@ -780,28 +769,17 @@ public class CryptImpl implements Crypt{
 
 		switch(trueNumber){
 		
-			case 0:
-				return 53;
-			case 1:
-				return 52;
-			case 2:
-				return 56;
-			case 3:
-				return 50;
-			case 4:
-				return 49;
-			case 5:
-				return 55;
-			case 6:
-				return 57;
-			case 7:
-				return 48;
-			case 8:
-				return 51;
-			case 9:
-				return 54;
-			default:
-				return 0; // NULL
+			case 0:  return 53;
+			case 1:  return 52;
+			case 2:  return 56;
+			case 3:  return 50;
+			case 4:  return 49;
+			case 5:  return 55;
+			case 6:  return 57;
+			case 7:  return 48;
+			case 8:  return 51;
+			case 9:  return 54;
+			default: return 0; // NULL
 		}
 	}
 	private char decipherOther(char other){
@@ -854,7 +832,7 @@ public class CryptImpl implements Crypt{
 		int interval = 6;
 		int limit;
 
-		String mini = "";
+		String mini;
 		
 		// i = 1 True Letter
 		for(int i = 0; i < trueLetters.length; i++){
@@ -1185,15 +1163,24 @@ public class CryptImpl implements Crypt{
 				
 			default: 
 				
-				throw new IllegalArgumentException("Invalid Property Type!");
+				throw new AssertionError("Impossible Case");
 		}
 	}
 
 	private boolean condition(int num){
-		if(num > 47 && num < 57) return true;
-		else if(num > 65 && num < 90) return true;
-		else if(num > 97 && num < 122) return true;
-		return false;
+		
+		if(num > 47 && num < 57){
+			return true;
+		}
+		else if(num > 65 && num < 90){
+			return true;
+		}
+		else if(num > 97 && num < 122){
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	
 	public String getRandom(int length) {
@@ -1216,7 +1203,7 @@ public class CryptImpl implements Crypt{
 				
 			} else {
 				
-				// Not alphanumeric -- Rerun
+				// Not alphanumeric, Rerun
 				
 				i--;
 			}

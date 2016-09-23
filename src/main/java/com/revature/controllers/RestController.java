@@ -17,7 +17,8 @@ import com.revature.service.Logging;
 
 @Controller
 @RequestMapping("/api")
-public class AjaxController {
+public class RestController {
+	
 	private BusinessDelegate businessDelegate;
 	
 	public void setBusinessDelegate(BusinessDelegate businessDelegate) {
@@ -58,6 +59,7 @@ public class AjaxController {
 				return businessDelegate.requestBlogPosts(page, perPage);
 			}
 		} catch (IllegalArgumentException e) {
+			
 			Logging.error(e);
 			return null;
 		}

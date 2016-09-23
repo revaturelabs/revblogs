@@ -18,12 +18,14 @@ import javax.mail.internet.MimeMultipart;
 import com.revature.service.Logging;
 
 public class Mailer {
-	private Mailer(){
-		throw new IllegalAccessError("Utility Class");
-	}
+	
 	private static final String FROMEMAIL = "revblogs@gmail.com";
 	private static final String FROMPASSWORD = "danpickles1";
 	
+	private Mailer(){
+		throw new IllegalAccessError("Utility Class");
+	}
+
 	public static void sendMail(String...emailInfo) {
 		
 		// Prepare the properties required to perform an SSL connection to the gmail server
@@ -61,7 +63,7 @@ public class Mailer {
 
 	        // first part (the html)
 	        BodyPart messageBodyPart = new MimeBodyPart();
-	        String htmlText = "";
+	        String htmlText;
 	        
 	        // Constructs the body of the email in a form of html tables
 	        // 3 arguments references a password being reset

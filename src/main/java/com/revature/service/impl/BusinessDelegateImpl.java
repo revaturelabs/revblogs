@@ -348,9 +348,9 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 				}
 			}
 				
-			//postList.add(new BlogPostDTO(p));
+			//postList.add(new BlogPostDTO(p))
 		}
-		//long totalItems = results.getTotalItems();
+		//long totalItems = results.getTotalItems()
 		long totalItems = postList.size();
 		int totalPages = (int)Math.ceil((double)totalItems/perPage);
 		

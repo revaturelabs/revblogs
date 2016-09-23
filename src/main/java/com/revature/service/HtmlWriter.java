@@ -83,7 +83,7 @@ public class HtmlWriter {
 				blogWriter.write("<meta property='og:description' content="+blog.getBlogSubtitle()+" />");
 			}
 			if(line.contains("author-image"))
-				blogWriter.write("<img src=" + blog.getAuthor().getProfilePicture() + " />");
+				blogWriter.write("<img src=" + blog.getAuthor().getProfilePicture() + " alt=\"Revature Author Profile Picture\" />");
 			if(line.contains("post-tags")){
 				Set<Tags> tags = blog.getTags();
 				for(Tags tag: tags){
