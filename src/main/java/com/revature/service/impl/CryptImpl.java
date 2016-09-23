@@ -32,6 +32,9 @@ public class CryptImpl implements Crypt{
 		{"boosNkoVgLkjnWJUMEeHAGbUmwWhVlBOPZKZjUduUXunxwbsZmnNxKdAWePg", "peobuefdvxjbtoajefspkfuccfngbf"}
 	};
 	
+    private char[] alphabet1 = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
+    private char[] alphabet2 = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+	
 	private BusinessDelegate businessDelegate;
 	
 	public void setBusinessDelegate(BusinessDelegate businessDelegate) {
@@ -49,9 +52,9 @@ public class CryptImpl implements Crypt{
 	public String encrypt(String target){
 		
 		String temp = saltTarget(target);
-		String[] e_keys = bindKeys(temp);
+		String[] eKeys = bindKeys(temp);
 	
-		return encrypt(temp, e_keys[0], e_keys[1]);
+		return encrypt(temp, eKeys[0], eKeys[1]);
 	}
 	private String encrypt(String target, String key1, String key2){
 		
@@ -68,7 +71,7 @@ public class CryptImpl implements Crypt{
 		
 		//------------------
 		// Masking
-		String st = "" + tempArray[0] + tempArray[1];
+		String st = "" + Character.toString(tempArray[0]) + Character.toString(tempArray[1]);
 		
 		for(char c : tempArray){
 			
@@ -91,10 +94,6 @@ public class CryptImpl implements Crypt{
 		char[] tempPassword = target.toCharArray();
 		char[] tempUsername = keyword.toCharArray();
 		char[] tempResult = new char[tempPassword.length];
-		
-		 //Alphabets
-        char[] alphabet1 = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
-        char[] alphabet2 = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
 		
         int keyBase = tempUsername.length;
         int keyCeil = tempUsername.length;
@@ -651,7 +650,7 @@ public class CryptImpl implements Crypt{
 	// Decryption
 	private String decrypt(String target){
 		
-		String dKeys[] = bindKeys(target);
+		String[] dKeys = bindKeys(target);
 		
 		return decrypt(target, dKeys[0], dKeys[1]);
 	}
@@ -678,11 +677,6 @@ public class CryptImpl implements Crypt{
 		char[] tempPassword = target.toCharArray();
 		char[] tempUsername = keyword.toCharArray();
 		char[] tempResult = new char[tempPassword.length];
-		
-		 //Alphabets
-        char[] alphabet1 = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
-        char[] alphabet2 = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
-		
         
         int keyBase = tempUsername.length;
         int keyCeil = tempUsername.length;
@@ -844,7 +838,7 @@ public class CryptImpl implements Crypt{
 			// j = 1 piece of the masked letter
 			for(int j = startPos; j < limit; j++){
 				
-				mini += maskedArray[j];
+				mini += Character.toString(maskedArray[j]);
 			}
 			
 			counter  += 1;
@@ -1056,7 +1050,7 @@ public class CryptImpl implements Crypt{
 		
 		for(int i = 8; i < temp.length - 3; i++){
 			
-			result += temp[i];
+			result += Character.toString(temp[i]);
 		}
 		
 		return result;
@@ -1178,9 +1172,8 @@ public class CryptImpl implements Crypt{
 		else if(num > 97 && num < 122){
 			return true;
 		}
-		else {
-			return false;
-		}
+		
+		return false;
 	}
 	
 	public String getRandom(int length) {
@@ -1199,7 +1192,7 @@ public class CryptImpl implements Crypt{
 				
 				myChar = (char)num;
 			
-				rand += myChar;
+				rand += Character.toString(myChar);
 				
 			} else {
 				
