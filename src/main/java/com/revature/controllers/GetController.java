@@ -9,16 +9,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.revature.beans.Blog;
-import com.revature.beans.User;
 import com.revature.dto.UserDTO;
 import com.revature.service.BusinessDelegate;
 import com.revature.service.Logging;
-import com.revature.service.impl.LoginEncoder;
 
 @Controller
 @SessionAttributes("roleDropDown")

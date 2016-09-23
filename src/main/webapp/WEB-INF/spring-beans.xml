@@ -50,7 +50,7 @@
 	<bean name="baseController" class="com.revature.controllers.BaseController">
 		<property name="businessDelegate" ref="businessDelegate" />
 	</bean>
-	<bean name="ajaxController" class="com.revature.controllers.AjaxController">
+	<bean name="restController" class="com.revature.controllers.RestController">
 		<property name="businessDelegate" ref="businessDelegate" />
 	</bean>
 	<bean name="postController" class="com.revature.controllers.PostController">

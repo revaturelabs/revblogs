@@ -4,7 +4,6 @@ import java.security.Principal;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -16,7 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.revature.beans.Blog;
 import com.revature.beans.Tags;
 import com.revature.beans.User;
-import com.revature.data.impl.PropertyType;
 import com.revature.dto.UserDTO;
 import com.revature.service.BusinessDelegate;
 
@@ -129,7 +127,7 @@ public class BaseController {
 		return model;
 	}
 	
-	private ModelAndView viewSetter(HttpServletRequest request, HttpServletRequest response,Principal principal){
+	private ModelAndView viewSetter(HttpServletRequest request, Principal principal){
 		String name = principal.getName();
 		User user = businessDelegate.requestUsers(name);
 		HttpSession session = request.getSession(false);
@@ -146,32 +144,16 @@ public class BaseController {
 	
 	// Admin Page
 	@RequestMapping(value="/admin**")
-	public ModelAndView viewAdmin(HttpServletRequest request, HttpServletRequest response, Principal principal){
+	public ModelAndView viewAdmin(HttpServletRequest request, Principal principal){
 
-		return viewSetter(request, response, principal);
+		return viewSetter(request, principal);
 	}
 	
 	// Contributor Page
 	@RequestMapping(value="/contributor**")
-	public ModelAndView viewContributor(HttpServletRequest request, HttpServletRequest response, Principal principal){
+	public ModelAndView viewContributor(HttpServletRequest request, Principal principal){
 
-		return viewSetter(request, response, principal);
-	}
-	
-	@RequestMapping(value="/go-admin")
-	public ModelAndView getViewAdmin(HttpServletRequest request, HttpServletResponse response){
-		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("user");
-		
-		return modelCreation(user.getJobTitle(), user.getFirstName());
-	}
-	
-	@RequestMapping(value="/go-contributor")
-	public ModelAndView getViewContributor(HttpServletRequest request, HttpServletResponse response){
-		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("user");
-		
-		return modelCreation(user.getJobTitle(), user.getFirstName());
+		return viewSetter(request, principal);
 	}
 	
 	@RequestMapping(value="edit.do")

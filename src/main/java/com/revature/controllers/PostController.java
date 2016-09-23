@@ -140,7 +140,7 @@ public class PostController {
 		if(businessDelegate.requestUsers(email) == null){
 			
 			// Generate a Temporary Password
-			String password = businessDelegate.getRandom(10);
+			String password = businessDelegate.getRandom(6);
 			String firstName = " ";
 			String lastName = " ";
 			
@@ -241,7 +241,7 @@ public class PostController {
 		
 		// Generate a Temporary Password
 
-		String password = businessDelegate.getRandom(10);
+		String password = businessDelegate.getRandom(6);
 
 		resetUserPassword.setPassword(businessDelegate.maskElement(password));
 		resetUserPassword.setNewUser(true);
@@ -426,7 +426,8 @@ public class PostController {
 		 * If exists, redirect to current page, if new, go to preview blog page.
 		 */
 		Boolean editingBlogInDatabase = (Boolean)req.getSession().getAttribute(EDIT);
-		User author = null;
+		User author;
+		
 		if(editingBlogInDatabase == null) {
 			editingBlogInDatabase = false;
 		}
@@ -442,7 +443,7 @@ public class PostController {
 			author = (User) req.getSession().getAttribute("blogToEditAuthor");
 		}
 		blog.setAuthor(author);
-		//blog.setReferences(getReferences(req));
+		//blog.setReferences(getReferences(req))
 		
 		/*
 		 * Blog Bean will be generated with proper tags and fields

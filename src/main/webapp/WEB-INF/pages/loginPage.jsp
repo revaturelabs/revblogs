@@ -83,8 +83,8 @@ $(document).ready(function(){
 	var temp = "";
 	var myHost = "";
 	
-	// "http://" = 7 chars
-	for(var i = 7; i < 12; i++){
+	// "https://" = 8 chars
+	for(var i = 8; i < 13; i++){
 	
 		temp += loc[i];
 	}
