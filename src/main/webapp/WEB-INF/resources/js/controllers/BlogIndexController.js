@@ -9,14 +9,14 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 		var ulQuery = $scope.searchQuery.toLowerCase();
 		$scope.savedQuery = $scope.searchQuery;
 		
-		fullUrl = $scope.appUrl + "?page=1&per_page=10&q=" + 
+		fullUrl = $scope.appUrl + "/api/posts/?page=1&per_page=10&q=" + ulQuery;
 		
 		$http.get(fullUrl).success(
 			    function(resp)
 				{
 					$scope.searchPosts = resp;
 					
-					$scope.curPage = page;  //current page
+					$scope.curPage = 1;  //current page
 					$scope.searchPage = true;
 					var prevPage = $scope.curPage;
 					var nextPage = $scope.curPage;
@@ -89,9 +89,12 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 			fullUrl = $scope.appUrl+"/api/posts?author=" + $scope.author + "&page=" + page + "&per_page=" + $scope.postsPerPage;
 		} else if($scope.category != null && sessionStorage.tag > 0){
 			fullUrl = $scope.appUrl+"/api/posts?category=" + $scope.category + "&page=" + page + "&per_page=" + $scope.postsPerPage;
+		} else if($scope.searchQuery.length > 1) {
+			fullUrl = $scope.appUrl+"api/posts?page=" + page + "&per_page=" + $scope.postsPerPage + "&q=" + $scope.searchQuery;
 		} else {
 			fullUrl = $scope.appUrl+"/api/posts?page=" + page + "&per_page=" + $scope.postsPerPage;
 		}
+		console.log(fullUrl);
 		$http.get(fullUrl).success(
 			    function(resp)
 				{

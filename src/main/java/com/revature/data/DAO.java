@@ -44,4 +44,7 @@ public interface DAO {
 	public PaginatedResultList<Blog> getBlogs(String search, int start, int max);
 	public PaginatedResultList<Blog> getBlogs(User author, int start, int max);
 	public PaginatedResultList<Blog> getBlogs(Tags category, int start, int max);
+	
+	// Build the Lucene index with blogs currently in database
+	public void rebuildIndex() throws InterruptedException;
 }

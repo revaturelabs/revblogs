@@ -23,6 +23,18 @@
   
  <div class="overall-container">
   <div class="container page-content content-padding">
+  	 <div class="row">
+  		<div class="col-xs-12">
+  			<form>
+			  <div class="form-group input-group post-search">
+			    <input ng-model="searchQuery" type="text" class="form-control" placeholder="Search">
+			    <span class="input-group-btn">
+			      <button ng-click="getPage(1,10)" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
+			    </span>
+			  </div>
+			</form>
+  		</div>
+  	</div>
   	<div class="row">
   		<div class="col-xs-12">
   			<h2>Latest Posts</h2>

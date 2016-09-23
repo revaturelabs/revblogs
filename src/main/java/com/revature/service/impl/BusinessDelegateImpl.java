@@ -327,31 +327,12 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 		int start = (page-1)*perPage;
 		int maxResults = perPage;
 		
-		PaginatedResultList<Blog> results = dataService.grabBlogs(start, maxResults);
+		PaginatedResultList<Blog> results = dataService.grabBlogs(query, start, maxResults);
 		List<BlogPostDTO> postList = new ArrayList<>();
 		for (Blog p: results.getItems()) {
-			BlogPostDTO blog = new BlogPostDTO(p);
-			
-			if(blog.getTitle().contains(query) || blog.getContent().contains(query) || blog.getAuthor().getName().contains(query) || blog.getSubtitle().contains(query))
-			{
-				postList.add(blog);
-			}
-			
-			else
-			{
-				for (int i = 0; i < blog.getTags().size(); i++)
-				{
-					if(blog.getTags().get(i).contains(query))
-					{
-						postList.add(blog);
-					}
-				}
-			}
-				
-			//postList.add(new BlogPostDTO(p))
+			postList.add(new BlogPostDTO(p));
 		}
-		//long totalItems = results.getTotalItems()
-		long totalItems = postList.size();
+		long totalItems = results.getTotalItems();
 		int totalPages = (int)Math.ceil((double)totalItems/perPage);
 		
 		postCollection.setPosts(postList);

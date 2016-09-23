@@ -77,6 +77,7 @@ public class Blog {
 	
 	@OneToMany
 	@JoinColumn(name="BLOG_EVIDENCE")
+	@IndexedEmbedded
 	private Set<Evidence> evidences;
 		
 	@ManyToMany

@@ -9,7 +9,7 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 		var ulQuery = $scope.searchQuery.toLowerCase();
 		$scope.savedQuery = $scope.searchQuery;
 		
-		fullUrl = $scope.appUrl + "?page=1&per_page=10&q=" + 
+		fullUrl = $scope.appUrl + "?page=1&per_page=10&q=" + ulQuery;
 		
 		$http.get(fullUrl).success(
 			    function(resp)
