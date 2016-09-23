@@ -1,4 +1,4 @@
-package com.revature.DaoTest;
+package com.revature.test.dao;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -25,10 +25,11 @@ import com.revature.data.impl.DAOImpl;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={"/dao-context.xml"})
 public class DAOTest{
+	
 	private Logger log = Logger.getRootLogger();
+	
 	@Autowired
     private ApplicationContext applicationContext;
- 
 
 	@Autowired
 	private DAOImpl daoImpl;
@@ -50,8 +51,6 @@ public class DAOTest{
 		assertNotNull(userRoles);
 	}
 	
-	
-	//Test fails
 	@Test
 	public void findUser(){
 		
@@ -60,8 +59,5 @@ public class DAOTest{
 		}catch(Exception e){
 			log.error(e);
 		}
-		
-	}
-
-	
+	}	
 }

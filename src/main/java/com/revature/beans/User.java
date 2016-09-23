@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.search.annotations.ContainedIn;
 import org.hibernate.search.annotations.Field;
@@ -31,23 +32,28 @@ public class User {
 	private int userId;
 		
 	@Column(name="USER_EMAIL", unique=true, nullable=false)
+	@NotNull
 	private String email;
 	
 	@Column(name="USER_PASSWORD", nullable=false)
+	@NotNull
 	private String password;
 		
 	@Column(name="USER_FIRST", nullable=false)
 	@Field
+	@NotNull
 	private String firstName;
 		
 	@Column(name="USER_LAST", nullable=false)
 	@Field
+	@NotNull
 	private String lastName;
 		
 	@Column(name="USER_PICTURE")
 	private String profilePicture;
 		
 	@Column(name="USER_TITLE", nullable=false)
+	@NotNull
 	private String jobTitle;
 		
 	@Column(name="USER_LINKEDIN", unique=true)

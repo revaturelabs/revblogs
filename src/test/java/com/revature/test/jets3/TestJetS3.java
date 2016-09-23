@@ -1,4 +1,4 @@
-package com.revature.jestS3Test;
+package com.revature.test.jets3;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -44,5 +44,4 @@ public class TestJetS3 {
 		assertNotNull(jetS3Impl);
 		assertNotNull(jetS3);
 	}
-	
 }

@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
@@ -24,6 +23,7 @@ import com.revature.beans.Tags;
 import com.revature.beans.User;
 import com.revature.beans.UserRoles;
 import com.revature.data.DAO;
+import com.revature.service.Logging;
 
 @Repository
 @Transactional
@@ -263,7 +263,8 @@ public class DAOImpl implements DAO {
 		try {
 			rebuildIndex();
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			
+			Logging.error(e);
 		}
 		
 		PaginatedResultList<Blog> blogPosts = new PaginatedResultList<>();
