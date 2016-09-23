@@ -59,11 +59,8 @@ public class DAOImpl implements DAO {
 	}
 	public Session getSession(){
 		
-		
-			
-			Session session = sessionFactory.openSession();
-			setSession(session);
-		
+		Session ses = sessionFactory.openSession();
+		setSession(ses);
 		
 		return session;
 	}
@@ -125,6 +122,7 @@ public class DAOImpl implements DAO {
 		setSession(ses);
 		
 		if(obj instanceof Blog){
+			
 			// Archive
 			((Blog)obj).setActive(false);
 			editRecord(obj);
@@ -176,8 +174,6 @@ public class DAOImpl implements DAO {
 		
 		return (Tags) ses.get(Tags.class, id);
 	}
-	
-	
 	
 	//Pull a Single Role
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -316,9 +312,9 @@ public class DAOImpl implements DAO {
 		
 		criteria = ses.createCriteria(Blog.class);
 		criteria.add(Restrictions.eq(ACTIVE, true));
-		criteria.addOrder(Order.desc("publishDate"));
-		/*criteria.setFirstResult(start);
-		criteria.setMaxResults(max);*/
+		criteria.addOrder(Order.desc(PUBLISH));
+		// criteria.setFirstResult(start)
+		// criteria.setMaxResults(max) 
 		List<Blog> postList = criteria.list();
 		for (Blog post: postList) {
 			Hibernate.initialize(post.getTags());
@@ -342,11 +338,11 @@ public class DAOImpl implements DAO {
 		blogPosts.setTotalItems((long)criteria.uniqueResult());
 		
 		criteria = ses.createCriteria(Blog.class).setMaxResults(MAX_POSTS_PER_PAGE*PAGES_TO_LOAD);
-		criteria.addOrder(Order.desc("publishDate"));
+		criteria.addOrder(Order.desc(PUBLISH));
 		criteria.add(Restrictions.eq("author", author));
 		criteria.add(Restrictions.eq(ACTIVE, true));
-		/*criteria.setFirstResult(start);
-		criteria.setMaxResults(max);*/
+		// criteria.setFirstResult(start)
+		// criteria.setMaxResults(max)
 
 		List<Blog> postList = criteria.list();
 		for (Blog post: postList) {
@@ -372,12 +368,12 @@ public class DAOImpl implements DAO {
 		blogPosts.setTotalItems((long)criteria.uniqueResult());
 		
 		criteria = ses.createCriteria(Blog.class).setMaxResults(MAX_POSTS_PER_PAGE*PAGES_TO_LOAD);
-		criteria.addOrder(Order.desc("publishDate"));
+		criteria.addOrder(Order.desc(PUBLISH));
 		criteria.createAlias("tags", "t");
 		criteria.add(Restrictions.eq("t.tagId", category.getTagId()));
 		criteria.add(Restrictions.eq(ACTIVE, true));
-		/*criteria.setFirstResult(start);
-		criteria.setMaxResults(max);*/
+		// criteria.setFirstResult(start)
+		// criteria.setMaxResults(max)
 
 		List<Blog> postList = criteria.list();
 		for (Blog post: postList) {
