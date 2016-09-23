@@ -84,10 +84,10 @@
 				&nbsp;
 			</td>
 			<td>
+				<br/>
 				<input type="submit" class="btn btn-primary update-btn" value="Update Profile" />
 			</td>
 		</tr>
-		
 		</table>
 		</form:form>
 		<br />

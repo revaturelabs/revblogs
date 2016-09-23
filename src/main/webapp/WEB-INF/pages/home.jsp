@@ -29,7 +29,6 @@
 		<c:redirect url="/password"/>
 	</c:if>
 	<div id="home-page-content">
-	<c:if test="${user.userRole.role eq 'ADMIN'}">
 		<div class="row">
 			<div class="col-xs-1"></div>
 			<div class="col-xs-4">
@@ -40,33 +39,42 @@
 		<div class="row">
 			<div class="col-xs-2"></div>
 			<div class="col-xs-4">
-				<h2><a href="profile"><span class="glyphicon glyphicon-wrench"></span>&nbsp;Update profile</a></h2>
+				<c:choose>
+					<c:when test="${user.firstName ne ' ' and user.lastName ne ' '}">
+						<h2><a href="create-blog"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Create Blog</a></h2>
+					</c:when>
+					<c:otherwise>
+						<h2><a href="profile"><span class="glyphicon glyphicon-alert"></span>&nbsp;Who are you?</a></h2>
+					</c:otherwise>
+				</c:choose>
 			</div>
 			<div class="col-xs-4">
-				<h2><a href="manageusers"><span class="glyphicon glyphicon-user"></span>&nbsp;Manage Users</a></h2>
+				<h2><a href="profile"><span class="glyphicon glyphicon-wrench"></span>&nbsp;Profile</a></h2>
 			</div>
 			<div class="col-xs-2"></div>
 		</div>
 		<div class="row">
 			<div class="col-xs-2"></div>
 			<div class="col-xs-4">
-				<h2><a href="create-blog"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Create a Blog</a></h2>
+				<h2><a href="user-blogs"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;My Blogs</a></h2>
 			</div>
 			<div class="col-xs-4">
-				<h2><a href="user-blogs"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;View Your Blogs</a></h2>
+				<h2><a href="all-blogs"><span class="glyphicon glyphicon-book"></span>&nbsp;All Blogs</a></h2>
 			</div>
 			<div class="col-xs-2"></div>
 		</div>
-		<div class="row">
-			<div class="col-xs-2"></div>
-			<div class="col-xs-4">
-				<h2><a href="all-blogs"><span class="glyphicon glyphicon-book"></span>&nbsp;View All Blogs</a></h2>
+		<c:if test="${user.userRole.role eq 'ADMIN'}">
+			<div class="row">
+				<div class="col-xs-2"></div>
+				<div class="col-xs-4">
+					<h2><a href="manageusers"><span class="glyphicon glyphicon-user"></span>&nbsp;Manage Users</a></h2>
+				</div>
+				<div class="col-xs-4">
+					<h2><a href="manage-S3"><span class="glyphicon glyphicon-remove"></span>&nbsp;Manage Bucket</a></h2>
+				</div>
+				<div class="col-xs-2"></div>
 			</div>
-			<div class="col-xs-4">
-				<h2><a href="manage-S3"><span class="glyphicon glyphicon-remove"></span>&nbsp;Manage Bucket</a></h2>
-			</div>
-			<div class="col-xs-2"></div>
-		</div>
+		</c:if>
 		<div class="row">
 			<div class="col-xs-2"></div>
 			<div class="col-xs-4 offset-xs-2">
@@ -76,50 +84,12 @@
 			</div>
 			<div class="col-xs-2"></div>
 		</div>
-	</c:if>
-	<c:if test="${user.userRole.role eq 'CONTRIBUTOR'}">
-		<div class="row">
-			<div class="col-xs-1"></div>
-			<div class="col-xs-4">
-				<h1 style="color:#444444">Dashboard</h1>
-			</div>
-			<div class="col-xs-7"></div>
-		</div>
-		<div class="row">
-			<div class="col-xs-2"></div>
-			<div class="col-xs-4">
-				<h2><a href="profile"><span class="glyphicon glyphicon-wrench"></span>&nbsp;Update profile</a></h2>
-			</div>
-			<div class="col-xs-4">
-				<h2><a href="create-blog"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Create a Blog</a></h2>
-			</div>
-			<div class="col-xs-2"></div>
-		</div>
-		<div class="row">
-			<div class="col-xs-2"></div>
-			<div class="col-xs-4">
-				<h2><a href="user-blogs"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;View Your Blogs</a></h2>
-			</div>
-			<div class="col-xs-4">
-				<h2><a href="all-blogs"><span class="glyphicon glyphicon-book"></span>&nbsp;View All Blogs</a></h2>
-			</div>
-			<div class="col-xs-2"></div>
-		</div>
-		<div class="row">
-			<div class="col-xs-2"></div>
-			<div class="col-xs-4">
-				<h2><a href="go-logout"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Logout</a></h2>
-			</div>
-			<div class="col-xs-4"></div>
-			<div class="col-xs-2"></div>
-		</div>
-	</c:if>
 	</div>
 </div>
 <div class="footer2">
-<jsp:include page="footer.jsp"></jsp:include>
+	<jsp:include page="footer.jsp"></jsp:include>
 </div>
 </div>
 </body>
-<script type="text/javascript" src="resources/js/ui.js"></script>
+	<script type="text/javascript" src="resources/js/ui.js"></script>
 </html>
