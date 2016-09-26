@@ -79,10 +79,6 @@ public class PostController {
 		model.setViewName("redirect:/profile");
 		if(bindingResult.hasErrors()){
 			
-			System.err.println("------------------------------------------------------------------------------------------------------------");
-			System.err.println("ERRORS");
-			System.err.println("------------------------------------------------------------------------------------------------------------");
-			
 			return model;
 		}
 		
