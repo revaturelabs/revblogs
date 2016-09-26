@@ -78,6 +78,11 @@ public class PostController {
 		ModelAndView model = new ModelAndView();
 		model.setViewName("redirect:/profile");
 		if(bindingResult.hasErrors()){
+			
+			System.err.println("------------------------------------------------------------------------------------------------------------");
+			System.err.println("ERRORS");
+			System.err.println("------------------------------------------------------------------------------------------------------------");
+			
 			return model;
 		}
 		
@@ -133,8 +138,8 @@ public class PostController {
 		ModelAndView model = new ModelAndView();
 	
 		// User Supplied
-		String email = req.getParameter("email");
-		String role = businessDelegate.requestRoles(2).getRole();
+		String email = req.getParameter("email").toLowerCase();
+		UserRoles userRole = businessDelegate.requestRoles(2);
 		
 		// Check if email exists
 		if(businessDelegate.requestUsers(email) == null){
@@ -143,13 +148,10 @@ public class PostController {
 			String password = businessDelegate.getRandom(6);
 			String firstName = " ";
 			String lastName = " ";
-			
 			String jobTitle = " ";
 			String linkedInURL = null;
-			String description = " ";
+			String description = null;
 			
-			// Role Obj from Database
-			UserRoles userRole = businessDelegate.requestRoles(role);
 			User newUser = new User(email, 
 									businessDelegate.maskElement(password), 
 									firstName, 
