@@ -18,38 +18,42 @@ import javax.mail.internet.MimeMultipart;
 import com.revature.service.Logging;
 
 public class Mailer {
-	
-	private static final String FROMEMAIL = "revblogs@gmail.com";
-	private static final String FROMPASSWORD = "danpickles1";
-	
+		
 	private Mailer(){
 		throw new IllegalAccessError("Utility Class");
 	}
 
-	public static void sendMail(String...emailInfo) {
+	public static void sendMail(String... emailInfo) {
 		
 		// Prepare the properties required to perform an SSL connection to the gmail server
-		Properties props = new Properties();
+		final Properties props1 = new Properties();
+		final Properties props2 = new Properties();
+		
 		try {
-			props.load(Mailer.class.getClassLoader().getResourceAsStream("mailer.properties"));
+
+			props1.load(Mailer.class.getClassLoader().getResourceAsStream("mailer.properties"));
+			props2.load(Mailer.class.getClassLoader().getResourceAsStream("mailerAuth.properties"));
+			
 		} catch (IOException e1) {
+			
 			Logging.error(e1);
 		}
-
+		
 		// Create a session with the properties and credentials to the gmail account linked to the server
-		Session session = Session.getInstance(props,
-			new javax.mail.Authenticator() {
-				protected PasswordAuthentication getPasswordAuthentication() {
-					return new PasswordAuthentication(FROMEMAIL,FROMPASSWORD);
-				}
-			});
+		Session session = Session.getInstance(props1,
+											  new javax.mail.Authenticator() {
+											  protected PasswordAuthentication getPasswordAuthentication() {
+											  return new PasswordAuthentication(props2.getProperty("email"),
+																				props2.getProperty("password"));
+		}
+		});
 
 		try {
 			// Start an email to be sent
 			Message message = new MimeMessage(session);
 			
 			// Part of the email designating where the email is coming from
-			message.setFrom(new InternetAddress(FROMEMAIL));
+			message.setFrom(new InternetAddress(props2.getProperty("email")));
 			
 			// Part of the email designating where the email is being sent to
 			message.setRecipients(Message.RecipientType.TO,

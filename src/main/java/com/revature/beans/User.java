@@ -36,7 +36,6 @@ public class User {
 	private String email;
 	
 	@Column(name="USER_PASSWORD", nullable=false)
-	@NotNull
 	private String password;
 		
 	@Column(name="USER_FIRST", nullable=false)
@@ -87,7 +86,6 @@ public class User {
 		super();
 		
 		// Set Defaults
-		this.profilePicture = "http://blogs.pjw6193.tech/content/evidence/Stickman.png";
 		this.active = true;
 		this.newUser = true;
 	}
