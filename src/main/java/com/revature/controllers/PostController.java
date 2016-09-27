@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashSet;
@@ -527,10 +528,38 @@ public class PostController {
 	
 	@RequestMapping(value="/deleteFile", method=RequestMethod.GET)
 	public ModelAndView delete(Blog blog, HttpServletRequest req, HttpServletResponse resp){
+		//Delete specified file
+		//Note: blog is not necessarily a blog page,
+		//	but used as a generic object with a string field for deletion
 		businessDelegate.delete(blog.getBlogTitle());
+		//Used to refresh the lists
 		String[] str = businessDelegate.getList();
+		List<String> pages = new ArrayList<>();
+		List<String> test = new ArrayList<>();
+		List<String> resources = new ArrayList<>();
+		List<String> evidence = new ArrayList<>();
+		List<String> profiles = new ArrayList<>();
+		//Distribute items to corresponding lists
+		for(String st:str){
+			if(!st.contains("content/")||st.contains("/resources/"))
+				resources.add(st);
+			else if(st.contains("/evidence/"))
+				evidence.add(st);
+			else if(st.contains("/pages/"))
+				pages.add(st);
+			else if(!st.contains("test/")&&st.contains("/profiles/"))
+				profiles.add(st);
+			else
+				test.add(st);
+		}
+		//Set the lists as session objects
 		req.setAttribute("blog", new Blog());
-		req.setAttribute("list", str);
+		req.setAttribute("list", pages);
+		req.setAttribute("prlist", profiles);
+		req.setAttribute("elist", evidence);
+		req.setAttribute("tlist", test);
+		req.setAttribute("rlist", resources);
+		//Return to management page 
 		ModelAndView model = new ModelAndView();
 		model.setViewName("/management");
 		return model;
