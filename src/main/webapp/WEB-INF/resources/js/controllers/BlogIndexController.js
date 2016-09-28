@@ -1,3 +1,10 @@
+$( function() {
+  var availableTags = $scope.autofill;
+   $scope.searchText.autocomplete({
+   source: availableTags
+  });
+} );
+
 app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http) 
 {
 	$scope.getFilter = function()
@@ -6,8 +13,8 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 		$("#loading").show();
 		window.scrollTo(0, $('#postsDiv').offsetTop + 100);
 		var fullUrl;
-		var ulQuery = $scope.searchQuery.toLowerCase();
-		$scope.savedQuery = $scope.searchQuery;
+		var ulQuery = $scope.searchText.toLowerCase();
+		$scope.savedQuery = $scope.searchText;
 		
 		fullUrl = $scope.appUrl + "/api/posts/?page=1&per_page=10&q=" + ulQuery;
 		
@@ -54,24 +61,6 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 				}
 			);
 		}
-		
-		/*$scope.searchPosts.posts = [];
-		var ulQuery = $scope.searchQuery.toLowerCase();
-		$scope.savedQuery = $scope.searchQuery;
-		$scope.searchPage = true;
-		for (var i = 0; i < $scope.posts.posts.length; i++) 
-		{
-			var ulTitle = $scope.posts.posts[i].title.toLowerCase();
-			var ulSubtitle = $scope.posts.posts[i].subtitle.toLowerCase();
-			var ulName = $scope.posts.posts[i].author.name.toLowerCase();
-			if (ulTitle.includes(ulQuery) || ulSubtitle.includes(ulQuery) || ulName.includes(ulQuery))
-			{
-				$scope.searchPosts.posts.push($scope.posts.posts[i]);
-			}
-		}
-		console.log($scope.searchPosts.posts);
-		return false;
-	}*/
 	
 	$scope.clearSearch = function()
 	{
@@ -89,8 +78,8 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 			fullUrl = $scope.appUrl+"/api/posts?author=" + $scope.author + "&page=" + page + "&per_page=" + $scope.postsPerPage;
 		} else if($scope.category != null && sessionStorage.tag > 0){
 			fullUrl = $scope.appUrl+"/api/posts?category=" + $scope.category + "&page=" + page + "&per_page=" + $scope.postsPerPage;
-		} else if($scope.searchQuery.length > 1) {
-			fullUrl = $scope.appUrl+"/api/posts?page=" + page + "&per_page=" + $scope.postsPerPage + "&q=" + $scope.searchQuery;
+		} else if($scope.searchText.length > 1) {
+			fullUrl = $scope.appUrl+"/api/posts?page=" + page + "&per_page=" + $scope.postsPerPage + "&q=" + $scope.searchText;
 		} else {
 			fullUrl = $scope.appUrl+"/api/posts?page=" + page + "&per_page=" + $scope.postsPerPage;
 		}
@@ -240,7 +229,7 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 			per_page: 0,
 			total_posts: 0
 	};
-	$scope.searchQuery = "";
+	$scope.searchText = "";
 	$scope.savedQuery = "";
 	$scope.searchPage = false;
 	$scope.curPage = 1;
