@@ -238,4 +238,8 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 	$scope.author = 0;
 	$scope.category = sessionStorage.tag;
 	$scope.getPage($scope.curPage, $scope.postsPerPage);
+	
+	//////////////////////////////////////////////////////////////////
+	///////////////////AUTO FILL SEARCHING///////////////////
+   //////////////////////////////////////////////////////////////////
 }]);
