@@ -164,6 +164,6 @@ enhancedSearchModule.controller('enhancedSearchCtrl', function($scope, $http) {
 					$('#postsDiv').load();
 					$("#loading").hide();
 					$('#postsDiv').css('visibility', 'visible');
-	}
-	
+	});
+	}	
 });
