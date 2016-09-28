@@ -49,8 +49,11 @@
   	<div class="row">
   		<div class="col-xs-12">
   			<form>
-			  <div class="form-group input-group post-search">
-			    <input ng-model="searchQuery" type="text" class="form-control" placeholder="Search">
+			  <div class="form-group input-group post-search" ng-controller="enhancedSearchCtrl">
+			    <input id="searchBox" type="text" ng-change="searchTextChanged()" ng-blur="searchLostFocus()" ng-keyup="keyup($event)" ng-model="searchText"/>
+			    <select id="selections" size="6" style="display: none; z-index: 2; position: relative;">
+					<option ng-repeat="suggestion in suggestions track by $index" ng-selected="suggestion.selected">{{suggestion.text}}</option>
+  				</select>
 			    <span class="input-group-btn">
 			      <button ng-click="getPage(1,10)" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
 			    </span>
