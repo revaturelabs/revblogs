@@ -50,10 +50,22 @@
   		<div class="col-xs-12">
   			<form>
 			  <div class="form-group input-group post-search" ng-controller="enhancedSearchCtrl">
-			    <input id="searchBox" type="text" ng-change="searchTextChanged()" ng-blur="searchLostFocus()" ng-keyup="keyup($event)" ng-model="searchText"/>
+			    <input id="searchBox" class="searchWidth" type="text"
+					ng-model="searchText"
+					ng-change="searchTextChanged()"
+					ng-blur="searchLostFocus($event)"
+					ng-keyup="keyup($event)">
+				</input>
 			    <select id="selections" size="6" style="display: none; z-index: 2; position: relative;">
 					<option ng-repeat="suggestion in suggestions track by $index" ng-selected="suggestion.selected">{{suggestion.text}}</option>
   				</select>
+				<select id="selections" class="searchWidth suggestions" size="6"
+					ng-model="selectedSuggestion"
+					ng-show="suggestionsShown"
+					ng-change="selectedSuggestionChanged()"
+					ng-blur="searchLostFocus($event)"
+					ng-options="suggestion.searchText as suggestion.displayText for suggestion in suggestions">
+				</select>
 			    <span class="input-group-btn">
 			      <button ng-click="getPage(1,10)" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
 			    </span>

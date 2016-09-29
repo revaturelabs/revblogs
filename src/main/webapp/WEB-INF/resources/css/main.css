@@ -272,6 +272,15 @@ html, body {
     outline: none;
 }
 
+.searchWidth {
+	width: 20em;
+}
+
+.suggestions {
+	z-index: 1;
+	position: fixed;
+}
+
 #home-page-content{
 	margin-top: 30px;
 }
