@@ -192,4 +192,9 @@ public class BaseController {
 	public String getAllBlogs(){
 		return "all-blogs";
 	}
+	
+	@RequestMapping(value="/remoteupload")
+	public String remoteUpload(){
+		return "remoteupload";
+	}
 }

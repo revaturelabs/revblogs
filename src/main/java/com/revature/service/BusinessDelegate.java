@@ -28,6 +28,14 @@ public interface BusinessDelegate {
 	public String uploadResource(String fileName, MultipartFile file);
 	
 	/**
+	 * Attempts to upload a resource (such as a CSS or JS file) to the S3 server remotely
+	 * @param folderPath the destination name of the file, a valid extension should be included
+	 * @param file a file that is to be uploaded to the S3 server
+	 * @return the URL where the file was uploaded if successful, null otherwise
+	 */
+	public String uploadRemote(String folderPath,MultipartFile file);
+	
+	/**
 	 * Attempts to upload a front-end page (html) to the S3 server
 	 * @param file a file that is to be uploaded to the database, the file should have a valid extension
 	 * @return the URL where the file was uploaded if successful, null otherwise

@@ -333,6 +333,21 @@ public class PostController {
 		return "Success";
 	}
 	
+	//Upload Item remotely
+	@RequestMapping(value="/upload-remote", method=RequestMethod.POST)
+	public ModelAndView uploadRemote(@RequestParam("path") String path, 
+			@RequestParam("file") MultipartFile file,
+			HttpServletRequest req, 
+			HttpServletResponse resp){
+		businessDelegate.uploadRemote(path, file);
+		//Resets lists
+		this.setLists(req);
+		//Return to management page 
+		ModelAndView model = new ModelAndView();
+		model.setViewName("/management");
+		return model;
+	}
+	
 	// Uploads a Blog Picture
 	@RequestMapping(value="/upload-picture", method=RequestMethod.POST)
 	public void uploadPictureHandler(@RequestParam("file") MultipartFile file,
@@ -533,6 +548,14 @@ public class PostController {
 		//	but used as a generic object with a string field for deletion
 		businessDelegate.delete(blog.getBlogTitle());
 		//Used to refresh the lists
+		this.setLists(req);
+		//Return to management page 
+		ModelAndView model = new ModelAndView();
+		model.setViewName("/management");
+		return model;
+	}
+	
+	public void setLists(HttpServletRequest req){
 		String[] str = businessDelegate.getList();
 		List<String> pages = new ArrayList<>();
 		List<String> test = new ArrayList<>();
@@ -559,10 +582,6 @@ public class PostController {
 		req.setAttribute("elist", evidence);
 		req.setAttribute("tlist", test);
 		req.setAttribute("rlist", resources);
-		//Return to management page 
-		ModelAndView model = new ModelAndView();
-		model.setViewName("/management");
-		return model;
 	}
 	
 	@RequestMapping(value="delete.do", method=RequestMethod.POST)
