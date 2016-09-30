@@ -132,16 +132,56 @@ enhancedSearchModule.controller('enhancedSearchCtrl', function($scope, $http) {
 		];
 	}
 	
-	$scope.submitSearch = function(searchText) 
-	{
+	$scope.submitSearch = function(searchText) {
+		$('#postsDiv').css('visibility', 'hidden');
+		$("#loading").show();
+		window.scrollTo(0, $('#postsDiv').offsetTop + 100);
 		var fullUrl;
 		var ulQuery = $scope.searchQuery.toLowerCase();
 		$scope.savedQuery = $scope.searchQuery;
 		
 		fullUrl = $scope.appUrl + "/api/posts/?page=1&per_page=10&q=" + ulQuery;
 		
-		$http.get(fullUrl).success(function(resp) {					
-			$scope.suggestions = resp.searchFills;
+		$http.get(fullUrl).success(
+			    function(resp)
+				{
+					$scope.searchPosts = resp;
+					
+					$scope.curPage = 1;  //current page
+					$scope.searchPage = true;
+					var prevPage = $scope.curPage;
+					var nextPage = $scope.curPage;
+					
+					if($scope.curPage > 1)
+					{
+						prevPage = $scope.curPage - 1;
+					}
+					
+					if($scope.curPage < $scope.searchPosts.total_pages)
+					{
+						nextPage = $scope.curPage + 1;
+					}
+					
+					$scope.numOfPages = [];
+					$scope.numOfPages[0] = 1;
+					
+					for (var i = 1; i < $scope.searchPosts.total_pages+1; i++)
+					{
+						$scope.numOfPages[i - 1] = i;
+					}
+					
+					if($scope.curPage < $scope.searchPosts.total_pages)
+					{
+						preloadPage(nextPage, $scope.postsPerPage);
+					}
+					
+					if($scope.curPage > 1)
+					{
+						preloadPage(prevPage, $scope.postsPerPage);
+					}
+					$('#postsDiv').load();
+					$("#loading").hide();
+					$('#postsDiv').css('visibility', 'visible');
 		});
 	}	
 });
