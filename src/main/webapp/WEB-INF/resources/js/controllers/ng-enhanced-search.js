@@ -18,13 +18,13 @@ enhancedSearchModule.controller('enhancedSearchCtrl', function($scope, $http) {
 	
 	$scope.keyup = function(keyUpEvent) {
 		var keyCode = keyUpEvent.which || keyUpEvent.keyCode;
-		if ( keyCode == 38 ) {
+		if ( keyCode === 38 ) {
 			$scope.upArrow();
-		} else if ( keyCode == 40 ) {
+		} else if ( keyCode === 40 ) {
 			$scope.downArrow();
-		} else if ( keyCode == 13 ) {
+		} else if ( keyCode === 13 ) {
 			$scope.enterKey();
-		} else if ( keyCode == 27 ) {
+		} else if ( keyCode === 27 ) {
 			$scope.escapeKey();
 		} else {
 			$scope.unknownKey(keyCode);
@@ -97,18 +97,18 @@ enhancedSearchModule.controller('enhancedSearchCtrl', function($scope, $http) {
 			itemBeingFocused = focusLostEvent.relatedTarget.id;
 		}
 		
-		if ( itemBeingFocused != 'searchBox' && itemBeingFocused != 'selections' ) {
+		if ( itemBeingFocused !== 'searchBox' && itemBeingFocused !== 'selections' ) {
 			$scope.setSuggestionsVisible(false);
 		}
 	}
 	
 	$scope.isSelected = function(suggestion) {
-		return $scope.selectedSuggestion == suggestion.searchText;
+		return $scope.selectedSuggestion === suggestion.searchText;
 	}
 	
 	$scope.selectSuggestion = function(indexToSelect) {
 		angular.forEach($scope.suggestions, function(suggestion, index) {
-			if ( index == indexToSelect && !($scope.isSelected(suggestion)) ) {
+			if ( index === indexToSelect && !($scope.isSelected(suggestion)) ) {
 				$scope.selectedSuggestion = suggestion.searchText;
 				$scope.setSearchText(suggestion.searchText);
 			}
@@ -122,8 +122,6 @@ enhancedSearchModule.controller('enhancedSearchCtrl', function($scope, $http) {
 	}
 	
 	$scope.generateSuggestions = function(userEnteredSearchText) {
-		console.log("Unimplemented Generate Suggestions Method: " + userEnteredSearchText);
-		
 		$scope.suggestions = [
 			{ "displayText":userEnteredSearchText + "", "searchText":userEnteredSearchText + "" },
 			{ "displayText":userEnteredSearchText + "d1", "searchText":userEnteredSearchText + "s1" },
@@ -142,10 +140,8 @@ enhancedSearchModule.controller('enhancedSearchCtrl', function($scope, $http) {
 		
 		fullUrl = $scope.appUrl + "/api/posts/?page=1&per_page=10&q=" + ulQuery;
 		
-		$http.get(fullUrl).success(
-			    function(resp)
-				{					
-					$scope.suggestions = resp.searchFills;
-				});
+		$http.get(fullUrl).success(function(resp) {					
+			$scope.suggestions = resp.searchFills;
+		});
 	}	
 });
