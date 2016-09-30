@@ -2,8 +2,12 @@ package com.revature.service.impl;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import org.apache.solr.common.util.Hash;
 import org.hibernate.Session;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -252,6 +256,28 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 		postCollection.setTotalPages(totalPages);
 		postCollection.setPerPage(perPage);
 		
+		Set<String> searchResults = new HashSet<String>();
+		
+		for (int i = 0; i < postList.size(); i++)
+		{
+			searchResults.add(postList.get(i).getTitle().toLowerCase());
+			searchResults.add(postList.get(i).getSubtitle().toLowerCase());
+			searchResults.add(postList.get(i).getAuthor().getName().toLowerCase());
+			
+			for (int j = 0; j < postList.get(i).getTags().size(); j++)
+			{
+				searchResults.add(postList.get(i).getTags().get(j).toLowerCase());
+			}
+		}
+		
+		List<String> searchList = new ArrayList<String>();
+		
+		searchList.addAll(searchResults);
+		
+		Collections.sort(searchList);
+		
+		postCollection.setSearchFills(searchList);
+		
 		return postCollection;
 	}
 	
@@ -281,6 +307,28 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 		postCollection.setTotalPages(totalPages);
 		postCollection.setPerPage(perPage);
 		postCollection.setAuthor(new AuthorDTO(author));
+		
+		Set<String> searchResults = new HashSet<String>();
+		
+		for (int i = 0; i < postList.size(); i++)
+		{
+			searchResults.add(postList.get(i).getTitle().toLowerCase());
+			searchResults.add(postList.get(i).getSubtitle().toLowerCase());
+			searchResults.add(postList.get(i).getAuthor().getName().toLowerCase());
+			
+			for (int j = 0; j < postList.get(i).getTags().size(); j++)
+			{
+				searchResults.add(postList.get(i).getTags().get(j).toLowerCase());
+			}
+		}
+		
+		List<String> searchList = new ArrayList<String>();
+		
+		searchList.addAll(searchResults);
+		
+		Collections.sort(searchList);
+		
+		postCollection.setSearchFills(searchList);
 		
 		return postCollection;
 	}
@@ -312,6 +360,28 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 		postCollection.setPerPage(perPage);
 		postCollection.setCategory(category.getDescription());
 		
+		Set<String> searchResults = new HashSet<String>();
+		
+		for (int i = 0; i < postList.size(); i++)
+		{
+			searchResults.add(postList.get(i).getTitle().toLowerCase());
+			searchResults.add(postList.get(i).getSubtitle().toLowerCase());
+			searchResults.add(postList.get(i).getAuthor().getName().toLowerCase());
+			
+			for (int j = 0; j < postList.get(i).getTags().size(); j++)
+			{
+				searchResults.add(postList.get(i).getTags().get(j).toLowerCase());
+			}
+		}
+		
+		List<String> searchList = new ArrayList<String>();
+		
+		searchList.addAll(searchResults);
+		
+		Collections.sort(searchList);
+		
+		postCollection.setSearchFills(searchList);
+		
 		return postCollection;
 	}
 	
@@ -327,12 +397,31 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 		int start = (page-1)*perPage;
 		int maxResults = perPage;
 		
-		PaginatedResultList<Blog> results = dataService.grabBlogs(query, start, maxResults);
+		PaginatedResultList<Blog> results = dataService.grabBlogs(start, maxResults);
 		List<BlogPostDTO> postList = new ArrayList<>();
 		for (Blog p: results.getItems()) {
-			postList.add(new BlogPostDTO(p));
+			BlogPostDTO blog = new BlogPostDTO(p);
+			
+			if(blog.getTitle().contains(query) || blog.getContent().contains(query) || blog.getAuthor().getName().contains(query) || blog.getSubtitle().contains(query))
+			{
+				postList.add(blog);
+			}
+			
+			else
+			{
+				for (int i = 0; i < blog.getTags().size(); i++)
+				{
+					if(blog.getTags().get(i).contains(query))
+					{
+						postList.add(blog);
+					}
+				}
+			}
+				
+			//postList.add(new BlogPostDTO(p));
 		}
-		long totalItems = results.getTotalItems();
+		//long totalItems = results.getTotalItems();
+		long totalItems = postList.size();
 		int totalPages = (int)Math.ceil((double)totalItems/perPage);
 		
 		postCollection.setPosts(postList);
@@ -340,6 +429,30 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 		postCollection.setTotalPosts(totalItems);
 		postCollection.setTotalPages(totalPages);
 		postCollection.setPerPage(perPage);
+		
+
+		
+		Set<String> searchResults = new HashSet<String>();
+		
+		for (int i = 0; i < postList.size(); i++)
+		{
+			searchResults.add(postList.get(i).getTitle().toLowerCase());
+			searchResults.add(postList.get(i).getSubtitle().toLowerCase());
+			searchResults.add(postList.get(i).getAuthor().getName().toLowerCase());
+			
+			for (int j = 0; j < postList.get(i).getTags().size(); j++)
+			{
+				searchResults.add(postList.get(i).getTags().get(j).toLowerCase());
+			}
+		}
+		
+		List<String> searchList = new ArrayList<String>();
+		
+		searchList.addAll(searchResults);
+		
+		Collections.sort(searchList);
+		
+		postCollection.setSearchFills(searchList);
 		
 		return postCollection;
 	}
