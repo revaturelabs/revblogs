@@ -8,9 +8,16 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
+
+import org.owasp.validator.html.AntiSamy;
+import org.owasp.validator.html.CleanResults;
+import org.owasp.validator.html.PolicyException;
+import org.owasp.validator.html.ScanException;
 
 import com.revature.app.TemporaryFile;
 import com.revature.beans.Blog;
@@ -34,6 +41,10 @@ public class HtmlWriter {
 		InputStreamReader isr = new InputStreamReader(templateStream);
 		tempReader = new BufferedReader(isr);
 	}
+
+	public String sanitize(String str) {
+		return Sanitizer.sanitize(str);
+	}
 	
 	public TemporaryFile render() throws IOException {
 		String line;
@@ -44,30 +55,31 @@ public class HtmlWriter {
 			if (st.hasMoreTokens())
 				title += "-";
 		}
-		String fileName = title+".html";
+		String fileName = sanitize(title)+".html";
 		String url = "http://blogs.pjw6193.tech/content/pages/" + fileName;
 		TemporaryFile tempFile = TemporaryFile.make(fileName);
 		File file = tempFile.getTemporaryFile();
 		FileWriter fw = new FileWriter(file);
 		blogWriter = new BufferedWriter(fw);
+		
 		while ((line=tempReader.readLine()) != null) {
 			blogWriter.write(line+"\n");
 			if (line.contains("<title>"))
-				blogWriter.write(blog.getBlogTitle()+" | Revature Blogs\n");
+				blogWriter.write(sanitize(blog.getBlogTitle())+" | Revature Blogs\n");
 			if (line.contains("post-date"))
 				blogWriter.write(blog.getPublishDate().toString()+"\n");
 			if (line.contains("post-author"))
-				blogWriter.write("by "+author.getFirstName()+" "+author.getLastName()+"\n");
+				blogWriter.write("by "+sanitize(author.getFirstName())+" "+sanitize(author.getLastName())+"\n");
 			if (line.contains("post-title"))
-				blogWriter.write(blog.getBlogTitle()+"\n");
+				blogWriter.write(sanitize(blog.getBlogTitle())+"\n");
 			if (line.contains("post-subtitle"))
-				blogWriter.write(blog.getBlogSubtitle());
+				blogWriter.write(sanitize(blog.getBlogSubtitle()));
 			if (line.contains("post-body"))
-				blogWriter.write(blog.getBlogContent()+"\n");
+				blogWriter.write(sanitize(blog.getBlogContent())+"\n");
 			if (line.contains("author-name"))
-				blogWriter.write(author.getFirstName()+" "+author.getLastName());
+				blogWriter.write(sanitize(author.getFirstName())+" "+sanitize(author.getLastName()));
 			if (line.contains("author-desc"))
-				blogWriter.write(author.getDescription());
+				blogWriter.write(sanitize(author.getDescription()));
 
 			if (line.contains("comments-facebook"))
 				blogWriter.write("<div>"+
@@ -77,17 +89,17 @@ public class HtmlWriter {
 				blogWriter.write("<meta property='og:url' content='http://blogs.pjw6193.tech/content/pages/"+fileName+"' />");
 			}
 			if (line.contains("url-title")){
-				blogWriter.write("<meta property='og:title' content="+blog.getBlogTitle()+" />");
+				blogWriter.write("<meta property='og:title' content="+sanitize(blog.getBlogTitle())+" />");
 			}
 			if(line.contains("url-description")){
-				blogWriter.write("<meta property='og:description' content="+blog.getBlogSubtitle()+" />");
+				blogWriter.write("<meta property='og:description' content="+sanitize(blog.getBlogSubtitle())+" />");
 			}
 			if(line.contains("author-image"))
-				blogWriter.write("<img src=" + blog.getAuthor().getProfilePicture() + " alt=\"Revature Author Profile Picture\" />");
+				blogWriter.write("<img src=" + sanitize(blog.getAuthor().getProfilePicture()) + " alt=\"Revature Author Profile Picture\" />");
 			if(line.contains("post-tags")){
 				Set<Tags> tags = blog.getTags();
 				for(Tags tag: tags){
-					blogWriter.write("<a href='' ng-click='getPageWithTagsFromBlogPost(" + tag.getTagId() + ")'>" + tag.getDescription() + "</a> ");
+					blogWriter.write("<a href='' ng-click='getPageWithTagsFromBlogPost(" + tag.getTagId() + ")'>" + sanitize(tag.getDescription()) + "</a> ");
 				}
 			}
 			if(line.contains("facebook-url")){
@@ -108,10 +120,11 @@ public class HtmlWriter {
 				List<String> references = blog.getReferences();
 				Integer i=1;
 				for (String reference : references ) {
-					if ( reference != null && reference.length() > 0 ) {
+					String cleanReference = sanitize(reference);
+					if ( cleanReference != null && cleanReference.length() > 0 ) {
 						blogWriter.write("<div class=\"post-reference-item\">"
-								+ "[" + i + "] - <a target=\"_blank\" href=" + reference + ">"
-								+ reference + "</a></div>");
+								+ "[" + i + "] - <a target=\"_blank\" href=" + cleanReference + ">"
+								+ cleanReference + "</a></div>");
 						i = i+1;
 					}
 				}
