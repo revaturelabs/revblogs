@@ -56,9 +56,7 @@
 					ng-blur="searchLostFocus($event)"
 					ng-keyup="keyup($event)">
 				</input>
-			    <select id="selections" size="6" style="display: none; z-index: 2; position: relative;">
-					<option ng-repeat="suggestion in suggestions track by $index" ng-selected="suggestion.selected">{{suggestion.text}}</option>
-  				</select>
+				<br />
 				<select id="selections" class="searchWidth suggestions" size="6"
 					ng-model="selectedSuggestion"
 					ng-show="suggestionsShown"
