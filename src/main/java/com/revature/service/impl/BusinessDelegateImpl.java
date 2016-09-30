@@ -75,7 +75,10 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	 */
 	public String uploadResource(String fileName, MultipartFile file) {
 		return jetS3.uploadResource(fileName, file);
-
+	}
+	
+	public String uploadRemote(String folderPath,MultipartFile file){
+		return jetS3.uploadRemote(folderPath, file);
 	}
 	
 	/**

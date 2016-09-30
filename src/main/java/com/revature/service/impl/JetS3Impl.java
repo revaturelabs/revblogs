@@ -104,6 +104,24 @@ public class JetS3Impl implements JetS3{
 		return uploadFile(PROFILES + loginName + "/", file);
 	}
 	
+	public String uploadRemote(String folderPath, MultipartFile file){
+		try {
+			S3Bucket bucket = s3.getBucket(BUCKET);
+			S3Object s3Obj = new S3Object(folderPath);
+			s3Obj.setContentType(file.getContentType());
+			AccessControlList acl = new AccessControlList();
+			acl.setOwner(bucket.getOwner());
+			acl.grantPermission(GroupGrantee.ALL_USERS, Permission.PERMISSION_READ);
+			s3Obj.setDataInputStream(file.getInputStream());
+			s3Obj.setContentLength(file.getSize());
+			s3Obj.setAcl(acl);
+			s3.putObject(bucket, s3Obj);
+			return HTTP + BUCKET+ "/" + folderPath;
+		} catch (Exception e) {
+			Logging.error(e);
+		}
+		return null; // Resource could not be uploaded
+	}
 	/**
 	 * Attempts to upload a file to the S3 server
 	 * @param folderPath the path to the folder this file will be stored at starting at the S3 root
@@ -113,7 +131,6 @@ public class JetS3Impl implements JetS3{
 	 */
 	protected String uploadFile(String folderPath, String fileName, MultipartFile file) {
 		try {
-			
 			S3Bucket bucket = s3.getBucket(BUCKET);
 			S3Object s3Obj = new S3Object(folderPath + fileName);
 			s3Obj.setContentType(file.getContentType());

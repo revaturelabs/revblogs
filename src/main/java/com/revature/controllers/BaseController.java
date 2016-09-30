@@ -4,6 +4,7 @@ import java.security.Principal;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -191,5 +192,10 @@ public class BaseController {
 	@RequestMapping(value="all-blogs")
 	public String getAllBlogs(){
 		return "all-blogs";
+	}
+	
+	@RequestMapping(value="/remoteupload")
+	public String remoteUpload(){
+		return "remoteupload";
 	}
 }
