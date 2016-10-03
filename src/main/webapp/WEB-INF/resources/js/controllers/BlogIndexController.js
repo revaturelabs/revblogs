@@ -1,6 +1,6 @@
 app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http) 
 {
-	$scope.doSearch()
+	$scope.doSearch = function()
 	{
 		$scope.getFilter();
 		$scope.changeView($scope.loadedPosts[0][0]);
@@ -16,7 +16,7 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 		
 		$scope.appUrl +=  "&q=" + ulQuery;
 		
-		$http.get($scope.appUrl).success(
+		$http.get($scope.getUrl).success(
 			    function(resp)
 				{
 			    	var page = 1;
@@ -52,7 +52,10 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 		$("#loading").show();
 		window.scrollTo(0, $('#postsDiv').offsetTop + 100);
 		
-		$http.get($scope.appUrl).success(
+		$scope.paramPage = page;
+		$scope.postsPerPage = postsPP;
+		
+		$http.get($scope.getUrl).success(
 			    function(resp)
 				{
 					$scope.posts = resp;
@@ -113,7 +116,7 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 							pageToLoad = 1;
 						}
 						
-						getPage(pageToLoad, $scope.postsPerPage)
+						$scope.getPage(pageToLoad, $scope.postsPerPage)
 	
 				        window.scrollTo(0, $('#postsDiv').offsetTop + 100);
 					}
@@ -128,9 +131,9 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 						pageToLoad = 1;
 					}
 					
-					getPage(pageToLoad, $scope.postsPerPage)
+					$scope.getPage(pageToLoad, $scope.postsPerPage)
 					
-					changeView(pageToLoad + (MAX_PP/$scope.postsPerPage/2));
+					$scope.changeView(pageToLoad + (MAX_PP/$scope.postsPerPage/2));
 	
 			        window.scrollTo(0, $('#postsDiv').offsetTop + 100);
 				}
@@ -174,14 +177,16 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 	$scope.savedQuery = "";
 	$scope.searchPage = false;
 	$scope.curPage = 1;
+	$scope.paramPage = 1;
 	$scope.postsPerPage = 10;
 	$scope.isLoading = false;
 	$scope.author = 0;
 	$scope.category = sessionStorage.tag;
-	$scope.appUrl = "https://dev.pjw6193.tech:7002/revblogs?page=" + $scope.curPage
-														+ "&per_page=" + $scope.postsPerPage
-														+ "&author=" + $scope.author
-														+ "&category=" + $scope.category;
+	$scope.appUrl = "https://dev.pjw6193.tech:7002/revblogs";
+	$scope.getUrl = $scope.appUrl + "/api/posts/?page=" + $scope.paramPage
+								  + "&per_page=" + $scope.postsPerPage
+								  + "&author=" + $scope.author
+								  + "&category=" + $scope.category;
 	$scope.getPage($scope.curPage, $scope.postsPerPage);
 	$scope.changeView(1);
 }]);
