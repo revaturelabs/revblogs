@@ -62,7 +62,7 @@
   	<img id="loading" src="http://blogs.pjw6193.tech/content/resources/img/rev.gif" />
     <div id="postsDiv" class="row">
       <div class="col-sm-8">
-        <div>         	                   <!-- PLEASE CHECK THIS!!! -->
+        <div>
       		<div ng-repeat="post in displayPosts" ng-include src="'http://blogs.pjw6193.tech/content/resources/js/templates/post-preview.html'"></div>
         </div>
       </div>
@@ -135,6 +135,7 @@
   <input type="hidden" ng-model="prevPagePosts">
   <input type="hidden" ng-model="searchPage">
   <input type="hidden" ng-model="searchPosts">
+  <input type="hidden" ng-model="numOfPages">
   
 </body>
 

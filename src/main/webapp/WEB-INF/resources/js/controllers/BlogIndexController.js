@@ -38,6 +38,11 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 						}
 					}
 					
+					for (var i = 1; i < $scope.searchPosts.totalPosts/$scope.postsPerPage; i++) 
+					{
+						$scope.numOfPages[i-1] = i;
+					}
+					
 					$('#postsDiv').load();
 					$("#loading").hide();
 					$('#postsDiv').css('visibility', 'visible');
@@ -70,6 +75,12 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 						$scope.loadedPosts[i] = [];
 					}
 					
+					/*
+					 * Ok. This is what this needs to do:
+					 * 		--First for loop is setting each page (loadedPosts[i][0] will hold the page number)
+					 * 		--The second for is dropping posts into the arrays at each index (loadingPosts[0][1] will be a post and so on...)
+					 */
+					
 					for (var i = 0; i < $scope.posts.posts.length/$scope.postsPerPage; i++) 
 					{
 						$scope.loadedPosts[i][0] = page + i;
@@ -78,6 +89,11 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 						{
 							$scope.loadedPosts[i][j+1] = $scope.posts.posts[j];
 						}
+					}
+					
+					for (var i = 1; i < $scope.posts.totalPosts/$scope.postsPerPage; i++) 
+					{
+						$scope.numOfPages[i-1] = i;
 					}
 					
 					$('#postsDiv').load();
@@ -100,40 +116,28 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 		
 		if(!$scope.isLoading)	
 		{
-			if(!$scope.searchPage)
+			$scope.isLoading = true;	
+			
+			for (var i = 0; i < $scope.loadedPosts.length; i++) 
 			{
-				$scope.isLoading = true;	
-				
-				for (var i = 0; i < $scope.loadedPosts.length; i++) 
+				if (page === $scope.loadedPosts[i][0]) 
 				{
-					if (page === $scope.loadedPosts[i][0]) 
-					{
-						pageCheck = true;
-						displayIndex = i;
-					}
+					pageCheck = true;
+					displayIndex = i;
 				}
+			}
+			
+			if(pageCheck)
+			{
+				$scope.displayPosts = $scope.loadedPosts[displayIndex];
 				
-				if(pageCheck)
-				{
-					$scope.displayPosts = $scope.loadedPosts[displayIndex];
-					
-					if(displayIndex === $scope.loadedPosts.length)		
-					{				
-						var pageToLoad = page - (MAX_PP/$scope.postsPerPage/2);
-						
-						if(pageToLoad < 1)
-						{
-							pageToLoad = 1;
-						}
-						
-						$scope.getPage(pageToLoad, $scope.postsPerPage)
-	
-				        window.scrollTo(0, $('#postsDiv').offsetTop + 100);
-					}
-				}
+				/*
+				 * Above assigns the posts for the desired page to the displayPosts
+				 * Below checks to see if we've reached the end (or beginning) of the pre-loaded posts
+				 */
 				
-				else
-				{			
+				if(displayIndex === $scope.loadedPosts.length | $scope.loadedPosts[displayIndex] == null)		
+				{				
 					var pageToLoad = page - (MAX_PP/$scope.postsPerPage/2);
 					
 					if(pageToLoad < 1)
@@ -142,19 +146,31 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 					}
 					
 					$scope.getPage(pageToLoad, $scope.postsPerPage)
-					
-					$scope.changeView(pageToLoad + (MAX_PP/$scope.postsPerPage/2));
-	
-			        window.scrollTo(0, $('#postsDiv').offsetTop + 100);
 				}
-				
-				$scope.isLoading = false;
 			}
 			
+			/*
+			 *	This else is for when a user clicks a page outside of pre-loaded range
+			 *	It makes a get request to get more pages, starting PRIOR to the requested page (for fast loading of prev pages)
+			 *	It then calls this method again with the request page.  Yes.  Recursion. 
+			 */
+			
 			else
-			{
+			{			
+				var pageToLoad = page - (MAX_PP/$scope.postsPerPage/2);
 				
+				if(pageToLoad < 1)
+				{
+					pageToLoad = 1;
+				}
+				
+				$scope.getPage(pageToLoad, $scope.postsPerPage)
+				
+				$scope.changeView(page);
 			}
+			
+	        window.scrollTo(0, $('#postsDiv').offsetTop + 100);
+			$scope.isLoading = false;
 		}
 	}
 	
@@ -181,6 +197,7 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 			total_posts: 0
 	};
 	const MAX_PP = 20;
+	$scope.numOfPages = [];
 	$scope.loadedPosts = [];
 	$scope.displayPosts = [];
 	$scope.searchQuery = "";
