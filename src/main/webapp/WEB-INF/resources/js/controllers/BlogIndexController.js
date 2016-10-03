@@ -23,6 +23,11 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 			    	
 					$scope.searchPosts = resp;
 					
+					for (var i = 0; i < $scope.searchPosts.posts.length/postsPP; i++) 
+					{
+						$scope.loadedPosts[i] = [];
+					}
+					
 					for (var i = 0; i < $scope.searchPosts.posts.length/$scope.postsPerPage; i++) 
 					{
 						$scope.loadedPosts[i][0] = page + i;
@@ -59,6 +64,11 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 			    function(resp)
 				{
 					$scope.posts = resp;
+					
+					for (var i = 0; i < $scope.posts.posts.length/postsPP; i++) 
+					{
+						$scope.loadedPosts[i] = [];
+					}
 					
 					for (var i = 0; i < $scope.posts.posts.length/$scope.postsPerPage; i++) 
 					{
@@ -171,7 +181,7 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 			total_posts: 0
 	};
 	const MAX_PP = 20;
-	$scope.loadedPosts = [[]];
+	$scope.loadedPosts = [];
 	$scope.displayPosts = [];
 	$scope.searchQuery = "";
 	$scope.savedQuery = "";
@@ -183,10 +193,7 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 	$scope.author = 0;
 	$scope.category = sessionStorage.tag;
 	$scope.appUrl = "https://dev.pjw6193.tech:7002/revblogs";
-	$scope.getUrl = $scope.appUrl + "/api/posts/?page=" + $scope.paramPage
-								  + "&per_page=" + $scope.postsPerPage
-								  + "&author=" + $scope.author
-								  + "&category=" + $scope.category;
+	$scope.getUrl = "https://dev.pjw6193.tech:7002/revblogs/api/posts?page=" + $scope.paramPage;
 	$scope.getPage($scope.curPage, $scope.postsPerPage);
 	$scope.changeView(1);
 }]);
