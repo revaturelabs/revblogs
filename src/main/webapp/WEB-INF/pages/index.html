@@ -11,6 +11,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
 <script src="http://blogs.pjw6193.tech/content/resources/js/app.js"></script>
 <script src="http://blogs.pjw6193.tech/content/resources/js/controllers/BlogIndexController.js"></script>
+<script src="http://blogs.pjw6193.tech/content/resources/js/controllers/ng-enhanced-search.js"></script>
 <link rel="shortcut icon" type="image/png" href="/content/resources/img/favicon.png"/>
 </head>
 
@@ -24,7 +25,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="/"><img src="http://blogs.pjw6193.tech/content/resources/img/rev-brand.png" alt="Revature Brand Logo"/></a>
+        <a class="navbar-brand" href="/"><img src="http://blogs.pjw6193.tech/content/resources/img/rev-brand.png" /></a>
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
@@ -49,36 +50,20 @@
   	<div class="row">
   		<div class="col-xs-12">
   			<form>
-			  <div class="form-group input-group post-search" ng-controller="enhancedSearchCtrl">
-			    <input id="searchBox" class="searchWidth" type="text"
-					ng-model="searchText"
-					ng-change="searchTextChanged()"
-					ng-blur="searchLostFocus($event)"
-					ng-keyup="keyup($event)">
-				</input>
-				<br />
-				<select id="selections" class="searchWidth suggestions" size="6"
-					ng-model="selectedSuggestion"
-					ng-show="suggestionsShown"
-					ng-change="selectedSuggestionChanged()"
-					ng-blur="searchLostFocus($event)"
-					ng-options="suggestion.searchText as suggestion.displayText for suggestion in suggestions">
-				</select>
+			  <div class="form-group input-group post-search">
+			    <input ng-model="searchQuery" type="text" class="form-control" placeholder="Search">
 			    <span class="input-group-btn">
-			      <button ng-click="getPage(1,10)" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
+			      <button ng-click="doSearch()" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
 			    </span>
 			  </div>
 			</form>
   		</div>
   	</div>
-  	<img id="loading" src="http://blogs.pjw6193.tech/content/resources/img/rev.gif" alt="Revature Loading Logo"/>
+  	<img id="loading" src="http://blogs.pjw6193.tech/content/resources/img/rev.gif" />
     <div id="postsDiv" class="row">
       <div class="col-sm-8">
-        <div ng-if="searchPage===true">
-        	<div ng-repeat="post in searchPosts.posts" ng-include src="'http://blogs.pjw6193.tech/content/resources/js/templates/post-preview.html'"></div>
-        </div>
-        <div ng-if="searchPage===false">                            <!-- PLEASE CHECK THIS!!! -->
-      		<div ng-repeat="post in posts.posts" ng-include src="'http://blogs.pjw6193.tech/content/resources/js/templates/post-preview.html'"></div>
+        <div>         	                   <!-- PLEASE CHECK THIS!!! -->
+      		<div ng-repeat="post in displayPosts" ng-include src="'http://blogs.pjw6193.tech/content/resources/js/templates/post-preview.html'"></div>
         </div>
       </div>
       <div class="col-sm-4 hidden-xs">
@@ -126,7 +111,7 @@
 	    <div class="container">
 	      <div class="row">
 	        <div class="col-sm-4">
-	          <img class="img-responsive" src="http://blogs.pjw6193.tech/content/resources/img/rev-footer.png" alt="Revature Brand Footer"/>
+	          <img class="img-responsive" src="http://blogs.pjw6193.tech/content/resources/img/rev-footer.png" />
 	        </div>
 	        <div class="col-sm-4">
 	        	<h4>Contact Info</h4>
