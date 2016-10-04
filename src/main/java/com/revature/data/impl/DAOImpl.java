@@ -315,6 +315,8 @@ public class DAOImpl implements DAO {
 		
 		
 		Criteria allPostsCount = ses.createCriteria(Blog.class).add(Restrictions.eq(ACTIVE, true));
+		allPostsCount.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		allPostsCount.setProjection(Projections.rowCount());
 		blogPosts.setTotalItems((long)allPostsCount.uniqueResult());
 		
 		
