@@ -400,7 +400,7 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 		int start = (page-1)*perPage;
 		int maxResults = perPage;
 		
-		PaginatedResultList<Blog> results = dataService.grabBlogs(start, maxResults);
+		PaginatedResultList<Blog> results = dataService.grabBlogs(query, 0, 0); //the int params are dummies, not necessary.  Will remove if have time.
 		List<BlogPostDTO> postList = new ArrayList<>();
 		for (Blog p: results.getItems()) {
 			BlogPostDTO blog = new BlogPostDTO(p);

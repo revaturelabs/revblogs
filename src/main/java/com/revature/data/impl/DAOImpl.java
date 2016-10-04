@@ -287,8 +287,9 @@ public class DAOImpl implements DAO {
 				.createQuery();
 		
 		FullTextQuery query = fts.createFullTextQuery(searchQuery, Blog.class);
-		query.setFirstResult(start);
-		query.setMaxResults(max);
+		query.setMaxResults(MAX_POSTS_PER_PAGE*PAGES_TO_LOAD);
+		/*query.setFirstResult(start);
+		query.setMaxResults(max);*/
 		
 		blogPosts.setTotalItems(query.getResultSize());
 		
@@ -356,6 +357,7 @@ public class DAOImpl implements DAO {
 		
 		
 		Criteria allPostsCount = ses.createCriteria(Blog.class).add(Restrictions.eq(ACTIVE, true));
+		allPostsCount.add(Restrictions.eq("author", author));
 		allPostsCount.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		allPostsCount.setProjection(Projections.rowCount());
 		blogPosts.setTotalItems((long)allPostsCount.uniqueResult());
@@ -394,6 +396,8 @@ public class DAOImpl implements DAO {
 		
 		
 		Criteria allPostsCount = ses.createCriteria(Blog.class).add(Restrictions.eq(ACTIVE, true));
+		allPostsCount.createAlias("tags", "t");
+		allPostsCount.add(Restrictions.eq("t.tagId", category.getTagId()));
 		allPostsCount.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		allPostsCount.setProjection(Projections.rowCount());
 		blogPosts.setTotalItems((long)allPostsCount.uniqueResult());
