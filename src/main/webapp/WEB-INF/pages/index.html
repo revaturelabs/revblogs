@@ -63,7 +63,7 @@
     <div id="postsDiv" class="row">
       <div class="col-sm-8">
         <div>
-      		<div ng-repeat="post in displayPosts" ng-include src="'http://blogs.pjw6193.tech/content/resources/js/templates/post-preview.html'"></div>
+      		<div ng-repeat="post in displayPosts" ng-if="!$first" ng-include src="'http://blogs.pjw6193.tech/content/resources/js/templates/post-preview.html'"></div>
         </div>
       </div>
       <div class="col-sm-4 hidden-xs">

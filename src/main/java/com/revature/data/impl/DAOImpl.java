@@ -312,7 +312,11 @@ public class DAOImpl implements DAO {
 		Criteria criteria = ses.createCriteria(Blog.class).setMaxResults(MAX_POSTS_PER_PAGE*PAGES_TO_LOAD);
 		criteria.add(Restrictions.eq(ACTIVE, true));
 		criteria.setProjection(Projections.rowCount());
-		blogPosts.setTotalItems((long)criteria.uniqueResult());
+		
+		
+		Criteria allPostsCount = ses.createCriteria(Blog.class).add(Restrictions.eq(ACTIVE, true));
+		blogPosts.setTotalItems((long)allPostsCount.uniqueResult());
+		
 		
 		criteria = ses.createCriteria(Blog.class);
 		criteria.add(Restrictions.eq(ACTIVE, true));
