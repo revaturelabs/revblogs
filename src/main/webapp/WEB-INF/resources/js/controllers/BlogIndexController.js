@@ -2,8 +2,9 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 {	
 	$scope.doSearch = function()
 	{
+		$scope.needsChanged = true;
+		$scope.searchPage = true;
 		$scope.getFilter();
-		$scope.changeView($scope.loadedPosts[0][0]);
 	}
 	
 	$scope.getFilter = function()
@@ -14,9 +15,9 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 		var ulQuery = $scope.searchQuery.toLowerCase().replace('/s', '+');
 		$scope.savedQuery = $scope.searchQuery;
 		
-		$scope.getUrl +=  "&q=" + ulQuery;
+		var searchUrl = $scope.getUrl + "&q=" + ulQuery;
 		
-		$http.get($scope.getUrl).success(
+		$http.get(searchUrl).success(
 			    function(resp)
 				{
 			    	$scope.loadedPosts = [];
@@ -47,6 +48,12 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 						$scope.numOfPages[m] = m+1;
 					}
 					
+					if($scope.needsChanged)
+					{
+						$scope.needsChanged = false;
+						$scope.changeView(1);
+					}
+					
 					$('#postsDiv').load();
 					$("#loading").hide();
 					$('#postsDiv').css('visibility', 'visible');
@@ -65,6 +72,8 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 		$('#postsDiv').css('visibility', 'hidden');
 		$("#loading").show();
 		window.scrollTo(0, $('#postsDiv').offsetTop + 100);
+
+		$scope.searchPage = false;
 		
 		$scope.paramPage = page;
 		$scope.postsPerPage = postsPP;
@@ -115,6 +124,7 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 					
 					if($scope.needsChanged)
 					{
+						$scope.needsChanged = false;
 						$scope.changeView(1);
 					}
 					
