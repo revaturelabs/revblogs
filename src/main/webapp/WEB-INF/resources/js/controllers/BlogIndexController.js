@@ -1,10 +1,5 @@
 app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http) 
-{
-	$scope.updateCurPage = function(number)
-	{
-		$scope.curPage += number;
-	}
-	
+{	
 	$scope.doSearch = function()
 	{
 		$scope.getFilter();
@@ -16,19 +11,20 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 		$('#postsDiv').css('visibility', 'hidden');
 		$("#loading").show();
 		window.scrollTo(0, $('#postsDiv').offsetTop + 100);
-		var ulQuery = $scope.searchQuery.toLowerCase().replace('\s', '+');
+		var ulQuery = $scope.searchQuery.toLowerCase().replace('/s', '+');
 		$scope.savedQuery = $scope.searchQuery;
 		
-		$scope.appUrl +=  "&q=" + ulQuery;
+		$scope.getUrl +=  "&q=" + ulQuery;
 		
 		$http.get($scope.getUrl).success(
 			    function(resp)
 				{
+			    	$scope.loadedPosts = [];
 			    	var page = 1;
 			    	
 					$scope.searchPosts = resp;
 					
-					for (var i = 0; i < $scope.searchPosts.posts.length/postsPP; i++) 
+					for (var i = 0; i < $scope.searchPosts.posts.length/$scope.postsPerPage; i++) 
 					{
 						$scope.loadedPosts[i] = [];
 					}
@@ -39,13 +35,16 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 						
 						for (var k = 0; k < $scope.postsPerPage; k++) 
 						{
-							$scope.loadedPosts[j][k+1] = $scope.searchPosts.posts[k];
+							if ($scope.posts.posts[k+(j*$scope.postsPerPage)] != null)
+							{
+								$scope.loadedPosts[j][k+1] = $scope.posts.posts[k+(j*$scope.postsPerPage)];							
+							}
 						}
 					}
 					
-					for (var m = 1; m < $scope.searchPosts.totalPosts/$scope.postsPerPage; m++) 
+					for (var m = 0; m < Math.ceil($scope.posts.total_posts/$scope.postsPerPage); m++) 
 					{
-						$scope.numOfPages[m-1] = m;
+						$scope.numOfPages[m] = m+1;
 					}
 					
 					$('#postsDiv').load();
@@ -76,7 +75,7 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 					$scope.posts = resp;
 
 					//console.log("In Success")
-					console.log("Total posts: " + $scope.posts.totalPosts);
+					console.log("Total posts: " + $scope.posts.total_posts);
 					//console.log("Initializing loadedPosts")
 					
 					for (var index = 0; index < $scope.posts.posts.length/postsPP; index++) 
@@ -100,15 +99,18 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 						
 						for (var j = 0; j < $scope.postsPerPage; j++) 
 						{
-							$scope.loadedPosts[i][j+1] = $scope.posts.posts[j];
-							console.log("In inner For");
-							console.log("loadedPosts[i][j+1]: " + $scope.loadedPosts[i][j+1]);
+							if ($scope.posts.posts[j+(i*$scope.postsPerPage)] != null)
+							{
+								$scope.loadedPosts[i][j+1] = $scope.posts.posts[j+(i*$scope.postsPerPage)];
+								console.log("In inner For");
+								console.log("loadedPosts[i][j+1]: " + $scope.loadedPosts[i][j+1]);								
+							}
 						}
 					}
 					
-					for (var k = 1; k < $scope.posts.totalPages; k++) 
+					for (var k = 0; k < Math.ceil($scope.posts.total_posts/$scope.postsPerPage); k++) 
 					{
-						$scope.numOfPages[k-1] = k;
+						$scope.numOfPages[k] = k+1;
 					}
 					
 					if($scope.needsChanged)
@@ -131,6 +133,7 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 
 	$scope.changeView = function(page)
 	{
+		$scope.curPage = page;
 		var pageCheck = false;
 		var displayIndex;
 
