@@ -1,5 +1,10 @@
 app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http) 
 {
+	$scope.updateCurPage = function(number)
+	{
+		$scope.curPage += number;
+	}
+	
 	$scope.doSearch = function()
 	{
 		$scope.getFilter();
@@ -103,7 +108,7 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 					
 					for (var k = 1; k < $scope.posts.totalPages; k++) 
 					{
-						$scope.numOfPages[k-1] = i;
+						$scope.numOfPages[k-1] = k;
 					}
 					
 					if($scope.needsChanged)

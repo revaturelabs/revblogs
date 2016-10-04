@@ -353,6 +353,13 @@ public class DAOImpl implements DAO {
 		criteria.add(Restrictions.eq(ACTIVE, true));
 		// criteria.setFirstResult(start)
 		// criteria.setMaxResults(max)
+		
+		
+		Criteria allPostsCount = ses.createCriteria(Blog.class).add(Restrictions.eq(ACTIVE, true));
+		allPostsCount.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		allPostsCount.setProjection(Projections.rowCount());
+		blogPosts.setTotalItems((long)allPostsCount.uniqueResult());
+		
 
 		List<Blog> postList = criteria.list();
 		for (Blog post: postList) {
@@ -384,6 +391,13 @@ public class DAOImpl implements DAO {
 		criteria.add(Restrictions.eq(ACTIVE, true));
 		// criteria.setFirstResult(start)
 		// criteria.setMaxResults(max)
+		
+		
+		Criteria allPostsCount = ses.createCriteria(Blog.class).add(Restrictions.eq(ACTIVE, true));
+		allPostsCount.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		allPostsCount.setProjection(Projections.rowCount());
+		blogPosts.setTotalItems((long)allPostsCount.uniqueResult());
+		
 
 		List<Blog> postList = criteria.list();
 		for (Blog post: postList) {
