@@ -13,13 +13,13 @@ enhancedSearchModule.controller('enhancedSearchCtrl', function($scope, $http) {
 	
 	$scope.keyup = function(event) {
 		var keyCode = event.which || event.keyCode;
-		if ( keyCode == 38 ) {
+		if ( keyCode === 38 ) {
 			$scope.upArrow();
-		} else if ( keyCode == 40 ) {
+		} else if ( keyCode === 40 ) {
 			$scope.downArrow();
-		} else if ( keyCode == 13 ) {
+		} else if ( keyCode === 13 ) {
 			$scope.enterKey();
-		} else if ( keyCode == 27 ) {
+		} else if ( keyCode === 27 ) {
 			$scope.escapeKey();
 		} else {
 			$scope.unknownKey(keyCode);
@@ -87,10 +87,10 @@ enhancedSearchModule.controller('enhancedSearchCtrl', function($scope, $http) {
 	
 	$scope.selectSuggestion = function(indexToSelect) {
 		angular.forEach($scope.suggestions, function(suggestion, index) {
-			if ( index == indexToSelect && suggestion.selected != "selected" ) {
+			if ( index === indexToSelect && suggestion.selected !== "selected" ) {
 				suggestion.selected = "selected";
 				$scope.setSearchText(suggestion.text);
-			} else if ( index != indexToSelect && suggestion.selected != "" ) {
+			} else if ( index !== indexToSelect && suggestion.selected !== "" ) {
 				suggestion.selected = "";
 			}
 		});
@@ -102,7 +102,7 @@ enhancedSearchModule.controller('enhancedSearchCtrl', function($scope, $http) {
 	}
 	
 	$scope.generateSuggestions = function(userEnteredSearchText) {
-		console.log("Unimplemented Generate Suggestions Method: " + userEnteredSearchText);
+		//console.log("Unimplemented Generate Suggestions Method: " + userEnteredSearchText)
 		
 		$scope.suggestions = $scope.posts.searchFills;
 	}

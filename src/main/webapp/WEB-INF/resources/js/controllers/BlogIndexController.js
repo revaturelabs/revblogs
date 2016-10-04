@@ -70,16 +70,16 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 				{
 					$scope.posts = resp;
 
-					console.log("In Success");
+					//console.log("In Success")
 					console.log("Total posts: " + $scope.posts.totalPosts);
-					console.log("Initializing loadedPosts");
+					//console.log("Initializing loadedPosts")
 					
 					for (var index = 0; index < $scope.posts.posts.length/postsPP; index++) 
 					{
 						$scope.loadedPosts[index] = [];
 					}
 
-					console.log("Initialized loadedPosts");
+					//console.log("Initialized loadedPosts")
 					
 					/*
 					 * Ok. This is what this needs to do:
