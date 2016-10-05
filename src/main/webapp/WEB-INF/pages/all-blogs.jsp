@@ -29,7 +29,7 @@
 			  <div class="form-group input-group post-search">
 			    <input ng-model="searchQuery" type="text" class="form-control" placeholder="Search">
 			    <span class="input-group-btn">
-			      <button ng-click="getPage(1,10)" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
+			      <button ng-click="doSearch()" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
 			    </span>
 			  </div>
 			</form>
@@ -44,10 +44,10 @@
     <div id="postsDiv" class="row">
       <div class="col-sm-8">
       	<c:if test="${user.userRole.userRoleId eq 1}">
-      		<div ng-repeat="post in posts.posts" ng-include src="'resources/js/templates/editable-post-preview.html'"></div>
+      		<div ng-repeat="post in displayPosts" ng-if="!$first" ng-include src="'resources/js/templates/editable-post-preview.html'"></div>
       	</c:if>
       	<c:if test="${user.userRole.userRoleId eq 2}">
-      		<div ng-repeat="post in posts.posts" ng-include src="'resources/js/templates/post-preview.html'"></div>
+      		<div ng-repeat="post in displayPosts" ng-if="!$first" ng-include src="'resources/js/templates/post-preview.html'"></div>
       	</c:if>
       </div>
       <div class="col-sm-4 hidden-xs">
@@ -80,9 +80,9 @@
   <nav id="pageNumsNav" aria-label="...">
   	<div>
   	<ul id="pageNums" class="pagination">
-   	  <li ng-class="{true:'disabled', false:'enabled'}[curPage == 1 || isLoading]" ng-click="changeView(0)"><a id="previous" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
- 		<li ng:class="{true:'active', false:''}[number == curPage]" ng-repeat="number in numOfPages" ng-if="number > 0"> <a ng-click="getPage(number)">{{number}}</a> </li>
-   	  <li ng:class="{true:'disabled', false:'enabled'}[curPage == numOfPages.length || isLoading]" ng-click="changeView(1)"><a id="next" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+   	  <li ng-class="{true:'disabled', false:'enabled'}[curPage == 1 || isLoading]" ng-click="changeView(curPage - 1)"><a id="previous" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+ 		<li ng:class="{true:'active', false:''}[number == curPage]" ng-repeat="number in numOfPages" ng-if="number > 0"> <a ng-click="changeView(number)">{{number}}</a> </li>
+   	  <li ng:class="{true:'disabled', false:'enabled'}[curPage == numOfPages.length || isLoading]" ng-click="changeView(curPage + 1)"><a id="next" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
   	</ul>
   	</div>
   </nav>

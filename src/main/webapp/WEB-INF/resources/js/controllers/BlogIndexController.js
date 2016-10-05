@@ -4,62 +4,62 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 	{
 		$scope.needsChanged = true;
 		$scope.searchPage = true;
-		$scope.getFilter();
+		$scope.getPage($scope.curPage, $scope.postsPerPage);
 	}
 	
-	$scope.getFilter = function()
-	{
-		$('#postsDiv').css('visibility', 'hidden');
-		$("#loading").show();
-		window.scrollTo(0, $('#postsDiv').offsetTop + 100);
-		var ulQuery = $scope.searchQuery.toLowerCase().replace('/s', '+');
-		$scope.savedQuery = $scope.searchQuery;
-		
-		var searchUrl = $scope.getUrl + "&q=" + ulQuery;
-		
-		$http.get(searchUrl).success(
-			    function(resp)
-				{
-			    	$scope.loadedPosts = [];
-			    	var page = 1;
-			    	
-					$scope.searchPosts = resp;
-					
-					for (var i = 0; i < $scope.searchPosts.posts.length/$scope.postsPerPage; i++) 
-					{
-						$scope.loadedPosts[i] = [];
-					}
-					
-					for (var j = 0; j < $scope.searchPosts.posts.length/$scope.postsPerPage; j++) 
-					{
-						$scope.loadedPosts[j][0] = page + j;
-						
-						for (var k = 0; k < $scope.postsPerPage; k++) 
-						{
-							if ($scope.posts.posts[k+(j*$scope.postsPerPage)] != null)
-							{
-								$scope.loadedPosts[j][k+1] = $scope.posts.posts[k+(j*$scope.postsPerPage)];							
-							}
-						}
-					}
-					
-					for (var m = 0; m < Math.ceil($scope.posts.total_posts/$scope.postsPerPage); m++) 
-					{
-						$scope.numOfPages[m] = m+1;
-					}
-					
-					if($scope.needsChanged)
-					{
-						$scope.needsChanged = false;
-						$scope.changeView(1);
-					}
-					
-					$('#postsDiv').load();
-					$("#loading").hide();
-					$('#postsDiv').css('visibility', 'visible');
-				}
-			);
-		}
+//	$scope.getFilter = function()
+//	{
+//		$('#postsDiv').css('visibility', 'hidden');
+//		$("#loading").show();
+//		window.scrollTo(0, $('#postsDiv').offsetTop + 100);
+//		var ulQuery = $scope.searchQuery.toLowerCase().replace('/s', '+');
+//		$scope.savedQuery = $scope.searchQuery;
+//		
+//		var searchUrl = $scope.getUrl + "&q=" + ulQuery;
+//		
+//		$http.get(searchUrl).success(
+//			    function(resp)
+//				{
+//			    	$scope.loadedPosts = [];
+//			    	var page = 1;
+//			    	
+//					$scope.searchPosts = resp;
+//					
+//					for (var i = 0; i < $scope.searchPosts.posts.length/$scope.postsPerPage; i++) 
+//					{
+//						$scope.loadedPosts[i] = [];
+//					}
+//					
+//					for (var j = 0; j < $scope.searchPosts.posts.length/$scope.postsPerPage; j++) 
+//					{
+//						$scope.loadedPosts[j][0] = page + j;
+//						
+//						for (var k = 0; k < $scope.postsPerPage; k++) 
+//						{
+//							if ($scope.posts.posts[k+(j*$scope.postsPerPage)] != null)
+//							{
+//								$scope.loadedPosts[j][k+1] = $scope.posts.posts[k+(j*$scope.postsPerPage)];							
+//							}
+//						}
+//					}
+//					
+//					for (var m = 0; m < Math.ceil($scope.posts.total_posts/$scope.postsPerPage); m++) 
+//					{
+//						$scope.numOfPages[m] = m+1;
+//					}
+//					
+//					if($scope.needsChanged)
+//					{
+//						$scope.needsChanged = false;
+//						$scope.changeView(1);
+//					}
+//					
+//					$('#postsDiv').load();
+//					$("#loading").hide();
+//					$('#postsDiv').css('visibility', 'visible');
+//				}
+//			);
+//		}
 	
 	$scope.clearSearch = function()
 	{
@@ -78,6 +78,13 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 		$scope.paramPage = page;
 		$scope.postsPerPage = postsPP;
 		
+		if($scope.author != null && $scope.author > 0){
+			$scope.getUrl = $scope.getUrl+"&author=" + $scope.author;
+		} else if($scope.category != null && sessionStorage.tag > 0){
+			$scope.getUrl = $scope.getUrl+"&category=" + $scope.category;
+		} else if($scope.searchQuery.length > 1) {
+			$scope.getUrl = $scope.getUrl+"&q=" + $scope.searchQuery;
+		}
 		$http.get($scope.getUrl).success(
 			    function(resp)
 				{
