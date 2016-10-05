@@ -400,29 +400,34 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 		int start = (page-1)*perPage;
 		int maxResults = perPage;
 		
-		PaginatedResultList<Blog> results = dataService.grabBlogs(0, 0); //the int params are dummies, not necessary.  Will remove if have time.
+		PaginatedResultList<Blog> results = dataService.grabBlogs(query, start, maxResults); //the int params are dummies, not necessary.  Will remove if have time.
 		List<BlogPostDTO> postList = new ArrayList<>();
-		for (Blog p: results.getItems()) {
-			BlogPostDTO blog = new BlogPostDTO(p);
-			
-			if(blog.getTitle().contains(query) || blog.getContent().contains(query) || blog.getAuthor().getName().contains(query) || blog.getSubtitle().contains(query))
-			{
-				postList.add(blog);
-			}
-			
-			else
-			{
-				for (int i = 0; i < blog.getTags().size(); i++)
-				{
-					if(blog.getTags().get(i).contains(query))
-					{
-						postList.add(blog);
-					}
-				}
-			}
+		
+		for(Blog p : results.getItems()) {
+			postList.add(new BlogPostDTO(p));
+		}
+		
+//		for (Blog p: results.getItems()) {
+//			BlogPostDTO blog = new BlogPostDTO(p);
+//			
+//			if(blog.getTitle().contains(query) || blog.getContent().contains(query) || blog.getAuthor().getName().contains(query) || blog.getSubtitle().contains(query))
+//			{
+//				postList.add(blog);
+//			}
+//			
+//			else
+//			{
+//				for (int i = 0; i < blog.getTags().size(); i++)
+//				{
+//					if(blog.getTags().get(i).contains(query))
+//					{
+//						postList.add(blog);
+//					}
+//				}
+//			}
 				
 			//postList.add(new BlogPostDTO(p));
-		}
+//		}
 		//long totalItems = results.getTotalItems();
 		long totalItems = postList.size();
 		int totalPages = (int)Math.ceil((double)totalItems/perPage);
