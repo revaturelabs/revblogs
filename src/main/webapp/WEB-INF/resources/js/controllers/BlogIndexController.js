@@ -78,14 +78,16 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 		$scope.paramPage = page;
 		$scope.postsPerPage = postsPP;
 		
+		var url = $scope.getUrl;
+		
 		if($scope.author != null && $scope.author > 0){
-			$scope.getUrl = $scope.getUrl+"&author=" + $scope.author;
+			url = $scope.getUrl+"&author=" + $scope.author;
 		} else if($scope.category != null && sessionStorage.tag > 0){
-			$scope.getUrl = $scope.getUrl+"&category=" + $scope.category;
+			url = $scope.getUrl+"&category=" + $scope.category;
 		} else if($scope.searchQuery.length > 1) {
-			$scope.getUrl = $scope.getUrl+"&q=" + $scope.searchQuery;
+			url = $scope.getUrl+"&q=" + $scope.searchQuery;
 		}
-		$http.get($scope.getUrl).success(
+		$http.get(url).success(
 			    function(resp)
 				{
 					$scope.posts = resp;
@@ -217,6 +219,10 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 			$scope.isLoading = false;
 		}
 	}
+	
+ 	window.onbeforeunload = function (e) {
+ 		sessionStorage.clear();
+ 	};
 	
 	$scope.posts = {
 			page: 0,
