@@ -95,6 +95,8 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 			    function(resp)
 				{
 					$scope.posts = resp;
+					
+					$scope.suggestions = $scope.posts.searchFills;
 
 					console.log("Total posts: " + $scope.posts.total_posts);
 					
@@ -122,10 +124,16 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 						}
 					}
 					
+					$scope.numOfPages = [];
+					
 					for (var k = 0; k < Math.ceil($scope.posts.total_posts/$scope.postsPerPage); k++) 
 					{
 						$scope.numOfPages[k] = k+1;
 					}
+					
+					console.log($scope.numOfPages);
+					
+					console.log($scope.numOfPages[$scope.numOfPages.length-1]);
 					
 					if($scope.needsChanged)
 					{
@@ -176,18 +184,21 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 			$scope.numOfPages[k] = k+1;
 		}
 
+		console.log("Call changeView");
 		$scope.changeView($scope.curPage);
+		console.log("Called changeView");
 	}
 
 	$scope.changeView = function(page)
 	{
+		console.log("Page: " + page);
 		$scope.curPage = page;
 		var pageCheck = false;
 		var displayIndex;
 
-		console.log("In change view");
+		console.log("Page: " + page);
 		
-		if(!$scope.isLoading)	
+		if(!(page > $scope.numOfPages[$scope.numOfPages.length-1] | page < 1))	
 		{
 			$scope.isLoading = true;	
 			
@@ -211,7 +222,7 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 				 * Below checks to see if we've reached the end (or beginning) of the pre-loaded posts
 				 */
 				
-				if(displayIndex === $scope.loadedPosts.length | $scope.loadedPosts[displayIndex] == null)		
+				if(displayIndex === $scope.loadedPosts.length-1 | $scope.loadedPosts[displayIndex] == null)		
 				{				
 					var pageToLoad = page - (MAX_PP/$scope.postsPerPage/2);
 					
@@ -247,6 +258,16 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 	        window.scrollTo(0, $('#postsDiv').offsetTop + 100);
 			$scope.isLoading = false;
 		}
+		
+		else
+		{
+			if(page < 1)
+			{
+				$scope.curPage = 1;
+			}
+			
+			else $scope.curPage = $scope.numOfPages[$scope.numOfPages.length-1];
+		}
 	}
 	
  	window.onbeforeunload = function (e) {
@@ -279,7 +300,6 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 	$scope.numOfPages = [];
 	$scope.loadedPosts = [];
 	$scope.displayPosts = [];
-	$scope.searchQuery = "";
 	$scope.savedQuery = "";
 	$scope.searchPage = false;
 	$scope.needsChanged = true;
@@ -289,7 +309,162 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 	$scope.isLoading = false;
 	$scope.author = 0;
 	$scope.category = sessionStorage.tag;
+	$scope.searchQuery = "";
 	$scope.appUrl = "https://dev.pjw6193.tech:7002/revblogs";
 	$scope.getUrl = "https://dev.pjw6193.tech:7002/revblogs/api/posts?page=" + $scope.paramPage;
 	$scope.getPage($scope.curPage, $scope.postsPerPage);
+	
+	
+	
+	
+	
+	
+	
+	/////////////////////////////
+	///// Start Suggestions /////
+	/////////////////////////////
+	
+	$scope.suggestions = [{"displayText":"", "searchQuery":""}];
+	$scope.maxSuggestions = 6;
+	$scope.selectedSuggestionId = 0;
+	$scope.selectedSuggestion = $scope.suggestions[0].searchQuery;
+	$scope.suggestionsShown = false;
+	
+	$scope.keyup = function(keyUpEvent) {
+		var keyCode = keyUpEvent.which || keyUpEvent.keyCode;
+		if ( keyCode === 38 ) {
+			$scope.upArrow();
+		} else if ( keyCode === 40 ) {
+			$scope.downArrow();
+		} else if ( keyCode === 13 ) {
+			$scope.enterKey();
+		} else if ( keyCode === 27 ) {
+			$scope.escapeKey();
+		} else {
+			$scope.unknownKey(keyCode);
+		}
+	}
+	
+	//////////////////////////////////
+	///// Start Key-Up Callbacks /////
+	//////////////////////////////////
+	$scope.upArrow = function() {
+		if ( $scope.searchQuery.length > 0 ) {
+			if ( $scope.selectedSuggestionId <= 0 ) {
+				$scope.selectedSuggestionId = 0;
+			} else {
+				$scope.selectedSuggestionId -= 1;
+			}
+			$scope.selectSuggestion($scope.selectedSuggestionId);
+			$scope.setSuggestionsVisible(true);
+		}
+	}
+	
+	$scope.downArrow = function() {
+		if ( $scope.searchQuery.length > 0 ) {
+			if ( $scope.selectedSuggestionId >= $scope.maxSuggestions-1 ) {
+				$scope.selectedSuggestionId = $scope.maxSuggestions-1;
+			} else {
+				$scope.selectedSuggestionId += 1;
+			}
+			$scope.selectSuggestion($scope.selectedSuggestionId);
+			$scope.setSuggestionsVisible(true);
+		}
+	}
+	
+	$scope.enterKey = function() {
+		$scope.submitSearch($scope.searchQuery);
+		$scope.setSuggestionsVisible(false);
+	}
+	
+	$scope.escapeKey = function() {
+		$scope.setSuggestionsVisible(false);
+	}
+	
+	$scope.unknownKey = function(keyCode) {
+		$scope.setSuggestionsVisible($scope.searchQuery.length > 0);
+	}
+	////////////////////////////////
+	///// End Key-Up Callbacks /////
+	////////////////////////////////
+	
+	$scope.selectedSuggestionChanged = function() {
+		$scope.setSuggestionsVisible(false);
+		$scope.setSearchQuery($scope.selectedSuggestion);
+		//$scope.submitSearch($scope.selectedSuggestion);
+	}
+	
+	$scope.setSuggestionsVisible = function(visible) {
+		if ( !visible )
+			$scope.selectedSuggestionId = 0;
+		
+		$scope.suggestionsShown = !!visible;
+	}
+	
+	$scope.setSearchQuery = function(newText) {
+		$scope.searchQuery = newText;
+	}
+	
+	$scope.searchLostFocus = function(focusLostEvent) {
+		var itemBeingFocused = '';
+		if ( focusLostEvent != null && focusLostEvent.relatedTarget != null ) {
+			itemBeingFocused = focusLostEvent.relatedTarget.id;
+		}
+		
+		if ( itemBeingFocused !== 'searchBox' && itemBeingFocused !== 'selections' ) {
+			$scope.setSuggestionsVisible(false);
+		}
+	}
+	
+	$scope.isSelected = function(suggestion) {
+		return $scope.selectedSuggestion === suggestion.searchQuery;
+	}
+	
+	$scope.selectSuggestion = function(indexToSelect) {
+		angular.forEach($scope.suggestions, function(suggestion, index) {
+			if ( index === indexToSelect && !($scope.isSelected(suggestion)) ) {
+				$scope.selectedSuggestion = suggestion.searchQuery;
+				$scope.setSearchQuery(suggestion.searchQuery);
+			}
+		});
+	}
+	
+	$scope.searchQueryChanged = function() {
+		var userEnteredSearchQuery = $scope.searchQuery;
+		$scope.generateSuggestions(userEnteredSearchQuery);
+		$scope.selectedSuggestion = $scope.suggestions[0].searchQuery;
+	}
+	
+	$scope.generateSuggestions = function(userEnteredSearchQuery) {
+		//$scope.suggestions = $scope.posts.searchFills;
+
+		$scope.suggestions = [{"displayText":userEnteredSearchQuery + "", "searchQuery":userEnteredSearchQuery + ""}];
+		
+		var suggestionIndex = 1;
+		
+		for (var int = 0; int < $scope.posts.searchFills.length; int++) 
+		{
+			var string = $scope.posts.searchFills[int].toString();
+			if (string.indexOf(userEnteredSearchQuery) > 0) 
+			{
+				$scope.suggestions[suggestionIndex] = { "displayText":string + "", "searchQuery":string + "" }	
+				suggestionIndex++;
+			}
+		}
+	}
+	
+	$scope.submitSearch = function(searchQuery) {
+		var fullUrl;
+		var ulQuery = $scope.searchQuery.toLowerCase();
+		$scope.savedQuery = $scope.searchQuery;
+		
+		fullUrl = $scope.appUrl + "/api/posts/?page=1&per_page=10&q=" + ulQuery;
+		
+		$http.get(fullUrl).success(
+			    function(resp)
+				{		
+					$scope.suggestions = resp.searchFills;
+				});
+	}	
+
 }]);
