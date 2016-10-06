@@ -65,6 +65,7 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 	{
 		$scope.searchPosts.posts = [];
 		$scope.searchPage = false;
+		$scope.getPage(1, $scope.postsPerPage);
 	}
 	
 	$scope.getPage = function(page, postsPP)
@@ -92,17 +93,13 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 				{
 					$scope.posts = resp;
 
-					//console.log("In Success")
 					console.log("Total posts: " + $scope.posts.total_posts);
-					//console.log("Initializing loadedPosts")
 					
 					for (var index = 0; index < $scope.posts.posts.length/postsPP; index++) 
 					{
 						$scope.loadedPosts[index] = [];
 					}
 
-					//console.log("Initialized loadedPosts")
-					
 					/*
 					 * Ok. This is what this needs to do:
 					 * 		--First for loop is setting each page (loadedPosts[i][0] will hold the page number)
@@ -112,21 +109,17 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 					for (var i = 0; i < $scope.posts.posts.length/$scope.postsPerPage; i++) 
 					{
 						$scope.loadedPosts[i][0] = page + i;
-						console.log("In outer For");
-						console.log("loadedPosts[i][0]: " + $scope.loadedPosts[i][0]);
 						
 						for (var j = 0; j < $scope.postsPerPage; j++) 
 						{
 							if ($scope.posts.posts[j+(i*$scope.postsPerPage)] != null)
 							{
-								$scope.loadedPosts[i][j+1] = $scope.posts.posts[j+(i*$scope.postsPerPage)];
-								console.log("In inner For");
-								console.log("loadedPosts[i][j+1]: " + $scope.loadedPosts[i][j+1]);								
+								$scope.loadedPosts[i][j+1] = $scope.posts.posts[j+(i*$scope.postsPerPage)];								
 							}
 						}
 					}
 					
-					for (var k = 0; k < Math.ceil($scope.posts.total_posts/$scope.postsPerPage); k++) 
+					for (var k = 0; k < Math.ceil($scope.posts.length/$scope.postsPerPage); k++) 
 					{
 						$scope.numOfPages[k] = k+1;
 					}
@@ -148,6 +141,42 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 	{
 		$scope.author = authorid;
 		$scope.getPage(page,$scope.postsPerPage);
+	}
+	
+	$scope.changePostsPP = function(postsPP)
+	{
+		$scope.postsPerPage = postsPP;
+		var page = $scope.loadedPosts[0][0];
+		
+		for (var index = 0; index < $scope.posts.posts.length/postsPP; index++) 
+		{
+			$scope.loadedPosts[index] = [];
+		}
+		
+		for (var i = 0; i < $scope.posts.posts.length/$scope.postsPerPage; i++) 
+		{
+			$scope.loadedPosts[i][0] = page + i;
+			
+			for (var j = 0; j < $scope.postsPerPage; j++) 
+			{
+				if ($scope.posts.posts[j+(i*$scope.postsPerPage)] != null)
+				{
+					$scope.loadedPosts[i][j+1] = $scope.posts.posts[j+(i*$scope.postsPerPage)];					
+				}
+			}
+		}
+		
+		$scope.numOfPages = [];
+		
+		for (var k = 0; k < Math.ceil($scope.posts.posts.length/$scope.postsPerPage); k++) 
+		{
+			$scope.numOfPages[k] = k+1;
+		}
+		
+		/*if($scope.curPage !== 1)
+		{*/
+			$scope.changeView($scope.curPage);
+		//}
 	}
 
 	$scope.changeView = function(page)
