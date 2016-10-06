@@ -106,7 +106,7 @@
 
 	  <div id="postsPerPage">
 	  	<label>Number of posts to show: </label>
-	  	<select  ng-model="postsPerPage" ng-change="getPage(curPage, postsPerPage)">
+	  	<select  ng-model="postsPerPage" ng-change="changeView(curPage)">
 	  		<option ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 5]">5</option>
 	  		<option ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 10]" selected>10</option>
 	  		<option ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 20]">20</option>
