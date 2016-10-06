@@ -87,6 +87,7 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 			url = $scope.getUrl+"&category=" + $scope.category;
 		} else if($scope.searchQuery.length > 1) {
 			url = $scope.getUrl+"&q=" + $scope.searchQuery;
+			$scope.searchPage = true;
 		}
 		$http.get(url).success(
 			    function(resp)
@@ -119,7 +120,7 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 						}
 					}
 					
-					for (var k = 0; k < Math.ceil($scope.posts.length/$scope.postsPerPage); k++) 
+					for (var k = 0; k < Math.ceil($scope.posts.total_posts/$scope.postsPerPage); k++) 
 					{
 						$scope.numOfPages[k] = k+1;
 					}
@@ -172,11 +173,8 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 		{
 			$scope.numOfPages[k] = k+1;
 		}
-		
-		/*if($scope.curPage !== 1)
-		{*/
-			$scope.changeView($scope.curPage);
-		//}
+
+		$scope.changeView($scope.curPage);
 	}
 
 	$scope.changeView = function(page)
