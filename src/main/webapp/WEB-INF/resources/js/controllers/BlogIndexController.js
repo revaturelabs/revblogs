@@ -95,6 +95,8 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 			    function(resp)
 				{
 					$scope.posts = resp;
+					
+					$scope.suggestions = $scope.posts.searchFills;
 
 					console.log("Total posts: " + $scope.posts.total_posts);
 					
@@ -288,10 +290,10 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 	$scope.isLoading = false;
 	$scope.author = 0;
 	$scope.category = sessionStorage.tag;
+	$scope.searchQuery = "";
 	$scope.appUrl = "https://dev.pjw6193.tech:7002/revblogs";
 	$scope.getUrl = "https://dev.pjw6193.tech:7002/revblogs/api/posts?page=" + $scope.paramPage;
 	$scope.getPage($scope.curPage, $scope.postsPerPage);
-	$scope.searchQuery = "";
 	
 	
 	
@@ -303,14 +305,7 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 	///// Start Suggestions /////
 	/////////////////////////////
 	
-	$scope.suggestions = [
-		{ "displayText":"", "searchQuery":"" },
-		{ "displayText":"d1", "searchQuery":"s1" },
-		{ "displayText":"d2", "searchQuery":"s2" },
-		{ "displayText":"d3", "searchQuery":"s3" },
-		{ "displayText":"d4", "searchQuery":"s4" },
-		{ "displayText":"d5", "searchQuery":"s5" }
-	];
+	$scope.suggestions = [{"displayText":"", "searchQuery":""}];
 	$scope.maxSuggestions = 6;
 	$scope.selectedSuggestionId = 0;
 	$scope.selectedSuggestion = $scope.suggestions[0].searchQuery;
@@ -422,17 +417,32 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 		$scope.selectedSuggestion = $scope.suggestions[0].searchQuery;
 	}
 	
-	$scope.generateSuggestions = function(userEnteredsearchQuery) {
+	$scope.generateSuggestions = function(userEnteredSearchQuery) {
 		console.log('generate');
 		//$scope.suggestions = $scope.posts.searchFills;
-		$scope.suggestions = [
+
+		$scope.suggestions = [{"displayText":"", "searchQuery":""}];
+		
+		var suggestionIndex = 0;
+		
+		for (var int = 0; int < $scope.posts.searchFills.length; int++) 
+		{
+			var string = $scope.posts.searchFills[int].toString();
+			if (string.indexOf(userEnteredSearchQuery) > 0) 
+			{
+				$scope.suggestions[suggestionIndex] = { "displayText":string + "", "searchQuery":string + "" }	
+				suggestionIndex++;
+			}
+		}
+		
+		/*$scope.suggestions = [
 			{ "displayText":userEnteredSearchQuery + "", "searchQuery":userEnteredSearchQuery + "" },
 			{ "displayText":userEnteredSearchQuery + "d1", "searchQuery":userEnteredSearchQuery + "s1" },
 			{ "displayText":userEnteredSearchQuery + "d2", "searchQuery":userEnteredSearchQuery + "s2" },
 			{ "displayText":userEnteredSearchQuery + "d3", "searchQuery":userEnteredSearchQuery + "s3" },
 			{ "displayText":userEnteredSearchQuery + "d4", "searchQuery":userEnteredSearchQuery + "s4" },
 			{ "displayText":userEnteredSearchQuery + "d5", "searchQuery":userEnteredSearchQuery + "s5" }
-		];
+		];*/
 	}
 	
 	$scope.submitSearch = function(searchQuery) {
