@@ -63,6 +63,13 @@ public class BaseController {
 		return "loginPage";
 	}
 	
+	//Login 
+	@RequestMapping(value="/login", method=RequestMethod.GET)
+	public String loginRedirect(HttpServletRequest req){
+		
+		return "redirect:/loginPage";
+	}
+	
 	@RequestMapping(value="/password", method=RequestMethod.GET)
 	public String password(HttpServletRequest req){
 		req.setAttribute("updatePassword", new UserDTO());

@@ -54,6 +54,7 @@ public class PostController {
 	private static final String UPDATE = "userUpdate";
 	private static final String LIST = "userList";
 	private static final String PROFILE = "updateUserProfile";
+	private static final String REDIRECTPROFILE = "redirect:/profile";
 	private static final String MANAGE = "redirect:/manageusers";
 	private static final String EDIT = "editingBlogInDatabase";
 	private static final String REDIRECTP = "redirect:/password";
@@ -77,7 +78,7 @@ public class PostController {
 							 HttpServletRequest req, HttpServletResponse resp){
 		
 		ModelAndView model = new ModelAndView();
-		model.setViewName("redirect:/profile");
+		model.setViewName(REDIRECTPROFILE);
 		if(bindingResult.hasErrors()){
 			
 			return model;
@@ -102,18 +103,25 @@ public class PostController {
 	}
 	
 	// Admin update a User
+	//DO NOT CHANGE USER TO USERDTO! IT BREAKS EEEEVVVVEEEERRRYYYTIME!!!!!!!!1!!
 	@RequestMapping(value="updateUserProfile.do", method=RequestMethod.POST)
-	public ModelAndView updateUserProfile(@ModelAttribute(PROFILE) @Valid UserDTO updateUserProfile, 
+	public ModelAndView updateUserProfile(@ModelAttribute(PROFILE) @Valid User updateUserProfile, 
 							 BindingResult bindingResult, HttpServletRequest req, HttpServletResponse resp){
 		
 		ModelAndView model = new ModelAndView();
-		model.setViewName("/manageusers");
+		model.setViewName(MANAGE);
+		System.err.println("Manage GRABBED!");
 		if(bindingResult.hasErrors()){
+			System.err.println(bindingResult.toString());
+			System.err.println("I dun fucked up, Captain.");
+			req.setAttribute(LIST, businessDelegate.requestUsers());
+			req.setAttribute(PROFILE, new User());
 			return model;
 		}
 		
 		User updateUser = businessDelegate.requestUser(updateUserProfile.getUserId());
-		
+		System.err.println("Calling BD");
+		System.err.println(model.toString());
 		// Set attributes
 		updateUser.setEmail(updateUserProfile.getEmail());
 		updateUser.setFirstName(updateUserProfile.getFirstName());
@@ -124,7 +132,7 @@ public class PostController {
 		
 		businessDelegate.updateRecord(updateUser);
 		req.setAttribute(LIST, businessDelegate.requestUsers());
-		req.setAttribute(PROFILE, new UserDTO());
+		req.setAttribute(PROFILE, new User());
 		return model;
 	}
 	
@@ -197,7 +205,7 @@ public class PostController {
 		businessDelegate.updateRecord(resetUserPic);
 
 		req.setAttribute(LIST, businessDelegate.requestUsers());
-		req.setAttribute(PROFILE, new UserDTO());
+		req.setAttribute(PROFILE, new User());
 		return model;		
 	}
 	
@@ -210,7 +218,7 @@ public class PostController {
 		businessDelegate.updateRecord(deactivateUser);	
 		
 		req.setAttribute(LIST, businessDelegate.requestUsers());
-		req.setAttribute(PROFILE, new UserDTO());
+		req.setAttribute(PROFILE, new User());
 		return MANAGE;
 	}
 	
@@ -223,7 +231,7 @@ public class PostController {
 		businessDelegate.updateRecord(activateUser);	
 		
 		req.setAttribute(LIST, businessDelegate.requestUsers());
-		req.setAttribute(PROFILE, new UserDTO());
+		req.setAttribute(PROFILE, new User());
 		return MANAGE;
 	}
 	
@@ -252,7 +260,7 @@ public class PostController {
 		Mailer.sendMail(email, password, resetUserPassword.getFullname());
 		
 		req.setAttribute(LIST, businessDelegate.requestUsers());
-		req.setAttribute(PROFILE, new UserDTO());
+		req.setAttribute(PROFILE, new User());
 		return model;
 	}
 		
@@ -266,7 +274,7 @@ public class PostController {
 		req.getSession().setAttribute("passwordFailure3", null);
 		
 		ModelAndView model = new ModelAndView();
-		model.setViewName("redirect:/profile");
+		model.setViewName(REDIRECTPROFILE);
 		
 		String success = "success";
 		String failure = "failure";
