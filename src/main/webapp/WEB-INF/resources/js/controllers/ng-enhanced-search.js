@@ -1,10 +1,8 @@
 /**
  * 
  */
-
-var enhancedSearchModule = angular.module('enhancedSearch', []);
-
-enhancedSearchModule.controller('enhancedSearchCtrl', function($scope, $http) {
+ 
+app.controller('enhancedSearchCtrl', function($scope, $http) {
 	
 	$scope.searchQuery = '';
 	$scope.suggestions = [
@@ -120,12 +118,14 @@ enhancedSearchModule.controller('enhancedSearchCtrl', function($scope, $http) {
 	}
 	
 	$scope.searchQueryChanged = function() {
+		console.log('searchQueryChanged');
 		var userEnteredSearchQuery = $scope.searchQuery;
 		$scope.generateSuggestions(userEnteredSearchQuery);
 		$scope.selectedSuggestion = $scope.suggestions[0].searchQuery;
 	}
 	
 	$scope.generateSuggestions = function(userEnteredsearchQuery) {
+		console.log('generate');
 		//$scope.suggestions = $scope.posts.searchFills;
 		$scope.suggestions = [
 			{ "displayText":userEnteredSearchQuery + "", "searchQuery":userEnteredSearchQuery + "" },
