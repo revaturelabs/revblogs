@@ -51,14 +51,14 @@
   		<div class="col-xs-12">
   			<form>
 			  <div class="form-group input-group post-search">
-				<input id="searchBox" class="form-control searchWidth" type="text" placeholder="Search"
+				<input id="searchBox" class="form-control" type="text" placeholder="Search"
 					ng-model="searchQuery"
 					ng-change="searchQueryChanged()"
 					ng-blur="searchLostFocus($event)"
 					ng-keyup="keyup($event)">
 				</input>
 				<br />
-				<select id="selections" class="searchWidth suggestions" size="6"
+				<select id="selections" class="form-control suggestions" size="6"
 					ng-model="selectedSuggestion"
 					ng-show="suggestionsShown"
 					ng-change="selectedSuggestionChanged()"
