@@ -37,7 +37,8 @@
 
 <!-- FORM-LOGIN SECURITY FOR THE LOGIN PAGE -->		
 		<security:form-login  
-			login-processing-url="/login" login-page="/loginPage"
+			login-processing-url="/login" 
+			login-page="/loginPage"
 			username-parameter="username"
 			password-parameter="password"
 			default-target-url="/home"

@@ -50,12 +50,11 @@ public class UserDTO {
 	/*
 	 *	Constructor for Admin Update User Profile
 	 */	
-	public UserDTO(int userId, String email, String password, String firstName, String lastName, String jobTitle,
+	public UserDTO(int userId, String email, String firstName, String lastName, String jobTitle,
 			String linkedInURL, String description) {
 		super();
 		this.userId = userId;
 		this.email = email;
-		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.jobTitle = jobTitle;
