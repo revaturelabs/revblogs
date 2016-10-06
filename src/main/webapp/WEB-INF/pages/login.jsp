@@ -3,6 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@page session="true"%>
 <%@ page isELIgnored ="false" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -43,7 +44,7 @@
 	</c:if>
 	<br><br>
 	<div id="login">
-	<form id="form" name="loginForm" action="${pageContext.request.contextPath}/login" method="post">
+	<form id="form" name="loginForm" action="<c:url value='/j_spring_security_check' />" method="post">
 	<table>	
 		<tr>
 			<td>
@@ -64,7 +65,7 @@
 		<tr><td colspan=2><hr/></td></tr>
 		<tr>
 			<td></td>
-			<td><button id="send" class="btn btn-primary form-control">Login</button></td>
+			<td><input type="submit" value="Login" class="btn btn-primary form-control" /></td>
 		</tr>
 		<tr><td colspan=2><br/><br/></td></tr>
 	</table>	
