@@ -80,7 +80,7 @@ enhancedSearchModule.controller('enhancedSearchCtrl', function($scope, $http) {
 	
 	$scope.selectedSuggestionChanged = function() {
 		$scope.setSuggestionsVisible(false);
-		$scope.setsearchQuery($scope.selectedSuggestion);
+		$scope.setSearchQuery($scope.selectedSuggestion);
 		$scope.submitSearch($scope.selectedSuggestion);
 	}
 	
@@ -91,7 +91,7 @@ enhancedSearchModule.controller('enhancedSearchCtrl', function($scope, $http) {
 		$scope.suggestionsShown = !!visible;
 	}
 	
-	$scope.setsearchQuery = function(newText) {
+	$scope.setSearchQuery = function(newText) {
 		$scope.searchQuery = newText;
 	}
 	
@@ -114,26 +114,26 @@ enhancedSearchModule.controller('enhancedSearchCtrl', function($scope, $http) {
 		angular.forEach($scope.suggestions, function(suggestion, index) {
 			if ( index === indexToSelect && !($scope.isSelected(suggestion)) ) {
 				$scope.selectedSuggestion = suggestion.searchQuery;
-				$scope.setsearchQuery(suggestion.searchQuery);
+				$scope.setSearchQuery(suggestion.searchQuery);
 			}
 		});
 	}
 	
 	$scope.searchQueryChanged = function() {
-		var userEnteredsearchQuery = $scope.searchQuery;
-		$scope.generateSuggestions(userEnteredsearchQuery);
+		var userEnteredSearchQuery = $scope.searchQuery;
+		$scope.generateSuggestions(userEnteredSearchQuery);
 		$scope.selectedSuggestion = $scope.suggestions[0].searchQuery;
 	}
 	
 	$scope.generateSuggestions = function(userEnteredsearchQuery) {
 		//$scope.suggestions = $scope.posts.searchFills;
 		$scope.suggestions = [
-			{ "displayText":userEnteredsearchQuery + "", "searchQuery":userEnteredsearchQuery + "" },
-			{ "displayText":userEnteredsearchQuery + "d1", "searchQuery":userEnteredsearchQuery + "s1" },
-			{ "displayText":userEnteredsearchQuery + "d2", "searchQuery":userEnteredsearchQuery + "s2" },
-			{ "displayText":userEnteredsearchQuery + "d3", "searchQuery":userEnteredsearchQuery + "s3" },
-			{ "displayText":userEnteredsearchQuery + "d4", "searchQuery":userEnteredsearchQuery + "s4" },
-			{ "displayText":userEnteredsearchQuery + "d5", "searchQuery":userEnteredsearchQuery + "s5" }
+			{ "displayText":userEnteredSearchQuery + "", "searchQuery":userEnteredSearchQuery + "" },
+			{ "displayText":userEnteredSearchQuery + "d1", "searchQuery":userEnteredSearchQuery + "s1" },
+			{ "displayText":userEnteredSearchQuery + "d2", "searchQuery":userEnteredSearchQuery + "s2" },
+			{ "displayText":userEnteredSearchQuery + "d3", "searchQuery":userEnteredSearchQuery + "s3" },
+			{ "displayText":userEnteredSearchQuery + "d4", "searchQuery":userEnteredSearchQuery + "s4" },
+			{ "displayText":userEnteredSearchQuery + "d5", "searchQuery":userEnteredSearchQuery + "s5" }
 		];
 	}
 	
