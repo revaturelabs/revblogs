@@ -66,6 +66,7 @@
 				  <select id="selections" size="6" class="form-control suggestions"
 					ng-model="selectedSuggestion"
 					ng-show="suggestionsShown"
+					ng-change="selectedSuggestionChanged()"
 					ng-blur="searchLostFocus($event)"
 					ng-options="suggestion.searchQuery as suggestion.displayText for suggestion in suggestions">
 				  </select>
