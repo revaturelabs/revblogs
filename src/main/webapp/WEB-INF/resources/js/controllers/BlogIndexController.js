@@ -290,6 +290,6 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 	$scope.author = 0;
 	$scope.category = sessionStorage.tag;
 	$scope.appUrl = "https://dev.pjw6193.tech:7002/revblogs";
-	$scope.getUrl = "https://dev.pjw6193.tech:7002/revblogs/api/posts?page=" + $scope.paramPage;
+	$scope.getUrl = "https://localhost:7002/revblogs/api/posts?page=" + $scope.paramPage;
 	$scope.getPage($scope.curPage, $scope.postsPerPage);
 }]);
