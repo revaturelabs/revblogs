@@ -64,7 +64,9 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 	$scope.clearSearch = function()
 	{
 		$scope.searchPosts.posts = [];
+		$scope.searchQuery = "";
 		$scope.searchPage = false;
+		$scope.needsChanged = true;
 		$scope.getPage(1, $scope.postsPerPage);
 	}
 	
