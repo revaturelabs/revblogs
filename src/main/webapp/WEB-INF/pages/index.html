@@ -53,7 +53,7 @@
 			  <div class="form-group input-group post-search">
 				<input id="searchBox" class="form-control searchWidth" type="text" placeholder="Search"
 					ng-model="searchQuery"
-					ng-change="searchTextChanged()"
+					ng-change="searchQueryChanged()"
 					ng-blur="searchLostFocus($event)"
 					ng-keyup="keyup($event)">
 				</input>
@@ -102,7 +102,7 @@
 	  	<select  ng-model="postsPerPage" ng-change="getPage(curPage, postsPerPage)">
 	  		<option ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 5]">5</option>
 	  		<option ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 10]" selected>10</option>
-	  		<option ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 25]">25</option>
+	  		<option ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 20]">20</option>
 	  	</select>
 	  </div>
 	  
