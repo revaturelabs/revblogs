@@ -4,9 +4,11 @@ import java.security.Principal;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,6 +35,7 @@ public class BaseController {
 	private static final String WELCOME = "Welcome ";
 	private static final String SUCCESS = "passwordSuccess";
 	private static final String UPDATE = "userUpdate";
+	private static final String LOGINPAGE = "redirect:/loginPage";
 	
 	public void setBusinessDelegate(BusinessDelegate businessDelegate){
 		this.businessDelegate = businessDelegate;
@@ -57,17 +60,17 @@ public class BaseController {
 	}
 	
 	// Login Page
-	@RequestMapping(value="/loginPage", method=RequestMethod.GET)
-	public String login(HttpServletRequest req){
-	
-		return "loginPage";
-	}
+//	@RequestMapping(value="/loginPage", method=RequestMethod.GET)
+//	public ModelAndView login(HttpServletRequest req){
+//		ModelAndView model = new ModelAndView("loginPage");
+//		return model;
+//	}
 	
 	//Login 
 	@RequestMapping(value="/login", method=RequestMethod.GET)
-	public String loginRedirect(HttpServletRequest req){
-		
-		return "redirect:/loginPage";
+	public ModelAndView loginRedirect(HttpServletRequest req, HttpServletResponse resp){
+		ModelAndView model = new ModelAndView("login");
+		return model;
 	}
 	
 	@RequestMapping(value="/password", method=RequestMethod.GET)
