@@ -124,10 +124,16 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 						}
 					}
 					
+					$scope.numOfPages = [];
+					
 					for (var k = 0; k < Math.ceil($scope.posts.total_posts/$scope.postsPerPage); k++) 
 					{
 						$scope.numOfPages[k] = k+1;
 					}
+					
+					console.log($scope.numOfPages);
+					
+					console.log($scope.numOfPages[$scope.numOfPages.length-1]);
 					
 					if($scope.needsChanged)
 					{
@@ -178,18 +184,21 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 			$scope.numOfPages[k] = k+1;
 		}
 
+		console.log("Call changeView");
 		$scope.changeView($scope.curPage);
+		console.log("Called changeView");
 	}
 
 	$scope.changeView = function(page)
 	{
+		console.log("Page: " + page);
 		$scope.curPage = page;
 		var pageCheck = false;
 		var displayIndex;
 
-		console.log("In change view");
+		console.log("Page: " + page);
 		
-		if(!$scope.isLoading)	
+		if(!(page > $scope.numOfPages[$scope.numOfPages.length-1] | page < 1))	
 		{
 			$scope.isLoading = true;	
 			
@@ -213,7 +222,7 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 				 * Below checks to see if we've reached the end (or beginning) of the pre-loaded posts
 				 */
 				
-				if(displayIndex === $scope.loadedPosts.length | $scope.loadedPosts[displayIndex] == null)		
+				if(displayIndex === $scope.loadedPosts.length-1 | $scope.loadedPosts[displayIndex] == null)		
 				{				
 					var pageToLoad = page - (MAX_PP/$scope.postsPerPage/2);
 					
@@ -248,6 +257,16 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 			
 	        window.scrollTo(0, $('#postsDiv').offsetTop + 100);
 			$scope.isLoading = false;
+		}
+		
+		else
+		{
+			if(page < 1)
+			{
+				$scope.curPage = 1;
+			}
+			
+			else $scope.curPage = $scope.numOfPages[$scope.numOfPages.length-1];
 		}
 	}
 	
@@ -411,19 +430,17 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 	}
 	
 	$scope.searchQueryChanged = function() {
-		console.log('searchQueryChanged');
 		var userEnteredSearchQuery = $scope.searchQuery;
 		$scope.generateSuggestions(userEnteredSearchQuery);
 		$scope.selectedSuggestion = $scope.suggestions[0].searchQuery;
 	}
 	
 	$scope.generateSuggestions = function(userEnteredSearchQuery) {
-		console.log('generate');
 		//$scope.suggestions = $scope.posts.searchFills;
 
-		$scope.suggestions = [{"displayText":"", "searchQuery":""}];
+		$scope.suggestions = [{"displayText":userEnteredSearchQuery + "", "searchQuery":userEnteredSearchQuery + ""}];
 		
-		var suggestionIndex = 0;
+		var suggestionIndex = 1;
 		
 		for (var int = 0; int < $scope.posts.searchFills.length; int++) 
 		{
@@ -434,15 +451,6 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 				suggestionIndex++;
 			}
 		}
-		
-		/*$scope.suggestions = [
-			{ "displayText":userEnteredSearchQuery + "", "searchQuery":userEnteredSearchQuery + "" },
-			{ "displayText":userEnteredSearchQuery + "d1", "searchQuery":userEnteredSearchQuery + "s1" },
-			{ "displayText":userEnteredSearchQuery + "d2", "searchQuery":userEnteredSearchQuery + "s2" },
-			{ "displayText":userEnteredSearchQuery + "d3", "searchQuery":userEnteredSearchQuery + "s3" },
-			{ "displayText":userEnteredSearchQuery + "d4", "searchQuery":userEnteredSearchQuery + "s4" },
-			{ "displayText":userEnteredSearchQuery + "d5", "searchQuery":userEnteredSearchQuery + "s5" }
-		];*/
 	}
 	
 	$scope.submitSearch = function(searchQuery) {
