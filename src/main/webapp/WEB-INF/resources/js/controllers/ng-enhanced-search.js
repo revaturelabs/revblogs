@@ -6,13 +6,22 @@ var enhancedSearchModule = angular.module('enhancedSearch', []);
 
 enhancedSearchModule.controller('enhancedSearchCtrl', function($scope, $http) {
 	
-	$scope.searchText = '';
-	$scope.suggestions = [];
-	$scope.selectedSuggestion = -1;
+	$scope.searchQuery = '';
+	$scope.suggestions = [
+		{ "displayText":"", "searchQuery":"" },
+		{ "displayText":"d1", "searchQuery":"s1" },
+		{ "displayText":"d2", "searchQuery":"s2" },
+		{ "displayText":"d3", "searchQuery":"s3" },
+		{ "displayText":"d4", "searchQuery":"s4" },
+		{ "displayText":"d5", "searchQuery":"s5" }
+	];
 	$scope.maxSuggestions = 6;
+	$scope.selectedSuggestionId = 0;
+	$scope.selectedSuggestion = $scope.suggestions[0].searchQuery;
+	$scope.suggestionsShown = false;
 	
-	$scope.keyup = function(event) {
-		var keyCode = event.which || event.keyCode;
+	$scope.keyup = function(keyUpEvent) {
+		var keyCode = keyUpEvent.which || keyUpEvent.keyCode;
 		if ( keyCode === 38 ) {
 			$scope.upArrow();
 		} else if ( keyCode === 40 ) {
@@ -30,31 +39,31 @@ enhancedSearchModule.controller('enhancedSearchCtrl', function($scope, $http) {
 	///// Start Key-Up Callbacks /////
 	//////////////////////////////////
 	$scope.upArrow = function() {
-		if ( $scope.searchText.length > 0 ) {
-			if ( $scope.selectedSuggestion <= 0 ) {
-				$scope.selectedSuggestion = 0;
+		if ( $scope.searchQuery.length > 0 ) {
+			if ( $scope.selectedSuggestionId <= 0 ) {
+				$scope.selectedSuggestionId = 0;
 			} else {
-				$scope.selectedSuggestion -= 1;
+				$scope.selectedSuggestionId -= 1;
 			}
-			$scope.selectSuggestion($scope.selectedSuggestion);
+			$scope.selectSuggestion($scope.selectedSuggestionId);
 			$scope.setSuggestionsVisible(true);
 		}
 	}
 	
 	$scope.downArrow = function() {
-		if ( $scope.searchText.length > 0 ) {
-			if ( $scope.selectedSuggestion >= $scope.maxSuggestions-1 ) {
-				$scope.selectedSuggestion = $scope.maxSuggestions-1;
+		if ( $scope.searchQuery.length > 0 ) {
+			if ( $scope.selectedSuggestionId >= $scope.maxSuggestions-1 ) {
+				$scope.selectedSuggestionId = $scope.maxSuggestions-1;
 			} else {
-				$scope.selectedSuggestion += 1;
+				$scope.selectedSuggestionId += 1;
 			}
-			$scope.selectSuggestion($scope.selectedSuggestion);
+			$scope.selectSuggestion($scope.selectedSuggestionId);
 			$scope.setSuggestionsVisible(true);
 		}
 	}
 	
 	$scope.enterKey = function() {
-		$scope.submitSearch($scope.searchText);
+		$scope.submitSearch($scope.searchQuery);
 		$scope.setSuggestionsVisible(false);
 	}
 	
@@ -63,51 +72,72 @@ enhancedSearchModule.controller('enhancedSearchCtrl', function($scope, $http) {
 	}
 	
 	$scope.unknownKey = function(keyCode) {
-		$scope.setSuggestionsVisible($scope.searchText.length > 0);
+		$scope.setSuggestionsVisible($scope.searchQuery.length > 0);
 	}
 	////////////////////////////////
 	///// End Key-Up Callbacks /////
 	////////////////////////////////
 	
+	$scope.selectedSuggestionChanged = function() {
+		$scope.setSuggestionsVisible(false);
+		$scope.setsearchQuery($scope.selectedSuggestion);
+		$scope.submitSearch($scope.selectedSuggestion);
+	}
+	
 	$scope.setSuggestionsVisible = function(visible) {
-		if ( visible ) {
-			document.getElementById("selections").style = "display: inline; z-index: 2; position: relative;";
-		} else {
-			document.getElementById("selections").style = "display: none; z-index: 2; position: relative;";
+		if ( !visible )
+			$scope.selectedSuggestionId = 0;
+		
+		$scope.suggestionsShown = !!visible;
+	}
+	
+	$scope.setsearchQuery = function(newText) {
+		$scope.searchQuery = newText;
+	}
+	
+	$scope.searchLostFocus = function(focusLostEvent) {
+		var itemBeingFocused = '';
+		if ( focusLostEvent != null && focusLostEvent.relatedTarget != null ) {
+			itemBeingFocused = focusLostEvent.relatedTarget.id;
+		}
+		
+		if ( itemBeingFocused !== 'searchBox' && itemBeingFocused !== 'selections' ) {
+			$scope.setSuggestionsVisible(false);
 		}
 	}
 	
-	$scope.setSearchText = function(newText) {
-		$scope.searchText = newText;
-	}
-	
-	$scope.searchLostFocus = function() {
-		$scope.setSuggestionsVisible(false);
+	$scope.isSelected = function(suggestion) {
+		return $scope.selectedSuggestion === suggestion.searchQuery;
 	}
 	
 	$scope.selectSuggestion = function(indexToSelect) {
 		angular.forEach($scope.suggestions, function(suggestion, index) {
-			if ( index === indexToSelect && suggestion.selected !== "selected" ) {
-				suggestion.selected = "selected";
-				$scope.setSearchText(suggestion.text);
-			} else if ( index !== indexToSelect && suggestion.selected !== "" ) {
-				suggestion.selected = "";
+			if ( index === indexToSelect && !($scope.isSelected(suggestion)) ) {
+				$scope.selectedSuggestion = suggestion.searchQuery;
+				$scope.setsearchQuery(suggestion.searchQuery);
 			}
 		});
 	}
 	
-	$scope.searchTextChanged = function() {
-		var userEnteredSearchText = $scope.searchText;
-		$scope.generateSuggestions(userEnteredSearchText);
+	$scope.searchQueryChanged = function() {
+		var userEnteredsearchQuery = $scope.searchQuery;
+		$scope.generateSuggestions(userEnteredsearchQuery);
+		$scope.selectedSuggestion = $scope.suggestions[0].searchQuery;
 	}
 	
-	$scope.generateSuggestions = function(userEnteredSearchText) {
-		//console.log("Unimplemented Generate Suggestions Method: " + userEnteredSearchText)
-		
-		$scope.suggestions = $scope.posts.searchFills;
+	$scope.generateSuggestions = function(userEnteredsearchQuery) {
+		//$scope.suggestions = $scope.posts.searchFills;
+		$scope.suggestions = [
+			{ "displayText":userEnteredsearchQuery + "", "searchQuery":userEnteredsearchQuery + "" },
+			{ "displayText":userEnteredsearchQuery + "d1", "searchQuery":userEnteredsearchQuery + "s1" },
+			{ "displayText":userEnteredsearchQuery + "d2", "searchQuery":userEnteredsearchQuery + "s2" },
+			{ "displayText":userEnteredsearchQuery + "d3", "searchQuery":userEnteredsearchQuery + "s3" },
+			{ "displayText":userEnteredsearchQuery + "d4", "searchQuery":userEnteredsearchQuery + "s4" },
+			{ "displayText":userEnteredsearchQuery + "d5", "searchQuery":userEnteredsearchQuery + "s5" }
+		];
 	}
 	
-	$scope.submitSearch = function(searchText) 
+	$scope.submitSearch = function(searchQuery) 
 	{
 		var fullUrl;
 		var ulQuery = $scope.searchQuery.toLowerCase();
