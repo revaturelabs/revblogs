@@ -278,7 +278,9 @@ html, body {
 
 .suggestions {
 	z-index: 1;
-	position: fixed;
+	position: absolute;
+	min-width: 50%;
+	max-width: 50%;
 }
 
 #home-page-content{

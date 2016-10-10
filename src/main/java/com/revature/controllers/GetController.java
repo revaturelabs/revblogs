@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.revature.beans.Blog;
-import com.revature.dto.UserDTO;
+import com.revature.beans.User;
 import com.revature.service.BusinessDelegate;
 import com.revature.service.Logging;
 
@@ -83,7 +83,7 @@ public class GetController {
 	@RequestMapping(value="/manageusers", method=RequestMethod.GET)
 	public String manageUsers(HttpServletRequest req, HttpServletResponse resp){
 		req.setAttribute("userList", businessDelegate.requestUsers());
-		req.setAttribute("updateUserProfile", new UserDTO());
+		req.setAttribute("updateUserProfile", new User());
 		req.setAttribute("roleList", businessDelegate.requestRoles());
 		return "manageusers";
 	}

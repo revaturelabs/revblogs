@@ -8,6 +8,7 @@
 <!-- CHECKS FOR THE USER'S ROLE, CALLED FROM SECURITY:JDBC-USER-SERVICE -->
 	<bean id="roleHandler" class="com.revature.secure.AuthSuccessHandler" />
 	
+
 <!-- HTTP SECURITY FOR CONTROLLING ACCESS BASED ON ROLL -->	
 	<security:http auto-config="true" use-expressions="true" create-session="always">
 
@@ -37,14 +38,15 @@
 
 <!-- FORM-LOGIN SECURITY FOR THE LOGIN PAGE -->		
 		<security:form-login  
-			login-processing-url="/login" login-page="/loginPage"
+			login-page="/login"
+			login-processing-url="/j_spring_security_check"
 			username-parameter="username"
 			password-parameter="password"
 			default-target-url="/home"
 			authentication-success-handler-ref="roleHandler"
-			authentication-failure-url="/loginPage?auth=fail" />
+			authentication-failure-url="/login?auth=fail" />
 			
-		<security:logout logout-url="/go-logout" logout-success-url="/loginPage?auth=logout"
+		<security:logout logout-url="/go-logout" logout-success-url="/login?auth=logout"
 			invalidate-session="true"  />
 	</security:http>
 	

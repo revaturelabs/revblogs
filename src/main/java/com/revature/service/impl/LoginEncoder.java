@@ -26,6 +26,10 @@ public class LoginEncoder implements PasswordEncoder{
 	}
 	public boolean matches(CharSequence passwordInput, String encodedPassword) {
 		
-		return businessDelegate.validate((String)passwordInput, encodedPassword);
+		if(encodedPassword == null){
+			return false;
+		} else{
+			return businessDelegate.validate((String)passwordInput, encodedPassword);
+		}
 	}
 }
