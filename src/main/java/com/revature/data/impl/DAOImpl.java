@@ -276,7 +276,7 @@ public class DAOImpl implements DAO {
 				  .must(
 						qb.keyword()
 						  .onFields("title", "subtitle", "author.firstName", "author.lastName", "tags.description")
-				          .matching(search)
+				          .matching(search+"*") //wildcard not working
 				          .createQuery()
 				  ).must(
 						qb.keyword()
