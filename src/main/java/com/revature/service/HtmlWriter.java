@@ -75,7 +75,7 @@ public class HtmlWriter {
 			if (line.contains("post-subtitle"))
 				blogWriter.write(sanitize(blog.getBlogSubtitle()));
 			if (line.contains("post-body"))
-				blogWriter.write(sanitize(blog.getBlogContent())+"\n");
+				blogWriter.write(blog.getBlogContent()+"\n");
 			if (line.contains("author-name"))
 				blogWriter.write(sanitize(author.getFirstName())+" "+sanitize(author.getLastName()));
 			if (line.contains("author-desc"))
