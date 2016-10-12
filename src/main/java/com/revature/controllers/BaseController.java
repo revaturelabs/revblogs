@@ -73,6 +73,13 @@ public class BaseController {
 		return model;
 	}
 	
+	//Login
+	@RequestMapping(value="/loginPage", method=RequestMethod.GET)
+	public ModelAndView loginRedirectDepricated(HttpServletRequest req, HttpServletResponse resp){
+		ModelAndView model = new ModelAndView("login");
+		return model;
+	}
+	
 	@RequestMapping(value="/password", method=RequestMethod.GET)
 	public String password(HttpServletRequest req){
 		req.setAttribute("updatePassword", new UserDTO());
