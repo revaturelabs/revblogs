@@ -97,9 +97,7 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 					$scope.posts = resp;
 					
 					$scope.suggestions = $scope.posts.searchFills;
-
-					console.log("Total posts: " + $scope.posts.total_posts);
-					
+									
 					for (var index = 0; index < $scope.posts.posts.length/postsPP; index++) 
 					{
 						$scope.loadedPosts[index] = [];
@@ -131,10 +129,6 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 						$scope.numOfPages[k] = k+1;
 					}
 					
-					console.log($scope.numOfPages);
-					
-					console.log($scope.numOfPages[$scope.numOfPages.length-1]);
-					
 					if($scope.needsChanged)
 					{
 						$scope.needsChanged = false;
@@ -151,6 +145,8 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 	$scope.getPageWithAuthor = function(page, authorid)
 	{
 		$scope.author = authorid;
+		$scope.needsChanged = true;
+		$scope.searchPage = true;
 		$scope.getPage(page,$scope.postsPerPage);
 	}
 	
@@ -184,19 +180,14 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 			$scope.numOfPages[k] = k+1;
 		}
 
-		console.log("Call changeView");
 		$scope.changeView($scope.curPage);
-		console.log("Called changeView");
 	}
 
 	$scope.changeView = function(page)
 	{
-		console.log("Page: " + page);
 		$scope.curPage = page;
 		var pageCheck = false;
 		var displayIndex;
-
-		console.log("Page: " + page);
 		
 		if(!(page > $scope.numOfPages[$scope.numOfPages.length-1] | page < 1))	
 		{
@@ -208,14 +199,12 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 				{
 					pageCheck = true;
 					displayIndex = i;
-					console.log("Display check" + pageCheck);
 				}
 			}
 			
 			if(pageCheck)
 			{
 				$scope.displayPosts = $scope.loadedPosts[displayIndex];
-				console.log("Display posts: " + $scope.displayPosts);
 				
 				/*
 				 * Above assigns the posts for the desired page to the displayPosts
@@ -250,9 +239,10 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 					pageToLoad = 1;
 				}
 				
+				$scope.needsChanged = true;
 				$scope.getPage(pageToLoad, $scope.postsPerPage)
 				
-				$scope.changeView(page);
+//				$scope.changeView(page);
 			}
 			
 	        window.scrollTo(0, $('#postsDiv').offsetTop + 100);

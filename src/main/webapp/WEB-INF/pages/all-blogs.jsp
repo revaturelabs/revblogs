@@ -96,6 +96,9 @@
   <input type="hidden" ng-model="curPage">
   <input type="hidden" ng-model="nextPagePosts">
   <input type="hidden" ng-model="prevPagePosts">
+  <input type="hidden" ng-model="searchPage">
+  <input type="hidden" ng-model="searchPosts">
+  <input type="hidden" ng-model="numOfPages">
  </div>
 </body>
 

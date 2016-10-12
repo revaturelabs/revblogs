@@ -61,7 +61,7 @@
 			        </li>
 		        </c:when>
 		        <c:otherwise>
-		        	<li id="navlogin"><a href="${pageContext.servletContext.contextPath}/loginPage"><span class="glyphicon glyphicon-log-in"></span>&nbsp;Log in</a></li>
+		        	<li id="navlogin"><a href="${pageContext.servletContext.contextPath}/login"><span class="glyphicon glyphicon-log-in"></span>&nbsp;Log in</a></li>
 				</c:otherwise>
 			</c:choose>
         </ul>
