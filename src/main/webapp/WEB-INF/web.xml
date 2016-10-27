@@ -105,4 +105,5 @@
 	    <exception-type>java.lang.Throwable</exception-type>
 	    <location>/WEB-INF/pages/error.jsp</location>
 	</error-page>
+	<!-- demo CI pipeline -->
 </web-app>
